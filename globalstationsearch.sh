@@ -4,7 +4,7 @@
 # Description: Television station search tool using Channels DVR API
 # Created: 2025/05/26
 # Last Modified: 2025/05/27
-VERSION="0.5.0-beta"
+VERSION="0.6.0-beta"
 
 # TERMINAL STYLING
 ESC="\033"
@@ -100,6 +100,43 @@ setup_config() {
         # Set defaults for filter settings if not in config file
         FILTER_BY_RESOLUTION=${FILTER_BY_RESOLUTION:-false}
         ENABLED_RESOLUTIONS=${ENABLED_RESOLUTIONS:-"SDTV,HDTV,UHDTV"}
+        FILTER_BY_COUNTRY=${FILTER_BY_COUNTRY:-false}
+        ENABLED_COUNTRIES=${ENABLED_COUNTRIES:-""}
+        
+        # CREATE SAMPLE MARKETS FILE IF IT DOESN'T EXIST
+        if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
+          echo -e "\n${YELLOW}Creating sample markets file...${RESET}"
+          
+          cat > "$CSV_FILE" << 'EOF'
+Country,ZIP
+USA,10001
+USA,48201
+USA,60614
+USA,33101
+USA,90210
+USA,02101
+CAN,M5V
+GBR,SW1A
+USA,75201
+USA,20001
+USA,30309
+USA,19101
+USA,77002
+USA,94102
+USA,33602
+EOF
+          
+          echo -e "${GREEN}Sample markets created with major cities:${RESET}"
+          echo -e "${YELLOW}Detroit, New York, Chicago, Boston, Washington DC,"
+          echo -e "Philadelphia, Atlanta, Miami, Tampa, Dallas, Houston,"
+          echo -e "Los Angeles, San Francisco, Toronto, London${RESET}"
+          echo
+          echo -e "${BOLD}${CYAN}IMPORTANT:${RESET} ${YELLOW}Before running your first local cache, consider"
+          echo -e "modifying the markets list to match your preferences.${RESET}"
+          echo -e "You can add/remove markets using the market management options."
+          pause_for_user
+        fi
+        
         return 0
       fi
     else
@@ -158,34 +195,18 @@ create_new_config() {
     echo "SHOW_LOGOS=false"
     echo "FILTER_BY_RESOLUTION=false"
     echo "ENABLED_RESOLUTIONS=\"SDTV,HDTV,UHDTV\""
+    echo "FILTER_BY_COUNTRY=false"
+    echo "ENABLED_COUNTRIES=\"\""
   } > "$CONFIG_FILE" || {
     echo -e "${RED}Error: Cannot write to config file${RESET}"
     exit 1
   }
   
-  source "$CONFIG_FILE"
-  FILTER_BY_RESOLUTION=${FILTER_BY_RESOLUTION:-false}
-  ENABLED_RESOLUTIONS=${ENABLED_RESOLUTIONS:-"SDTV,HDTV,UHDTV"}
-  echo -e "${GREEN}Configuration saved successfully!${RESET}"
-}
-
-setup_config() {
-  if [ -f "$CONFIG_FILE" ]; then
-    if source "$CONFIG_FILE" 2>/dev/null; then
-      if [[ -z "${CHANNELS_URL:-}" ]]; then
-        echo -e "${RED}Error: Invalid config file - missing CHANNELS_URL${RESET}"
-        rm "$CONFIG_FILE"
-        echo -e "${YELLOW}Corrupted config removed. Let's set it up again.${RESET}"
-      else
-        # Set defaults for filter settings if not in config file
-        FILTER_BY_RESOLUTION=${FILTER_BY_RESOLUTION:-false}
-        ENABLED_RESOLUTIONS=${ENABLED_RESOLUTIONS:-"SDTV,HDTV,UHDTV"}
-        
-        # CREATE SAMPLE MARKETS FILE IF IT DOESN'T EXIST (moved here)
-        if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
-          echo -e "\n${YELLOW}Creating sample markets file...${RESET}"
-          
-          cat > "$CSV_FILE" << 'EOF'
+  # CREATE SAMPLE MARKETS FILE IF IT DOESN'T EXIST
+  if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
+    echo -e "\n${YELLOW}Creating sample markets file...${RESET}"
+    
+    cat > "$CSV_FILE" << 'EOF'
 Country,ZIP
 USA,10001
 USA,48201
@@ -203,29 +224,24 @@ USA,77002
 USA,94102
 USA,33602
 EOF
-          
-          echo -e "${GREEN}Sample markets created with major cities:${RESET}"
-          echo -e "${YELLOW}Detroit, New York, Chicago, Boston, Washington DC,"
-          echo -e "Philadelphia, Atlanta, Miami, Tampa, Dallas, Houston,"
-          echo -e "Los Angeles, San Francisco, Toronto, London${RESET}"
-          echo
-          echo -e "${BOLD}${CYAN}IMPORTANT:${RESET} ${YELLOW}Before running your first local cache, consider"
-          echo -e "modifying the markets list to match your preferences.${RESET}"
-          echo -e "You can add/remove markets using the market management options."
-          pause_for_user
-        fi
-        
-        return 0
-      fi
-    else
-      echo -e "${RED}Error: Cannot source config file${RESET}"
-      rm "$CONFIG_FILE"
-      echo -e "${YELLOW}Corrupted config removed. Let's set it up again.${RESET}"
-    fi
+    
+    echo -e "${GREEN}Sample markets created with major cities:${RESET}"
+    echo -e "${YELLOW}Detroit, New York, Chicago, Boston, Washington DC,"
+    echo -e "Philadelphia, Atlanta, Miami, Tampa, Dallas, Houston,"
+    echo -e "Los Angeles, San Francisco, Toronto, London${RESET}"
+    echo
+    echo -e "${BOLD}${CYAN}IMPORTANT:${RESET} ${YELLOW}Before running your first local cache, consider"
+    echo -e "modifying the markets list to match your preferences.${RESET}"
+    echo -e "You can add/remove markets using the market management options."
+    pause_for_user
   fi
-
-  # Config file doesn't exist or was corrupted
-  create_new_config
+  
+  source "$CONFIG_FILE"
+  FILTER_BY_RESOLUTION=${FILTER_BY_RESOLUTION:-false}
+  ENABLED_RESOLUTIONS=${ENABLED_RESOLUTIONS:-"SDTV,HDTV,UHDTV"}
+  FILTER_BY_COUNTRY=${FILTER_BY_COUNTRY:-false}
+  ENABLED_COUNTRIES=${ENABLED_COUNTRIES:-""}
+  echo -e "${GREEN}Configuration saved successfully!${RESET}"
 }
 
 # ============================================================================
@@ -353,8 +369,6 @@ add_callsign_to_cache() {
   
   # Double-check JSON validity
   if ! echo "$json_data" | jq empty 2>/dev/null; then
-    echo -e "\n${RED}Error: Invalid JSON in add_callsign_to_cache for $callSign${RESET}"
-    echo "Data: $json_data"
     return 1
   fi
   
@@ -363,21 +377,26 @@ add_callsign_to_cache() {
     echo '{}' > "$CALLSIGN_CACHE"
   fi
   
-  # Use jq with error handling
+  # Use jq with error handling - suppress all error output
   if ! jq --arg cs "$callSign" --argjson data "$json_data" '. + {($cs): $data}' "$CALLSIGN_CACHE" > "$tmp_file" 2>/dev/null; then
-    echo -e "\n${RED}Error: jq failed in add_callsign_to_cache${RESET}"
-    echo "CallSign: $callSign"
-    echo "JSON Data: $json_data"
     rm -f "$tmp_file"
     return 1
   fi
   
-  mv "$tmp_file" "$CALLSIGN_CACHE"
+  mv "$tmp_file" "$CALLSIGN_CACHE" 2>/dev/null || return 1
 }
 
 # ============================================================================
 # SEARCH FUNCTIONS
 # ============================================================================
+
+get_available_countries() {
+  if [ -f "$CSV_FILE" ] && [ -s "$CSV_FILE" ]; then
+    awk -F, 'NR>1 {print $1}' "$CSV_FILE" | sort -u | tr '\n' ',' | sed 's/,$//'
+  else
+    echo ""
+  fi
+}
 
 build_resolution_filter() {
   if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
@@ -395,6 +414,22 @@ build_resolution_filter() {
   fi
 }
 
+build_country_filter() {
+  if [ "$FILTER_BY_COUNTRY" = "true" ] && [ -n "$ENABLED_COUNTRIES" ]; then
+    local filter_conditions=""
+    IFS=',' read -ra COUNTRIES <<< "$ENABLED_COUNTRIES"
+    for country in "${COUNTRIES[@]}"; do
+      if [ -n "$filter_conditions" ]; then
+        filter_conditions+=" or "
+      fi
+      filter_conditions+="(.country // \"\" | . == \"$country\")"
+    done
+    echo "and ($filter_conditions)"
+  else
+    echo ""
+  fi
+}
+
 run_search_interface() {
   mkdir -p "$LOGO_DIR"
   
@@ -403,10 +438,22 @@ run_search_interface() {
     echo -e "${BOLD}${CYAN}=== Station Search ===${RESET}\n"
     
     # Show filter status
+    local filter_status=""
     if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-      echo -e "${YELLOW}Resolution Filter Active: $ENABLED_RESOLUTIONS${RESET}"
+      filter_status+="${YELLOW}Resolution: $ENABLED_RESOLUTIONS${RESET}"
+    fi
+    
+    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
+      if [ -n "$filter_status" ]; then
+        filter_status+=" | "
+      fi
+      filter_status+="${GREEN}Country: $ENABLED_COUNTRIES${RESET}"
+    fi
+    
+    if [ -n "$filter_status" ]; then
+      echo -e "Active Filters: $filter_status"
     else
-      echo -e "Resolution Filter: ${RED}Disabled${RESET}"
+      echo -e "Filters: ${RED}None Active${RESET}"
     fi
     echo
     
@@ -433,8 +480,9 @@ perform_search() {
   # Escape special regex characters for safety
   local escaped_term=$(echo "$search_term" | sed 's/[[\.*^$()+?{|]/\\&/g')
   
-  # Build resolution filter
+  # Build filters
   local resolution_filter=$(build_resolution_filter)
+  local country_filter=$(build_country_filter)
   
   jq -r --arg term "$escaped_term" --arg exact_term "$search_term" '
     .[] | select(
@@ -443,7 +491,8 @@ perform_search() {
        (.name // "" | . == $exact_term) or
        (.callSign // "" | . == $exact_term))
       '"$resolution_filter"'
-    ) | [.name, .callSign, (.videoQuality.videoType // ""), .stationId] | @tsv
+      '"$country_filter"'
+    ) | [.name, .callSign, (.videoQuality.videoType // ""), .stationId, (.country // "UNK")] | @tsv
   ' "$FINAL_JSON" > "$SEARCH_RESULTS"
   
   display_search_results "$search_term"
@@ -455,14 +504,23 @@ display_search_results() {
   mapfile -t RESULTS < "$SEARCH_RESULTS"
   local count=${#RESULTS[@]}
   
+  # Build filter info for display
+  local filter_info=""
+  if [ "$FILTER_BY_RESOLUTION" = "true" ] || [ "$FILTER_BY_COUNTRY" = "true" ]; then
+    filter_info=" (filtered by:"
+    [ "$FILTER_BY_RESOLUTION" = "true" ] && filter_info+=" Resolution: $ENABLED_RESOLUTIONS"
+    [ "$FILTER_BY_COUNTRY" = "true" ] && filter_info+=" Country: $ENABLED_COUNTRIES"
+    filter_info+=")"
+  fi
+  
   # Show search result count with filter info
   if [[ $count -eq 0 ]]; then
-    echo -e "${YELLOW}No results found for '$search_term'$([ "$FILTER_BY_RESOLUTION" = "true" ] && echo " (filtered by: $ENABLED_RESOLUTIONS)")${RESET}"
+    echo -e "${YELLOW}No results found for '$search_term'$filter_info${RESET}"
     pause_for_user
     return
   fi
   
-  echo -e "${GREEN}Found $count result(s) for '$search_term'$([ "$FILTER_BY_RESOLUTION" = "true" ] && echo " (filtered by: $ENABLED_RESOLUTIONS)")${RESET}"
+  echo -e "${GREEN}Found $count result(s) for '$search_term'$filter_info${RESET}"
   
   local offset=0
   
@@ -474,16 +532,16 @@ display_search_results() {
     local end_num=$((offset + 10 < count ? offset + 10 : count))
     
     # Show pagination info with filter status
-    echo -e "${GREEN}Found $count result(s) for '$search_term'$([ "$FILTER_BY_RESOLUTION" = "true" ] && echo " (filtered by: $ENABLED_RESOLUTIONS)")${RESET}"
+    echo -e "${GREEN}Found $count result(s) for '$search_term'$filter_info${RESET}"
     echo -e "${BOLD}Showing results $start_num-$end_num of $count${RESET}"
     echo
     
-    printf "${BOLD}${YELLOW}%-35s %-12s %-10s %-12s${RESET}\n" "Channel Name" "Call Sign" "Resolution" "Station ID"
+    printf "${BOLD}${YELLOW}%-30s %-10s %-8s %-8s %-12s${RESET}\n" "Channel Name" "Call Sign" "Quality" "Country" "Station ID"
     echo "--------------------------------------------------------------------------------"
     
     for ((i = offset; i < offset + 10 && i < count; i++)); do
-      IFS=$'\t' read -r NAME CALLSIGN RES STID <<< "${RESULTS[$i]}" 
-      printf "%-35s %-12s %-10s ${CYAN}%-12s${RESET}\n" "$NAME" "$CALLSIGN" "$RES" "$STID"
+      IFS=$'\t' read -r NAME CALLSIGN RES STID COUNTRY <<< "${RESULTS[$i]}" 
+      printf "%-30s %-10s %-8s ${GREEN}%-8s${RESET} ${CYAN}%-12s${RESET}\n" "$NAME" "$CALLSIGN" "$RES" "$COUNTRY" "$STID"
       
       display_logo "$STID"
       echo
@@ -712,9 +770,10 @@ settings_menu() {
     echo "a) Change Channels DVR Server"
     echo "b) Toggle Logo Display"
     echo "c) Configure Resolution Filter"
-    echo "d) Cache Management"
-    echo "e) Reset All Settings"
-    echo "f) Export Settings"
+    echo "d) Configure Country Filter"
+    echo "e) Cache Management"
+    echo "f) Reset All Settings"
+    echo "g) Export Settings"
     echo "q) Back to Main Menu"
     echo
     
@@ -724,9 +783,10 @@ settings_menu() {
       a|A) change_server_settings && pause_for_user ;;
       b|B) toggle_logo_display && pause_for_user ;;
       c|C) configure_resolution_filter && pause_for_user ;;
-      d|D) cache_management_menu ;;
-      e|E) reset_all_settings && pause_for_user ;;
-      f|F) export_settings && pause_for_user ;;
+      d|D) configure_country_filter && pause_for_user ;;
+      e|E) cache_management_menu ;;
+      f|F) reset_all_settings && pause_for_user ;;
+      g|G) export_settings && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -745,6 +805,7 @@ display_current_settings() {
   fi
   
   echo "Resolution Filter: $([ "$FILTER_BY_RESOLUTION" = "true" ] && echo -e "${GREEN}Enabled${RESET} ${YELLOW}($ENABLED_RESOLUTIONS)${RESET}" || echo -e "${RED}Disabled${RESET}")"
+  echo "Country Filter: $([ "$FILTER_BY_COUNTRY" = "true" ] && echo -e "${GREEN}Enabled${RESET} ${YELLOW}($ENABLED_COUNTRIES)${RESET}" || echo -e "${RED}Disabled${RESET}")"
   
   if [ -f "$FINAL_JSON" ]; then
     local station_count=$(jq length "$FINAL_JSON" 2>/dev/null || echo "0")
@@ -878,6 +939,70 @@ configure_resolution_filter() {
   return 0
 }
 
+configure_country_filter() {
+  echo -e "\n${BOLD}Country Filter Configuration${RESET}"
+  echo "Current status: $([ "$FILTER_BY_COUNTRY" = "true" ] && echo "Enabled" || echo "Disabled")"
+  echo "Current filters: $ENABLED_COUNTRIES"
+  
+  # Get available countries from markets CSV
+  local available_countries=$(get_available_countries)
+  if [ -z "$available_countries" ]; then
+    echo -e "${RED}No markets configured. Add markets first to enable country filtering.${RESET}"
+    return 1
+  fi
+  
+  echo -e "\nAvailable countries from your markets: ${GREEN}$available_countries${RESET}"
+  echo
+  
+  if confirm_action "Enable country filtering?"; then
+    FILTER_BY_COUNTRY=true
+    
+    echo -e "\nSelect countries to include (space-separated):"
+    echo "Available: $(echo "$available_countries" | tr ',' ' ')"
+    read -p "Enter countries: " selected_countries
+    
+    # Validate selections against available countries
+    local valid_countries=""
+    IFS=',' read -ra AVAILABLE <<< "$available_countries"
+    for country in $selected_countries; do
+      country=$(echo "$country" | tr '[:lower:]' '[:upper:]')  # Normalize to uppercase
+      if [[ " ${AVAILABLE[*]} " =~ " ${country} " ]]; then
+        valid_countries+="$country,"
+      else
+        echo -e "${YELLOW}Ignoring invalid country: $country (not in your markets)${RESET}"
+      fi
+    done
+    
+    if [[ -n "$valid_countries" ]]; then
+      ENABLED_COUNTRIES="${valid_countries%,}"  # Remove trailing comma
+      echo -e "${GREEN}Country filter enabled: $ENABLED_COUNTRIES${RESET}"
+    else
+      echo -e "${RED}No valid countries selected, filter disabled${RESET}"
+      FILTER_BY_COUNTRY=false
+      ENABLED_COUNTRIES=""
+    fi
+  else
+    FILTER_BY_COUNTRY=false
+    ENABLED_COUNTRIES=""
+    echo -e "${YELLOW}Country filter disabled${RESET}"
+  fi
+  
+  # Save to config file
+  if grep -q "FILTER_BY_COUNTRY=" "$CONFIG_FILE"; then
+    sed -i "s/FILTER_BY_COUNTRY=.*/FILTER_BY_COUNTRY=$FILTER_BY_COUNTRY/" "$CONFIG_FILE"
+  else
+    echo "FILTER_BY_COUNTRY=$FILTER_BY_COUNTRY" >> "$CONFIG_FILE"
+  fi
+  
+  if grep -q "ENABLED_COUNTRIES=" "$CONFIG_FILE"; then
+    sed -i "s/ENABLED_COUNTRIES=.*/ENABLED_COUNTRIES=\"$ENABLED_COUNTRIES\"/" "$CONFIG_FILE"
+  else
+    echo "ENABLED_COUNTRIES=\"$ENABLED_COUNTRIES\"" >> "$CONFIG_FILE"
+  fi
+  
+  return 0
+}
+
 cache_management_menu() {
   while true; do
     clear
@@ -971,6 +1096,16 @@ show_detailed_cache_stats() {
     echo "  HDTV stations: $(jq '[.[] | select(.videoQuality.videoType == "HDTV")] | length' "$FINAL_JSON")"
     echo "  SDTV stations: $(jq '[.[] | select(.videoQuality.videoType == "SDTV")] | length' "$FINAL_JSON")"
     echo "  UHDTV stations: $(jq '[.[] | select(.videoQuality.videoType == "UHDTV")] | length' "$FINAL_JSON")"
+    
+    # Show country breakdown if available
+    local countries=$(jq -r '[.[] | .country // "UNK"] | unique | .[]' "$FINAL_JSON" 2>/dev/null)
+    if [ -n "$countries" ]; then
+      echo "  Countries:"
+      while read -r country; do
+        local count=$(jq --arg c "$country" '[.[] | select((.country // "UNK") == $c)] | length' "$FINAL_JSON")
+        echo "    $country: $count stations"
+      done <<< "$countries"
+    fi
   fi
   
   if [ -d "$CACHE_DIR" ]; then
@@ -991,6 +1126,8 @@ reset_all_settings() {
     SHOW_LOGOS=false
     FILTER_BY_RESOLUTION=false
     ENABLED_RESOLUTIONS="SDTV,HDTV,UHDTV"
+    FILTER_BY_COUNTRY=false
+    ENABLED_COUNTRIES=""
     echo -e "${GREEN}Settings reset. Restart the script to reconfigure.${RESET}"
     return 0
   else
@@ -1011,6 +1148,8 @@ export_settings() {
     echo "Logo Display: $SHOW_LOGOS"
     echo "Resolution Filter: $FILTER_BY_RESOLUTION"
     echo "Enabled Resolutions: $ENABLED_RESOLUTIONS"
+    echo "Country Filter: $FILTER_BY_COUNTRY"
+    echo "Enabled Countries: $ENABLED_COUNTRIES"
     echo
     echo "Markets:"
     [ -f "$CSV_FILE" ] && cat "$CSV_FILE"
@@ -1083,10 +1222,57 @@ perform_caching() {
     curl -s "$CHANNELS_URL/dvr/guide/stations/$LINEUP" -o "$station_file"
   done < cache/unique_lineups.txt
 
-  # Process and deduplicate stations
-  local pre_dedup_stations=$(jq -s 'flatten | length' $STATION_CACHE_DIR/*.json)
-  jq -s 'flatten | sort_by((.name // "") | length) | reverse | unique_by(.stationId)' $STATION_CACHE_DIR/*.json \
+  # Process and deduplicate stations with country injection
+  echo "Processing stations and injecting country codes..."
+  local pre_dedup_stations=0
+  > "$MASTER_JSON.tmp"
+
+  # Process each lineup file individually to track country origin
+  while read LINEUP; do
+    local station_file="$STATION_CACHE_DIR/${LINEUP}.json"
+    if [ -f "$station_file" ]; then
+      # Find which country this lineup belongs to by checking our markets
+      local country_code=""
+      while IFS=, read -r COUNTRY ZIP; do
+        [[ "$COUNTRY" == "Country" ]] && continue
+        # Check if this lineup matches this market by querying the raw response
+        if grep -q "\"lineupId\":\"$LINEUP\"" "cache/last_raw_${COUNTRY}_${ZIP}.json" 2>/dev/null; then
+          country_code="$COUNTRY"
+          break
+        fi
+      done < "$CSV_FILE"
+      
+      # If we couldn't find country, try to extract from lineup ID pattern
+      if [[ -z "$country_code" ]]; then
+        case "$LINEUP" in
+          *USA*|*US-*) country_code="USA" ;;
+          *CAN*|*CA-*) country_code="CAN" ;;
+          *GBR*|*GB-*|*UK-*) country_code="GBR" ;;
+          *DEU*|*DE-*) country_code="DEU" ;;
+          *FRA*|*FR-*) country_code="FRA" ;;
+          *) country_code="UNK" ;;  # Unknown
+        esac
+      fi
+      
+      echo "Processing lineup $LINEUP (Country: $country_code)"
+      
+      # Count stations before processing
+      local lineup_count=$(jq 'length' "$station_file" 2>/dev/null || echo "0")
+      pre_dedup_stations=$((pre_dedup_stations + lineup_count))
+      
+      # Inject country code into each station and append to temp file
+      jq --arg country "$country_code" 'map(. + {country: $country})' "$station_file" >> "$MASTER_JSON.tmp"
+    fi
+  done < cache/unique_lineups.txt
+
+  # Now flatten, deduplicate, and sort
+  echo "Flattening and deduplicating stations..."
+  jq -s 'flatten | sort_by((.name // "") | length) | reverse | unique_by(.stationId)' "$MASTER_JSON.tmp" \
     | jq 'map(.name = (.name // empty))' > "$MASTER_JSON"
+
+  # Clean up temp file
+  rm -f "$MASTER_JSON.tmp"
+
   local post_dedup_stations=$(jq length "$MASTER_JSON")
   local dup_stations_removed=$((pre_dedup_stations - post_dedup_stations))
 

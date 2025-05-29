@@ -3,8 +3,8 @@
 # === Global Station Search ===
 # Description: Television station search tool using Channels DVR API
 # Created: 2025/05/26
-# Last Modified: 2025/05/27
-VERSION="0.8.0-beta"
+# Last Modified: 2025/05/28
+VERSION="0.8.5-beta"
 
 # TERMINAL STYLING
 ESC="\033"
@@ -972,6 +972,7 @@ settings_menu() {
     echo "e) Cache Management"
     echo "f) Reset All Settings"
     echo "g) Export Settings"
+    echo "h) Export Station Database to CSV"
     echo "q) Back to Main Menu"
     echo
     
@@ -985,6 +986,7 @@ settings_menu() {
       e|E) cache_management_menu ;;
       f|F) reset_all_settings && pause_for_user ;;
       g|G) export_settings && pause_for_user ;;
+      h|H) export_stations_to_csv && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -1355,6 +1357,71 @@ export_settings() {
   } > "$settings_file"
   
   echo -e "${GREEN}Settings exported to: $settings_file${RESET}"
+  return 0
+}
+
+export_stations_to_csv() {
+  echo -e "\n${BOLD}Export Station Database to CSV${RESET}"
+  
+  if [ ! -f "$FINAL_JSON" ]; then
+    echo -e "${RED}No station database found. Run local caching first.${RESET}"
+    return 1
+  fi
+  
+  local station_count
+  station_count=$(jq length "$FINAL_JSON" 2>/dev/null || echo "0")
+  echo "Station database contains: $station_count stations"
+  echo
+  
+  # Generate filename with timestamp
+  local csv_file="stations_export_$(date +%Y%m%d_%H%M%S).csv"
+  read -p "Export filename [default: $csv_file]: " filename
+  filename=${filename:-$csv_file}
+  
+  echo "Exporting stations to CSV..."
+  
+  # Create CSV with comprehensive station data
+  {
+    # CSV Header
+    echo "Station_ID,Name,Call_Sign,Country,Video_Quality,Network,Genre,Language,Logo_URL,Description"
+    
+    # Export station data
+    jq -r '.[] | [
+      .stationId // "",
+      .name // "",
+      .callSign // "",
+      .country // "",
+      .videoQuality.videoType // "",
+      .network // "",
+      (.genre // [] | join("; ")),
+      .language // "",
+      .preferredImage.uri // "",
+      .description // ""
+    ] | @csv' "$FINAL_JSON"
+  } > "$filename"
+  
+  if [ $? -eq 0 ]; then
+    local exported_count
+    exported_count=$(tail -n +2 "$filename" | wc -l)
+    echo -e "${GREEN}✅ Successfully exported $exported_count stations to: $filename${RESET}"
+    
+    # Show file info
+    local file_size
+    file_size=$(ls -lh "$filename" | awk '{print $5}')
+    echo -e "${CYAN}📄 File size: $file_size${RESET}"
+    
+    # Show sample of exported data
+    echo -e "\n${BOLD}Sample of exported data:${RESET}"
+    head -3 "$filename" | while IFS= read -r line; do
+      echo "  $line"
+    done
+    
+    echo -e "\n${CYAN}💡 This CSV can be opened in Excel, LibreOffice, or imported into databases${RESET}"
+  else
+    echo -e "${RED}❌ Failed to export stations to CSV${RESET}"
+    return 1
+  fi
+  
   return 0
 }
 

@@ -65,25 +65,91 @@ confirm_action() {
 
 show_system_status() {
   if [ -f "$FINAL_JSON" ]; then
-    local station_count=$(jq length "$FINAL_JSON" 2>/dev/null || echo "0")
-    echo -e "${GREEN}Station Database: $station_count stations cached${RESET}"
+    local station_count
+    station_count=$(jq length "$FINAL_JSON" 2>/dev/null || echo "0")
+    echo -e "${GREEN}✅ Station Database: $station_count stations cached${RESET}"
+    echo -e "${GREEN}✅ Local Search: Available with full features${RESET}"
   else
-    echo -e "${YELLOW}Station Database: No data cached - run caching first${RESET}"
+    echo -e "${YELLOW}⚠️  Station Database: No data cached${RESET}"
+    echo -e "${YELLOW}⚠️  Local Search: Not available - run caching first${RESET}"
   fi
   
-  local market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
-  echo -e "Markets Configured: $market_count"
-  echo -e "Server: $CHANNELS_URL"
+  local market_count
+  market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
+  echo -e "📍 Markets Configured: $market_count"
+  echo -e "🔗 Channels DVR: $CHANNELS_URL"
   echo
 }
 
 check_database_exists() {
   if [ ! -f "$FINAL_JSON" ]; then
-    echo -e "${RED}No station database found. Please run caching first.${RESET}"
-    pause_for_user
-    return 1
+    clear
+    echo -e "${BOLD}${RED}❌ Local Search Not Available${RESET}\n"
+    
+    echo -e "${YELLOW}Local search requires a cached station database.${RESET}"
+    echo -e "${YELLOW}The database is created by running the local caching process.${RESET}"
+    echo
+    
+    show_workflow_guidance
+    
+    echo -e "${BOLD}${CYAN}What would you like to do?${RESET}"
+    echo -e "${GREEN}1.${RESET} Configure markets and run local caching (recommended)"
+    echo -e "${GREEN}2.${RESET} Use Direct API Search instead (limited features)"
+    echo -e "${GREEN}3.${RESET} Return to main menu"
+    echo
+    
+    read -p "Select option (1-3): " choice
+    
+    case $choice in
+      1)
+        echo -e "\n${GREEN}Great! Let's set up your markets first...${RESET}"
+        pause_for_user
+        manage_markets
+        return 1
+        ;;
+      2)
+        echo -e "\n${CYAN}Redirecting to Direct API Search...${RESET}"
+        pause_for_user
+        run_direct_api_search
+        return 1
+        ;;
+      3|"")
+        return 1
+        ;;
+      *)
+        show_invalid_choice
+        return 1
+        ;;
+    esac
   fi
   return 0
+}
+
+show_workflow_guidance() {
+  echo -e "${BOLD}${BLUE}=== Getting Started Workflow ===${RESET}"
+  echo
+  echo -e "${YELLOW}📋 Recommended Steps:${RESET}"
+  echo -e "${GREEN}1.${RESET} ${BOLD}Manage Markets${RESET} - Configure the geographic regions you're interested in"
+  echo -e "   • Add countries/ZIP codes for your desired coverage areas"
+  echo -e "   • More markets = more stations but longer caching time"
+  echo
+  echo -e "${GREEN}2.${RESET} ${BOLD}Run Local Caching${RESET} - Download and deduplicate stations from your markets"
+  echo -e "   • Fetches all available stations from configured markets"
+  echo -e "   • Deduplicates stations across markets automatically"
+  echo -e "   • Enables full-featured local search with filtering"
+  echo
+  echo -e "${GREEN}3.${RESET} ${BOLD}Search Stations${RESET} - Full-featured search with all options"
+  echo -e "   • Filter by resolution (HDTV, SDTV, UHDTV)"
+  echo -e "   • Filter by country"
+  echo -e "   • Browse logos and detailed information"
+  echo -e "   • Unlimited results"
+  echo
+  echo -e "${CYAN}💡 Alternative: Direct API Search${RESET}"
+  echo -e "   • No setup required - works immediately"
+  echo -e "   • Limited to 10 results per search"
+  echo -e "   • No filtering options available"
+  echo -e "   • No country information"
+  echo
 }
 
 # ============================================================================
@@ -720,6 +786,17 @@ manage_markets() {
     clear
     echo -e "${BOLD}${CYAN}=== Market Management ===${RESET}\n"
     
+    # Show workflow context
+    echo -e "${BLUE}📍 Step 1 of 3: Configure Geographic Markets${RESET}"
+    echo -e "${YELLOW}Markets determine which regions' stations will be cached locally.${RESET}"
+    echo -e "${YELLOW}Stations from all configured markets will be deduplicated automatically.${RESET}"
+    echo
+    echo -e "${CYAN}💡 Tips:${RESET}"
+    echo -e "• Start with 3-5 markets to test caching speed"
+    echo -e "• Add more markets later if needed"
+    echo -e "• Larger market lists = longer caching time but more stations"
+    echo
+    
     show_current_markets
     
     echo -e "${BOLD}Options:${RESET}"
@@ -727,6 +804,7 @@ manage_markets() {
     echo "b) Remove Market"
     echo "c) Import Markets from File"
     echo "d) Export Markets to File"
+    echo "r) Ready to Cache - Go to Local Caching"
     echo "q) Back to Main Menu"
     echo
     
@@ -737,6 +815,19 @@ manage_markets() {
       b|B) remove_market && pause_for_user ;;
       c|C) import_markets && pause_for_user ;;
       d|D) export_markets && pause_for_user ;;
+      r|R) 
+        local market_count
+        market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
+        if [[ "$market_count" -gt 0 ]]; then
+          echo -e "\n${GREEN}Excellent! You have $market_count markets configured.${RESET}"
+          echo -e "${CYAN}Proceeding to Local Caching...${RESET}"
+          pause_for_user
+          run_local_caching
+        else
+          echo -e "\n${RED}Please add at least one market before caching.${RESET}"
+          pause_for_user
+        fi
+        ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -1275,18 +1366,46 @@ run_local_caching() {
   clear
   echo -e "${BOLD}${CYAN}=== Local Caching ===${RESET}\n"
   
-  if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
-    echo -e "${RED}No markets configured. Please add markets first.${RESET}"
-    return 1
-  fi
-  
-  local market_count=$(awk 'END {print NR-1}' "$CSV_FILE")
-  echo -e "${YELLOW}This will refresh all lineups and channels for $market_count configured markets.${RESET}"
-  echo -e "This process may take considerable time for large market lists."
+  echo -e "${BLUE}📊 Step 2 of 3: Build Local Station Database${RESET}"
+  echo -e "${YELLOW}This process will:${RESET}"
+  echo -e "• Query all configured markets for available stations"
+  echo -e "• Deduplicate stations that appear in multiple markets"
+  echo -e "• Cache station details locally for fast searching"
+  echo -e "• Enable full-featured local search with filtering"
   echo
   
-  if ! confirm_action "Continue with full cache refresh?"; then
-    echo -e "${YELLOW}Cache refresh cancelled${RESET}"
+  if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
+    echo -e "${RED}❌ No markets configured. Please add markets first.${RESET}"
+    echo
+    echo -e "${CYAN}Would you like to configure markets now?${RESET}"
+    if confirm_action "Go to Market Management"; then
+      manage_markets
+      return 1
+    else
+      return 1
+    fi
+  fi
+  
+  local market_count
+  market_count=$(awk 'END {print NR-1}' "$CSV_FILE")
+  echo -e "${GREEN}✅ Markets configured: $market_count${RESET}"
+  
+  # Show market preview
+  echo -e "\n${BOLD}Markets to be cached:${RESET}"
+  head -6 "$CSV_FILE" | tail -5 | while IFS=, read -r country zip; do
+    echo -e "   • $country / $zip"
+  done
+  if [[ "$market_count" -gt 5 ]]; then
+    echo -e "   • ... and $((market_count - 5)) more"
+  fi
+  echo
+  
+  echo -e "${YELLOW}⏱️  Estimated time: $((market_count * 2))-$((market_count * 5)) minutes${RESET}"
+  echo -e "${YELLOW}📡 API calls required: ~$((market_count * 3))${RESET}"
+  echo
+  
+  if ! confirm_action "Continue with local caching?"; then
+    echo -e "${YELLOW}Local caching cancelled${RESET}"
     return 1
   fi
   
@@ -1547,9 +1666,14 @@ main_menu() {
     
     show_system_status
     
+    # Show workflow guidance for new users
+    if [ ! -f "$FINAL_JSON" ]; then
+      show_workflow_guidance
+    fi
+    
     echo -e "${BOLD}Main Menu:${RESET}"
     echo "1) Manage Television Markets"
-    echo "2) Run Local Caching"
+    echo "2) Run Local Caching" 
     echo "3) Search Stations (Local Cache)"
     echo "4) Direct API Search"
     echo "5) Settings"

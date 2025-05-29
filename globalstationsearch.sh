@@ -4,7 +4,7 @@
 # Description: Television station search tool using Channels DVR API
 # Created: 2025/05/26
 # Last Modified: 2025/05/27
-VERSION="0.6.0-beta"
+VERSION="0.8.0-beta"
 
 # TERMINAL STYLING
 ESC="\033"
@@ -34,6 +34,7 @@ LINEUP_CACHE="$CACHE_DIR/all_lineups.jsonl"
 MASTER_JSON="$CACHE_DIR/all_stations_deduped.json"
 FINAL_JSON="$CACHE_DIR/all_stations_final.json"
 CALLSIGN_CACHE="enhancement_cache.json"
+API_SEARCH_RESULTS="$CACHE_DIR/api_search_results.tsv"
 
 # TEMPORARY FILES
 TEMP_CONFIG="${CONFIG_FILE}.tmp"
@@ -338,6 +339,9 @@ cleanup_cache() {
   
   rm -f "$CACHE_DIR"/*.tmp 2>/dev/null || true
   echo "  ✓ Temporary files removed"
+
+  rm -f "$API_SEARCH_RESULTS" 2>/dev/null || true
+  echo "  ✓ API search results removed"
   
   echo -e "${GREEN}Cache cleanup completed${RESET}"
 }
@@ -589,6 +593,109 @@ display_logo() {
   else
     echo "[logo previews disabled]"
   fi
+}
+
+run_direct_api_search() {
+  while true; do
+    clear
+    echo -e "${BOLD}${CYAN}=== Direct API Search ===${RESET}\n"
+    
+    echo -e "${YELLOW}⚠️  IMPORTANT LIMITATIONS:${RESET}"
+    echo -e "${RED}• Results limited to 6 stations per search${RESET}"
+    echo -e "${RED}• No country information available${RESET}"
+    echo -e "${RED}• Cannot be filtered by resolution or country${RESET}"
+    echo -e "${RED}• Less robust than local cache search${RESET}"
+    echo
+    echo -e "${GREEN}💡 For better results: Use 'Local Caching' + 'Search Stations'${RESET}"
+    echo
+    
+    read -p "Search API by name or call sign (or 'q' to return to main menu): " SEARCH_TERM
+    
+    case "$SEARCH_TERM" in
+      q|Q|"") break ;;
+      *)
+        if [[ -z "$SEARCH_TERM" || "$SEARCH_TERM" =~ ^[[:space:]]*$ ]]; then
+          echo -e "${RED}Please enter a search term${RESET}"
+          pause_for_user
+          continue
+        fi
+        
+        perform_direct_api_search "$SEARCH_TERM"
+        ;;
+    esac
+  done
+}
+
+perform_direct_api_search() {
+  local search_term="$1"
+  
+  echo -e "\n${YELLOW}Searching API for '$search_term'...${RESET}"
+  echo "This may take a moment..."
+  
+  # Call the TMS API directly
+  local api_response
+  api_response=$(curl -s --connect-timeout 15 --max-time 30 "$CHANNELS_URL/tms/stations/$search_term" 2>/dev/null)
+  
+  if [[ -z "$api_response" ]]; then
+    echo -e "${RED}No response from API. Check your connection.${RESET}"
+    pause_for_user
+    return
+  fi
+  
+  # Check if response is valid JSON
+  if ! echo "$api_response" | jq empty 2>/dev/null; then
+    echo -e "${RED}Invalid response from API${RESET}"
+    echo "Response: $(echo "$api_response" | head -c 200)..."
+    pause_for_user
+    return
+  fi
+  
+  # Process the response and convert to TSV format (fixed column order)
+  echo "$api_response" | jq -r '
+    .[] | [
+      .name // "Unknown", 
+      .callSign // "N/A", 
+      .videoQuality.videoType // "Unknown", 
+      .stationId // "Unknown",
+      "API-Direct"
+    ] | @tsv
+  ' > "$API_SEARCH_RESULTS" 2>/dev/null
+  
+  display_direct_api_results "$search_term"
+}
+
+display_direct_api_results() {
+  local search_term="$1"
+  
+  mapfile -t RESULTS < "$API_SEARCH_RESULTS"
+  local count=${#RESULTS[@]}
+  
+  if [[ $count -eq 0 ]]; then
+    echo -e "${YELLOW}No results found for '$search_term' in API${RESET}"
+    echo -e "${CYAN}Try: Different spelling, call signs, or partial names${RESET}"
+    pause_for_user
+    return
+  fi
+  
+  clear
+  echo -e "${GREEN}Found $count result(s) for '$search_term' ${YELLOW}(Direct API - Limited to 6)${RESET}"
+  echo -e "${YELLOW}Note: No country data available, no filtering applied${RESET}"
+  echo
+  
+  printf "${BOLD}${YELLOW}%-30s %-10s %-8s %-12s${RESET}\n" "Channel Name" "Call Sign" "Quality" "Station ID"
+  echo "------------------------------------------------------------------------"
+  
+  for ((i = 0; i < count; i++)); do
+    IFS=$'\t' read -r NAME CALLSIGN RES STID SOURCE <<< "${RESULTS[$i]}" 
+    printf "%-30s %-10s %-8s ${CYAN}%-12s${RESET}\n" "$NAME" "$CALLSIGN" "$RES" "$STID"
+    
+    # Display logo if available
+    display_logo "$STID"
+    echo
+  done
+  
+  echo -e "${CYAN}💡 Tip: For more results and filtering options, use Local Cache Search${RESET}"
+  pause_for_user
 }
 
 # ============================================================================
@@ -1039,6 +1146,7 @@ display_cache_statistics() {
   [ -f "$LINEUP_CACHE" ] && echo "Lineups: $(wc -l < "$LINEUP_CACHE" 2>/dev/null || echo "0")"
   [ -f "$CALLSIGN_CACHE" ] && echo "Callsign cache: $(jq 'keys | length' "$CALLSIGN_CACHE" 2>/dev/null || echo "0") entries"
   [ -d "$LOGO_DIR" ] && echo "Logos cached: $(find "$LOGO_DIR" -name "*.png" 2>/dev/null | wc -l)"
+  [ -f "$API_SEARCH_RESULTS" ] && echo "API search results: $(wc -l < "$API_SEARCH_RESULTS" 2>/dev/null || echo "0") entries"
   echo "Total cache size: $(du -sh "$CACHE_DIR" 2>/dev/null | cut -f1 || echo "unknown")"
   echo
 }
@@ -1442,8 +1550,9 @@ main_menu() {
     echo -e "${BOLD}Main Menu:${RESET}"
     echo "1) Manage Television Markets"
     echo "2) Run Local Caching"
-    echo "3) Search Stations"
-    echo "4) Settings"
+    echo "3) Search Stations (Local Cache)"
+    echo "4) Direct API Search"
+    echo "5) Settings"
     echo "q) Quit"
     echo
     
@@ -1453,7 +1562,8 @@ main_menu() {
       1) manage_markets ;;
       2) run_local_caching && pause_for_user ;;
       3) check_database_exists && run_search_interface ;;
-      4) settings_menu ;;
+      4) run_direct_api_search ;;
+      5) settings_menu ;;
       q|Q|"") echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
       *) show_invalid_choice ;;
     esac

@@ -23,9 +23,13 @@ A comprehensive television station search tool that integrates with Channels DVR
 ```bash
 git clone https://github.com/yourusername/global-station-search.git
 cd global-station-search
-
+```
 2. Make the script executable
+```
 "chmod +x globalstationsearch.sh"
-
-3. Run
+```
+4. Run
+```
 "./globalstationsearch.sh"
+```
+5. Follow Prompts in Script

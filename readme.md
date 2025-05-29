@@ -9,6 +9,7 @@ A comprehensive television station search tool that integrates with Channels DVR
 - **Logo Display**: Visual station logos with caching
 - **Market Management**: Add/remove television markets
 - **Local Caching**: Efficient data caching making searching more robust
+- **Direct API search**: Directly search API without locally caching, though search and results may be less useful
 - **Settings Management**: Comprehensive configuration options
 
 ## Requirements
@@ -21,11 +22,15 @@ A comprehensive television station search tool that integrates with Channels DVR
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/global-station-search.git
-cd global-station-search
-
+git clone https://github.com/egyptiangio/channelsdvr-global-search
+cd channelsdvr-global-search
+```
 2. Make the script executable
-"chmod +x globalstationsearch.sh"
-
-3. Run
-"./globalstationsearch.sh"
+```
+chmod +x globalstationsearch.sh
+```
+4. Run
+```
+./globalstationsearch.sh
+```
+5. Follow Prompts in Script

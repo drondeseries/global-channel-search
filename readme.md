@@ -22,7 +22,7 @@ A comprehensive television station search tool that integrates with Channels DVR
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/global-station-search.git
+git clone https://github.com/yourusername/global-station-search
 cd global-station-search
 ```
 2. Make the script executable

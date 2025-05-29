@@ -9,6 +9,7 @@ A comprehensive television station search tool that integrates with Channels DVR
 - **Logo Display**: Visual station logos with caching
 - **Market Management**: Add/remove television markets
 - **Local Caching**: Efficient data caching making searching more robust
+- **Direct API search**: Directly search API without locally caching, though search and results may be less useful
 - **Settings Management**: Comprehensive configuration options
 
 ## Requirements

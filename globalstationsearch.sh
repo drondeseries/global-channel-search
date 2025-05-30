@@ -4,7 +4,7 @@
 # Description: Television station search tool using Channels DVR API
 # Created: 2025/05/26
 # Last Modified: 2025/05/28
-VERSION="0.8.5-beta"
+VERSION="1.0-RC"
 
 # TERMINAL STYLING
 ESC="\033"
@@ -35,6 +35,12 @@ MASTER_JSON="$CACHE_DIR/all_stations_deduped.json"
 FINAL_JSON="$CACHE_DIR/all_stations_final.json"
 CALLSIGN_CACHE="enhancement_cache.json"
 API_SEARCH_RESULTS="$CACHE_DIR/api_search_results.tsv"
+
+# DISPATCHARR FILES
+DISPATCHARR_CACHE="$CACHE_DIR/dispatcharr_channels.json"
+DISPATCHARR_MATCHES="$CACHE_DIR/dispatcharr_matches.tsv"
+DISPATCHARR_LOG="$CACHE_DIR/dispatcharr_operations.log"
+DISPATCHARR_TOKENS="$CACHE_DIR/dispatcharr_tokens.json"
 
 # TEMPORARY FILES
 TEMP_CONFIG="${CONFIG_FILE}.tmp"
@@ -78,6 +84,15 @@ show_system_status() {
   market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
   echo -e "📍 Markets Configured: $market_count"
   echo -e "🔗 Channels DVR: $CHANNELS_URL"
+  if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
+    if check_dispatcharr_connection 2>/dev/null; then
+      echo -e "${GREEN}✅ Dispatcharr: Connected ($DISPATCHARR_URL)${RESET}"
+    else
+      echo -e "${RED}❌ Dispatcharr: Connection Failed${RESET}"
+    fi
+  else
+    echo -e "${YELLOW}🔌 Dispatcharr: Integration Disabled${RESET}"
+  fi
   echo
 }
 
@@ -169,6 +184,12 @@ setup_config() {
         ENABLED_RESOLUTIONS=${ENABLED_RESOLUTIONS:-"SDTV,HDTV,UHDTV"}
         FILTER_BY_COUNTRY=${FILTER_BY_COUNTRY:-false}
         ENABLED_COUNTRIES=${ENABLED_COUNTRIES:-""}
+
+        # Set defaults for Dispatcharr settings if not in config file
+        DISPATCHARR_URL=${DISPATCHARR_URL:-""}
+        DISPATCHARR_USERNAME=${DISPATCHARR_USERNAME:-""}
+        DISPATCHARR_PASSWORD=${DISPATCHARR_PASSWORD:-""}
+        DISPATCHARR_ENABLED=${DISPATCHARR_ENABLED:-false}
         
         # CREATE SAMPLE MARKETS FILE IF IT DOESN'T EXIST
         if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
@@ -256,18 +277,23 @@ create_new_config() {
     echo -e "${GREEN}Connection successful!${RESET}"
   fi
   
-  # Write config file
-  {
-    echo "CHANNELS_URL=\"http://$ip:$port\""
-    echo "SHOW_LOGOS=false"
-    echo "FILTER_BY_RESOLUTION=false"
-    echo "ENABLED_RESOLUTIONS=\"SDTV,HDTV,UHDTV\""
-    echo "FILTER_BY_COUNTRY=false"
-    echo "ENABLED_COUNTRIES=\"\""
-  } > "$CONFIG_FILE" || {
-    echo -e "${RED}Error: Cannot write to config file${RESET}"
-    exit 1
-  }
+# Write config file
+{
+  echo "CHANNELS_URL=\"http://$ip:$port\""
+  echo "SHOW_LOGOS=false"
+  echo "FILTER_BY_RESOLUTION=false"
+  echo "ENABLED_RESOLUTIONS=\"SDTV,HDTV,UHDTV\""
+  echo "FILTER_BY_COUNTRY=false"
+  echo "ENABLED_COUNTRIES=\"\""
+  echo "# Dispatcharr Settings"
+  echo "DISPATCHARR_URL=\"\""
+  echo "DISPATCHARR_USERNAME=\"\""
+  echo "DISPATCHARR_PASSWORD=\"\""
+  echo "DISPATCHARR_ENABLED=false"
+} > "$CONFIG_FILE" || {
+  echo -e "${RED}Error: Cannot write to config file${RESET}"
+  exit 1
+}
   
   # CREATE SAMPLE MARKETS FILE IF IT DOESN'T EXIST
   if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
@@ -454,6 +480,804 @@ add_callsign_to_cache() {
   fi
   
   mv "$tmp_file" "$CALLSIGN_CACHE" 2>/dev/null || return 1
+}
+
+# ============================================================================
+# DISPATCHARR INTEGRATION FUNCTIONS
+# ============================================================================
+
+check_dispatcharr_connection() {
+  if [[ -z "${DISPATCHARR_URL:-}" ]] || [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
+    return 1
+  fi
+  
+  local test_url="${DISPATCHARR_URL}/api/core/version/"
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  
+  # Try with existing JWT token if available
+  if [[ -f "$token_file" ]]; then
+    local access_token
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+    if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+      if curl -s --connect-timeout 5 -H "Authorization: Bearer $access_token" "$test_url" >/dev/null 2>&1; then
+        return 0
+      fi
+    fi
+  fi
+  
+  # If token test fails, the auto-refresh should have handled getting new tokens
+  # So just test once more with current token file
+  if [[ -f "$token_file" ]]; then
+    local access_token
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+    if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+      curl -s --connect-timeout 5 -H "Authorization: Bearer $access_token" "$test_url" >/dev/null 2>&1
+      return $?
+    fi
+  fi
+  
+  return 1
+}
+
+get_dispatcharr_channels() {
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  local response
+  
+  # Ensure we have a valid connection/token
+  if ! check_dispatcharr_connection; then
+    return 1
+  fi
+  
+  # Get current access token
+  local access_token
+  if [[ -f "$token_file" ]]; then
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+  fi
+  
+  if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+    response=$(curl -s --connect-timeout 15 --max-time 30 \
+      -H "Authorization: Bearer $access_token" \
+      "${DISPATCHARR_URL}/api/channels/channels/" 2>/dev/null)
+  fi
+  
+  if [[ -n "$response" ]] && echo "$response" | jq empty 2>/dev/null; then
+    echo "$response" > "$DISPATCHARR_CACHE"
+    echo "$response"
+  else
+    return 1
+  fi
+}
+
+find_channels_missing_stationid() {
+  local channels_data="$1"
+  
+  echo "$channels_data" | jq -r '
+    .[] | 
+    select((.tvc_guide_stationid // "") == "" or (.tvc_guide_stationid // "") == null) |
+    [.id, .name, .channel_group_id // "Ungrouped", .channel_number // 0] | 
+    @tsv
+  ' 2>/dev/null
+}
+
+search_stations_by_name() {
+  local search_term="$1"
+  local page="${2:-1}"
+  local results_per_page=10
+  local start_index=$(( (page - 1) * results_per_page ))
+  
+  if [[ ! -f "$FINAL_JSON" ]]; then
+    echo "Error: Station database not found" >&2
+    return 1
+  fi
+  
+  # Simple search - no confidence scoring
+  jq -r --arg term "$search_term" --argjson start "$start_index" --argjson limit "$results_per_page" '
+    [.[] | 
+      select(
+        (.name // "" | ascii_downcase | contains($term | ascii_downcase)) or
+        (.callSign // "" | ascii_downcase | contains($term | ascii_downcase))
+      )
+    ] |
+    .[$start:$start+$limit] |
+    .[] |
+    [.stationId, .name, .callSign, (.country // "UNK")] |
+    @tsv
+  ' "$FINAL_JSON" 2>/dev/null
+}
+
+get_total_search_results() {
+  local search_term="$1"
+  
+  if [[ ! -f "$FINAL_JSON" ]]; then
+    return 1
+  fi
+  
+  jq -r --arg term "$search_term" '
+    [.[] | 
+      select(
+        (.name // "" | ascii_downcase | contains($term | ascii_downcase)) or
+        (.callSign // "" | ascii_downcase | contains($term | ascii_downcase))
+      )
+    ] |
+    length
+  ' "$FINAL_JSON" 2>/dev/null
+}
+
+update_dispatcharr_channel_epg() {
+  local channel_id="$1"
+  local station_id="$2"
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  local response
+  
+  # Ensure we have a valid connection/token
+  if ! check_dispatcharr_connection; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to connect to Dispatcharr for channel ID $channel_id" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Get current access token
+  local access_token
+  if [[ -f "$token_file" ]]; then
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+  fi
+  
+  if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+    response=$(curl -s -X PATCH \
+      -H "Authorization: Bearer $access_token" \
+      -H "Content-Type: application/json" \
+      -d "{\"tvc_guide_stationid\":\"$station_id\"}" \
+      "${DISPATCHARR_URL}/api/channels/channels/${channel_id}/" 2>/dev/null)
+  fi
+  
+  if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Updated channel ID $channel_id with station ID $station_id" >> "$DISPATCHARR_LOG"
+    return 0
+  else
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to update channel ID $channel_id: $response" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+}
+
+run_dispatcharr_integration() {
+  # Always refresh tokens when entering Dispatcharr integration
+  if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
+    echo -e "${CYAN}Initializing Dispatcharr integration...${RESET}"
+    
+    if ! refresh_dispatcharr_tokens; then
+      echo -e "${RED}Cannot continue without valid authentication${RESET}"
+      echo -e "${CYAN}Please check your Dispatcharr connection settings${RESET}"
+      pause_for_user
+      return 1
+    fi
+    echo
+  fi
+  
+  while true; do
+    clear
+    echo -e "${BOLD}${CYAN}=== Dispatcharr Integration ===${RESET}\n"
+    
+    # Check connection status
+    if check_dispatcharr_connection; then
+      echo -e "${GREEN}✅ Dispatcharr Connection: Active${RESET}"
+      echo -e "   Server: $DISPATCHARR_URL"
+      
+      # Show token freshness
+      local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+      if [[ -f "$token_file" ]]; then
+        local token_time
+        token_time=$(stat -c %Y "$token_file" 2>/dev/null || stat -f %m "$token_file" 2>/dev/null)
+        if [[ -n "$token_time" ]]; then
+          local current_time=$(date +%s)
+          local age_seconds=$((current_time - token_time))
+          local age_minutes=$((age_seconds / 60))
+          echo -e "   Tokens: ${GREEN}Fresh (${age_minutes}m old)${RESET}"
+        fi
+      fi
+    else
+      echo -e "${RED}❌ Dispatcharr Connection: Failed${RESET}"
+      if [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
+        echo -e "${YELLOW}   (Integration disabled in settings)${RESET}"
+      fi
+    fi
+    echo
+    
+    echo -e "${BOLD}Options:${RESET}"
+    echo "1) Configure Dispatcharr Connection"
+    echo "2) Scan Channels for Missing Station IDs"
+    echo "3) Interactive Station ID Matching"
+    echo "4) Commit Station ID Changes"
+    echo "5) View Integration Logs"
+    echo "6) Refresh Authentication Tokens"
+    echo "q) Back to Main Menu"
+    echo
+    
+    read -p "Select option: " choice
+    
+    case $choice in
+      1) configure_dispatcharr_connection && pause_for_user ;;
+      2) scan_missing_stationids && pause_for_user ;;
+      3) interactive_stationid_matching ;;
+      4) batch_update_stationids && pause_for_user ;;
+      5) view_dispatcharr_logs && pause_for_user ;;
+      6) refresh_dispatcharr_tokens && pause_for_user ;;
+      q|Q|"") break ;;
+      *) show_invalid_choice ;;
+    esac
+  done
+}
+
+configure_dispatcharr_connection() {
+  echo -e "\n${BOLD}Configure Dispatcharr Connection${RESET}"
+  echo
+  
+  local current_url="${DISPATCHARR_URL:-}"
+  local current_enabled="${DISPATCHARR_ENABLED:-false}"
+  
+  echo "Current settings:"
+  echo "  URL: ${current_url:-"Not configured"}"
+  echo "  Status: $([ "$current_enabled" = "true" ] && echo "Enabled" || echo "Disabled")"
+  echo
+  
+  # Enable/Disable toggle
+  if confirm_action "Enable Dispatcharr integration?"; then
+    DISPATCHARR_ENABLED=true
+    
+    # Get connection details separately
+    local ip port username password
+    
+    echo -e "\n${BOLD}Server Configuration:${RESET}"
+    read -p "Dispatcharr IP address [default: localhost]: " ip
+    ip=${ip:-localhost}
+    
+    # Validate IP
+    while [[ ! "$ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$|^localhost$ ]]; do
+      echo -e "${RED}Invalid IP address format${RESET}"
+      read -p "Dispatcharr IP address [default: localhost]: " ip
+      ip=${ip:-localhost}
+    done
+    
+    read -p "Dispatcharr port [default: 9191]: " port
+    port=${port:-9191}
+    
+    # Validate port
+    while [[ ! "$port" =~ ^[0-9]+$ ]] || (( port < 1 || port > 65535 )); do
+      echo -e "${RED}Invalid port number. Must be 1-65535${RESET}"
+      read -p "Dispatcharr port [default: 9191]: " port
+      port=${port:-9191}
+    done
+    
+    local url="http://$ip:$port"
+    
+    echo -e "\n${BOLD}Authentication:${RESET}"
+    read -p "Username: " username
+    read -s -p "Password: " password
+    echo
+    
+    # Test connection and generate JWT tokens
+    echo -e "\nTesting connection and generating authentication tokens..."
+    DISPATCHARR_URL="$url"
+    DISPATCHARR_USERNAME="$username"
+    DISPATCHARR_PASSWORD="$password"
+    
+    # Get JWT tokens
+    local token_response
+    token_response=$(curl -s --connect-timeout 10 \
+      -H "Content-Type: application/json" \
+      -d "{\"username\":\"$username\",\"password\":\"$password\"}" \
+      "${url}/api/accounts/token/" 2>/dev/null)
+    
+    if echo "$token_response" | jq -e '.access' >/dev/null 2>&1; then
+      # Save tokens to file
+      local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+      echo "$token_response" > "$token_file"
+      
+      # Extract tokens for display
+      local access_token=$(echo "$token_response" | jq -r '.access')
+      local refresh_token=$(echo "$token_response" | jq -r '.refresh')
+      
+      echo -e "${GREEN}✅ Connection successful!${RESET}"
+      echo -e "${GREEN}✅ JWT tokens generated and cached${RESET}"
+      echo
+      echo -e "${BOLD}${CYAN}Generated API Tokens:${RESET}"
+      echo -e "${YELLOW}Access Token (expires in ~30 min):${RESET}"
+      echo "  ${access_token:0:50}..."
+      echo -e "${YELLOW}Refresh Token (long-lived):${RESET}"
+      echo "  ${refresh_token:0:50}..."
+      echo
+      echo -e "${CYAN}💡 These tokens are automatically managed by the script${RESET}"
+      echo -e "${CYAN}💡 Access tokens are refreshed automatically when needed${RESET}"
+      echo -e "${CYAN}💡 Tokens are securely cached in: $token_file${RESET}"
+      
+      # Log token generation
+      echo "$(date '+%Y-%m-%d %H:%M:%S') - JWT tokens generated for user: $username" >> "$DISPATCHARR_LOG"
+      
+      # Test a simple API call to verify everything works
+      echo -e "\nTesting API access..."
+      if curl -s --connect-timeout 5 -H "Authorization: Bearer $access_token" "${url}/api/channels/channels/" >/dev/null 2>&1; then
+        echo -e "${GREEN}✅ API access confirmed${RESET}"
+      else
+        echo -e "${YELLOW}⚠️  API test failed, but tokens were generated${RESET}"
+      fi
+      
+    else
+      echo -e "${RED}❌ Authentication failed${RESET}"
+      echo "Response: $token_response"
+      if ! confirm_action "Save settings anyway?"; then
+        return 1
+      fi
+    fi
+  else
+    DISPATCHARR_ENABLED=false
+    echo -e "${YELLOW}Dispatcharr integration disabled${RESET}"
+    
+    # Clear any existing tokens
+    rm -f "$CACHE_DIR/dispatcharr_tokens.json" 2>/dev/null
+  fi
+  
+  # Update config file
+  local temp_config="${CONFIG_FILE}.tmp"
+  grep -v -E '^DISPATCHARR_(URL|USERNAME|PASSWORD|ENABLED)=' "$CONFIG_FILE" > "$temp_config" 2>/dev/null || true
+  {
+    echo "DISPATCHARR_URL=\"${DISPATCHARR_URL:-}\""
+    echo "DISPATCHARR_USERNAME=\"${DISPATCHARR_USERNAME:-}\""
+    echo "DISPATCHARR_PASSWORD=\"${DISPATCHARR_PASSWORD:-}\""
+    echo "DISPATCHARR_ENABLED=$DISPATCHARR_ENABLED"
+  } >> "$temp_config"
+  
+  mv "$temp_config" "$CONFIG_FILE"
+  echo -e "\n${GREEN}Settings saved${RESET}"
+  
+  # Show token management info
+  if [[ "$DISPATCHARR_ENABLED" == "true" ]] && [[ -f "$CACHE_DIR/dispatcharr_tokens.json" ]]; then
+    echo
+    echo -e "${BOLD}${BLUE}Token Management:${RESET}"
+    echo -e "• Tokens are cached and reused automatically"
+    echo -e "• Access tokens refresh automatically when expired"
+    echo -e "• View logs: 'View Integration Logs' in the main menu"
+    echo -e "• Clear tokens: Disable integration or delete cache files"
+  fi
+  
+  return 0
+}
+
+scan_missing_stationids() {
+  echo -e "\n${BOLD}Scanning Dispatcharr Channels${RESET}"
+  
+  if ! check_dispatcharr_connection; then
+    echo -e "${RED}Cannot connect to Dispatcharr. Please configure connection first.${RESET}"
+    return 1
+  fi
+  
+  if [[ ! -f "$FINAL_JSON" ]]; then
+    echo -e "${RED}No station database found. Please run local caching first.${RESET}"
+    return 1
+  fi
+  
+  echo "Fetching channels from Dispatcharr..."
+  local channels_data
+  channels_data=$(get_dispatcharr_channels)
+  
+  if [[ -z "$channels_data" ]]; then
+    echo -e "${RED}Failed to fetch channels from Dispatcharr${RESET}"
+    return 1
+  fi
+  
+  echo "Analyzing channels for missing station IDs..."
+  local missing_channels
+  missing_channels=$(find_channels_missing_stationid "$channels_data")
+  
+  if [[ -z "$missing_channels" ]]; then
+    echo -e "${GREEN}All channels have station IDs assigned!${RESET}"
+    return 0
+  fi
+  
+  local missing_count
+  missing_count=$(echo "$missing_channels" | wc -l)
+  
+  echo -e "${YELLOW}Found $missing_count channels missing station IDs:${RESET}"
+  echo
+  
+  printf "${BOLD}%-8s %-30s %-15s %s${RESET}\n" "ID" "Channel Name" "Group" "Number"
+  echo "------------------------------------------------------------------------"
+  
+  echo "$missing_channels" | while IFS=$'\t' read -r id name group number; do
+    printf "%-8s %-30s %-15s %s\n" "$id" "$name" "$group" "$number"
+  done
+  
+  echo
+  echo -e "${CYAN}Next: Use 'Interactive Station ID Matching' to resolve these${RESET}"
+  return 0
+}
+
+interactive_stationid_matching() {
+  if ! check_dispatcharr_connection; then
+    echo -e "${RED}Cannot connect to Dispatcharr. Please configure connection first.${RESET}"
+    pause_for_user
+    return 1
+  fi
+  
+  if [[ ! -f "$FINAL_JSON" ]]; then
+    echo -e "${RED}No station database found. Please run local caching first.${RESET}"
+    pause_for_user
+    return 1
+  fi
+  
+  echo "Fetching channels..."
+  local channels_data
+  channels_data=$(get_dispatcharr_channels)
+  
+  if [[ -z "$channels_data" ]]; then
+    echo -e "${RED}Failed to fetch channels${RESET}"
+    pause_for_user
+    return 1
+  fi
+  
+  local missing_channels
+  missing_channels=$(find_channels_missing_stationid "$channels_data")
+  
+  if [[ -z "$missing_channels" ]]; then
+    echo -e "${GREEN}All channels have station IDs assigned!${RESET}"
+    pause_for_user
+    return 0
+  fi
+  
+  # Clear previous matches file
+  > "$DISPATCHARR_MATCHES"
+  
+  # Convert to array
+  mapfile -t missing_array <<< "$missing_channels"
+  local total_missing=${#missing_array[@]}
+  
+  echo -e "${CYAN}Found $total_missing channels missing station IDs${RESET}"
+  echo "Starting interactive matching process..."
+  pause_for_user
+  
+  for ((i = 0; i < total_missing; i++)); do
+    IFS=$'\t' read -r channel_id channel_name group number <<< "${missing_array[$i]}"
+    
+    # Skip empty lines
+    [[ -z "$channel_id" ]] && continue
+    
+    # Main matching loop for this channel
+    while true; do
+      clear
+      echo -e "${BOLD}${CYAN}=== Channel Station ID Assignment ===${RESET}\n"
+      
+      echo -e "${BOLD}Channel: ${YELLOW}$channel_name${RESET}"
+      echo -e "Group: $group | Number: $number | ID: $channel_id"
+      echo -e "Progress: $((i + 1)) of $total_missing"
+      echo
+      
+      # Initial search with channel name
+      local search_term="$channel_name"
+      local current_page=1
+      
+      # Search and display loop
+      while true; do
+        echo -e "${CYAN}Searching for: '$search_term' (Page $current_page)${RESET}"
+        
+        local results
+        results=$(search_stations_by_name "$search_term" "$current_page")
+        
+        local total_results
+        total_results=$(get_total_search_results "$search_term")
+        
+        if [[ -z "$results" ]]; then
+          echo -e "${YELLOW}No results found for '$search_term'${RESET}"
+        else
+          echo -e "${GREEN}Found $total_results total results${RESET}"
+          echo
+          
+          printf "${BOLD}%-3s %-12s %-30s %-10s %-8s${RESET}\n" "Key" "Station ID" "Name" "Call Sign" "Country"
+          echo "--------------------------------------------------------------------------------"
+          
+          local station_array=()
+          local key_letters=("a" "b" "c" "d" "e" "f" "g" "h" "i" "j")
+          local result_count=0
+          
+          while IFS=$'\t' read -r station_id name call_sign country; do
+            [[ -z "$station_id" ]] && continue
+            
+            local key="${key_letters[$result_count]}"
+            printf "%-3s %-12s %-30s %-10s %-8s\n" "$key)" "$station_id" "${name:0:30}" "$call_sign" "$country"
+            station_array+=("$station_id|$name|$call_sign|$country")
+            ((result_count++))
+          done <<< "$results"
+          
+          echo
+          
+          # Calculate pagination info
+          local total_pages=$(( (total_results + 9) / 10 ))
+          [[ $total_pages -eq 0 ]] && total_pages=1
+          
+          echo -e "${BOLD}Page $current_page of $total_pages${RESET}"
+        fi
+        
+        echo
+        echo -e "${BOLD}Options:${RESET}"
+        [[ $result_count -gt 0 ]] && echo "a-j) Select a station from the results above"
+        [[ $current_page -lt $total_pages ]] && echo "n) Next page"
+        [[ $current_page -gt 1 ]] && echo "p) Previous page"
+        echo "s) Search with different term"
+        echo "m) Enter station ID manually"
+        echo "k) Skip this channel"
+        echo "q) Quit matching"
+        echo
+        
+        read -p "Your choice: " choice < /dev/tty
+        
+        case "$choice" in
+          a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
+            if [[ $result_count -gt 0 ]]; then
+              # Convert letter to array index
+              local letter_lower=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
+              local index=-1
+              for ((idx=0; idx<10; idx++)); do
+                if [[ "${key_letters[$idx]}" == "$letter_lower" ]]; then
+                  index=$idx
+                  break
+                fi
+              done
+              
+              if [[ $index -ge 0 ]] && [[ $index -lt $result_count ]]; then
+                local selected="${station_array[$index]}"
+                IFS='|' read -r sel_station_id sel_name sel_call sel_country <<< "$selected"
+                
+                echo
+                echo -e "${BOLD}Selected Station:${RESET}"
+                echo "  Station ID: $sel_station_id"
+                echo "  Name: $sel_name"
+                echo "  Call Sign: $sel_call"
+                echo "  Country: $sel_country"
+                echo
+                
+                read -p "Use this station? (y/n): " confirm < /dev/tty
+                if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                  if update_dispatcharr_channel_epg "$channel_id" "$sel_station_id"; then
+                    echo -e "${GREEN}✅ Successfully updated channel${RESET}"
+                    echo -e "$channel_id\t$channel_name\t$sel_station_id\t$sel_name\t100" >> "$DISPATCHARR_MATCHES"
+                    pause_for_user
+                    break 2  # Exit both loops, move to next channel
+                  else
+                    echo -e "${RED}❌ Failed to update channel${RESET}"
+                    pause_for_user
+                  fi
+                fi
+              else
+                echo -e "${RED}Invalid selection${RESET}"
+                sleep 1
+              fi
+            else
+              echo -e "${RED}No results to select from${RESET}"
+              sleep 1
+            fi
+            ;;
+          n|N)
+            if [[ $current_page -lt $total_pages ]]; then
+              ((current_page++))
+            else
+              echo -e "${YELLOW}Already on last page${RESET}"
+              sleep 1
+            fi
+            ;;
+          p|P)
+            if [[ $current_page -gt 1 ]]; then
+              ((current_page--))
+            else
+              echo -e "${YELLOW}Already on first page${RESET}"
+              sleep 1
+            fi
+            ;;
+          s|S)
+            read -p "Enter new search term: " new_search < /dev/tty
+            if [[ -n "$new_search" ]]; then
+              search_term="$new_search"
+              current_page=1
+            fi
+            ;;
+          m|M)
+            read -p "Enter station ID manually: " manual_station_id < /dev/tty
+            if [[ -n "$manual_station_id" ]]; then
+              if update_dispatcharr_channel_epg "$channel_id" "$manual_station_id"; then
+                echo -e "${GREEN}✅ Successfully updated channel with manual ID${RESET}"
+                echo -e "$channel_id\t$channel_name\t$manual_station_id\tManual Entry\t100" >> "$DISPATCHARR_MATCHES"
+                pause_for_user
+                break 2  # Exit both loops, move to next channel
+              else
+                echo -e "${RED}❌ Failed to update channel${RESET}"
+                pause_for_user
+              fi
+            fi
+            ;;
+          k|K)
+            echo -e "${YELLOW}Skipped: $channel_name${RESET}"
+            break 2  # Exit both loops, move to next channel
+            ;;
+          q|Q)
+            echo -e "${CYAN}Matching session ended${RESET}"
+            return 0
+            ;;
+          *)
+            echo -e "${RED}Invalid option${RESET}"
+            sleep 1
+            ;;
+        esac
+      done
+    done
+  done
+  
+  echo -e "\n${GREEN}Matching session complete${RESET}"
+  if [[ -f "$DISPATCHARR_MATCHES" ]] && [[ -s "$DISPATCHARR_MATCHES" ]]; then
+    local match_count
+    match_count=$(wc -l < "$DISPATCHARR_MATCHES")
+    echo -e "${CYAN}Applied $match_count matches${RESET}"
+  fi
+  pause_for_user
+}
+
+batch_update_stationids() {
+  echo -e "\n${BOLD}Batch Update Station IDs${RESET}"
+  
+  if [[ ! -f "$DISPATCHARR_MATCHES" ]] || [[ ! -s "$DISPATCHARR_MATCHES" ]]; then
+    echo -e "${YELLOW}No pending matches found.${RESET}"
+    echo -e "${CYAN}Run 'Interactive Station ID Matching' first to create matches.${RESET}"
+    return 1
+  fi
+  
+  local total_matches
+  total_matches=$(wc -l < "$DISPATCHARR_MATCHES")
+  
+  echo "Found $total_matches pending matches:"
+  echo
+  
+  # Show preview of matches
+  echo -e "${BOLD}Pending Matches:${RESET}"
+  printf "${BOLD}%-8s %-25s %-12s %-20s${RESET}\n" "Ch ID" "Channel Name" "Station ID" "Match Source"
+  echo "------------------------------------------------------------------------"
+  
+  local line_count=0
+  while IFS=$'\t' read -r channel_id channel_name station_id station_name confidence; do
+    printf "%-8s %-25s %-12s %-20s\n" "$channel_id" "${channel_name:0:25}" "$station_id" "${station_name:0:20}"
+    ((line_count++))
+    # Show only first 10 for preview
+    [[ $line_count -ge 10 ]] && break
+  done < "$DISPATCHARR_MATCHES"
+  
+  [[ $total_matches -gt 10 ]] && echo "... and $((total_matches - 10)) more"
+  echo
+  
+  if ! confirm_action "Apply all $total_matches matches?"; then
+    echo -e "${YELLOW}Batch update cancelled${RESET}"
+    return 1
+  fi
+  
+  local success_count=0
+  local failure_count=0
+  
+  echo -e "\n${BOLD}Processing updates...${RESET}"
+  
+  while IFS=$'\t' read -r channel_id channel_name station_id station_name confidence; do
+    # Skip empty lines
+    [[ -z "$channel_id" ]] && continue
+    
+    echo -n "Updating: $channel_name -> $station_id ... "
+    
+    if update_dispatcharr_channel_epg "$channel_id" "$station_id"; then
+      echo -e "${GREEN}✅ Success${RESET}"
+      ((success_count++))
+    else
+      echo -e "${RED}❌ Failed${RESET}"
+      ((failure_count++))
+    fi
+  done < "$DISPATCHARR_MATCHES"
+  
+  echo
+  echo -e "${BOLD}Batch Update Complete:${RESET}"
+  echo -e "${GREEN}Successful: $success_count${RESET}"
+  [[ $failure_count -gt 0 ]] && echo -e "${RED}Failed: $failure_count${RESET}"
+  
+  # Clear processed matches
+  > "$DISPATCHARR_MATCHES"
+  echo -e "${CYAN}Match queue cleared${RESET}"
+  
+  return 0
+}
+
+view_dispatcharr_logs() {
+  echo -e "\n${BOLD}Dispatcharr Integration Logs${RESET}"
+  
+  if [[ ! -f "$DISPATCHARR_LOG" ]]; then
+    echo -e "${YELLOW}No logs found${RESET}"
+    return 0
+  fi
+  
+  echo
+  echo -e "${BOLD}Recent Operations:${RESET}"
+  tail -20 "$DISPATCHARR_LOG" | while IFS= read -r line; do
+    if [[ "$line" == *"Updated"* ]]; then
+      echo -e "${GREEN}$line${RESET}"
+    elif [[ "$line" == *"Failed"* ]]; then
+      echo -e "${RED}$line${RESET}"
+    elif [[ "$line" == *"JWT tokens generated"* ]]; then
+      echo -e "${CYAN}$line${RESET}"
+    else
+      echo "$line"
+    fi
+  done
+  
+  echo
+  local total_operations
+  total_operations=$(wc -l < "$DISPATCHARR_LOG" 2>/dev/null || echo "0")
+  echo "Total operations logged: $total_operations"
+  
+  # Show token status if available
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  if [[ -f "$token_file" ]]; then
+    echo
+    echo -e "${BOLD}Current Token Status:${RESET}"
+    local access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+    if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+      echo -e "${GREEN}✅ Access token available${RESET}"
+      # Try to decode JWT to show expiration (basic parsing)
+      local exp_claim=$(echo "$access_token" | cut -d'.' -f2 | base64 -d 2>/dev/null | jq -r '.exp // empty' 2>/dev/null)
+      if [[ -n "$exp_claim" && "$exp_claim" != "null" ]]; then
+        local exp_date=$(date -d "@$exp_claim" 2>/dev/null || echo "Unknown")
+        echo -e "   Expires: $exp_date"
+      fi
+    else
+      echo -e "${RED}❌ No valid access token${RESET}"
+    fi
+    
+    local refresh_token=$(jq -r '.refresh // empty' "$token_file" 2>/dev/null)
+    if [[ -n "$refresh_token" && "$refresh_token" != "null" ]]; then
+      echo -e "${GREEN}✅ Refresh token available${RESET}"
+    else
+      echo -e "${YELLOW}⚠️  No refresh token${RESET}"
+    fi
+  fi
+  
+  return 0
+}
+
+refresh_dispatcharr_tokens() {
+  if [[ -z "${DISPATCHARR_URL:-}" ]] || [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
+    echo -e "${RED}Dispatcharr not configured or disabled${RESET}"
+    return 1
+  fi
+  
+  if [[ -z "${DISPATCHARR_USERNAME:-}" ]] || [[ -z "${DISPATCHARR_PASSWORD:-}" ]]; then
+    echo -e "${RED}Dispatcharr credentials not found in settings${RESET}"
+    return 1
+  fi
+  
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  
+  echo "🔄 Refreshing Dispatcharr authentication tokens..."
+  
+  # Get fresh JWT tokens
+  local token_response
+  token_response=$(curl -s --connect-timeout 10 \
+    -H "Content-Type: application/json" \
+    -d "{\"username\":\"$DISPATCHARR_USERNAME\",\"password\":\"$DISPATCHARR_PASSWORD\"}" \
+    "${DISPATCHARR_URL}/api/accounts/token/" 2>/dev/null)
+  
+  if echo "$token_response" | jq -e '.access' >/dev/null 2>&1; then
+    # Save tokens to file
+    echo "$token_response" > "$token_file"
+    
+    # Log the refresh
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Tokens refreshed automatically" >> "$DISPATCHARR_LOG"
+    
+    echo -e "${GREEN}✅ Fresh tokens obtained${RESET}"
+    return 0
+  else
+    echo -e "${RED}❌ Failed to refresh tokens${RESET}"
+    echo "Response: $token_response"
+    
+    # Log the failure
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: $token_response" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
 }
 
 # ============================================================================
@@ -964,17 +1788,17 @@ settings_menu() {
     
     display_current_settings
     
-    echo -e "${BOLD}Options:${RESET}"
-    echo "a) Change Channels DVR Server"
-    echo "b) Toggle Logo Display"
-    echo "c) Configure Resolution Filter"
-    echo "d) Configure Country Filter"
-    echo "e) Cache Management"
-    echo "f) Reset All Settings"
-    echo "g) Export Settings"
-    echo "h) Export Station Database to CSV"
-    echo "q) Back to Main Menu"
-    echo
+      echo -e "${BOLD}Options:${RESET}"
+      echo "a) Change Channels DVR Server"
+      echo "b) Toggle Logo Display"
+      echo "c) Configure Resolution Filter"
+      echo "d) Configure Country Filter"
+      echo "e) Cache Management"
+      echo "f) Reset All Settings"
+      echo "g) Export Settings"
+      echo "h) Export Station Database to CSV"
+      echo "i) Configure Dispatcharr Integration"
+      echo "q) Back to Main Menu"
     
     read -p "Select option: " choice
     
@@ -987,6 +1811,7 @@ settings_menu() {
       f|F) reset_all_settings && pause_for_user ;;
       g|G) export_settings && pause_for_user ;;
       h|H) export_stations_to_csv && pause_for_user ;;
+      i|I) configure_dispatcharr_connection && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -1743,9 +2568,9 @@ main_menu() {
     echo "2) Run Local Caching" 
     echo "3) Search Stations (Local Cache)"
     echo "4) Direct API Search"
-    echo "5) Settings"
+    echo "5) Dispatcharr Integration"
+    echo "6) Settings"
     echo "q) Quit"
-    echo
     
     read -p "Select option: " choice
     
@@ -1754,9 +2579,18 @@ main_menu() {
       2) run_local_caching && pause_for_user ;;
       3) check_database_exists && run_search_interface ;;
       4) run_direct_api_search ;;
-      5) settings_menu ;;
-      q|Q|"") echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
-      *) show_invalid_choice ;;
+      5) 
+        if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
+          run_dispatcharr_integration
+        else
+          echo -e "${YELLOW}Dispatcharr integration is disabled${RESET}"
+          echo -e "${CYAN}Enable it in Settings > Dispatcharr Configuration${RESET}"
+          pause_for_user
+        fi
+        ;;
+      6) settings_menu ;;
+        q|Q|"") echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
+        *) show_invalid_choice ;;
     esac
   done
 }

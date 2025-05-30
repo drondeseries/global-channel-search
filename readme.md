@@ -4,6 +4,8 @@ A comprehensive television station search tool that integrates with Channels DVR
 
 ## Features
 
+- **New in 1.0-RC - Dispatcharr Integration** - automatically find channels in dispatcharr missing stationID and populate with an interactive channel matching function
+
 - **Station Search**: Search by name, call sign with partial/exact matching
 - **Resolution Filtering**: Filter results by SDTV, HDTV, UHDTV
 - **Logo Display**: Visual station logos with caching

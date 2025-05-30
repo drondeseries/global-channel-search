@@ -4,7 +4,7 @@
 # Description: Television station search tool using Channels DVR API
 # Created: 2025/05/26
 # Last Modified: 2025/05/28
-VERSION="1.0-RC"
+VERSION="1.0.1-RC"
 
 # TERMINAL STYLING
 ESC="\033"
@@ -205,6 +205,8 @@ USA,90210
 USA,02101
 CAN,M5V
 GBR,SW1A
+GBR,G1
+GBR,EH1
 USA,75201
 USA,20001
 USA,30309
@@ -309,6 +311,8 @@ USA,90210
 USA,02101
 CAN,M5V
 GBR,SW1A
+GBR,G1
+GBR,EH1
 USA,75201
 USA,20001
 USA,30309
@@ -1628,9 +1632,9 @@ manage_markets() {
     echo "b) Remove Market"
     echo "c) Import Markets from File"
     echo "d) Export Markets to File"
+    echo "e) Clean Up Postal Code Formats"
     echo "r) Ready to Cache - Go to Local Caching"
     echo "q) Back to Main Menu"
-    echo
     
     read -p "Select option: " choice
     
@@ -1639,6 +1643,7 @@ manage_markets() {
       b|B) remove_market && pause_for_user ;;
       c|C) import_markets && pause_for_user ;;
       d|D) export_markets && pause_for_user ;;
+      e|E) cleanup_existing_postal_codes && pause_for_user ;;
       r|R) 
         local market_count
         market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
@@ -1660,8 +1665,14 @@ manage_markets() {
 
 add_market() {
   echo -e "\n${BOLD}Add New Market${RESET}"
+  echo -e "${CYAN}💡 Postal Code Tips:${RESET}"
+  echo -e "• UK: Use short format (G1, SW1A, EH1) - not full postcodes"
+  echo -e "• USA: Use 5-digit ZIP codes (90210, 10001)"  
+  echo -e "• Canada: Use short format (M5V, K1A)"
+  echo -e "• If unsure, try the area/district code first"
+  echo
   
-  local country zip
+  local country zip normalized_zip
   
   while true; do
     read -p "Country (3-letter ISO code): " country
@@ -1685,17 +1696,29 @@ add_market() {
     return 1
   fi
   
+  # Normalize postal code - take only first segment if there's a space
+  if [[ "$zip" == *" "* ]]; then
+    normalized_zip=$(echo "$zip" | cut -d' ' -f1)
+    echo -e "${CYAN}✓ Postal code '$zip' normalized to '$normalized_zip' (first segment only)${RESET}"
+    echo -e "${CYAN}  This format works better with TV lineup APIs${RESET}"
+  else
+    normalized_zip="$zip"
+  fi
+  
+  # Remove any remaining spaces and convert to uppercase for consistency
+  normalized_zip=$(echo "$normalized_zip" | tr -d ' ' | tr '[:lower:]' '[:upper:]')
+  
   # Create CSV file with header if it doesn't exist
   if [ ! -f "$CSV_FILE" ]; then
     echo "Country,ZIP" > "$CSV_FILE"
   fi
   
-  if grep -q "^$country,$zip$" "$CSV_FILE"; then
-    echo -e "${RED}Market $country/$zip already exists${RESET}"
+  if grep -q "^$country,$normalized_zip$" "$CSV_FILE"; then
+    echo -e "${RED}Market $country/$normalized_zip already exists${RESET}"
     return 1
   else
-    echo "$country,$zip" >> "$CSV_FILE"
-    echo -e "${GREEN}Added market: $country/$zip${RESET}"
+    echo "$country,$normalized_zip" >> "$CSV_FILE"
+    echo -e "${GREEN}Added market: $country/$normalized_zip${RESET}"
     return 0
   fi
 }
@@ -1775,6 +1798,54 @@ export_markets() {
     echo -e "${RED}Failed to export markets${RESET}"
     return 1
   fi
+}
+
+cleanup_existing_postal_codes() {
+  echo -e "\n${BOLD}Clean Up Existing Postal Codes${RESET}"
+  
+  if [ ! -f "$CSV_FILE" ] || [ ! -s "$CSV_FILE" ]; then
+    echo -e "${YELLOW}No markets file to clean up${RESET}"
+    return 1
+  fi
+  
+  local temp_file="${CSV_FILE}.cleanup"
+  local changes_made=0
+  
+  echo "Checking existing postal codes for normalization..."
+  
+  # Process the CSV file
+  {
+    # Keep header
+    head -1 "$CSV_FILE"
+    
+    # Process data lines
+    tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
+      if [[ "$zip" == *" "* ]]; then
+        local normalized_zip=$(echo "$zip" | cut -d' ' -f1 | tr -d ' ' | tr '[:lower:]' '[:upper:]')
+        echo "$country,$normalized_zip"
+        echo -e "${CYAN}Normalized: $country/$zip → $country/$normalized_zip${RESET}" >&2
+        changes_made=1
+      else
+        # Convert to uppercase for consistency
+        local clean_zip=$(echo "$zip" | tr '[:lower:]' '[:upper:]')
+        echo "$country,$clean_zip"
+        if [[ "$zip" != "$clean_zip" ]]; then
+          echo -e "${CYAN}Uppercase: $country/$zip → $country/$clean_zip${RESET}" >&2
+          changes_made=1
+        fi
+      fi
+    done
+  } > "$temp_file"
+  
+  if [[ $changes_made -eq 1 ]]; then
+    mv "$temp_file" "$CSV_FILE"
+    echo -e "${GREEN}Postal codes cleaned up successfully${RESET}"
+  else
+    rm -f "$temp_file"
+    echo -e "${GREEN}All postal codes are already in correct format${RESET}"
+  fi
+  
+  return 0
 }
 
 # ============================================================================

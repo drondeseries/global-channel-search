@@ -1015,13 +1015,6 @@ update_dispatcharr_channel_epg() {
 }
 
 run_dispatcharr_integration() {
-  # Check if Channels DVR server is configured (needed for Dispatcharr)
-  if [[ -z "${CHANNELS_URL:-}" ]]; then
-    echo -e "${RED}Dispatcharr integration requires a Channels DVR server${RESET}"
-    echo -e "${CYAN}Configure server in Settings first${RESET}"
-    pause_for_user
-    return 1
-  fi
   # Always refresh tokens when entering Dispatcharr integration
   if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
     echo -e "${CYAN}Initializing Dispatcharr integration...${RESET}"

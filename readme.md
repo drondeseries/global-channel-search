@@ -4,6 +4,10 @@ A comprehensive television station search tool that integrates with Channels DVR
 
 ## Features
 
+- **New in 1.1.0-RC - Channels DVR server is now optional, as the script is distributed withe a comprehensive local base cache including all major television markets in the US, Canada, and the UK.
+- **User Cache** - Users can add to the base cache incrementally by adding country and postal codes using the Televeion Market Management function in the Main Menu.
+- **Script is now Instantly Usable** - There is no longer a need to build a local cache prior to using the script.
+
 - **New in 1.0-RC - Dispatcharr Integration** - automatically find channels in dispatcharr missing stationID and populate with an interactive channel matching function
 
 - **Station Search**: Search by name, call sign with partial/exact matching

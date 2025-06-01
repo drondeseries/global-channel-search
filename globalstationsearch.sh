@@ -4,14 +4,88 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-# Last Modified: 2025/05/31
-VERSION="1.2.0-RC"
-# Most recent changes
-# Major overhaul to base cache
-# Added dispatcharr functionality
-# Base cache manifest checking to avoid user import of lineups already in base cache
-# =============================
+VERSION="1.3.0"
+VERSION_INFO="Last Modified: 2025/06/01
+Recent Changes (1.3.0)
+• Added flags (-v, -h, --version-info)
+• Updated versioning schema and enhanced developer tools
+• Addition of USA and GBR streaming channels to base cache
+• Cleanup of orphaned code and legacy variables
+• Improved channel name parsing for Dispatcharr auto-matching
+• Fixed global country search filter
+• Enhanced menu consistency and navigation  
+• Enhanced Dispatcharr logo integration with API workflow
+• Fixed critical function breaks and improved user feedback
+• Updated versioning schema and enhanced developer tools
 
+Previous Versions:
+• 1.2.0 - Major base cache overhaul, better user cache handling
+• 1.1.0 - Added comprehensive local base cache
+• 1.0.0 - Initial release with Dispatcharr integration
+
+System Requirements:
+• Required: jq, curl, bash 4.0+
+• Optional: viu (logo previews), bc (progress calculations)
+• Integration: Channels DVR server (optional), Dispatcharr (optional)
+
+Quick Start:
+1. Run: ./globalstationsearch.sh
+2. Use 'Search Local Database' for immediate access
+3. Use 'Dispatcharr Integration' for automated Dispatcharr field population
+3. Add custom markets via 'Manage Television Markets' (optional)
+4. Configure integrations in 'Settings' (optional)"
+
+check_version_flags() {
+  case "${1:-}" in
+    --version|-v)
+      echo "Global Station Search v$VERSION"
+      exit 0
+      ;;
+    --version-info|--info)
+      show_version_info
+      exit 0
+      ;;
+    --help|-h)
+      show_usage_help
+      exit 0
+      ;;
+  esac
+}
+
+show_version_info() {
+  echo -e "${BOLD}${CYAN}=== Global Station Search v$VERSION ===${RESET}"
+  echo "$VERSION_INFO"
+}
+
+show_usage_help() {
+  echo -e "${BOLD}${CYAN}Global Station Search v$VERSION${RESET}"
+  echo "Television station search tool with optional Dispatcharr and Channels DVR integration"
+  echo
+  echo -e "${BOLD}Usage:${RESET}"
+  echo "  ./globalstationsearch.sh [options]"
+  echo
+  echo -e "${BOLD}Options:${RESET}"
+  echo "  -h, --help         Show this help message"
+  echo "  -v, --version      Show version number only"
+  echo "      --version-info Show detailed version information"
+  echo
+  echo -e "${BOLD}Features:${RESET}"
+  echo "• Local database search with base cache (ready to use)"
+  echo "• User cache expansion via market configuration"
+  echo "• Dispatcharr integration with multiple field population"
+  echo "  (including station ID, logo, channel name, and callsign [tvg-id])"
+  echo "• Direct Channels DVR API search (requires Channels DVR)"
+  echo "• Reverse station ID lookup"
+  echo
+  echo -e "${BOLD}Quick Start:${RESET}"
+  echo "1. Run script without options to enter interactive mode"
+  echo "2. Try 'Search Local Database' first (works immediately)"
+  echo "3. Use 'Dispatcharr Integration' for automated Dispatcharr field population"
+  echo "4. Configure additional options in 'Settings' as needed"
+  echo
+  echo -e "${BOLD}Documentation:${RESET}"
+  echo "See README.md for detailed setup and usage instructions"
+}
 
 # TERMINAL STYLING
 ESC="\033"
@@ -63,9 +137,13 @@ DISPATCHARR_CACHE="$CACHE_DIR/dispatcharr_channels.json"
 DISPATCHARR_MATCHES="$CACHE_DIR/dispatcharr_matches.tsv"
 DISPATCHARR_LOG="$CACHE_DIR/dispatcharr_operations.log"
 DISPATCHARR_TOKENS="$CACHE_DIR/dispatcharr_tokens.json"
+DISPATCHARR_LOGOS="$CACHE_DIR/dispatcharr_logos.json"
 
 # TEMPORARY FILES
 TEMP_CONFIG="${CONFIG_FILE}.tmp"
+
+# Handle command line arguments before main execution
+check_version_flags "$@"
 
 # ============================================================================
 # STANDARDIZED NAVIGATION HELPER FUNCTIONS
@@ -492,9 +570,10 @@ cleanup_cache() {
   cleanup_combined_cache
   echo "  ✓ Combined cache files removed"
   
-  # Remove old master JSON (replaced by two-file system)
-  rm -f "$MASTER_JSON" 2>/dev/null || true
-  echo "  ✓ Legacy master JSON removed"
+  # Remove legacy master JSON files (all variants)
+  rm -f "$CACHE_DIR"/all_stations_master.json* 2>/dev/null || true
+  rm -f "$CACHE_DIR"/working_stations.json* 2>/dev/null || true
+  echo "  ✓ Legacy cache files removed"
   
   # Remove lineup cache (will be rebuilt)
   rm -f "$LINEUP_CACHE" 2>/dev/null || true
@@ -1065,30 +1144,30 @@ run_dispatcharr_integration() {
     echo
     
     echo -e "${BOLD}Station ID Management:${RESET}"
-    echo "1) Scan Channels for Missing Station IDs"
-    echo "2) Interactive Station ID Matching"
-    echo "3) Commit Station ID Changes"
+    echo "a) Scan Channels for Missing Station IDs"
+    echo "b) Interactive Station ID Matching"
+    echo "c) Commit Station ID Changes"
     echo
     echo -e "${BOLD}Field Population:${RESET}"
-    echo "4) Populate Other Dispatcharr Fields"
+    echo "d) Populate Other Dispatcharr Fields"
     echo
     echo -e "${BOLD}System:${RESET}"
-    echo "5) Configure Dispatcharr Connection"
-    echo "6) View Integration Logs"
-    echo "7) Refresh Authentication Tokens"
+    echo "e) Configure Dispatcharr Connection"
+    echo "f) View Integration Logs"
+    echo "g) Refresh Authentication Tokens"
     echo "q) Back to Main Menu"
     echo
     
     read -p "Select option: " choice
     
     case $choice in
-      1) scan_missing_stationids ;;
-      2) interactive_stationid_matching ;;
-      3) batch_update_stationids && pause_for_user ;;
-      4) populate_dispatcharr_fields ;;
-      5) configure_dispatcharr_connection && pause_for_user ;;
-      6) view_dispatcharr_logs && pause_for_user ;;
-      7) refresh_dispatcharr_tokens && pause_for_user ;;
+      a|A) scan_missing_stationids ;;
+      b|B) interactive_stationid_matching ;;
+      c|C) batch_update_stationids && pause_for_user ;;
+      d|D) populate_dispatcharr_fields ;;
+      e|E) configure_dispatcharr_connection && pause_for_user ;;
+      f|F) view_dispatcharr_logs && pause_for_user ;;
+      g|G) refresh_dispatcharr_tokens && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -1234,6 +1313,7 @@ scan_missing_stationids() {
   
   if ! check_dispatcharr_connection; then
     echo -e "${RED}Cannot connect to Dispatcharr. Please configure connection first.${RESET}"
+    pause_for_user
     return 1
   fi
   
@@ -1241,6 +1321,7 @@ scan_missing_stationids() {
     echo -e "${RED}No station database found${RESET}"
     echo -e "${CYAN}Expected: Base cache file ($(basename "$BASE_STATIONS_JSON")) in script directory${RESET}"
     echo -e "${CYAN}Alternative: Build user cache via 'Manage Television Markets'${RESET}"
+    pause_for_user
     return 1
   fi
   
@@ -1250,6 +1331,7 @@ scan_missing_stationids() {
   
   if [[ -z "$channels_data" ]]; then
     echo -e "${RED}Failed to fetch channels from Dispatcharr${RESET}"
+    pause_for_user
     return 1
   fi
   
@@ -1257,8 +1339,24 @@ scan_missing_stationids() {
   local missing_channels
   missing_channels=$(find_channels_missing_stationid "$channels_data")
   
+  # *** THIS IS THE CRITICAL FIX ***
   if [[ -z "$missing_channels" ]]; then
-    echo -e "${GREEN}All channels have station IDs assigned!${RESET}"
+    clear
+    echo -e "${BOLD}${GREEN}=== Scan Results ===${RESET}\n"
+    echo -e "${GREEN}✅ Excellent! All channels have station IDs assigned!${RESET}"
+    echo
+    echo -e "${CYAN}📊 Analysis Complete:${RESET}"
+    local total_channels=$(echo "$channels_data" | jq 'length' 2>/dev/null || echo "0")
+    echo -e "   • Total channels scanned: $total_channels"
+    echo -e "   • Channels missing station IDs: 0"
+    echo -e "   • Channels with station IDs: $total_channels"
+    echo
+    echo -e "${BOLD}${CYAN}Next Steps:${RESET}"
+    echo -e "• Your Dispatcharr channels are fully configured"
+    echo -e "• Consider using 'Populate Other Dispatcharr Fields' to enhance channel data"
+    echo -e "• No station ID matching needed at this time"
+    echo
+    pause_for_user
     return 0
   fi
   
@@ -1576,9 +1674,6 @@ interactive_stationid_matching() {
         [[ $current_page -lt $total_pages ]] && echo "n) Next page"
         [[ $current_page -gt 1 ]] && echo "p) Previous page"
         echo "s) Search with different term"
-        if [[ -n "$detected_country" ]] || [[ -n "$detected_resolution" ]]; then
-          echo "c) Clear auto-detected filters"
-        fi
         echo "m) Enter station ID manually"
         echo "k) Skip this channel"
         echo "q) Quit matching"
@@ -1667,18 +1762,6 @@ interactive_stationid_matching() {
             if [[ -n "$new_search" ]]; then
               search_term="$new_search"
               current_page=1
-            fi
-            ;;
-          c|C)
-            if [[ -n "$detected_country" ]] || [[ -n "$detected_resolution" ]]; then
-              echo -e "${CYAN}Clearing auto-detected filters...${RESET}"
-              detected_country=""
-              detected_resolution=""
-              current_page=1
-              sleep 1
-            else
-              echo -e "${YELLOW}No auto-detected filters to clear${RESET}"
-              sleep 1
             fi
             ;;
           m|M)
@@ -2199,16 +2282,13 @@ process_single_channel_fields() {
       echo
       
       # IDENTICAL OPTIONS TO STATION ID WORKFLOW
-      echo -e "${BOLD}Options:${RESET}"
-      [[ $result_count -gt 0 ]] && echo "a-j) Select a station from the results above"
-      [[ $current_page -lt $total_pages ]] && echo "n) Next page"
-      [[ $current_page -gt 1 ]] && echo "p) Previous page"
-      echo "s) Search with different term"
-      if [[ -n "$detected_country" ]] || [[ -n "$detected_resolution" ]]; then
-        echo "c) Clear auto-detected filters"
-      fi
-      echo "k) Skip this channel"
-      echo "q) Quit field population"
+        echo -e "${BOLD}Options:${RESET}"
+        [[ $result_count -gt 0 ]] && echo "a-j) Select a station from the results above"
+        [[ $current_page -lt $total_pages ]] && echo "n) Next page"
+        [[ $current_page -gt 1 ]] && echo "p) Previous page"
+        echo "s) Search with different term"
+        echo "k) Skip this channel"
+        echo "q) Quit field population"
       echo
       
       read -p "Your choice: " choice
@@ -2283,18 +2363,6 @@ process_single_channel_fields() {
             current_page=1
           fi
           ;;
-        c|C)
-          if [[ -n "$detected_country" ]] || [[ -n "$detected_resolution" ]]; then
-            echo -e "${CYAN}Clearing auto-detected filters...${RESET}"
-            detected_country=""
-            detected_resolution=""
-            current_page=1
-            sleep 1
-          else
-            echo -e "${YELLOW}No auto-detected filters to clear${RESET}"
-            sleep 1
-          fi
-          ;;
         k|K)
           echo -e "${YELLOW}Skipped: $channel_name${RESET}"
           return 0  # Skip this channel, move to next
@@ -2321,6 +2389,34 @@ show_field_comparison_and_update_simplified() {
   local station_name="$6"
   local call_sign="$7"
   
+  # Get current channel info to see existing logo
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  local access_token
+  if [[ -f "$token_file" ]]; then
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+  fi
+  
+  local current_logo_id=""
+  if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+    local channel_info
+    channel_info=$(curl -s -H "Authorization: Bearer $access_token" \
+      "${DISPATCHARR_URL}/api/channels/channels/${channel_id}/" 2>/dev/null)
+    
+    if echo "$channel_info" | jq empty 2>/dev/null; then
+      current_logo_id=$(echo "$channel_info" | jq -r '.logo_id // empty')
+    fi
+  fi
+  
+  # Get logo URL from station database
+  local logo_url=""
+  local stations_file
+  stations_file=$(get_effective_stations_file)
+  if [[ $? -eq 0 ]]; then
+    logo_url=$(jq -r --arg id "$station_id" \
+      '.[] | select(.stationId == $id) | .preferredImage.uri // empty' \
+      "$stations_file" 2>/dev/null | head -n 1)
+  fi
+  
   echo
   echo -e "${BOLD}${GREEN}=== Field Comparison & Update Options ===${RESET}\n"
   
@@ -2330,7 +2426,27 @@ show_field_comparison_and_update_simplified() {
   echo -e "Station ID: ${GREEN}$station_id${RESET}"
   echo
   
-  # Field-by-field comparison (SIMPLIFIED - Only 3 fields)
+  # LOGO COMPARISON SECTION
+  echo -e "${BOLD}${CYAN}=== Logo Comparison ===${RESET}"
+  echo
+  
+  # Show current Dispatcharr logo
+  if [[ -n "$current_logo_id" && "$current_logo_id" != "null" ]]; then
+    display_dispatcharr_logo "$current_logo_id" "Current Dispatcharr Logo"
+  else
+    echo "   Current Dispatcharr Logo: ${YELLOW}No logo set${RESET}"
+  fi
+  echo
+  
+  # Show potential replacement from station database
+  if [[ -n "$logo_url" && "$logo_url" != "null" ]]; then
+    display_station_logo_preview "$logo_url" "Potential Replacement"
+  else
+    echo "   Potential Replacement: ${YELLOW}No logo available${RESET}"
+  fi
+  echo
+  
+  # Field-by-field comparison
   echo -e "${BOLD}${CYAN}=== Proposed Field Updates ===${RESET}"
   echo
   
@@ -2370,12 +2486,34 @@ show_field_comparison_and_update_simplified() {
   fi
   echo
   
+  # 4. Logo (NEW)
+  echo -e "${BOLD}4. Channel Logo:${RESET}"
+  local update_logo="n"
+  local logo_id=""
+  if [[ -n "$logo_url" && "$logo_url" != "null" ]]; then
+    read -p "   Upload and set station logo? (y/n): " update_logo
+    
+    if [[ "$update_logo" =~ ^[Yy]$ ]]; then
+      echo -e "   ${CYAN}Uploading logo to Dispatcharr...${RESET}"
+      logo_id=$(upload_station_logo_to_dispatcharr "$station_name" "$logo_url")
+      if [[ -n "$logo_id" && "$logo_id" != "null" ]]; then
+        echo -e "   ${GREEN}✅ Logo uploaded successfully (ID: $logo_id)${RESET}"
+      else
+        echo -e "   ${RED}❌ Logo upload failed${RESET}"
+        update_logo="n"
+      fi
+    fi
+  else
+    echo -e "   Station Logo: ${YELLOW}Not available${RESET}"
+  fi
+  echo
+  
   # Apply updates
   local updates_made=0
-  if [[ "$update_name" =~ ^[Yy]$ ]] || [[ "$update_tvg" =~ ^[Yy]$ ]] || [[ "$update_station_id" =~ ^[Yy]$ ]]; then
+  if [[ "$update_name" =~ ^[Yy]$ ]] || [[ "$update_tvg" =~ ^[Yy]$ ]] || [[ "$update_station_id" =~ ^[Yy]$ ]] || [[ "$update_logo" =~ ^[Yy]$ ]]; then
     echo -e "${CYAN}Applying updates...${RESET}"
     
-    if update_dispatcharr_channel_corrected "$channel_id" "$update_name" "$station_name" "$update_tvg" "$call_sign" "$update_station_id" "$station_id"; then
+    if update_dispatcharr_channel_with_logo "$channel_id" "$update_name" "$station_name" "$update_tvg" "$call_sign" "$update_station_id" "$station_id" "$update_logo" "$logo_id"; then
       echo -e "${GREEN}✅ Successfully updated channel fields${RESET}"
       updates_made=1
     else
@@ -2412,7 +2550,7 @@ display_logo_from_url() {
   fi
 }
 
-update_dispatcharr_channel_corrected() {
+update_dispatcharr_channel_with_logo() {
   local channel_id="$1"
   local update_name="$2"
   local new_name="$3"
@@ -2420,6 +2558,8 @@ update_dispatcharr_channel_corrected() {
   local new_tvg_id="$5"
   local update_station_id="$6"
   local new_station_id="$7"
+  local update_logo="$8"
+  local logo_id="$9"
   
   local token_file="$CACHE_DIR/dispatcharr_tokens.json"
   
@@ -2440,7 +2580,7 @@ update_dispatcharr_channel_corrected() {
     return 1
   fi
   
-  # Build update data JSON with CORRECT field names (no logo)
+  # Build update data JSON with logo support
   local update_data="{}"
   
   if [[ "$update_name" =~ ^[Yy]$ ]]; then
@@ -2455,7 +2595,12 @@ update_dispatcharr_channel_corrected() {
     update_data=$(echo "$update_data" | jq --arg station_id "$new_station_id" '. + {tvc_guide_stationid: $station_id}')
   fi
   
-  # Send PATCH request with corrected field names
+  # NEW: Add logo ID if provided (field name is "logo_id" not "logo")
+  if [[ "$update_logo" =~ ^[Yy]$ ]] && [[ -n "$logo_id" && "$logo_id" != "null" ]]; then
+    update_data=$(echo "$update_data" | jq --argjson logo_id "$logo_id" '. + {logo_id: $logo_id}')
+  fi
+  
+  # Send PATCH request
   local response
   response=$(curl -s -X PATCH \
     -H "Authorization: Bearer $access_token" \
@@ -2464,11 +2609,227 @@ update_dispatcharr_channel_corrected() {
     "${DISPATCHARR_URL}/api/channels/channels/${channel_id}/" 2>/dev/null)
   
   if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Updated channel ID $channel_id: name=$update_name, tvg=$update_tvg, station=$update_station_id" >> "$DISPATCHARR_LOG"
+    local log_msg="Updated channel ID $channel_id:"
+    [[ "$update_name" =~ ^[Yy]$ ]] && log_msg+=" name=yes"
+    [[ "$update_tvg" =~ ^[Yy]$ ]] && log_msg+=" tvg=yes"
+    [[ "$update_station_id" =~ ^[Yy]$ ]] && log_msg+=" station=yes"
+    [[ "$update_logo" =~ ^[Yy]$ ]] && log_msg+=" logo=$logo_id"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $log_msg" >> "$DISPATCHARR_LOG"
     return 0
   else
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to update channel ID $channel_id: $response" >> "$DISPATCHARR_LOG"
     return 1
+  fi
+}
+
+upload_station_logo_to_dispatcharr() {
+  local station_name="$1"
+  local logo_url="$2"
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  
+  if [[ -z "$logo_url" || "$logo_url" == "null" ]]; then
+    return 1
+  fi
+  
+  # Ensure we have a valid connection/token
+  if ! check_dispatcharr_connection; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to connect to Dispatcharr for logo upload" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Get current access token
+  local access_token
+  if [[ -f "$token_file" ]]; then
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+  fi
+  
+  if [[ -z "$access_token" || "$access_token" == "null" ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - No valid access token for logo upload" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Create a clean logo name from station name
+  local clean_name=$(echo "$station_name" | sed 's/[^a-zA-Z0-9 ]//g' | sed 's/  */ /g' | sed 's/^ *//' | sed 's/ *$//')
+  
+  # Check if logo already exists in Dispatcharr cache
+  local existing_logo_id=$(check_existing_dispatcharr_logo "$logo_url")
+  if [[ -n "$existing_logo_id" && "$existing_logo_id" != "null" ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Logo already exists with ID: $existing_logo_id" >> "$DISPATCHARR_LOG"
+    echo "$existing_logo_id"
+    return 0
+  fi
+  
+  # Upload logo to Dispatcharr using FORM DATA (not JSON)
+  local response
+  response=$(curl -s -X POST \
+    -H "Authorization: Bearer $access_token" \
+    -F "name=$clean_name" \
+    -F "url=$logo_url" \
+    "${DISPATCHARR_URL}/api/channels/logos/" 2>/dev/null)
+  
+  if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+    local logo_id=$(echo "$response" | jq -r '.id')
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Uploaded logo for '$station_name' with ID: $logo_id" >> "$DISPATCHARR_LOG"
+    
+    # Cache the logo info locally for future reference
+    cache_dispatcharr_logo_info "$logo_url" "$logo_id" "$clean_name"
+    
+    echo "$logo_id"
+    return 0
+  else
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to upload logo for '$station_name': $response" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+}
+
+check_existing_dispatcharr_logo() {
+  local logo_url="$1"
+  
+  # First check our local cache
+  if [[ -f "$DISPATCHARR_LOGOS" ]]; then
+    local cached_id=$(jq -r --arg url "$logo_url" '.[$url].id // empty' "$DISPATCHARR_LOGOS" 2>/dev/null)
+    if [[ -n "$cached_id" && "$cached_id" != "null" ]]; then
+      echo "$cached_id"
+      return 0
+    fi
+  fi
+  
+  # If not in local cache, query Dispatcharr API
+  local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  local access_token
+  if [[ -f "$token_file" ]]; then
+    access_token=$(jq -r '.access // empty' "$token_file" 2>/dev/null)
+  fi
+  
+  if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+    local response
+    response=$(curl -s -H "Authorization: Bearer $access_token" \
+      "${DISPATCHARR_URL}/api/channels/logos/" 2>/dev/null)
+    
+    if echo "$response" | jq empty 2>/dev/null; then
+      local logo_id=$(echo "$response" | jq -r --arg url "$logo_url" \
+        '.[] | select(.url == $url) | .id // empty' 2>/dev/null)
+      
+      if [[ -n "$logo_id" && "$logo_id" != "null" ]]; then
+        # Cache this for future use
+        local logo_name=$(echo "$response" | jq -r --arg url "$logo_url" \
+          '.[] | select(.url == $url) | .name // empty' 2>/dev/null)
+        cache_dispatcharr_logo_info "$logo_url" "$logo_id" "$logo_name"
+        echo "$logo_id"
+        return 0
+      fi
+    fi
+  fi
+  
+  return 1
+}
+
+cache_dispatcharr_logo_info() {
+  local logo_url="$1"
+  local logo_id="$2"
+  local logo_name="$3"
+  
+  # Initialize cache file if it doesn't exist
+  if [[ ! -f "$DISPATCHARR_LOGOS" ]]; then
+    echo '{}' > "$DISPATCHARR_LOGOS"
+  fi
+  
+  # Add/update logo info in cache
+  local temp_file="${DISPATCHARR_LOGOS}.tmp"
+  jq --arg url "$logo_url" \
+     --arg id "$logo_id" \
+     --arg name "$logo_name" \
+     --arg timestamp "$(date -Iseconds)" \
+     '. + {($url): {id: $id, name: $name, cached: $timestamp}}' \
+     "$DISPATCHARR_LOGOS" > "$temp_file" 2>/dev/null
+  
+  if [[ $? -eq 0 ]]; then
+    mv "$temp_file" "$DISPATCHARR_LOGOS"
+  else
+    rm -f "$temp_file"
+  fi
+}
+
+display_dispatcharr_logo() {
+  local logo_id="$1"
+  local label="$2"
+  
+  if [[ -z "$logo_id" || "$logo_id" == "null" ]]; then
+    echo "   $label: ${YELLOW}No logo${RESET}"
+    return 1
+  fi
+  
+  if [[ "$SHOW_LOGOS" == "true" ]] && command -v viu >/dev/null 2>&1; then
+    echo "   $label:"
+    
+    # Download logo to temp file
+    local temp_logo="/tmp/dispatcharr_logo_${logo_id}_$(date +%s).png"
+    
+    if curl -s "${DISPATCHARR_URL}/api/channels/logos/${logo_id}/cache/" --output "$temp_logo" 2>/dev/null; then
+      local mime_type=$(file --mime-type -b "$temp_logo" 2>/dev/null)
+      if [[ "$mime_type" == image/* ]]; then
+        viu -h 3 -w 20 "$temp_logo" 2>/dev/null || echo "   [logo display failed]"
+      else
+        echo "   [invalid image format]"
+      fi
+      rm -f "$temp_logo"
+    else
+      echo "   [failed to download logo]"
+    fi
+  else
+    echo "   $label: ${GREEN}Logo ID $logo_id${RESET} [logo preview unavailable]"
+  fi
+}
+
+display_station_logo_preview() {
+  local logo_url="$1"
+  local label="$2"
+  
+  if [[ -z "$logo_url" || "$logo_url" == "null" ]]; then
+    echo "   $label: ${YELLOW}No logo available${RESET}"
+    return 1
+  fi
+  
+  if [[ "$SHOW_LOGOS" == "true" ]] && command -v viu >/dev/null 2>&1; then
+    echo "   $label:"
+    
+    # Download logo to temp file
+    local temp_logo="/tmp/station_logo_preview_$(date +%s).png"
+    
+    if curl -s "$logo_url" --output "$temp_logo" 2>/dev/null; then
+      local mime_type=$(file --mime-type -b "$temp_logo" 2>/dev/null)
+      if [[ "$mime_type" == image/* ]]; then
+        viu -h 3 -w 20 "$temp_logo" 2>/dev/null || echo "   [logo preview failed]"
+      else
+        echo "   [invalid image format]"
+      fi
+      rm -f "$temp_logo"
+    else
+      echo "   [failed to download logo preview]"
+    fi
+  else
+    echo "   $label: ${GREEN}Available${RESET} [logo preview unavailable]"
+    echo "   URL: ${CYAN}$logo_url${RESET}"
+  fi
+}
+
+cleanup_dispatcharr_logo_cache() {
+  if [[ -f "$DISPATCHARR_LOGOS" ]]; then
+    # Remove entries older than 30 days
+    local cutoff_date=$(date -d '30 days ago' -Iseconds 2>/dev/null || date -v-30d -Iseconds 2>/dev/null)
+    if [[ -n "$cutoff_date" ]]; then
+      local temp_file="${DISPATCHARR_LOGOS}.tmp"
+      jq --arg cutoff "$cutoff_date" \
+        'to_entries | map(select(.value.cached >= $cutoff)) | from_entries' \
+        "$DISPATCHARR_LOGOS" > "$temp_file" 2>/dev/null
+      
+      if [[ $? -eq 0 ]]; then
+        mv "$temp_file" "$DISPATCHARR_LOGOS"
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Cleaned up old logo cache entries" >> "$DISPATCHARR_LOG"
+      else
+        rm -f "$temp_file"
+      fi
+    fi
   fi
 }
 
@@ -2646,204 +3007,38 @@ shared_station_search() {
 }
 
 get_available_countries() {
+  local countries=""
+  
+  # Get countries from base cache manifest (if available)
+  if [ -f "$BASE_CACHE_MANIFEST" ] && [ -s "$BASE_CACHE_MANIFEST" ]; then
+    local base_countries=$(jq -r '.stats.countries_covered[]?' "$BASE_CACHE_MANIFEST" 2>/dev/null | sort -u | tr '\n' ',' | sed 's/,$//')
+    if [ -n "$base_countries" ]; then
+      countries="$base_countries"
+    fi
+  fi
+  
+  # Get countries from user's CSV markets (if available)
   if [ -f "$CSV_FILE" ] && [ -s "$CSV_FILE" ]; then
-    awk -F, 'NR>1 {print $1}' "$CSV_FILE" | sort -u | tr '\n' ',' | sed 's/,$//'
-  else
-    echo ""
-  fi
-}
-
-build_resolution_filter() {
-  local runtime_resolution="${1:-}"  # Optional runtime override
-  
-  # Use runtime resolution if provided, otherwise use configured filter
-  if [[ -n "$runtime_resolution" ]]; then
-    echo "and (.videoQuality.videoType // \"\" | . == \"$runtime_resolution\")"
-  elif [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-    local filter_conditions=""
-    IFS=',' read -ra RESOLUTIONS <<< "$ENABLED_RESOLUTIONS"
-    for res in "${RESOLUTIONS[@]}"; do
-      if [ -n "$filter_conditions" ]; then
-        filter_conditions+=" or "
+    local csv_countries=$(awk -F, 'NR>1 {print $1}' "$CSV_FILE" | sort -u | tr '\n' ',' | sed 's/,$//')
+    if [ -n "$csv_countries" ]; then
+      if [ -n "$countries" ]; then
+        # Combine and deduplicate
+        countries=$(echo "$countries,$csv_countries" | tr ',' '\n' | sort -u | tr '\n' ',' | sed 's/,$//')
+      else
+        countries="$csv_countries"
       fi
-      filter_conditions+="(.videoQuality.videoType // \"\" | . == \"$res\")"
-    done
-    echo "and ($filter_conditions)"
-  else
-    echo ""
-  fi
-}
-
-build_country_filter() {
-  local runtime_country="${1:-}"  # Optional runtime override
-  
-  # Use runtime country if provided, otherwise use configured filter
-  if [[ -n "$runtime_country" ]]; then
-    echo "and (.country // \"\" | . == \"$runtime_country\")"
-  elif [ "$FILTER_BY_COUNTRY" = "true" ] && [ -n "$ENABLED_COUNTRIES" ]; then
-    local filter_conditions=""
-    IFS=',' read -ra COUNTRIES <<< "$ENABLED_COUNTRIES"
-    for country in "${COUNTRIES[@]}"; do
-      if [ -n "$filter_conditions" ]; then
-        filter_conditions+=" or "
-      fi
-      filter_conditions+="(.country // \"\" | . == \"$country\")"
-    done
-    echo "and ($filter_conditions)"
-  else
-    echo ""
-  fi
-}
-
-run_search_interface() {
-  mkdir -p "$LOGO_DIR"
-  
-  while true; do
-    clear
-    echo -e "${BOLD}${CYAN}=== Station Search ===${RESET}\n"
-    
-    # Show filter status
-    local filter_status=""
-    if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-      filter_status+="${YELLOW}Resolution: $ENABLED_RESOLUTIONS${RESET}"
     fi
-    
-    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
-      if [ -n "$filter_status" ]; then
-        filter_status+=" | "
-      fi
-      filter_status+="${GREEN}Country: $ENABLED_COUNTRIES${RESET}"
+  fi
+  
+  # If no countries found anywhere, try to get from actual station data as fallback
+  if [ -z "$countries" ]; then
+    local stations_file
+    if stations_file=$(get_effective_stations_file 2>/dev/null); then
+      countries=$(jq -r '[.[] | .country // empty] | unique | join(",")' "$stations_file" 2>/dev/null)
     fi
-    
-    if [ -n "$filter_status" ]; then
-      echo -e "Active Filters: $filter_status"
-    else
-      echo -e "Filters: ${RED}None Active${RESET}"
-    fi
-    echo
-    
-    read -p "Search by name or call sign (or 'q' to return to main menu): " SEARCH_TERM
-    
-    case "$SEARCH_TERM" in
-      q|Q|"") break ;;
-      *)
-        if [[ -z "$SEARCH_TERM" || "$SEARCH_TERM" =~ ^[[:space:]]*$ ]]; then
-          echo -e "${RED}Please enter a search term${RESET}"
-          pause_for_user
-          continue
-        fi
-        
-        perform_search "$SEARCH_TERM"
-        ;;
-    esac
-  done
-}
-
-perform_search() {
-  local search_term="$1"
-  
-  # Get effective stations file (handled by shared function now)
-  if ! has_stations_database; then
-    echo -e "${RED}No stations database available${RESET}"
-    pause_for_user
-    return 1
   fi
   
-  # Use shared search function with "full" format for local display
-  shared_station_search "$search_term" 1 "full" "" "" > "$SEARCH_RESULTS"
-  
-  display_search_results "$search_term"
-}
-
-display_search_results() {
-  local search_term="$1"
-  
-  # Get total count using shared search
-  local count=$(shared_station_search "$search_term" 1 "count")
-  
-  # Build filter info for display
-  local filter_info=""
-  if [ "$FILTER_BY_RESOLUTION" = "true" ] || [ "$FILTER_BY_COUNTRY" = "true" ]; then
-    filter_info=" (filtered by:"
-    [ "$FILTER_BY_RESOLUTION" = "true" ] && filter_info+=" Resolution: $ENABLED_RESOLUTIONS"
-    [ "$FILTER_BY_COUNTRY" = "true" ] && filter_info+=" Country: $ENABLED_COUNTRIES"
-    filter_info+=")"
-  fi
-  
-  # Show search result count with filter info
-  if [[ $count -eq 0 ]]; then
-    echo -e "${YELLOW}No results found for '$search_term'$filter_info${RESET}"
-    pause_for_user
-    return
-  fi
-  
-  echo -e "${GREEN}Found $count result(s) for '$search_term'$filter_info${RESET}"
-  
-  local current_page=1
-  local results_per_page=10
-  
-  while true; do
-    clear
-    
-    # Calculate current page info
-    local start_num=$(( (current_page - 1) * results_per_page + 1 ))
-    local end_num=$(( current_page * results_per_page < count ? current_page * results_per_page : count ))
-    local total_pages=$(( (count + results_per_page - 1) / results_per_page ))
-    
-    # Show pagination info with filter status
-    echo -e "${GREEN}Found $count result(s) for '$search_term'$filter_info${RESET}"
-    echo -e "${BOLD}Showing results $start_num-$end_num of $count (Page $current_page of $total_pages)${RESET}"
-    echo
-    
-    printf "${BOLD}${YELLOW}%-30s %-10s %-8s %-8s %-12s${RESET}\n" "Channel Name" "Call Sign" "Quality" "Country" "Station ID"
-    echo "--------------------------------------------------------------------------------"
-    
-    # Get current page results using shared search
-    local page_results
-    page_results=$(shared_station_search "$search_term" "$current_page" "full")
-    
-    while IFS=$'\t' read -r NAME CALLSIGN RES STID COUNTRY; do
-      [[ -z "$NAME" ]] && continue
-      printf "%-30s %-10s %-8s ${GREEN}%-8s${RESET} ${CYAN}%-12s${RESET}\n" "$NAME" "$CALLSIGN" "$RES" "$COUNTRY" "$STID"
-      
-      display_logo "$STID"
-      echo
-    done <<< "$page_results"
-    
-    # Pagination navigation
-    echo -e "\n${BOLD}Navigation:${RESET}"
-    [[ $current_page -gt 1 ]] && echo "p) Previous page"
-    [[ $current_page -lt $total_pages ]] && echo "n) Next page"
-    echo "q) Return to search"
-    echo
-    
-    read -p "Your choice: " choice
-    case "$choice" in
-      p|P)
-        if [[ $current_page -gt 1 ]]; then
-          ((current_page--))
-        else
-          echo -e "${YELLOW}Already on first page${RESET}"
-          sleep 1
-        fi
-        ;;
-      n|N)
-        if [[ $current_page -lt $total_pages ]]; then
-          ((current_page++))
-        else
-          echo -e "${YELLOW}Already on last page${RESET}"
-          sleep 1
-        fi
-        ;;
-      q|Q|"")
-        break
-        ;;
-      *)
-        echo -e "${RED}Invalid option${RESET}"
-        sleep 1
-        ;;
-    esac
-  done
+  echo "$countries"
 }
 
 display_logo() {
@@ -3219,6 +3414,11 @@ parse_channel_name() {
     detected_country="DEU"
     clean_name=$(echo "$clean_name" | sed -E 's/[[:space:]]*(DE|DEU)[[:space:]]*/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
   fi
+
+  # Clean unwanted characters
+  if [[ "$clean_name" =~ [|★◉] ]]; then
+     clean_name=$(echo "$clean_name" | sed 's/[|★◉]//g')
+  fi
   
   # Resolution detection patterns (order matters - check highest quality first)
   
@@ -3241,6 +3441,99 @@ parse_channel_name() {
   
   # Output: clean_name|detected_country|detected_resolution
   echo "${clean_name}|${detected_country}|${detected_resolution}"
+}
+
+build_resolution_filter() {
+  local runtime_resolution="${1:-}"  # Optional runtime override
+  
+  # Use runtime resolution if provided, otherwise use configured filter
+  if [[ -n "$runtime_resolution" ]]; then
+    echo "and (.videoQuality.videoType // \"\" | . == \"$runtime_resolution\")"
+  elif [ "$FILTER_BY_RESOLUTION" = "true" ]; then
+    local filter_conditions=""
+    IFS=',' read -ra RESOLUTIONS <<< "$ENABLED_RESOLUTIONS"
+    for res in "${RESOLUTIONS[@]}"; do
+      if [ -n "$filter_conditions" ]; then
+        filter_conditions+=" or "
+      fi
+      filter_conditions+="(.videoQuality.videoType // \"\" | . == \"$res\")"
+    done
+    echo "and ($filter_conditions)"
+  else
+    echo ""
+  fi
+}
+
+build_country_filter() {
+  local runtime_country="${1:-}"  # Optional runtime override
+  
+  # Use runtime country if provided, otherwise use configured filter
+  if [[ -n "$runtime_country" ]]; then
+    echo "and (.country // \"\" | . == \"$runtime_country\")"
+  elif [ "$FILTER_BY_COUNTRY" = "true" ] && [ -n "$ENABLED_COUNTRIES" ]; then
+    local filter_conditions=""
+    IFS=',' read -ra COUNTRIES <<< "$ENABLED_COUNTRIES"
+    for country in "${COUNTRIES[@]}"; do
+      if [ -n "$filter_conditions" ]; then
+        filter_conditions+=" or "
+      fi
+      filter_conditions+="(.country // \"\" | . == \"$country\")"
+    done
+    echo "and ($filter_conditions)"
+  else
+    echo ""
+  fi
+}
+
+run_search_interface() {
+  while true; do
+    clear
+    echo -e "${BOLD}${CYAN}=== Local Database Search ===${RESET}\n"
+    
+    # Show database status
+    local breakdown=$(get_stations_breakdown)
+    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
+    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+    local total_count=$(get_total_stations_count)
+    
+    echo -e "${GREEN}✅ Database Available: $total_count stations${RESET}"
+    if [ "$base_count" -gt 0 ]; then
+      echo -e "   Base stations: $base_count"
+    fi
+    if [ "$user_count" -gt 0 ]; then
+      echo -e "   User stations: $user_count"
+    fi
+    echo
+    
+    # Show current filter status
+    echo -e "${BOLD}Current Filters:${RESET}"
+    if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
+      echo -e "${GREEN}✅ Resolution: $ENABLED_RESOLUTIONS${RESET}"
+    else
+      echo -e "${YELLOW}⚠️  Resolution: Disabled${RESET}"
+    fi
+    
+    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
+      echo -e "${GREEN}✅ Country: $ENABLED_COUNTRIES${RESET}"
+    else
+      echo -e "${YELLOW}⚠️  Country: Disabled${RESET}"
+    fi
+    echo
+    
+    read -p "Enter search term (name or call sign) or 'q' to return: " search_term
+    
+    case "$search_term" in
+      q|Q|"") return 0 ;;
+      *)
+        if [[ -n "$search_term" && ! "$search_term" =~ ^[[:space:]]*$ ]]; then
+          perform_search "$search_term"
+        else
+          echo -e "${RED}Please enter a search term${RESET}"
+          pause_for_user
+        fi
+        ;;
+    esac
+  done
 }
 
 # ============================================================================
@@ -3287,6 +3580,7 @@ manage_markets() {
     echo "f) Force Refresh Market (ignore base cache)"
     echo "r) Ready to Cache - Go to Local Caching"
     echo "q) Back to Main Menu"
+    echo
     
     read -p "Select option: " choice
     
@@ -3586,6 +3880,203 @@ force_refresh_market() {
   echo -e "${GREEN}✅ Market $country/$zip force refreshed${RESET}"
 }
 
+perform_search() {
+  local search_term="$1"
+  local page=1
+  local results_per_page=10
+  
+  while true; do
+    clear
+    echo -e "${BOLD}${CYAN}=== Search Results ===${RESET}\n"
+    echo -e "${YELLOW}Search term: '$search_term' (Page $page)${RESET}"
+    
+    # Show active filters
+    local filter_status=""
+    if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
+      filter_status+="Resolution: $ENABLED_RESOLUTIONS "
+    fi
+    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
+      filter_status+="Country: $ENABLED_COUNTRIES "
+    fi
+    if [ -n "$filter_status" ]; then
+      echo -e "${BLUE}Active Filters: $filter_status${RESET}"
+    fi
+    echo
+    
+    # Get search results using shared function
+    local results
+    results=$(shared_station_search "$search_term" "$page" "full")
+    
+    local total_results
+    total_results=$(shared_station_search "$search_term" 1 "count")
+    
+    if [[ -z "$results" ]]; then
+      echo -e "${YELLOW}No results found for '$search_term'${RESET}"
+      if [ "$FILTER_BY_RESOLUTION" = "true" ] || [ "$FILTER_BY_COUNTRY" = "true" ]; then
+        echo -e "${CYAN}💡 Try disabling filters in Settings if results seem limited${RESET}"
+      fi
+    else
+      echo -e "${GREEN}Found $total_results total results${RESET}"
+      echo
+      
+      # Enhanced table header
+      printf "${BOLD}${YELLOW}%-3s %-30s %-10s %-8s %-12s %s${RESET}\n" "Key" "Channel Name" "Call Sign" "Quality" "Station ID" "Country"
+      echo "--------------------------------------------------------------------------------"
+      
+      local result_count=0
+      local key_letters=("a" "b" "c" "d" "e" "f" "g" "h" "i" "j")
+      
+      # Process search results (TSV format from shared_station_search)
+      while IFS=$'\t' read -r name call_sign quality station_id country; do
+        [[ -z "$name" ]] && continue
+        
+        local key="${key_letters[$result_count]}"
+        
+        # Format table row
+        printf "%-3s " "${key})"
+        printf "%-30s %-10s %-8s " "${name:0:30}" "${call_sign:0:10}" "${quality:0:8}"
+        echo -n -e "${CYAN}${station_id}${RESET}"
+        printf "%*s" $((12 - ${#station_id})) ""
+        echo -e "${GREEN}${country}${RESET}"
+        
+        # Display logo if enabled
+        if [[ "$SHOW_LOGOS" == true ]]; then
+          display_logo "$station_id"
+        else
+          echo "[logo previews disabled]"
+        fi
+        echo
+        
+        ((result_count++))
+      done <<< "$results"
+    fi
+    
+    # Calculate pagination info
+    local total_pages=$(( (total_results + results_per_page - 1) / results_per_page ))
+    [[ $total_pages -eq 0 ]] && total_pages=1
+    
+    echo -e "${BOLD}Page $page of $total_pages${RESET}"
+    echo
+    echo -e "${BOLD}Options:${RESET}"
+    [[ $result_count -gt 0 ]] && echo "a-j) View detailed info for selected station"
+    [[ $page -lt $total_pages ]] && echo "n) Next page"
+    [[ $page -gt 1 ]] && echo "p) Previous page"
+    echo "s) New search"
+    echo "q) Back to search menu"
+    echo
+    
+    read -p "Your choice: " choice
+    
+    case "$choice" in
+      a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
+        if [[ $result_count -gt 0 ]]; then
+          show_station_details "$choice" "$results"
+        else
+          echo -e "${RED}No results to select from${RESET}"
+          sleep 1
+        fi
+        ;;
+      n|N)
+        if [[ $page -lt $total_pages ]]; then
+          ((page++))
+        else
+          echo -e "${YELLOW}Already on last page${RESET}"
+          sleep 1
+        fi
+        ;;
+      p|P)
+        if [[ $page -gt 1 ]]; then
+          ((page--))
+        else
+          echo -e "${YELLOW}Already on first page${RESET}"
+          sleep 1
+        fi
+        ;;
+      s|S)
+        return 0  # Return to search interface for new search
+        ;;
+      q|Q|"")
+        return 0  # Return to search interface
+        ;;
+      *)
+        echo -e "${RED}Invalid option${RESET}"
+        sleep 1
+        ;;
+    esac
+  done
+}
+
+show_station_details() {
+  local choice="$1"
+  local results="$2"
+  
+  # Convert letter to array index
+  local letter_lower=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
+  local index=-1
+  local key_letters=("a" "b" "c" "d" "e" "f" "g" "h" "i" "j")
+  
+  for ((idx=0; idx<10; idx++)); do
+    if [[ "${key_letters[$idx]}" == "$letter_lower" ]]; then
+      index=$idx
+      break
+    fi
+  done
+  
+  if [[ $index -ge 0 ]]; then
+    # Get the selected result (line number = index + 1)
+    local selected_line=$(echo "$results" | sed -n "$((index + 1))p")
+    
+    if [[ -n "$selected_line" ]]; then
+      IFS=$'\t' read -r name call_sign quality station_id country <<< "$selected_line"
+      
+      clear
+      echo -e "${BOLD}${CYAN}=== Station Details ===${RESET}\n"
+      
+      echo -e "${BOLD}Basic Information:${RESET}"
+      echo -e "Name: ${GREEN}$name${RESET}"
+      echo -e "Call Sign: ${GREEN}$call_sign${RESET}"
+      echo -e "Station ID: ${GREEN}$station_id${RESET}"
+      echo -e "Country: ${GREEN}$country${RESET}"
+      echo -e "Quality: ${GREEN}$quality${RESET}"
+      echo
+      
+      # Get additional details from database
+      local stations_file
+      stations_file=$(get_effective_stations_file)
+      if [[ $? -eq 0 ]]; then
+        local details=$(jq -r --arg id "$station_id" \
+          '.[] | select(.stationId == $id) | 
+           "Network: " + (.network // "N/A") + "\n" +
+           "Language: " + (.language // "N/A") + "\n" +
+           "Logo URL: " + (.preferredImage.uri // "N/A") + "\n" +
+           "Description: " + (.description // "N/A")' \
+          "$stations_file" 2>/dev/null)
+        
+        if [[ -n "$details" ]]; then
+          echo -e "${BOLD}Additional Details:${RESET}"
+          echo "$details"
+          echo
+        fi
+      fi
+      
+      # Show logo if available
+      if [[ "$SHOW_LOGOS" == true ]]; then
+        echo -e "${BOLD}Logo Preview:${RESET}"
+        display_logo "$station_id"
+        echo
+      fi
+      
+      pause_for_user
+    else
+      echo -e "${RED}Could not retrieve station details${RESET}"
+      sleep 1
+    fi
+  else
+    echo -e "${RED}Invalid selection${RESET}"
+    sleep 1
+  fi
+}
+
 # ============================================================================
 # SETTINGS MANAGEMENT
 # ============================================================================
@@ -3609,6 +4100,7 @@ settings_menu() {
     echo "i) Configure Dispatcharr Integration"
     echo "j) Developer Information"
     echo "q) Back to Main Menu"
+    echo
     
     read -p "Select option: " choice
     
@@ -3638,26 +4130,26 @@ developer_information() {
     echo
     
     echo -e "${BOLD}Options:${RESET}"
-    echo "1) File System Layout"
-    echo "2) Base Cache Manifest Status"
-    echo "3) Cache State Tracking Details"
-    echo "4) Function Dependencies Map"
-    echo "5) Base Cache Manifest Creation Guide"
-    echo "6) Debug: Raw Cache Files"
-    echo "7) Script Architecture Overview"
+    echo "a) File System Layout"
+    echo "b) Base Cache Manifest Status"
+    echo "c) Cache State Tracking Details"
+    echo "d) Function Dependencies Map"
+    echo "e) Base Cache Manifest Creation Guide"
+    echo "f) Debug: Raw Cache Files"
+    echo "g) Script Architecture Overview"
     echo "q) Back to Settings"
     echo
     
     read -p "Select option: " dev_choice
     
     case $dev_choice in
-      1) show_filesystem_layout && pause_for_user ;;
-      2) show_manifest_status && pause_for_user ;;
-      3) show_cache_state_details && pause_for_user ;;
-      4) show_function_dependencies && pause_for_user ;;
-      5) show_manifest_creation_guide && pause_for_user ;;
-      6) show_raw_cache_debug && pause_for_user ;;
-      7) show_script_architecture && pause_for_user ;;
+      a|A) show_filesystem_layout && pause_for_user ;;
+      b|B) show_manifest_status && pause_for_user ;;
+      c|C) show_cache_state_details && pause_for_user ;;
+      d|D) show_function_dependencies && pause_for_user ;;
+      e|E) show_manifest_creation_guide && pause_for_user ;;
+      f|F) show_raw_cache_debug && pause_for_user ;;
+      g|G) show_script_architecture && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac
@@ -3671,6 +4163,7 @@ show_filesystem_layout() {
   
   echo -e "${BOLD}Core Files (Script Directory):${RESET}"
   echo "  Script: $(realpath "$0" 2>/dev/null || echo "globalstationsearch.sh")"
+  echo "  Version: $VERSION ($(date '+%Y-%m-%d'))"
   echo "  Base Cache: $BASE_STATIONS_JSON"
   echo "  Base Manifest: $BASE_CACHE_MANIFEST"
   echo "  Config: $CONFIG_FILE"
@@ -3680,7 +4173,6 @@ show_filesystem_layout() {
   echo -e "${BOLD}Cache Directory: $CACHE_DIR${RESET}"
   echo "  User Cache: $USER_STATIONS_JSON"
   echo "  Combined Cache: $COMBINED_STATIONS_JSON (runtime only)"
-  echo "  Legacy Master: $MASTER_JSON (deprecated)"
   echo
   
   echo -e "${BOLD}State Tracking:${RESET}"
@@ -4060,8 +4552,9 @@ show_script_architecture() {
   
   echo -e "${BOLD}Version Information:${RESET}"
   echo "  Script Version: $VERSION"
-  echo "  Last Modified: 2025/05/30"
+  echo "  Last Modified: 2025/06/01"
   echo "  Architecture: Two-file cache system with manifest optimization"
+  echo "  Release Stage: Stable"
   echo
   
   echo -e "${BOLD}Core Components:${RESET}"
@@ -4086,6 +4579,7 @@ show_script_architecture() {
   echo
   echo -e "${YELLOW}4. Integration Layer:${RESET}"
   echo "   • Dispatcharr: Channel field population and station ID matching"
+  echo "   • Logo Workflow: Station logo upload and channel assignment"
   echo "   • Channels DVR: Station data API and logo retrieval"
   echo "   • Authentication: JWT token management for Dispatcharr"
   echo
@@ -4110,6 +4604,7 @@ show_script_architecture() {
   echo "• Manifest optimization: Prevents redundant API calls"
   echo "• Shared search functions: Consistency across local/API search"
   echo "• Modular integration: Clean separation of Dispatcharr/Channels DVR"
+  echo "• Semantic versioning: Professional release management"
   echo
   
   echo -e "${BOLD}Configuration Files:${RESET}"
@@ -4117,6 +4612,7 @@ show_script_architecture() {
   echo "• $CSV_FILE: User-defined markets"
   echo "• Cache state files: Processing progress tracking"
   echo "• Dispatcharr tokens: Authentication cache"
+  echo "• Dispatcharr logos: Logo URL to ID mapping cache"
 }
 
 display_current_settings() {
@@ -4458,7 +4954,11 @@ clear_all_cache() {
 
 clear_station_cache() {
   if confirm_action "Clear station cache?"; then
-    rm -f "$STATION_CACHE_DIR"/*.json "$MASTER_JSON"
+    # Remove station cache files and any legacy master JSON files
+    rm -f "$STATION_CACHE_DIR"/*.json 2>/dev/null || true
+    rm -f "$CACHE_DIR"/all_stations_master.json* 2>/dev/null || true
+    rm -f "$CACHE_DIR"/working_stations.json* 2>/dev/null || true
+    rm -f "$CACHE_DIR"/temp_stations_*.json 2>/dev/null || true
     echo -e "${GREEN}Station cache cleared${RESET}"
     return 0
   else
@@ -4607,16 +5107,20 @@ export_settings() {
   {
     echo "Global Station Search Settings Export"
     echo "Generated: $(date)"
-    echo "Version: $VERSION"
+    echo "Script Version: $VERSION"
+    echo "Last Modified: 2025/06/01"
     echo
+    echo "=== Configuration ==="
     echo "Server: $CHANNELS_URL"
     echo "Logo Display: $SHOW_LOGOS"
     echo "Resolution Filter: $FILTER_BY_RESOLUTION"
     echo "Enabled Resolutions: $ENABLED_RESOLUTIONS"
     echo "Country Filter: $FILTER_BY_COUNTRY"
     echo "Enabled Countries: $ENABLED_COUNTRIES"
+    echo "Dispatcharr Enabled: $DISPATCHARR_ENABLED"
+    echo "Dispatcharr URL: $DISPATCHARR_URL"
     echo
-    echo "Markets:"
+    echo "=== Markets ==="
     [ -f "$CSV_FILE" ] && cat "$CSV_FILE"
   } > "$settings_file"
   
@@ -4805,7 +5309,9 @@ perform_caching() {
   init_cache_state_tracking
   
   # Clean up temporary files (but preserve user and base caches)
-  rm -f "$LINEUP_CACHE" cache/unique_lineups.txt "$MASTER_JSON" "$STATION_CACHE_DIR"/*.json cache/enhanced_stations.log
+  rm -f "$LINEUP_CACHE" cache/unique_lineups.txt "$STATION_CACHE_DIR"/*.json cache/enhanced_stations.log
+  # Remove any legacy master JSON files during cleanup
+  rm -f "$CACHE_DIR"/all_stations_master.json* "$CACHE_DIR"/working_stations.json* 2>/dev/null || true
   
   local start_time=$(date +%s.%N)
   mkdir -p "cache" "$STATION_CACHE_DIR"
@@ -4899,9 +5405,11 @@ perform_caching() {
   done < cache/unique_lineups.txt
 
   # Process and deduplicate stations with country injection
+  # Use temporary working file that will be cleaned up
   echo -e "\n${BOLD}Phase 4: Processing stations and injecting country codes${RESET}"
   local pre_dedup_stations=0
-  > "$MASTER_JSON.tmp"
+  local temp_stations_file="$CACHE_DIR/temp_stations_$(date +%s).json"
+  > "$temp_stations_file.tmp"
 
   # Process each lineup file individually to track country origin
   while read LINEUP; do
@@ -4939,19 +5447,19 @@ perform_caching() {
       # Inject country code and source into each station
       jq --arg country "$country_code" --arg source "user" \
          'map(. + {country: $country, source: $source})' \
-         "$station_file" >> "$MASTER_JSON.tmp"
+         "$station_file" >> "$temp_stations_file.tmp"
     fi
   done < cache/unique_lineups.txt
 
   # Now flatten, deduplicate, and sort
   echo -e "\n${BOLD}Phase 5: Final deduplication and processing${RESET}"
-  jq -s 'flatten | sort_by((.name // "") | length) | reverse | unique_by(.stationId)' "$MASTER_JSON.tmp" \
-    | jq 'map(.name = (.name // empty))' > "$MASTER_JSON"
+  jq -s 'flatten | sort_by((.name // "") | length) | reverse | unique_by(.stationId)' "$temp_stations_file.tmp" \
+    | jq 'map(.name = (.name // empty))' > "$temp_stations_file"
 
-  # Clean up temp file
-  rm -f "$MASTER_JSON.tmp"
+  # Clean up intermediate temp file
+  rm -f "$temp_stations_file.tmp"
 
-  local post_dedup_stations=$(jq length "$MASTER_JSON")
+  local post_dedup_stations=$(jq length "$temp_stations_file")
   local dup_stations_removed=$((pre_dedup_stations - post_dedup_stations))
   
   echo "  Stations before dedup: $pre_dedup_stations"
@@ -4961,7 +5469,7 @@ perform_caching() {
   # Enhancement phase with statistics capture
   echo -e "\n${BOLD}Phase 6: Enhancing station data${RESET}"
   local enhancement_stats
-  enhancement_stats=$(enhance_stations "$start_time")
+  enhancement_stats=$(enhance_stations "$start_time" "$temp_stations_file")
   local enhanced_from_cache=$(echo "$enhancement_stats" | cut -d' ' -f1)
   local enhanced_from_api=$(echo "$enhancement_stats" | cut -d' ' -f2)
   
@@ -4969,10 +5477,12 @@ perform_caching() {
   echo -e "\n${BOLD}Phase 7: Saving to user cache${RESET}"
   echo "Adding stations to user cache..."
   
-  if add_stations_to_user_cache "$MASTER_JSON"; then
+  if add_stations_to_user_cache "$temp_stations_file"; then
     echo -e "${GREEN}✅ User cache updated successfully${RESET}"
   else
     echo -e "${RED}❌ Failed to update user cache${RESET}"
+    # Clean up temp file before returning
+    rm -f "$temp_stations_file"
     return 1
   fi
 
@@ -4983,18 +5493,20 @@ perform_caching() {
 
   show_user_caching_summary "$dup_lineups_removed" "$dup_stations_removed" "$human_duration" "$enhanced_from_cache" "$enhanced_from_api"
   
-  # Clean up temporary files
+  # Clean up temporary files including our temp stations file
   cleanup_combined_cache
+  rm -f "$temp_stations_file"
 }
 
 enhance_stations() {
   local start_time="$1"
+  local stations_file="$2"  # The file to enhance (passed as parameter)
   
   echo "Processing final station list..."
-  local tmp_json="cache/all_stations_tmp.json"
+  local tmp_json="$CACHE_DIR/enhancement_tmp_$(date +%s).json"
   > "$tmp_json"
 
-  mapfile -t stations < <(jq -c '.[]' "$MASTER_JSON")
+  mapfile -t stations < <(jq -c '.[]' "$stations_file")
   local total_stations=${#stations[@]}
   local enhanced_from_api=0
 
@@ -5029,7 +5541,7 @@ enhance_stations() {
   # Clear the progress line and show completion
   echo
   echo -e "\nProcessing complete."
-  mv "$tmp_json" "$MASTER_JSON"
+  mv "$tmp_json" "$stations_file"
 
   # Return enhancement statistics (0 for cache, actual count for API)
   echo "0 $enhanced_from_api"
@@ -5140,7 +5652,7 @@ main_menu() {
   
   while true; do
     clear
-    echo -e "${BOLD}${CYAN}=== Global Station Search - Version $VERSION ===${RESET}\n"
+    echo -e "${BOLD}${CYAN}=== Global Station Search v$VERSION ===${RESET}\n"
     
     show_system_status
     
@@ -5231,31 +5743,30 @@ cache_management_main_menu() {
     echo -e "${CYAN}📊 Total Available: $total_count stations${RESET}"
     echo
     
-    # Show state tracking summary
     show_cache_state_stats
     echo
     
     echo -e "${BOLD}Cache Management Options:${RESET}"
-    echo "1) Incremental Update (add new markets only)"
-    echo "2) Full User Cache Refresh"
-    echo "3) View Cache Statistics"
-    echo "4) Export Combined Database to CSV"
-    echo "5) Clear User Cache"
-    echo "6) Clear Temporary Files"
-    echo "7) Advanced Cache Operations"
+    echo "a) Incremental Update (add new markets only)"
+    echo "b) Full User Cache Refresh"
+    echo "c) View Cache Statistics"
+    echo "d) Export Combined Database to CSV"
+    echo "e) Clear User Cache"
+    echo "f) Clear Temporary Files"
+    echo "g) Advanced Cache Operations"
     echo "q) Back to Main Menu"
     echo
     
     read -p "Select option: " choice
     
     case $choice in
-      1) run_incremental_update && pause_for_user ;;
-      2) run_full_user_refresh && pause_for_user ;;
-      3) show_detailed_cache_stats && pause_for_user ;;
-      4) export_stations_to_csv && pause_for_user ;;
-      5) clear_user_cache && pause_for_user ;;
-      6) clear_temp_files && pause_for_user ;;
-      7) advanced_cache_operations ;;
+      a|A) run_incremental_update && pause_for_user ;;
+      b|B) run_full_user_refresh && pause_for_user ;;
+      c|C) show_detailed_cache_stats && pause_for_user ;;
+      d|D) export_stations_to_csv && pause_for_user ;;
+      e|E) clear_user_cache && pause_for_user ;;
+      f|F) clear_temp_files && pause_for_user ;;
+      g|G) advanced_cache_operations ;;
       q|Q|"") break ;;
       *) show_invalid_choice ;;
     esac

@@ -2,16 +2,24 @@
 
 A comprehensive television station search tool that integrates with Channels DVR API and Dispatcharr to provide enhanced station discovery, automated field population, and logo management capabilities.
 
-## Version 1.3.0
+## Version 1.3.1
 
-**New in 1.3.0:**
+**New in 1.3.1:**
+- **Enhanced Dispatcharr Workflows** - Significantly improved efficiency and user experience
+- **Streamlined Channel Processing** - Removed disruptive prompts for smoother batch operations
+- **Improved Channel Name Parsing** - Enhanced regex logic with helper functions for better auto-matching
+- **Consistent Channel Sorting** - Fixed sorting across all Dispatcharr workflows (lowest to highest channel number)
+- **Better Navigation Controls** - Added proper escape options and single-channel processing modes
+- **Enhanced Guidance** - Updated instructions and messaging for better accuracy across functions
+- **Improved Error Handling** - Better backup handling and recovery mechanisms
+- **Code Cleanup** - Removed broken features and improved overall consistency
+
+**Previous Major Release (1.3.0):**
 - Command line flags (`-v`, `-h`, `--version-info`)
 - USA and GBR streaming channels added to base cache
 - Enhanced Dispatcharr logo integration with API workflow
-- Enhanced channel name parsing for auto-matching
 - Fixed global country search filter
 - Menu consistency improvements
-- Complete code cleanup and legacy variable removal
 
 ## Features
 

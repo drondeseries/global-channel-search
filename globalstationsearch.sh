@@ -4,8 +4,11 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-VERSION="1.3.1"
+VERSION="1.3.3"
 VERSION_INFO="Last Modified: 2025/06/01
+Patch (1.3.3)
+• Second attempt to fix broken automatic token refresh during workflow
+• Fix save and resume state handling in the dispatcharr all channels workflow
 Patch (1.3.2)
 • Fixed broken automatic token refresh during workflow
 • Add save and resume state handling to dispatcharr all channels workflow
@@ -449,9 +452,8 @@ setup_config() {
       DISPATCHARR_ENABLED=${DISPATCHARR_ENABLED:-false}
       DISPATCHARR_REFRESH_INTERVAL=${DISPATCHARR_REFRESH_INTERVAL:-25}
       
-      # Add resume state variables
+      # Resume state - ONLY channel number now
       LAST_PROCESSED_CHANNEL_NUMBER=${LAST_PROCESSED_CHANNEL_NUMBER:-""}
-      LAST_PROCESSED_CHANNEL_INDEX=${LAST_PROCESSED_CHANNEL_INDEX:-""}
       
       return 0
     else
@@ -499,9 +501,8 @@ create_minimal_config() {
     echo "DISPATCHARR_PASSWORD=\"\""
     echo "DISPATCHARR_ENABLED=false"
     echo "DISPATCHARR_REFRESH_INTERVAL=25"
-    echo "# Resume State for Field Population"
+    echo "# Resume State for Field Population - Channel Number Only"
     echo "LAST_PROCESSED_CHANNEL_NUMBER=\"\""
-    echo "LAST_PROCESSED_CHANNEL_INDEX=\"\""
   } > "$CONFIG_FILE" || {
     echo -e "${RED}Error: Cannot write to config file${RESET}"
     exit 1
@@ -2655,18 +2656,17 @@ init_dispatcharr_interaction_counter() {
 }
 
 increment_dispatcharr_interaction() {
-  local operation_description="${1:-channel interaction}"
-  
   ((DISPATCHARR_INTERACTION_COUNT++))
   
   # Check if we need to refresh tokens
   if (( DISPATCHARR_INTERACTION_COUNT % DISPATCHARR_REFRESH_INTERVAL == 0 )); then
-    echo -e "${CYAN}🔄 Refreshing authentication tokens ($DISPATCHARR_INTERACTION_COUNT $operation_description processed)...${RESET}"
+    echo -e "${CYAN}🔄 Refreshing tokens after $DISPATCHARR_INTERACTION_COUNT interactions...${RESET}" >&2
     
-    if refresh_dispatcharr_tokens >/dev/null 2>&1; then
-      echo -e "${GREEN}✅ Tokens refreshed successfully${RESET}"
+    if refresh_dispatcharr_tokens; then
+      echo -e "${GREEN}✅ Tokens refreshed${RESET}" >&2
     else
-      echo -e "${YELLOW}⚠️  Token refresh failed - continuing with existing tokens${RESET}"
+      echo -e "${YELLOW}⚠️  Token refresh failed - continuing with existing tokens${RESET}" >&2
+      # Log the failure but don't stop the workflow
       echo "$(date '+%Y-%m-%d %H:%M:%S') - Automatic token refresh failed after $DISPATCHARR_INTERACTION_COUNT interactions" >> "$DISPATCHARR_LOG"
     fi
   fi
@@ -2707,26 +2707,42 @@ check_dispatcharr_connection() {
 
 refresh_dispatcharr_tokens() {
   if [[ -z "${DISPATCHARR_URL:-}" ]] || [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
-    echo -e "${RED}Dispatcharr not configured or disabled${RESET}"
     return 1
   fi
   
   if [[ -z "${DISPATCHARR_USERNAME:-}" ]] || [[ -z "${DISPATCHARR_PASSWORD:-}" ]]; then
-    echo -e "${RED}Dispatcharr credentials not found in settings${RESET}"
     return 1
   fi
   
   local token_file="$CACHE_DIR/dispatcharr_tokens.json"
   
-  echo "🔄 Refreshing Dispatcharr authentication tokens..."
-  
-  # Get fresh JWT tokens
+  # Get fresh JWT tokens (silent operation)
   local token_response
-  token_response=$(curl -s --connect-timeout 10 \
+  token_response=$(curl -s --connect-timeout 10 --max-time 20 \
     -H "Content-Type: application/json" \
     -d "{\"username\":\"$DISPATCHARR_USERNAME\",\"password\":\"$DISPATCHARR_PASSWORD\"}" \
-    "${DISPATCHARR_URL}/api/accounts/token/" 2>/dev/null)
+    "${DISPATCHARR_URL}/api/accounts/token/" 2>&1)
+  local curl_exit_code=$?
   
+  # Check curl exit code
+  if [[ $curl_exit_code -ne 0 ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: Curl error $curl_exit_code" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Check if we got any response
+  if [[ -z "$token_response" ]]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: No response from server" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Validate JSON response
+  if ! echo "$token_response" | jq empty 2>/dev/null; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: Invalid JSON response: $token_response" >> "$DISPATCHARR_LOG"
+    return 1
+  fi
+  
+  # Check if response contains access token
   if echo "$token_response" | jq -e '.access' >/dev/null 2>&1; then
     # Save tokens to file
     echo "$token_response" > "$token_file"
@@ -2734,14 +2750,12 @@ refresh_dispatcharr_tokens() {
     # Log the refresh
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Tokens refreshed automatically" >> "$DISPATCHARR_LOG"
     
-    echo -e "${GREEN}✅ Fresh tokens obtained${RESET}"
+    # RESET THE COUNTER AFTER SUCCESSFUL REFRESH
+    DISPATCHARR_INTERACTION_COUNT=0
+    
     return 0
   else
-    echo -e "${RED}❌ Failed to refresh tokens${RESET}"
-    echo "Response: $token_response"
-    
-    # Log the failure
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: $token_response" >> "$DISPATCHARR_LOG"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Token refresh failed: Response missing access token: $token_response" >> "$DISPATCHARR_LOG"
     return 1
   fi
 }
@@ -4145,17 +4159,16 @@ process_all_channels_fields() {
   local start_index=0
   
   # Check if there's valid resume state
-  if [[ -n "$LAST_PROCESSED_CHANNEL_NUMBER" && -n "$LAST_PROCESSED_CHANNEL_INDEX" ]]; then
+  if [[ -n "$LAST_PROCESSED_CHANNEL_NUMBER" ]]; then
     # 3 OPTIONS: Resume state available
     echo -e "${BOLD}${YELLOW}=== Choose Starting Point ===${RESET}"
     echo -e "${CYAN}Previous session data found:${RESET}"
     echo -e "Last processed channel: ${GREEN}#$LAST_PROCESSED_CHANNEL_NUMBER${RESET}"
-    echo -e "Progress: ${CYAN}$((LAST_PROCESSED_CHANNEL_INDEX + 1)) of $total_channels channels${RESET}"
     echo
     
     echo -e "${BOLD}${BLUE}Starting Point Options:${RESET}"
-    echo -e "${GREEN}1)${RESET} Resume from last processed channel (#$LAST_PROCESSED_CHANNEL_NUMBER)"
-    echo -e "${GREEN}2)${RESET} Start from beginning (channel 1)"
+    echo -e "${GREEN}1)${RESET} Resume from next channel after #$LAST_PROCESSED_CHANNEL_NUMBER"
+    echo -e "${GREEN}2)${RESET} Start from beginning (channel with lowest number)"
     echo -e "${GREEN}3)${RESET} Start from specific channel number"
     echo -e "${GREEN}q)${RESET} Cancel and return"
     echo
@@ -4167,16 +4180,28 @@ process_all_channels_fields() {
       case "$start_choice" in
         1)
           # Resume from next channel after last processed
-          start_index=$((LAST_PROCESSED_CHANNEL_INDEX + 1))
-          if [ "$start_index" -ge "$total_channels" ]; then
-            echo -e "${YELLOW}⚠️  All channels have been processed${RESET}"
+          local next_channel_number
+          next_channel_number=$(find_next_channel_number "$LAST_PROCESSED_CHANNEL_NUMBER" channels_array)
+          
+          if [[ -n "$next_channel_number" ]]; then
+            start_index=$(find_channel_index_by_number "$next_channel_number" channels_array)
+            if [[ "$start_index" -ge 0 ]]; then
+              echo -e "${GREEN}✅ Resuming from channel #$next_channel_number${RESET}"
+              break
+            else
+              echo -e "${RED}❌ Could not find channel #$next_channel_number in current list${RESET}"
+              echo -e "${CYAN}💡 Starting from beginning instead${RESET}"
+              start_index=0
+              clear_resume_state
+              break
+            fi
+          else
+            echo -e "${YELLOW}⚠️  All channels after #$LAST_PROCESSED_CHANNEL_NUMBER have been processed${RESET}"
             echo -e "${CYAN}💡 Starting from beginning instead${RESET}"
             start_index=0
             clear_resume_state
-          else
-            echo -e "${GREEN}✅ Resuming from channel $((start_index + 1))${RESET}"
+            break
           fi
-          break
           ;;
         2)
           start_index=0
@@ -4190,17 +4215,10 @@ process_all_channels_fields() {
           
           if [[ "$custom_channel" =~ ^[0-9]+$ ]]; then
             # Find index for this channel number
-            local found_index=-1
-            for ((idx = 0; idx < total_channels; idx++)); do
-              local channel_data="${channels_array[$idx]}"
-              local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
-              if [[ "$channel_number" == "$custom_channel" ]]; then
-                found_index=$idx
-                break
-              fi
-            done
+            local found_index
+            found_index=$(find_channel_index_by_number "$custom_channel" channels_array)
             
-            if [ "$found_index" -ge 0 ]; then
+            if [[ "$found_index" -ge 0 ]]; then
               start_index=$found_index
               echo -e "${GREEN}✅ Starting from channel #$custom_channel${RESET}"
               clear_resume_state
@@ -4230,7 +4248,7 @@ process_all_channels_fields() {
     echo
     
     echo -e "${BOLD}${BLUE}Starting Point Options:${RESET}"
-    echo -e "${GREEN}1)${RESET} Start from beginning (channel 1)"
+    echo -e "${GREEN}1)${RESET} Start from beginning (lowest channel number)"
     echo -e "${GREEN}2)${RESET} Start from specific channel number"
     echo -e "${GREEN}q)${RESET} Cancel and return"
     echo
@@ -4251,17 +4269,10 @@ process_all_channels_fields() {
           
           if [[ "$custom_channel" =~ ^[0-9]+$ ]]; then
             # Find index for this channel number
-            local found_index=-1
-            for ((idx = 0; idx < total_channels; idx++)); do
-              local channel_data="${channels_array[$idx]}"
-              local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
-              if [[ "$channel_number" == "$custom_channel" ]]; then
-                found_index=$idx
-                break
-              fi
-            done
+            local found_index
+            found_index=$(find_channel_index_by_number "$custom_channel" channels_array)
             
-            if [ "$found_index" -ge 0 ]; then
+            if [[ "$found_index" -ge 0 ]]; then
               start_index=$found_index
               echo -e "${GREEN}✅ Starting from channel #$custom_channel${RESET}"
               break
@@ -4288,7 +4299,8 @@ process_all_channels_fields() {
   
   # Show processing plan
   if [ "$start_index" -gt 0 ]; then
-    echo -e "${CYAN}📊 Processing plan: Starting from channel $((start_index + 1)) of $total_channels${RESET}"
+    local start_channel_number=$(echo "${channels_array[$start_index]}" | jq -r '.channel_number // "0"')
+    echo -e "${CYAN}📊 Processing plan: Starting from channel #$start_channel_number${RESET}"
     echo -e "${CYAN}📊 Remaining channels: $((total_channels - start_index))${RESET}"
   else
     echo -e "${CYAN}📊 Processing plan: All $total_channels channels${RESET}"
@@ -4319,12 +4331,14 @@ process_all_channels_fields() {
   
   for ((i = start_index; i < total_channels; i++)); do
     local channel_data="${channels_array[$i]}"
-    local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "N/A"')
+    local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
+    
+    # Convert "N/A" or empty to "0" for consistency
+    if [[ "$channel_number" == "N/A" || -z "$channel_number" ]]; then
+      channel_number="0"
+    fi
     
     echo -e "${BOLD}${BLUE}=== Channel $((i + 1)) of $total_channels (Channel #$channel_number) ===${RESET}"
-    
-    # Save resume state before processing this channel
-    save_resume_state "$channel_number" "$i"
     
     # Process the channel - capture return code to handle user exit
     process_single_channel_fields "$channel_data" $((i + 1)) "$total_channels"
@@ -4338,6 +4352,10 @@ process_all_channels_fields() {
       pause_for_user
       return 0
     fi
+    
+    # SAVE RESUME STATE AFTER SUCCESSFUL COMPLETION
+    # Save the completed channel number for resume functionality
+    save_resume_state "$channel_number"
     
     # Show progress status but no interruption
     if [[ $((i + 1)) -lt $total_channels ]]; then
@@ -4362,29 +4380,95 @@ process_all_channels_fields() {
 
 save_resume_state() {
   local channel_number="$1"
-  local channel_index="$2"
   
-  # Update the in-memory variables
+  # Update the in-memory variable
   LAST_PROCESSED_CHANNEL_NUMBER="$channel_number"
-  LAST_PROCESSED_CHANNEL_INDEX="$channel_index"
   
-  # Update config file
-  sed -i "s/LAST_PROCESSED_CHANNEL_NUMBER=.*/LAST_PROCESSED_CHANNEL_NUMBER=\"$channel_number\"/" "$CONFIG_FILE"
-  sed -i "s/LAST_PROCESSED_CHANNEL_INDEX=.*/LAST_PROCESSED_CHANNEL_INDEX=\"$channel_index\"/" "$CONFIG_FILE"
-  
-  echo -e "${CYAN}💾 Resume state saved: Channel $channel_number${RESET}" >&2
+  # Update config file more robustly
+  local temp_config="${CONFIG_FILE}.tmp"
+  if [ -f "$CONFIG_FILE" ]; then
+    # Remove existing line and add new one
+    grep -v "^LAST_PROCESSED_CHANNEL_NUMBER=" "$CONFIG_FILE" > "$temp_config" 2>/dev/null || true
+    echo "LAST_PROCESSED_CHANNEL_NUMBER=\"$channel_number\"" >> "$temp_config"
+    
+    # Replace original file
+    if mv "$temp_config" "$CONFIG_FILE"; then
+      echo -e "${CYAN}💾 Resume state saved: Channel #$channel_number${RESET}" >&2
+    else
+      echo -e "${RED}❌ Failed to save resume state${RESET}" >&2
+      rm -f "$temp_config" 2>/dev/null
+    fi
+  else
+    echo -e "${RED}❌ Config file not found, cannot save resume state${RESET}" >&2
+  fi
 }
 
 clear_resume_state() {
-  # Clear in-memory variables
+  # Clear in-memory variable
   LAST_PROCESSED_CHANNEL_NUMBER=""
-  LAST_PROCESSED_CHANNEL_INDEX=""
   
   # Clear in config file
   sed -i "s/LAST_PROCESSED_CHANNEL_NUMBER=.*/LAST_PROCESSED_CHANNEL_NUMBER=\"\"/" "$CONFIG_FILE"
-  sed -i "s/LAST_PROCESSED_CHANNEL_INDEX=.*/LAST_PROCESSED_CHANNEL_INDEX=\"\"/" "$CONFIG_FILE"
   
   echo -e "${CYAN}💾 Resume state cleared${RESET}" >&2
+}
+
+find_channel_index_by_number() {
+  local target_channel_number="$1"
+  local channels_array_ref=$2
+  
+  # Use nameref to access the array
+  local -n channels_array=$channels_array_ref
+  
+  for ((i = 0; i < ${#channels_array[@]}; i++)); do
+    local channel_data="${channels_array[$i]}"
+    local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
+    
+    # Convert "N/A" or empty to "0" for consistency
+    if [[ "$channel_number" == "N/A" || -z "$channel_number" ]]; then
+      channel_number="0"
+    fi
+    
+    # Compare as numbers
+    if (( channel_number == target_channel_number )); then
+      echo "$i"
+      return 0
+    fi
+  done
+  
+  # Not found
+  echo "-1"
+  return 1
+}
+
+find_next_channel_number() {
+  local last_channel_number="$1"
+  local channels_array_ref=$2
+  
+  # Use nameref to access the array
+  local -n channels_array=$channels_array_ref
+  
+  local next_channel_number=""
+  local smallest_higher_number=""
+  
+  for ((i = 0; i < ${#channels_array[@]}; i++)); do
+    local channel_data="${channels_array[$i]}"
+    local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
+    
+    # Convert "N/A" or empty to "0" for consistency
+    if [[ "$channel_number" == "N/A" || -z "$channel_number" ]]; then
+      channel_number="0"
+    fi
+    
+    # Find the smallest channel number that's higher than last_channel_number
+    if (( channel_number > last_channel_number )); then
+      if [[ -z "$smallest_higher_number" ]] || (( channel_number < smallest_higher_number )); then
+        smallest_higher_number="$channel_number"
+      fi
+    fi
+  done
+  
+  echo "$smallest_higher_number"
 }
 
 process_channels_missing_fields() {
@@ -4806,11 +4890,20 @@ process_single_channel_fields() {
       case "$auto_choice" in
         c|C|"")
           # Proceed with field comparison
-          if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"; then
-            echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
-          else
-            echo -e "${CYAN}💡 No field updates were applied for auto-matched station${RESET}"
-          fi
+          show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"
+          local update_result=$?
+          
+          case $update_result in
+            0)
+              echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
+              ;;
+            1)
+              echo -e "${RED}❌ Failed to apply auto-matched field updates${RESET}"
+              ;;
+            2)
+              echo -e "${CYAN}💡 No field updates requested for auto-matched station${RESET}"
+              ;;
+          esac
           pause_for_user
           return 0
           ;;
@@ -4825,11 +4918,20 @@ process_single_channel_fields() {
         *)
           echo -e "${RED}Invalid option. Proceeding with field updates...${RESET}"
           # Default to continuing
-          if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"; then
-            echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
-          else
-            echo -e "${CYAN}💡 No field updates were applied for auto-matched station${RESET}"
-          fi
+          show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"
+          local update_result=$?
+          
+          case $update_result in
+            0)
+              echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
+              ;;
+            1)
+              echo -e "${RED}❌ Failed to apply auto-matched field updates${RESET}"
+              ;;
+            2)
+              echo -e "${CYAN}💡 No field updates requested for auto-matched station${RESET}"
+              ;;
+          esac
           pause_for_user
           return 0
           ;;
@@ -4919,7 +5021,7 @@ process_single_channel_fields() {
     if [[ -z "$results" ]]; then
       echo -e "${YELLOW}No results found for '$search_term'${RESET}"
       if [[ -n "$detected_country" ]] || [[ -n "$detected_resolution" ]]; then
-        echo -e "${CYAN}💡 Try 'c' to clear auto-detected filters${RESET}"
+        echo -e "${CYAN}💡 Try 's' to search with different term or filters${RESET}"
       fi
     else
       echo -e "${GREEN}Found $total_results total results${RESET}"
@@ -5012,11 +5114,20 @@ process_single_channel_fields() {
             read -p "Use this station for field updates? (y/n): " confirm
             if [[ "$confirm" =~ ^[Yy]$ ]]; then
               # Show field comparison and get user choices (NO LOGO LOGIC)
-              if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$sel_station_id" "$sel_name" "$sel_call"; then
-                echo -e "${GREEN}Field updates applied successfully${RESET}"
-              else
-                echo -e "${CYAN}No field updates were applied${RESET}"
-              fi
+              show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$sel_station_id" "$sel_name" "$sel_call"
+              local update_result=$?
+              
+              case $update_result in
+                0)
+                  echo -e "${GREEN}Field updates applied successfully${RESET}"
+                  ;;
+                1)
+                  echo -e "${RED}Failed to apply field updates${RESET}"
+                  ;;
+                2)
+                  echo -e "${CYAN}No field updates were requested${RESET}"
+                  ;;
+              esac
               pause_for_user
               return 0  # Exit channel processing, move to next channel
             fi
@@ -5136,11 +5247,20 @@ process_single_channel_fields_standalone() {
       case "$auto_choice" in
         c|C|"")
           # Proceed with field comparison
-          if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"; then
-            echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
-          else
-            echo -e "${CYAN}💡 No field updates were applied for auto-matched station${RESET}"
-          fi
+          show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"
+          local update_result=$?
+          
+          case $update_result in
+            0)
+              echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
+              ;;
+            1)
+              echo -e "${RED}❌ Failed to apply auto-matched field updates${RESET}"
+              ;;
+            2)
+              echo -e "${CYAN}💡 No field updates requested for auto-matched station${RESET}"
+              ;;
+          esac
           pause_for_user
           return 0
           ;;
@@ -5155,11 +5275,20 @@ process_single_channel_fields_standalone() {
         *)
           echo -e "${RED}Invalid option. Proceeding with field updates...${RESET}"
           # Default to continuing
-          if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"; then
-            echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
-          else
-            echo -e "${CYAN}💡 No field updates were applied for auto-matched station${RESET}"
-          fi
+          show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$current_tvc_stationid" "$station_name" "$call_sign"
+          local update_result=$?
+          
+          case $update_result in
+            0)
+              echo -e "${GREEN}✅ Auto-matched field updates applied successfully${RESET}"
+              ;;
+            1)
+              echo -e "${RED}❌ Failed to apply auto-matched field updates${RESET}"
+              ;;
+            2)
+              echo -e "${CYAN}💡 No field updates requested for auto-matched station${RESET}"
+              ;;
+          esac
           pause_for_user
           return 0
           ;;
@@ -5342,11 +5471,20 @@ process_single_channel_fields_standalone() {
             read -p "Use this station for field updates? (y/n): " confirm
             if [[ "$confirm" =~ ^[Yy]$ ]]; then
               # Show field comparison and get user choices
-              if show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$sel_station_id" "$sel_name" "$sel_call"; then
-                echo -e "${GREEN}Field updates applied successfully${RESET}"
-              else
-                echo -e "${CYAN}No field updates were applied${RESET}"
-              fi
+              show_field_comparison_and_update_simplified "$channel_id" "$channel_name" "$current_tvg_id" "$current_tvc_stationid" "$sel_station_id" "$sel_name" "$sel_call"
+              local update_result=$?
+              
+              case $update_result in
+                0)
+                  echo -e "${GREEN}Field updates applied successfully${RESET}"
+                  ;;
+                1)
+                  echo -e "${RED}Failed to apply field updates${RESET}"
+                  ;;
+                2)
+                  echo -e "${CYAN}No field updates were requested${RESET}"
+                  ;;
+              esac
               pause_for_user
               return 0  # Complete processing
             fi
@@ -5787,9 +5925,11 @@ show_field_comparison_and_update_simplified() {
   fi
   echo
   
-  # Field-by-field comparison
+  # Field-by-field comparison - track if any changes are requested
   echo -e "${BOLD}${CYAN}=== Proposed Field Updates ===${RESET}"
   echo
+  
+  local changes_requested=false
   
   # 1. Channel Name
   echo -e "${BOLD}1. Channel Name:${RESET}"
@@ -5798,6 +5938,9 @@ show_field_comparison_and_update_simplified() {
   local update_name="n"
   if [[ "$channel_name" != "$station_name" ]]; then
     read -p "   Update channel name? (y/n): " update_name
+    if [[ "$update_name" =~ ^[Yy]$ ]]; then
+      changes_requested=true
+    fi
   else
     echo -e "   ${CYAN}(already matches)${RESET}"
   fi
@@ -5810,6 +5953,9 @@ show_field_comparison_and_update_simplified() {
   local update_tvg="n"
   if [[ "$current_tvg_id" != "$call_sign" ]]; then
     read -p "   Update TVG-ID? (y/n): " update_tvg
+    if [[ "$update_tvg" =~ ^[Yy]$ ]]; then
+      changes_requested=true
+    fi
   else
     echo -e "   ${CYAN}(already matches)${RESET}"
   fi
@@ -5822,12 +5968,15 @@ show_field_comparison_and_update_simplified() {
   local update_station_id="n"
   if [[ "$current_tvc_stationid" != "$station_id" ]]; then
     read -p "   Update TVC Guide Station ID? (y/n): " update_station_id
+    if [[ "$update_station_id" =~ ^[Yy]$ ]]; then
+      changes_requested=true
+    fi
   else
     echo -e "   ${CYAN}(already matches)${RESET}"
   fi
   echo
   
-  # 4. Logo (NEW)
+  # 4. Logo
   echo -e "${BOLD}4. Channel Logo:${RESET}"
   local update_logo="n"
   local logo_id=""
@@ -5839,6 +5988,7 @@ show_field_comparison_and_update_simplified() {
       logo_id=$(upload_station_logo_to_dispatcharr "$station_name" "$logo_url")
       if [[ -n "$logo_id" && "$logo_id" != "null" ]]; then
         echo -e "   ${GREEN}✅ Logo uploaded successfully (ID: $logo_id)${RESET}"
+        changes_requested=true
       else
         echo -e "   ${RED}❌ Logo upload failed${RESET}"
         update_logo="n"
@@ -5849,22 +5999,21 @@ show_field_comparison_and_update_simplified() {
   fi
   echo
   
-  # Apply updates
-  local updates_made=0
-  if [[ "$update_name" =~ ^[Yy]$ ]] || [[ "$update_tvg" =~ ^[Yy]$ ]] || [[ "$update_station_id" =~ ^[Yy]$ ]] || [[ "$update_logo" =~ ^[Yy]$ ]]; then
+  # Apply updates only if changes were requested
+  if [[ "$changes_requested" == "true" ]]; then
     echo -e "${CYAN}Applying updates...${RESET}"
     
     if update_dispatcharr_channel_with_logo "$channel_id" "$update_name" "$station_name" "$update_tvg" "$call_sign" "$update_station_id" "$station_id" "$update_logo" "$logo_id"; then
       echo -e "${GREEN}✅ Successfully updated channel fields${RESET}"
-      updates_made=1
+      return 0  # Success - changes were applied
     else
       echo -e "${RED}❌ Failed to update some channel fields${RESET}"
+      return 1  # Failure
     fi
   else
-    echo -e "${YELLOW}No updates requested${RESET}"
+    echo -e "${CYAN}💡 No field updates requested - all fields already match or were skipped${RESET}"
+    return 2  # No changes requested (different from failure)
   fi
-  
-  return $updates_made
 }
 
 display_logo_from_url() {
@@ -6102,7 +6251,7 @@ display_dispatcharr_logo() {
   local label="$2"
   
   if [[ -z "$logo_id" || "$logo_id" == "null" ]]; then
-    echo "   $label: ${YELLOW}No logo${RESET}"
+    echo -e "   $label: ${YELLOW}No logo${RESET}"
     return 1
   fi
   
@@ -6124,7 +6273,7 @@ display_dispatcharr_logo() {
       echo "   [failed to download logo]"
     fi
   else
-    echo "   $label: ${GREEN}Logo ID $logo_id${RESET} [logo preview unavailable]"
+    echo -e "   $label: ${GREEN}Logo ID $logo_id${RESET} [logo preview unavailable]"
   fi
 }
 

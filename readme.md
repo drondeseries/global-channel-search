@@ -2,9 +2,12 @@
 
 A comprehensive television station search tool that integrates with Channels DVR API and Dispatcharr to provide enhanced station discovery, automated field population, and logo management capabilities.
 
-## Version 1.3.2
+## Version 1.3.3
 
-**Patch (1.3.2) - 2025-06-01**
+**Patch (1.3.3) - 2025-06-02**
+- Bug fixes from last update
+
+**1.3.2**
 - Fixed broken dispatcharr token refresh logic
 - Added `increment_dispatcharr_interaction()` calls to all Dispatcharr API functions
 - Removed manual counting from batch operations for automatic refresh

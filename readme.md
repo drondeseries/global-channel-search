@@ -2,9 +2,18 @@
 
 A comprehensive television station search tool that integrates with Channels DVR API and Dispatcharr to provide enhanced station discovery, automated field population, and logo management capabilities.
 
-## Version 1.3.1
+## Version 1.3.2
 
-**New in 1.3.1:**
+**Patch (1.3.2) - 2025-06-01**
+- Fixed broken dispatcharr token refresh logic
+- Added `increment_dispatcharr_interaction()` calls to all Dispatcharr API functions
+- Removed manual counting from batch operations for automatic refresh
+- Added save and resume state handling to Dispatcharr all channels workflow
+- Added ability to start at any channel in the Dispatcharr all channels workflow
+- Users can now resume from last processed channel, start fresh, or pick specific channel number
+- Resume state persists between script runs via configuration file
+
+**1.3.1:**
 - **Enhanced Dispatcharr Workflows** - Significantly improved efficiency and user experience
 - **Streamlined Channel Processing** - Removed disruptive prompts for smoother batch operations
 - **Improved Channel Name Parsing** - Enhanced regex logic with helper functions for better auto-matching

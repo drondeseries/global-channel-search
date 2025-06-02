@@ -6,6 +6,10 @@
 # Created: 2025/05/26
 VERSION="1.3.1"
 VERSION_INFO="Last Modified: 2025/06/01
+Patch (1.3.2)
+• Fixed broken automatic token refresh during workflow
+• Add save and resume state handling to dispatcharr all channels workflow
+• Add ability to start at any channel in the dispatcharr all channels workflow
 Patch (1.3.1)
 • Update to regex logic for channel name parsing, including helper functions
 • Updated instructions and guidance to be more accurate in multiple functions
@@ -443,8 +447,11 @@ setup_config() {
       DISPATCHARR_USERNAME=${DISPATCHARR_USERNAME:-""}
       DISPATCHARR_PASSWORD=${DISPATCHARR_PASSWORD:-""}
       DISPATCHARR_ENABLED=${DISPATCHARR_ENABLED:-false}
-      # UPDATED: Changed default from 10 to 25
       DISPATCHARR_REFRESH_INTERVAL=${DISPATCHARR_REFRESH_INTERVAL:-25}
+      
+      # Add resume state variables
+      LAST_PROCESSED_CHANNEL_NUMBER=${LAST_PROCESSED_CHANNEL_NUMBER:-""}
+      LAST_PROCESSED_CHANNEL_INDEX=${LAST_PROCESSED_CHANNEL_INDEX:-""}
       
       return 0
     else
@@ -492,6 +499,9 @@ create_minimal_config() {
     echo "DISPATCHARR_PASSWORD=\"\""
     echo "DISPATCHARR_ENABLED=false"
     echo "DISPATCHARR_REFRESH_INTERVAL=25"
+    echo "# Resume State for Field Population"
+    echo "LAST_PROCESSED_CHANNEL_NUMBER=\"\""
+    echo "LAST_PROCESSED_CHANNEL_INDEX=\"\""
   } > "$CONFIG_FILE" || {
     echo -e "${RED}Error: Cannot write to config file${RESET}"
     exit 1
@@ -2657,7 +2667,6 @@ increment_dispatcharr_interaction() {
       echo -e "${GREEN}✅ Tokens refreshed successfully${RESET}"
     else
       echo -e "${YELLOW}⚠️  Token refresh failed - continuing with existing tokens${RESET}"
-      # Log the failure but don't stop the workflow
       echo "$(date '+%Y-%m-%d %H:%M:%S') - Automatic token refresh failed after $DISPATCHARR_INTERACTION_COUNT interactions" >> "$DISPATCHARR_LOG"
     fi
   fi
@@ -2802,6 +2811,9 @@ update_dispatcharr_channel_epg() {
   local station_id="$2"
   local token_file="$CACHE_DIR/dispatcharr_tokens.json"
   local response
+  
+  # Increment interaction counter BEFORE the API call
+  increment_dispatcharr_interaction "station ID updates"
   
   # Ensure we have a valid connection/token
   if ! check_dispatcharr_connection; then
@@ -3948,10 +3960,6 @@ batch_update_stationids() {
     
     if update_dispatcharr_channel_epg "$channel_id" "$station_id"; then
       ((success_count++))
-      # UPDATED: Increment interaction counter every 25 successful updates instead of 10
-      if (( success_count % 25 == 0 )); then
-        increment_dispatcharr_interaction "batch updates"
-      fi
     else
       ((failure_count++))
       echo -e "\n${RED}❌ Failed: $channel_name (ID: $channel_id)${RESET}"
@@ -4131,32 +4139,192 @@ process_all_channels_fields() {
   local total_channels=${#channels_array[@]}
   
   echo -e "${GREEN}✅ Processing $total_channels channels in channel number order${RESET}"
+  echo
+  
+  # Always show starting point options
+  local start_index=0
+  
+  # Check if there's valid resume state
+  if [[ -n "$LAST_PROCESSED_CHANNEL_NUMBER" && -n "$LAST_PROCESSED_CHANNEL_INDEX" ]]; then
+    # 3 OPTIONS: Resume state available
+    echo -e "${BOLD}${YELLOW}=== Choose Starting Point ===${RESET}"
+    echo -e "${CYAN}Previous session data found:${RESET}"
+    echo -e "Last processed channel: ${GREEN}#$LAST_PROCESSED_CHANNEL_NUMBER${RESET}"
+    echo -e "Progress: ${CYAN}$((LAST_PROCESSED_CHANNEL_INDEX + 1)) of $total_channels channels${RESET}"
+    echo
+    
+    echo -e "${BOLD}${BLUE}Starting Point Options:${RESET}"
+    echo -e "${GREEN}1)${RESET} Resume from last processed channel (#$LAST_PROCESSED_CHANNEL_NUMBER)"
+    echo -e "${GREEN}2)${RESET} Start from beginning (channel 1)"
+    echo -e "${GREEN}3)${RESET} Start from specific channel number"
+    echo -e "${GREEN}q)${RESET} Cancel and return"
+    echo
+    
+    local start_choice
+    while true; do
+      read -p "Select starting point: " start_choice < /dev/tty
+      
+      case "$start_choice" in
+        1)
+          # Resume from next channel after last processed
+          start_index=$((LAST_PROCESSED_CHANNEL_INDEX + 1))
+          if [ "$start_index" -ge "$total_channels" ]; then
+            echo -e "${YELLOW}⚠️  All channels have been processed${RESET}"
+            echo -e "${CYAN}💡 Starting from beginning instead${RESET}"
+            start_index=0
+            clear_resume_state
+          else
+            echo -e "${GREEN}✅ Resuming from channel $((start_index + 1))${RESET}"
+          fi
+          break
+          ;;
+        2)
+          start_index=0
+          echo -e "${GREEN}✅ Starting from beginning${RESET}"
+          clear_resume_state
+          break
+          ;;
+        3)
+          echo
+          read -p "Enter channel number to start from: " custom_channel < /dev/tty
+          
+          if [[ "$custom_channel" =~ ^[0-9]+$ ]]; then
+            # Find index for this channel number
+            local found_index=-1
+            for ((idx = 0; idx < total_channels; idx++)); do
+              local channel_data="${channels_array[$idx]}"
+              local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
+              if [[ "$channel_number" == "$custom_channel" ]]; then
+                found_index=$idx
+                break
+              fi
+            done
+            
+            if [ "$found_index" -ge 0 ]; then
+              start_index=$found_index
+              echo -e "${GREEN}✅ Starting from channel #$custom_channel${RESET}"
+              clear_resume_state
+              break
+            else
+              echo -e "${RED}❌ Channel #$custom_channel not found${RESET}"
+              echo -e "${CYAN}💡 Try a different channel number${RESET}"
+            fi
+          else
+            echo -e "${RED}❌ Invalid channel number${RESET}"
+          fi
+          ;;
+        q|Q|"")
+          echo -e "${YELLOW}⚠️  Field population cancelled${RESET}"
+          return 0
+          ;;
+        *)
+          echo -e "${RED}❌ Invalid option. Please enter 1, 2, 3, or q${RESET}"
+          ;;
+      esac
+    done
+    
+  else
+    # 2 OPTIONS: No resume state available
+    echo -e "${BOLD}${YELLOW}=== Choose Starting Point ===${RESET}"
+    echo -e "${CYAN}No previous session data found.${RESET}"
+    echo
+    
+    echo -e "${BOLD}${BLUE}Starting Point Options:${RESET}"
+    echo -e "${GREEN}1)${RESET} Start from beginning (channel 1)"
+    echo -e "${GREEN}2)${RESET} Start from specific channel number"
+    echo -e "${GREEN}q)${RESET} Cancel and return"
+    echo
+    
+    local start_choice
+    while true; do
+      read -p "Select starting point: " start_choice < /dev/tty
+      
+      case "$start_choice" in
+        1)
+          start_index=0
+          echo -e "${GREEN}✅ Starting from beginning${RESET}"
+          break
+          ;;
+        2)
+          echo
+          read -p "Enter channel number to start from: " custom_channel < /dev/tty
+          
+          if [[ "$custom_channel" =~ ^[0-9]+$ ]]; then
+            # Find index for this channel number
+            local found_index=-1
+            for ((idx = 0; idx < total_channels; idx++)); do
+              local channel_data="${channels_array[$idx]}"
+              local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "0"')
+              if [[ "$channel_number" == "$custom_channel" ]]; then
+                found_index=$idx
+                break
+              fi
+            done
+            
+            if [ "$found_index" -ge 0 ]; then
+              start_index=$found_index
+              echo -e "${GREEN}✅ Starting from channel #$custom_channel${RESET}"
+              break
+            else
+              echo -e "${RED}❌ Channel #$custom_channel not found${RESET}"
+              echo -e "${CYAN}💡 Try a different channel number${RESET}"
+            fi
+          else
+            echo -e "${RED}❌ Invalid channel number${RESET}"
+          fi
+          ;;
+        q|Q|"")
+          echo -e "${YELLOW}⚠️  Field population cancelled${RESET}"
+          return 0
+          ;;
+        *)
+          echo -e "${RED}❌ Invalid option. Please enter 1, 2, or q${RESET}"
+          ;;
+      esac
+    done
+  fi
+  
+  echo
+  
+  # Show processing plan
+  if [ "$start_index" -gt 0 ]; then
+    echo -e "${CYAN}📊 Processing plan: Starting from channel $((start_index + 1)) of $total_channels${RESET}"
+    echo -e "${CYAN}📊 Remaining channels: $((total_channels - start_index))${RESET}"
+  else
+    echo -e "${CYAN}📊 Processing plan: All $total_channels channels${RESET}"
+  fi
+  
   echo -e "${CYAN}💡 Processing will continue automatically between channels${RESET}"
   echo
   
   # Show available controls clearly
   echo -e "${BOLD}${BLUE}Available Controls During Processing:${RESET}"
-  echo -e "${GREEN}• q${RESET} - Quit entire batch processing (stops all remaining channels)"
+  echo -e "${GREEN}• q${RESET} - Quit entire batch processing (saves resume state)"
   echo -e "${GREEN}• k${RESET} - Skip current channel (continues to next channel)"
   echo -e "${GREEN}• s${RESET} - Search with different term for current channel"
   echo -e "${GREEN}• a-j${RESET} - Select station from search results"
   echo -e "${CYAN}💡 These options will be available during each channel's processing${RESET}"
   echo
   
-  # Add initial confirmation for the full batch
-  if ! confirm_action "Begin processing all $total_channels channels automatically?"; then
+  # Add initial confirmation for the processing
+  local channels_to_process=$((total_channels - start_index))
+  if ! confirm_action "Begin processing $channels_to_process channels?"; then
     echo -e "${YELLOW}⚠️  Batch processing cancelled${RESET}"
     return 0
   fi
   
-  echo -e "${CYAN}🔄 Starting automated processing of all channels...${RESET}"
-  echo -e "${YELLOW}💡 Remember: Press 'q' during any channel to stop the entire batch${RESET}"
+  echo -e "${CYAN}🔄 Starting automated processing...${RESET}"
+  echo -e "${YELLOW}💡 Remember: Press 'q' during any channel to stop and save progress${RESET}"
   echo
   
-  for ((i = 0; i < total_channels; i++)); do
+  for ((i = start_index; i < total_channels; i++)); do
     local channel_data="${channels_array[$i]}"
+    local channel_number=$(echo "$channel_data" | jq -r '.channel_number // "N/A"')
     
-    echo -e "${BOLD}${BLUE}=== Channel $((i + 1)) of $total_channels ===${RESET}"
+    echo -e "${BOLD}${BLUE}=== Channel $((i + 1)) of $total_channels (Channel #$channel_number) ===${RESET}"
+    
+    # Save resume state before processing this channel
+    save_resume_state "$channel_number" "$i"
     
     # Process the channel - capture return code to handle user exit
     process_single_channel_fields "$channel_data" $((i + 1)) "$total_channels"
@@ -4165,8 +4333,8 @@ process_all_channels_fields() {
     # Check if user chose to quit during processing
     if [[ $process_result -eq 1 ]]; then
       echo -e "\n${YELLOW}⚠️  Processing stopped by user${RESET}"
-      echo -e "${CYAN}💡 Completed $((i + 1)) of $total_channels channels before stopping${RESET}"
-      echo -e "${CYAN}💡 You can resume field population anytime${RESET}"
+      echo -e "${CYAN}💡 Progress saved: Completed through channel #$channel_number${RESET}"
+      echo -e "${CYAN}💡 Resume anytime by selecting 'Process All Channels' again${RESET}"
       pause_for_user
       return 0
     fi
@@ -4174,7 +4342,7 @@ process_all_channels_fields() {
     # Show progress status but no interruption
     if [[ $((i + 1)) -lt $total_channels ]]; then
       echo
-      echo -e "${CYAN}✅ Channel $((i + 1)) completed. Moving to next channel...${RESET}"
+      echo -e "${CYAN}✅ Channel #$channel_number completed. Moving to next channel...${RESET}"
       echo -e "${YELLOW}📊 Progress: $((i + 1)) of $total_channels channels processed${RESET}"
       
       # Brief pause for visual feedback, but no user input required
@@ -4182,10 +4350,41 @@ process_all_channels_fields() {
     fi
   done
   
+  # Clear resume state when all channels are completed
+  clear_resume_state
+  
   echo -e "\n${GREEN}✅ All channels field population workflow complete${RESET}"
   echo -e "${CYAN}💡 Processed $total_channels channels successfully${RESET}"
   echo -e "${CYAN}💡 Changes have been applied to Dispatcharr as selected${RESET}"
+  echo -e "${GREEN}💡 Resume state cleared - all channels completed${RESET}"
   pause_for_user
+}
+
+save_resume_state() {
+  local channel_number="$1"
+  local channel_index="$2"
+  
+  # Update the in-memory variables
+  LAST_PROCESSED_CHANNEL_NUMBER="$channel_number"
+  LAST_PROCESSED_CHANNEL_INDEX="$channel_index"
+  
+  # Update config file
+  sed -i "s/LAST_PROCESSED_CHANNEL_NUMBER=.*/LAST_PROCESSED_CHANNEL_NUMBER=\"$channel_number\"/" "$CONFIG_FILE"
+  sed -i "s/LAST_PROCESSED_CHANNEL_INDEX=.*/LAST_PROCESSED_CHANNEL_INDEX=\"$channel_index\"/" "$CONFIG_FILE"
+  
+  echo -e "${CYAN}💾 Resume state saved: Channel $channel_number${RESET}" >&2
+}
+
+clear_resume_state() {
+  # Clear in-memory variables
+  LAST_PROCESSED_CHANNEL_NUMBER=""
+  LAST_PROCESSED_CHANNEL_INDEX=""
+  
+  # Clear in config file
+  sed -i "s/LAST_PROCESSED_CHANNEL_NUMBER=.*/LAST_PROCESSED_CHANNEL_NUMBER=\"\"/" "$CONFIG_FILE"
+  sed -i "s/LAST_PROCESSED_CHANNEL_INDEX=.*/LAST_PROCESSED_CHANNEL_INDEX=\"\"/" "$CONFIG_FILE"
+  
+  echo -e "${CYAN}💾 Resume state cleared${RESET}" >&2
 }
 
 process_channels_missing_fields() {
@@ -5503,6 +5702,9 @@ automatic_field_population() {
     fi
     
     if [[ -n "$access_token" && "$access_token" != "null" ]]; then
+      # Increment interaction counter BEFORE the API call
+      increment_dispatcharr_interaction "automatic field updates"
+      
       local response
       response=$(curl -s -X PATCH \
         -H "Authorization: Bearer $access_token" \
@@ -5700,6 +5902,9 @@ update_dispatcharr_channel_with_logo() {
   local update_logo="$8"
   local logo_id="$9"
   
+  # Increment interaction counter BEFORE the API call
+  increment_dispatcharr_interaction "field updates"
+  
   local token_file="$CACHE_DIR/dispatcharr_tokens.json"
   
   # Ensure we have a valid connection/token
@@ -5765,6 +5970,9 @@ upload_station_logo_to_dispatcharr() {
   local station_name="$1"
   local logo_url="$2"
   local token_file="$CACHE_DIR/dispatcharr_tokens.json"
+  
+  # Increment interaction counter BEFORE the API call
+  increment_dispatcharr_interaction "logo uploads"
   
   if [[ -z "$logo_url" || "$logo_url" == "null" ]]; then
     return 1

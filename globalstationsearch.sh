@@ -9,7 +9,7 @@ VERSION_INFO="Last Modified: 2025/06/01
 Patch (1.3.1)
 • Update to regex logic for channel name parsing, including helper functions
 • Updated instructions and guidance to be more accurate in multiple functions
-• Fixed 'process specific channel' workflow in Dispatcharr integration
+• Fixed dispatcharr integration workflows to be significantly more efficient
 • Improved backup handling
 • Removed broken 'station information' option in direct API search
 • More consistent appearance across the script
@@ -5947,8 +5947,8 @@ display_station_logo_preview() {
       echo "   [failed to download logo preview]"
     fi
   else
-    echo "   $label: ${GREEN}Available${RESET} [logo preview unavailable]"
-    echo "   URL: ${CYAN}$logo_url${RESET}"
+    echo -e "   $label: ${GREEN}Available${RESET} [logo preview unavailable]"
+    echo -e "   URL: $logo_url"  # Removed ${CYAN} and ${RESET}
   fi
 }
 

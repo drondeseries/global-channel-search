@@ -204,10 +204,24 @@ load_module() {
     fi
 }
 
-load_core_modules() {
-    local modules=(
+load_essential_modules() {
+    local essential_modules=(
         "lib/core/utils.sh|Core Utility Functions|true"
-        "lib/core/config.sh|Configuration Management|true" 
+        "lib/core/config.sh|Configuration Management|true"
+    )
+    
+    echo -e "${CYAN}📦 Loading essential modules...${RESET}" >&2
+
+    for module_info in "${essential_modules[@]}"; do
+        IFS='|' read -r module_path module_desc required <<< "$module_info"
+        load_module "$module_path" "$module_desc" "$required"
+    done
+    
+    echo -e "${GREEN}✅ Essential modules loaded successfully${RESET}" >&2
+}
+
+load_remaining_modules() {
+    local remaining_modules=(
         "lib/ui/display.sh|UI Display Framework|true"
         "lib/core/settings.sh|Settings Configuration|true"
         "lib/ui/menus.sh|Menu Framework|true"
@@ -215,40 +229,15 @@ load_core_modules() {
         "lib/core/cache.sh|Cache Management Module|true"
     )
     
-    echo -e "${CYAN}📦 Loading core modules...${RESET}" >&2
+    echo -e "${CYAN}📦 Loading remaining modules...${RESET}" >&2
 
-    for module_info in "${modules[@]}"; do
+    for module_info in "${remaining_modules[@]}"; do
         IFS='|' read -r module_path module_desc required <<< "$module_info"
         load_module "$module_path" "$module_desc" "$required"
     done
     
-    echo -e "${GREEN}✅ All modules loaded successfully${RESET}" >&2
+    echo -e "${GREEN}✅ All remaining modules loaded successfully${RESET}" >&2
 }
-
-# Load all modules
-load_core_modules
-
-
-init_combined_cache_startup() {
-  # Only build if both caches exist and user cache is substantial
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ] && 
-     [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    
-    local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
-    
-    # Only pre-build if user cache is significant (>100 stations)
-    if [ "$user_count" -gt 100 ]; then
-      # Check if we can skip the rebuild using persistent state
-      if check_combined_cache_freshness; then
-        echo -e "${GREEN}✅ Station database ready (using cached version)${RESET}"
-      else
-        echo -e "${CYAN}🔄 Initializing station database (one-time startup process)...${RESET}"
-        build_combined_cache_with_progress >/dev/null
-      fi
-    fi
-  fi
-}
-
 
 # ============================================================================
 # CONFIGURATION & SETUP FUNCTIONS
@@ -6863,16 +6852,21 @@ main_menu() {
 # APPLICATION INITIALIZATION AND STARTUP
 # ============================================================================
 
-# Initialize configuration FIRST (before loading modules)
+# Initialize directories first
 setup_directories
+
+# Load essential modules (utils and config only)
+load_essential_modules
+
+# Now we can safely call setup_config since config.sh is loaded
 setup_config
 check_dependencies
 
-# NOW load modules (they can reference CONFIG_FILE and other variables)
-load_core_modules
+# Load all remaining modules (they can now safely use config variables)
+load_remaining_modules
 
-# NEW: Initialize cache optimization system
-setup_optimized_cache
+# Initialize cache optimization system
+init_combined_cache_startup
 
 # Start main application
 main_menu

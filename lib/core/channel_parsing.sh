@@ -109,12 +109,17 @@ parse_channel_name() {
         clean_name=$(remove_word "$clean_name" "UHD") 
         clean_name=$(remove_word "$clean_name" "UHDTV")
         clean_name=$(echo "$clean_name" | sed -E 's/Ultra[[:space:]]*HD/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-    elif word_exists "$clean_name" "HD" || word_exists "$clean_name" "FHD" || [[ "$clean_name" =~ (^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$) ]]; then
+    elif word_exists "$clean_name" "FHD" || [[ "$clean_name" =~ (^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$) ]]; then
+        # FIXED: Remove standalone "HD" check that was too broad - now only matches FHD and specific resolutions
+        detected_resolution="HDTV"
+        confidence_score=$((confidence_score + 25))
+        clean_name=$(remove_word "$clean_name" "FHD")
+        clean_name=$(echo "$clean_name" | sed -E 's/(^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$)/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    elif word_exists "$clean_name" "HD" && ! [[ "$clean_name" =~ [0-9] ]]; then
+        # FIXED: Only match "HD" if it's standalone and there are no numbers in the name (to avoid "4 MORE" matches)
         detected_resolution="HDTV"
         confidence_score=$((confidence_score + 25))
         clean_name=$(remove_word "$clean_name" "HD")
-        clean_name=$(remove_word "$clean_name" "FHD")
-        clean_name=$(echo "$clean_name" | sed -E 's/(^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$)/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
     elif word_exists "$clean_name" "SD" || [[ "$clean_name" =~ (^|[[:space:]])480[ip]?([[:space:]]|$) ]]; then
         detected_resolution="SDTV"
         confidence_score=$((confidence_score + 25))

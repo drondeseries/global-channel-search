@@ -4,8 +4,14 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-VERSION="1.4.0"
+VERSION="1.4.1."
 VERSION_INFO="Last Modified: 2025/06/02
+Patch (1.4.1)
+• Fixed issues with first time setup
+• Fixed some poor regex
+• Fixed terminal style formatting
+• Cleared all automatically applied filters if user enters their own search field in Dispatcharr matching 
+
 MAJOR RELEASE (1.4.0)
 • New modular script framework with many functions moved to subcscripts in lib/ folder
 • New filesystem layout
@@ -2258,7 +2264,9 @@ interactive_stationid_matching() {
       while true; do
         echo -e "${CYAN}🔍 Searching for: '$search_term' (Page $current_page)${RESET}"
         
-        # Show active filters
+    echo -e "${CYAN}Searching for: '$search_term' (Page $current_page)${RESET}"
+    
+        # Show active filters - UPDATED
         local filter_status=""
         if [[ -n "$detected_country" ]]; then
           filter_status+="Country: $detected_country (auto) "
@@ -2268,9 +2276,11 @@ interactive_stationid_matching() {
         fi
         if [[ -n "$filter_status" ]]; then
           echo -e "${BLUE}Active Filters: $filter_status${RESET}"
+        else
+          echo -e "${CYAN}🔍 No auto-filters active - searching all available stations${RESET}"
         fi
         echo
-        
+            
         # Get search results with auto-detected filters
         local results
         results=$(search_stations_by_name "$search_term" "$current_page" "$detected_country" "$detected_resolution")
@@ -2422,6 +2432,10 @@ interactive_stationid_matching() {
             if [[ -n "$new_search" ]]; then
               search_term="$new_search"
               current_page=1
+              # FIXED: Clear auto-detected filters when user enters manual search
+              detected_country=""
+              detected_resolution=""
+              echo -e "${CYAN}💡 Auto-detected filters cleared for manual search${RESET}"
             fi
             ;;
           m|M)
@@ -3179,15 +3193,15 @@ process_channels_missing_fields() {
         issues+="StID "
       fi
       
-      # STANDARDIZED: Table row with consistent formatting
-      printf "%-6s %-8s %-25s %-15s %-10s %-10s %s\n" \
+      # STANDARDIZED: Table row with consistent formatting - FIXED
+      printf "%-6s %-8s %-25s %-15s %-10s %-10s " \
         "$channel_number" \
         "$channel_id" \
         "${channel_name:0:25}" \
         "${channel_group:0:15}" \
         "${tvg_id:0:10}" \
-        "${tvc_stationid:0:10}" \
-        "${RED}$issues${RESET}"
+        "${tvc_stationid:0:10}"
+      echo -e "${RED}$issues${RESET}"
     done
     
     if [ "$filtered_count" -gt 10 ]; then
@@ -3599,7 +3613,7 @@ process_single_channel_fields() {
   while true; do
     echo -e "${CYAN}Searching for: '$search_term' (Page $current_page)${RESET}"
     
-    # Show active filters
+    # Show active filters - UPDATED
     local filter_status=""
     if [[ -n "$detected_country" ]]; then
       filter_status+="Country: $detected_country (auto) "
@@ -3609,6 +3623,8 @@ process_single_channel_fields() {
     fi
     if [[ -n "$filter_status" ]]; then
       echo -e "${BLUE}Active Filters: $filter_status${RESET}"
+    else
+      echo -e "${CYAN}🔍 No auto-filters active - searching all available stations${RESET}"
     fi
     echo
     
@@ -3758,10 +3774,14 @@ process_single_channel_fields() {
         fi
         ;;
       s|S)
-        read -p "Enter new search term: " new_search
+        read -p "Enter new search term: " new_search < /dev/tty
         if [[ -n "$new_search" ]]; then
           search_term="$new_search"
           current_page=1
+          # FIXED: Clear auto-detected filters when user enters manual search
+          detected_country=""
+          detected_resolution=""
+          echo -e "${CYAN}💡 Auto-detected filters cleared for manual search${RESET}"
         fi
         ;;
       k|K)
@@ -3956,7 +3976,7 @@ process_single_channel_fields_standalone() {
   while true; do
     echo -e "${CYAN}Searching for: '$search_term' (Page $current_page)${RESET}"
     
-    # Show active filters
+    # Show active filters - UPDATED
     local filter_status=""
     if [[ -n "$detected_country" ]]; then
       filter_status+="Country: $detected_country (auto) "
@@ -3966,6 +3986,8 @@ process_single_channel_fields_standalone() {
     fi
     if [[ -n "$filter_status" ]]; then
       echo -e "${BLUE}Active Filters: $filter_status${RESET}"
+    else
+      echo -e "${CYAN}🔍 No auto-filters active - searching all available stations${RESET}"
     fi
     echo
     
@@ -4115,10 +4137,14 @@ process_single_channel_fields_standalone() {
         fi
         ;;
       s|S)
-        read -p "Enter new search term: " new_search
+        read -p "Enter new search term: " new_search < /dev/tty
         if [[ -n "$new_search" ]]; then
           search_term="$new_search"
           current_page=1
+          # FIXED: Clear auto-detected filters when user enters manual search
+          detected_country=""
+          detected_resolution=""
+          echo -e "${CYAN}💡 Auto-detected filters cleared for manual search${RESET}"
         fi
         ;;
       r|R)

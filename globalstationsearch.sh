@@ -4,13 +4,18 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-VERSION="1.4.1."
+VERSION="1.4.2"
 VERSION_INFO="Last Modified: 2025/06/02
+Patch (1.4.2)
+• Removed unused channel parsing fields (language, confidence)
+  These were intended for future update but broke core functionality
+
 Patch (1.4.1)
 • Fixed issues with first time setup
 • Fixed some poor regex
 • Fixed terminal style formatting
-• Cleared all automatically applied filters if user enters their own search field in Dispatcharr matching 
+• Clear all automatically applied filters if user enters their own search term 
+  in Dispatcharr matching 
 
 MAJOR RELEASE (1.4.0)
 • New modular script framework with many functions moved to subcscripts in lib/ folder

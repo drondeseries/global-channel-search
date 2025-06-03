@@ -1,0 +1,97 @@
+#!/bin/bash
+
+parse_channel_name() {
+    local channel_name="$1"
+    local debug_mode="${2:-false}"
+    
+    # Initialize variables
+    local clean_name="$channel_name"
+    local detected_country=""
+    local detected_resolution=""
+    local detected_language=""
+    local confidence_score=0
+    
+    # DEBUG: Show what we're starting with
+    echo "DEBUG: Starting parse of: '$channel_name'" >&2
+    
+    # Step 0: Handle special character separators FIRST
+    clean_name=$(handle_special_separators "$clean_name")
+    echo "DEBUG: After separator handling: '$clean_name'" >&2
+    
+    # Step 1: Country detection - check for separate words only
+    if word_exists "$clean_name" "US" || word_exists "$clean_name" "USA"; then
+        detected_country="USA"
+        confidence_score=$((confidence_score + 30))
+        clean_name=$(remove_word "$clean_name" "US")
+        clean_name=$(remove_word "$clean_name" "USA")
+        echo "DEBUG: Detected country USA, clean_name now: '$clean_name'" >&2
+    elif word_exists "$clean_name" "CA" || word_exists "$clean_name" "CAN" || word_exists "$clean_name" "CANADA"; then
+        detected_country="CAN" 
+        confidence_score=$((confidence_score + 30))
+        clean_name=$(remove_word "$clean_name" "CA")
+        clean_name=$(remove_word "$clean_name" "CAN")
+        clean_name=$(remove_word "$clean_name" "CANADA")
+        echo "DEBUG: Detected country CAN, clean_name now: '$clean_name'" >&2
+    elif word_exists "$clean_name" "UK" || word_exists "$clean_name" "GBR" || word_exists "$clean_name" "BRITAIN"; then
+        detected_country="GBR"
+        confidence_score=$((confidence_score + 30))
+        clean_name=$(remove_word "$clean_name" "UK")
+        clean_name=$(remove_word "$clean_name" "GBR")
+        clean_name=$(remove_word "$clean_name" "BRITAIN")
+        echo "DEBUG: Detected country GBR, clean_name now: '$clean_name'" >&2
+    fi
+
+    # Step 2: Resolution detection patterns - DEBUG VERSION
+    echo "DEBUG: Starting resolution detection on: '$clean_name'" >&2
+    
+    if word_exists "$clean_name" "4K" || word_exists "$clean_name" "UHD" || word_exists "$clean_name" "UHDTV" || [[ "$clean_name" =~ Ultra[[:space:]]*HD ]]; then
+        detected_resolution="UHDTV"
+        confidence_score=$((confidence_score + 30))
+        echo "DEBUG: Matched 4K/UHD pattern" >&2
+        clean_name=$(remove_word "$clean_name" "4K")
+        clean_name=$(remove_word "$clean_name" "UHD") 
+        clean_name=$(remove_word "$clean_name" "UHDTV")
+        clean_name=$(echo "$clean_name" | sed -E 's/Ultra[[:space:]]*HD/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    elif word_exists "$clean_name" "FHD" || [[ "$clean_name" =~ (^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$) ]]; then
+        detected_resolution="HDTV"
+        confidence_score=$((confidence_score + 25))
+        echo "DEBUG: Matched FHD/1080p/720p pattern" >&2
+        clean_name=$(remove_word "$clean_name" "FHD")
+        clean_name=$(echo "$clean_name" | sed -E 's/(^|[[:space:]])(1080[ip]?|720[ip]?)([[:space:]]|$)/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    elif word_exists "$clean_name" "HD" && ! [[ "$clean_name" =~ [0-9] ]]; then
+        detected_resolution="HDTV"
+        confidence_score=$((confidence_score + 25))
+        echo "DEBUG: Matched standalone HD pattern" >&2
+        clean_name=$(remove_word "$clean_name" "HD")
+    elif word_exists "$clean_name" "SD" || [[ "$clean_name" =~ (^|[[:space:]])480[ip]?([[:space:]]|$) ]]; then
+        detected_resolution="SDTV"
+        confidence_score=$((confidence_score + 25))
+        echo "DEBUG: Matched SD/480p pattern" >&2
+        clean_name=$(remove_word "$clean_name" "SD")
+        clean_name=$(echo "$clean_name" | sed -E 's/(^|[[:space:]])480[ip]?([[:space:]]|$)/ /g' | sed 's/[[:space:]]\+/ /g' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+    else
+        echo "DEBUG: No resolution pattern matched" >&2
+    fi
+    
+    echo "DEBUG: After resolution detection: detected_resolution='$detected_resolution', clean_name='$clean_name'" >&2
+    
+    # Step 3: Language detection (simplified for debug)
+    # ... existing language detection code ...
+    
+    # Step 4: Final cleanup
+    clean_name=$(perform_general_cleanup "$clean_name")
+    echo "DEBUG: After final cleanup: '$clean_name'" >&2
+    
+    # DEBUG: Show final result components
+    echo "DEBUG: Final result components:" >&2
+    echo "DEBUG:   clean_name='$clean_name'" >&2
+    echo "DEBUG:   detected_country='$detected_country'" >&2
+    echo "DEBUG:   detected_resolution='$detected_resolution'" >&2
+    echo "DEBUG:   detected_language='$detected_language'" >&2
+    echo "DEBUG:   confidence_score='$confidence_score'" >&2
+    
+    # Return format: clean_name|country|resolution|language|confidence
+    local result="$clean_name|$detected_country|$detected_resolution|$detected_language|$confidence_score"
+    echo "DEBUG: Final result string: '$result'" >&2
+    echo "$result"
+}

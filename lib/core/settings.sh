@@ -267,10 +267,20 @@ _configure_numeric_setting() {
 _configure_network_setting() {
     local setting_name="$1"
     local current_url="$2"
-    
+
     # Parse current URL
     local current_ip=$(echo "$current_url" | cut -d'/' -f3 | cut -d':' -f1)
     local current_port=$(echo "$current_url" | cut -d':' -f3)
+
+    # Set defaults based on setting type
+    if [[ "$setting_name" == "DISPATCHARR_URL" ]]; then
+    current_ip=${current_ip:-"localhost"}
+    current_port=${current_port:-"9191"}
+    else
+    # Channels DVR defaults
+    current_ip=${current_ip:-"localhost"}
+    current_port=${current_port:-"8089"}
+    fi
     
     # Get new values
     local new_ip new_port

@@ -7,6 +7,33 @@
 # CACHE INITIALIZATION AND SETUP
 # ============================================================================
 
+init_combined_cache_startup() {
+  # Build combined cache if both base and user caches exist
+  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ] && 
+     [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
+    
+    local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
+    local base_count=$(jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
+    
+    # Check if we can skip the rebuild using persistent state
+    if check_combined_cache_freshness; then
+      echo -e "${GREEN}✅ Station database ready (using cached version)${RESET}"
+    else
+      echo -e "${CYAN}🔄 Building combined station database...${RESET}"
+      echo -e "${CYAN}💡 Merging $base_count base stations + $user_count user stations${RESET}"
+      echo -e "${CYAN}💡 This may take a moment for large datasets...${RESET}"
+      build_combined_cache_with_progress >/dev/null
+    fi
+  elif [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
+    # Only base cache exists
+    echo -e "${GREEN}✅ Station database ready (base cache only)${RESET}"
+  elif [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
+    # Only user cache exists
+    local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
+    echo -e "${GREEN}✅ Station database ready ($user_count user stations)${RESET}"
+  fi
+}
+
 init_user_cache() {
   if [ ! -f "$USER_STATIONS_JSON" ]; then
     echo '[]' > "$USER_STATIONS_JSON"
@@ -102,71 +129,73 @@ mark_user_cache_updated() {
 # COMBINED CACHE MANAGEMENT
 # ============================================================================
 
-build_combined_cache_with_progress() {
-  echo -e "${CYAN}🔄 Preparing station database...${RESET}" >&2
-  
-  local base_count=0
-  local user_count=0
-  local start_time=$(date +%s)
-  local base_time=0
-  local user_time=0
-  
-  # Get source file timestamps
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    echo -e "${CYAN}📊 Analyzing base station cache...${RESET}" >&2
-    base_count=$(jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
-    base_time=$(stat -c %Y "$BASE_STATIONS_JSON" 2>/dev/null || stat -f %m "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
-    echo -e "${CYAN}   Base stations: $base_count${RESET}" >&2
-  fi
-  
-  if [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    echo -e "${CYAN}📊 Analyzing user station cache...${RESET}" >&2
-    user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
-    user_time=$(stat -c %Y "$USER_STATIONS_JSON" 2>/dev/null || stat -f %m "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
-    echo -e "${CYAN}   User stations: $user_count${RESET}" >&2
-  fi
-  
-  local total_to_process=$((base_count + user_count))
-  
-  if [ "$total_to_process" -gt 10000 ]; then
-    echo -e "${YELLOW}⏳ Large database detected ($total_to_process stations)${RESET}" >&2
-    echo -e "${YELLOW}   This may take 10-30 seconds depending on your system...${RESET}" >&2
-  elif [ "$total_to_process" -gt 5000 ]; then
-    echo -e "${CYAN}⏳ Processing $total_to_process stations (may take 5-15 seconds)...${RESET}" >&2
-  fi
-  
-  echo -e "${CYAN}🔄 Merging and deduplicating station data...${RESET}" >&2
-  
-  # Perform the merge with error handling
-  if jq -s '
-    .[0] as $base | .[1] as $user |
-    ($user | map(.stationId)) as $user_ids |
-    ($base | map(select(.stationId | IN($user_ids[]) | not))) + $user |
-    sort_by(.name // "")
-  ' "$BASE_STATIONS_JSON" "$USER_STATIONS_JSON" > "$COMBINED_STATIONS_JSON" 2>/dev/null; then
+init_combined_cache_startup() {
+  # Build combined cache if both base and user caches exist
+  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ] && 
+     [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
     
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-    local final_count=$(jq 'length' "$COMBINED_STATIONS_JSON" 2>/dev/null || echo "0")
-    local duplicates_removed=$((total_to_process - final_count))
-    local combined_time=$(date +%s)
+    local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
+    local base_count=$(jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
     
-    echo -e "${GREEN}✅ Station database ready: $final_count stations (${duration}s)${RESET}" >&2
-    if [ "$duplicates_removed" -gt 0 ]; then
-      echo -e "${CYAN}   Removed $duplicates_removed duplicate stations${RESET}" >&2
+    # Check if we can skip the rebuild using persistent state
+    if check_combined_cache_freshness; then
+      echo -e "${GREEN}✅ Station database ready (using cached version)${RESET}"
+    else
+      echo -e "${CYAN}🔄 Building combined station database...${RESET}"
+      echo -e "${CYAN}💡 Merging $base_count base stations + $user_count user stations${RESET}"
+      echo -e "${CYAN}💡 This may take a moment for large datasets...${RESET}"
+      build_combined_cache_with_progress # Show the progress output
     fi
-    
-    # Save state to config file for persistence
-    save_combined_cache_state "$combined_time" "$base_time" "$user_time"
-    echo -e "${CYAN}💾 Cache state saved for faster future startups${RESET}" >&2
-    
-    COMBINED_CACHE_VALID=true
-    COMBINED_CACHE_TIMESTAMP="$combined_time"
-    return 0
-  else
-    echo -e "${RED}❌ Failed to merge station databases${RESET}" >&2
-    return 1
+  elif [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
+    # Only base cache exists
+    echo -e "${GREEN}✅ Station database ready (base cache only)${RESET}"
+  elif [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
+    # Only user cache exists
+    local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
+    echo -e "${GREEN}✅ Station database ready ($user_count user stations)${RESET}"
   fi
+}
+
+build_combined_cache_with_progress() {
+  echo -e "${CYAN}🔄 Building station database (3 steps)...${RESET}" >&2
+  
+  # Step 1: Analyze
+  echo -e "${CYAN}📊 [1/3] Analyzing source databases...${RESET}" >&2
+  local base_count=$([ -f "$BASE_STATIONS_JSON" ] && jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
+  local user_count=$([ -f "$USER_STATIONS_JSON" ] && jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
+  echo -e "${CYAN}   Base: $base_count stations, User: $user_count stations${RESET}" >&2
+  
+  # Step 2: Merge (with spinner)
+  echo -e "${CYAN}🔄 [2/3] Merging and deduplicating...${RESET}" >&2
+  
+  # Do the actual work in background with spinner
+  jq -s 'flatten | unique_by(.stationId) | sort_by(.name // "")' \
+    "$BASE_STATIONS_JSON" "$USER_STATIONS_JSON" > "$COMBINED_STATIONS_JSON" &
+  
+  local merge_pid=$!
+  local spin='-\|/'
+  local i=0
+  while kill -0 $merge_pid 2>/dev/null; do
+    i=$(((i+1)%4))
+    printf "\r${CYAN}🔄 [2/3] Merging and deduplicating ${spin:$i:1}${RESET}" >&2
+    sleep 0.3
+  done
+  
+  wait $merge_pid
+  
+  # Step 3: Finalize
+  echo -e "\n${CYAN}💾 [3/3] Finalizing database...${RESET}" >&2
+  local final_count=$(jq 'length' "$COMBINED_STATIONS_JSON" 2>/dev/null || echo "0")
+  
+  echo -e "${GREEN}✅ Database ready: $final_count total stations${RESET}" >&2
+  
+  # Save state and return
+  save_combined_cache_state "$(date +%s)" \
+    "$(stat -c %Y "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")" \
+    "$(stat -c %Y "$USER_STATIONS_JSON" 2>/dev/null || echo "0")"
+  
+  COMBINED_CACHE_VALID=true
+  return 0
 }
 
 get_effective_stations_file() {

@@ -1924,12 +1924,16 @@ configure_dispatcharr_connection() {
     
     if configure_setting "boolean" "Integration" "$DISPATCHARR_ENABLED"; then
         DISPATCHARR_ENABLED=true
+        save_setting "DISPATCHARR_ENABLED" "$DISPATCHARR_ENABLED"
         
         if configure_setting "network" "DISPATCHARR_URL" "$DISPATCHARR_URL"; then
+            # Reload config to get the updated settings
+            source "$CONFIG_FILE" 2>/dev/null
             configure_setting "credentials" "Dispatcharr"
         fi
     else
         DISPATCHARR_ENABLED=false
+        save_setting "DISPATCHARR_ENABLED" "$DISPATCHARR_ENABLED"
     fi
     
     save_setting "DISPATCHARR_ENABLED" "$DISPATCHARR_ENABLED"

@@ -6864,9 +6864,9 @@ main_menu() {
 # ============================================================================
 
 # Initialize configuration FIRST (before loading modules)
+setup_directories
 setup_config
 check_dependencies
-setup_directories
 
 # NOW load modules (they can reference CONFIG_FILE and other variables)
 load_core_modules

@@ -1935,8 +1935,6 @@ configure_dispatcharr_connection() {
         DISPATCHARR_ENABLED=false
         save_setting "DISPATCHARR_ENABLED" "$DISPATCHARR_ENABLED"
     fi
-    
-    save_setting "DISPATCHARR_ENABLED" "$DISPATCHARR_ENABLED"
 }
 
 scan_missing_stationids() {
@@ -6185,8 +6183,11 @@ change_server_settings() {
     show_setting_status "CHANNELS_URL" "$CHANNELS_URL" "Channels DVR Server" "configured"
     echo
     
-    configure_setting "network" "CHANNELS_URL" "$CHANNELS_URL"
-    save_setting "CHANNELS_URL" "$CHANNELS_URL"
+    if configure_setting "network" "CHANNELS_URL" "$CHANNELS_URL"; then
+        save_setting "CHANNELS_URL" "$CHANNELS_URL"
+        # Reload config to get the updated CHANNELS_URL
+        source "$CONFIG_FILE" 2>/dev/null
+    fi
     
     echo -e "\n${GREEN}✅ Server settings updated${RESET}"
 }

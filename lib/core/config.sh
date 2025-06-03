@@ -49,6 +49,8 @@ create_minimal_config() {
   
   if confirm_action "Configure Channels DVR server now? (can be done later in Settings)"; then
     if configure_channels_server; then
+      # Reload config to get the newly saved CHANNELS_URL
+      source "$CONFIG_FILE" 2>/dev/null
       echo -e "${GREEN}✅ Server configured successfully!${RESET}"
     else
       echo -e "${YELLOW}Server configuration skipped${RESET}"
@@ -147,6 +149,9 @@ configure_channels_server() {
   if curl -s --connect-timeout 5 "$CHANNELS_URL" >/dev/null 2>&1; then
     echo -e "${GREEN}✅ Connection successful!${RESET}"
     echo -e "${CYAN}💡 Server is responding and ready for use${RESET}"
+    
+    # Save the configured URL to config file
+    save_setting "CHANNELS_URL" "$CHANNELS_URL"
     return 0
   else
     echo -e "${RED}❌ Connection test failed${RESET}"
@@ -166,6 +171,9 @@ configure_channels_server() {
       1)
         echo -e "${YELLOW}⚠️  Settings saved with failed connection test${RESET}"
         echo -e "${CYAN}💡 Connection will be tested again when features are used${RESET}"
+        
+        # Save the configured URL to config file
+        save_setting "CHANNELS_URL" "$CHANNELS_URL"
         return 0
         ;;
       2)

@@ -6,11 +6,10 @@ Thumbs.db
 cache/
 data/
 
-# Large output files
-tools/lineup-downloader/manual_lineup_output/all_stations_master.json
-tools/lineup-downloader/manual_lineup_output/stations/
+# Development Tools
+tools
 
-# Previous versions (keep in separate branch if needed)
+# Previous versions
 previous_versions/
 
 # Temporary files
@@ -24,9 +23,6 @@ previous_versions/
 .idea/
 .*.swp
 .*.swo
-
-# Tools and development files
-tools/
 
 # Base cache build files
 sampled_markets_base_cache.csv

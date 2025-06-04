@@ -1,0 +1,927 @@
+[
+  {
+    "type": "",
+    "name": "",
+    "channel": "1",
+    "callSign": "BBC1",
+    "stationId": "17153",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17153_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "2",
+    "callSign": "BBC2",
+    "stationId": "17154",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17154_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "3",
+    "callSign": "BBC4",
+    "stationId": "20684",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s20684_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "4",
+    "callSign": "CBBC",
+    "stationId": "29324",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s29324_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "5",
+    "callSign": "CBEEB",
+    "stationId": "29325",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s29325_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "6",
+    "callSign": "BBCSCOT",
+    "stationId": "110718",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s110718_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "7",
+    "callSign": "BBCNEWS",
+    "stationId": "19037",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s19037_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "8",
+    "callSign": "BBCPARL",
+    "stationId": "20685",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s20685_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "9",
+    "callSign": "BBCALBA",
+    "stationId": "60940",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s60940_ll_h9_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "10",
+    "callSign": "S4CD",
+    "stationId": "25342",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25342_ll_h9_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "11",
+    "callSign": "ITV1LON",
+    "stationId": "17468",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17468_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "12",
+    "callSign": "STVNTH",
+    "stationId": "21833",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21833_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "13",
+    "callSign": "ULSTER",
+    "stationId": "21825",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21825_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "14",
+    "callSign": "ITV2",
+    "stationId": "20630",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s20630_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "15",
+    "callSign": "ITVBE",
+    "stationId": "90257",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s90257_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "16",
+    "callSign": "ITVTHREE",
+    "stationId": "44643",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s44643_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "17",
+    "callSign": "ITV4",
+    "stationId": "48020",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s48020_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "18",
+    "callSign": "CHITV",
+    "stationId": "49452",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s49452_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "19",
+    "callSign": "C4",
+    "stationId": "17155",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17155_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "20",
+    "callSign": "E4",
+    "stationId": "25117",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25117_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "21",
+    "callSign": "MORE4",
+    "stationId": "47657",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s47657_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "22",
+    "callSign": "4SEVEN",
+    "stationId": "75804",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s75804_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "23",
+    "callSign": "FILM4UK",
+    "stationId": "21494",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21494_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "24",
+    "callSign": "E4EXTRA",
+    "stationId": "31786",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s31786_ll_h9_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "25",
+    "callSign": "CH5",
+    "stationId": "17157",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17157_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "26",
+    "callSign": "5USA",
+    "stationId": "52335",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s52335_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "27",
+    "callSign": "5ST",
+    "stationId": "52336",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s52336_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "28",
+    "callSign": "5ACTSVM",
+    "stationId": "109246",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s109246_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "29",
+    "callSign": "5SELECT",
+    "stationId": "56888",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s56888_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "30",
+    "callSign": "UDAVE",
+    "stationId": "24305",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s24305_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "32",
+    "callSign": "UDRAMHD",
+    "stationId": "82575",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s82575_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "33",
+    "callSign": "CBSRPL",
+    "stationId": "120454",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120454_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "34",
+    "callSign": "TCEXTRA",
+    "stationId": "57827",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s57827_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "36",
+    "callSign": "LEGENDVM",
+    "stationId": "73970",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s73970_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "37",
+    "callSign": "POP",
+    "stationId": "33638",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s33638_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "38",
+    "callSign": "POPMXUK",
+    "stationId": "56896",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s56896_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "39",
+    "callSign": "TINYPOP",
+    "stationId": "34087",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s34087_ll_h9_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "GBR-1008295-DEFAULT",
+    "source": "manual",
+    "country": "GBR",
+    "processed_timestamp": "20250531_231433"
+  }
+]

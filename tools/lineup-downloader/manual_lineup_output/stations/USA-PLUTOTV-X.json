@@ -1,0 +1,3402 @@
+[
+  {
+    "type": "",
+    "name": "",
+    "channel": "1",
+    "callSign": "PTVSP",
+    "stationId": "114614",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114614_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "2",
+    "callSign": "PTVBLC",
+    "stationId": "114617",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114617_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "3",
+    "callSign": "PTVNBC",
+    "stationId": "114633",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114633_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "4",
+    "callSign": "PTVBLTV",
+    "stationId": "114652",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114652_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "5",
+    "callSign": "PTVFOXS",
+    "stationId": "114654",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114654_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "6",
+    "callSign": "PTVWPT",
+    "stationId": "114670",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114670_ll_h9_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "7",
+    "callSign": "PTV007",
+    "stationId": "114894",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114894_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "8",
+    "callSign": "PTVDTBH",
+    "stationId": "114699",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114699_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "9",
+    "callSign": "PTVCCF",
+    "stationId": "114701",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114701_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "10",
+    "callSign": "PTVGRK",
+    "stationId": "114721",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114721_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "11",
+    "callSign": "PTVFRD",
+    "stationId": "114722",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114722_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "12",
+    "callSign": "PTVADV",
+    "stationId": "114723",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114723_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "13",
+    "callSign": "PTVCOM",
+    "stationId": "114895",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114895_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "14",
+    "callSign": "PTVVH1",
+    "stationId": "114898",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "15",
+    "callSign": "PTVVHHF",
+    "stationId": "114913",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114913_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "16",
+    "callSign": "PTVBET",
+    "stationId": "114914",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114914_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "17",
+    "callSign": "PTVSPK",
+    "stationId": "114915",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114915_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "18",
+    "callSign": "PTVTELE",
+    "stationId": "114916",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114916_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "19",
+    "callSign": "PTVINVE",
+    "stationId": "114917",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114917_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "20",
+    "callSign": "PTVCINE",
+    "stationId": "114918",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114918_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "21",
+    "callSign": "PTVSPKO",
+    "stationId": "114920",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114920_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "23",
+    "callSign": "PTVBAY",
+    "stationId": "114944",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114944_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "25",
+    "callSign": "PTVSAMC",
+    "stationId": "114945",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114945_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "26",
+    "callSign": "PTVLAND",
+    "stationId": "114949",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114949_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "27",
+    "callSign": "PTVNOSE",
+    "stationId": "114950",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114950_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "28",
+    "callSign": "PTVDEG",
+    "stationId": "114951",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114951_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "29",
+    "callSign": "PTVBRIT",
+    "stationId": "114952",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114952_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "30",
+    "callSign": "PTVELCT",
+    "stationId": "114956",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114956_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "31",
+    "callSign": "PTVNNN",
+    "stationId": "114957",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114957_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "32",
+    "callSign": "PTVCNN",
+    "stationId": "114958",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114958_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "34",
+    "callSign": "PTVLHHP",
+    "stationId": "114966",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114966_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "35",
+    "callSign": "PTVRPDR",
+    "stationId": "114967",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114967_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "36",
+    "callSign": "PTVDCCH",
+    "stationId": "114968",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114968_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "37",
+    "callSign": "PTVFORF",
+    "stationId": "114969",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114969_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "38",
+    "callSign": "PTVFRFC",
+    "stationId": "114981",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114981_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "39",
+    "callSign": "PTVLVRG",
+    "stationId": "114982",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114982_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "40",
+    "callSign": "PTVTOH",
+    "stationId": "114983",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114983_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "41",
+    "callSign": "PTVARUK",
+    "stationId": "114984",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114984_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "42",
+    "callSign": "PTVDOCW",
+    "stationId": "115018",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115018_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "43",
+    "callSign": "PTVCCP",
+    "stationId": "115019",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115019_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "44",
+    "callSign": "PTVWILD",
+    "stationId": "115020",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115020_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "45",
+    "callSign": "PTVTOSH",
+    "stationId": "115021",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115021_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "46",
+    "callSign": "PTVLNDS",
+    "stationId": "115058",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115058_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "47",
+    "callSign": "PTVSLOF",
+    "stationId": "115059",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115059_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "48",
+    "callSign": "PTVCBSS",
+    "stationId": "115061",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115061_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "49",
+    "callSign": "PTVNFLC",
+    "stationId": "115063",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115063_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "50",
+    "callSign": "PTVMLS",
+    "stationId": "115106",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115106_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "51",
+    "callSign": "PTVBSPX",
+    "stationId": "115107",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115107_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "52",
+    "callSign": "PTVSURF",
+    "stationId": "115108",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115108_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "53",
+    "callSign": "PTVFOOD",
+    "stationId": "115109",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115109_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "54",
+    "callSign": "PTVNKTV",
+    "stationId": "115148",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115148_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "55",
+    "callSign": "PTVNKGM",
+    "stationId": "115149",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115149_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "56",
+    "callSign": "PTVTTRT",
+    "stationId": "115150",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115150_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "57",
+    "callSign": "PTVTWEN",
+    "stationId": "115151",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115151_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "58",
+    "callSign": "PTVCBS3",
+    "stationId": "115449",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115449_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "59",
+    "callSign": "PTVCOPS",
+    "stationId": "115453",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115453_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "60",
+    "callSign": "PTVKHLO",
+    "stationId": "115454",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115454_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "61",
+    "callSign": "PTVACTN",
+    "stationId": "115455",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115455_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "62",
+    "callSign": "PTVCARS",
+    "stationId": "115489",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115489_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "63",
+    "callSign": "PTVHORR",
+    "stationId": "115490",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115490_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "64",
+    "callSign": "PTVMOV",
+    "stationId": "115491",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115491_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "65",
+    "callSign": "PTVCBN",
+    "stationId": "114638",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112036_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "73",
+    "callSign": "PTVCRMO",
+    "stationId": "117296",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117296_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "74",
+    "callSign": "PTVCRDR",
+    "stationId": "123816",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123816_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "75",
+    "callSign": "PTVMTVD",
+    "stationId": "123793",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123793_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "76",
+    "callSign": "PTVMTVS",
+    "stationId": "123813",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123813_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "77",
+    "callSign": "PTVBLTB",
+    "stationId": "123819",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123819_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "78",
+    "callSign": "PTVBLCL",
+    "stationId": "123792",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123792_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "79",
+    "callSign": "PTVBBMS",
+    "stationId": "123806",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123806_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "80",
+    "callSign": "PTVDRMA",
+    "stationId": "123802",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123802_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "111",
+    "callSign": "PTVMTV",
+    "stationId": "114897",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114897_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "138",
+    "callSign": "P90210",
+    "stationId": "115892",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115892_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "150",
+    "callSign": "PTVSTAR",
+    "stationId": "115987",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115987_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "151",
+    "callSign": "SYFY",
+    "stationId": "11097",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11097_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "153",
+    "callSign": "TOHOUSE",
+    "stationId": "113738",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113738_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "154",
+    "callSign": "TINY",
+    "stationId": "118456",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s118456_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "163",
+    "callSign": "PTVPIRE",
+    "stationId": "117298",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117298_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "233",
+    "callSign": "NBCNN",
+    "stationId": "114174",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114174_ll_h15_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "236",
+    "callSign": "NEWSMX",
+    "stationId": "87925",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s87925_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "250",
+    "callSign": "PTVCHRS",
+    "stationId": "115893",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115893_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "251",
+    "callSign": "PTVMIST",
+    "stationId": "115894",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115894_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "258",
+    "callSign": "VIZHMMM",
+    "stationId": "120977",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "261",
+    "callSign": "BLAZETV",
+    "stationId": "77361",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s77361_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "262",
+    "callSign": "BLOOM",
+    "stationId": "14755",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14755_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "275",
+    "callSign": "PTVREAL",
+    "stationId": "117293",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117293_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "293",
+    "callSign": "PTVBAR",
+    "stationId": "120245",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120245_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "296",
+    "callSign": "PTVSURV",
+    "stationId": "115890",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115890_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "297",
+    "callSign": "PTVAZR",
+    "stationId": "115889",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115889_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "298",
+    "callSign": "PTVCHALL",
+    "stationId": "117292",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117292_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "355",
+    "callSign": "PTVCSI",
+    "stationId": "115994",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115994_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "358",
+    "callSign": "PTVNARC",
+    "stationId": "116355",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116355_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "365",
+    "callSign": "PTVCRIM",
+    "stationId": "117289",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117289_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "486",
+    "callSign": "BEINX",
+    "stationId": "113143",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113143_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "508",
+    "callSign": "PTV3CO",
+    "stationId": "115888",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s163976_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "605",
+    "callSign": "PTVAMTK",
+    "stationId": "117297",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117297_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "615",
+    "callSign": "PTVHOME",
+    "stationId": "117290",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117290_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "709",
+    "callSign": "PTVMLB",
+    "stationId": "118354",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s118354_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "734",
+    "callSign": "PTVIMPT",
+    "stationId": "117294",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117294_ll_h9_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "735",
+    "callSign": "N12NY",
+    "stationId": "116946",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116946_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "736",
+    "callSign": "NFLDC1",
+    "stationId": "121705",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121705_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "737",
+    "callSign": "TOTTMNT",
+    "stationId": "121107",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121107_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "738",
+    "callSign": "NICKPLT",
+    "stationId": "121301",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121301_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "739",
+    "callSign": "PTVCBSN",
+    "stationId": "114632",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s104846_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "740",
+    "callSign": "FWX",
+    "stationId": "121307",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121307_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "741",
+    "callSign": "POKERGO",
+    "stationId": "120620",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120620_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "742",
+    "callSign": "RMADHD",
+    "stationId": "97484",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s97484_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "743",
+    "callSign": "NBC4K3Y",
+    "stationId": "121073",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s47004_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "UHDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "744",
+    "callSign": "BOUNSTR",
+    "stationId": "120372",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120372_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "745",
+    "callSign": "BUZZRST",
+    "stationId": "113452",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s93430_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "746",
+    "callSign": "TPIR60",
+    "stationId": "124310",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121659_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "747",
+    "callSign": "DECLASS",
+    "stationId": "130514",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s130514_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "748",
+    "callSign": "SOBCAN",
+    "stationId": "136495",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123662_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "749",
+    "callSign": "SCLASSC",
+    "stationId": "114607",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114607_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "750",
+    "callSign": "VVP",
+    "stationId": "115694",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115694_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "751",
+    "callSign": "ESTNEWS",
+    "stationId": "117478",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117478_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "752",
+    "callSign": "TDN",
+    "stationId": "118087",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s118087_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "753",
+    "callSign": "RAF",
+    "stationId": "118462",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s118462_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "754",
+    "callSign": "BEIXE",
+    "stationId": "119661",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s119661_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "755",
+    "callSign": "VVL",
+    "stationId": "120053",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120053_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "756",
+    "callSign": "CJENM",
+    "stationId": "120440",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120440_ll_h9_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "757",
+    "callSign": "PTVPBRR",
+    "stationId": "120981",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120981_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "758",
+    "callSign": "VV70",
+    "stationId": "121122",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121122_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "759",
+    "callSign": "VV80",
+    "stationId": "121123",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121123_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "760",
+    "callSign": "VV90",
+    "stationId": "121124",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121124_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "761",
+    "callSign": "VV2K",
+    "stationId": "121125",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121125_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "762",
+    "callSign": "VVRT",
+    "stationId": "121388",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121388_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "763",
+    "callSign": "WYPOINT",
+    "stationId": "121424",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121424_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "764",
+    "callSign": "RACSEL",
+    "stationId": "121708",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121708_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "765",
+    "callSign": "VVRR",
+    "stationId": "122261",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s122261_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "766",
+    "callSign": "VVTSHH",
+    "stationId": "122262",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s122262_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "767",
+    "callSign": "PKGFAST",
+    "stationId": "124268",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s124268_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "768",
+    "callSign": "EURONWS",
+    "stationId": "40704",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s40704_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "769",
+    "callSign": "PTVWHL",
+    "stationId": "133620",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s133620_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "770",
+    "callSign": "PTVJEOP",
+    "stationId": "133622",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s133622_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "771",
+    "callSign": "ABCNL",
+    "stationId": "113380",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113380_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "772",
+    "callSign": "CBSNSTR",
+    "stationId": "104846",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s104846_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-PLUTOTV-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  }
+]

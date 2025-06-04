@@ -1,0 +1,6028 @@
+[
+  {
+    "type": "",
+    "name": "",
+    "channel": "100",
+    "callSign": "AMC",
+    "stationId": "10021",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10021_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "101",
+    "callSign": "BBCA",
+    "stationId": "18332",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18332_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "102",
+    "callSign": "BRAVO",
+    "stationId": "10057",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10057_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "103",
+    "callSign": "DISN",
+    "stationId": "10171",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10171_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "104",
+    "callSign": "ESPN",
+    "stationId": "10179",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10179_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "105",
+    "callSign": "ESPN2",
+    "stationId": "12444",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12444_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "106",
+    "callSign": "ESPNEWS",
+    "stationId": "16485",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16485_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "107",
+    "callSign": "FNC",
+    "stationId": "16374",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16374_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "108",
+    "callSign": "FX",
+    "stationId": "14321",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14321_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "109",
+    "callSign": "MSNBC",
+    "stationId": "16300",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16300_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "110",
+    "callSign": "PARSHO",
+    "stationId": "11115",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11115_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "111",
+    "callSign": "USA",
+    "stationId": "11207",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11207_ll_h15_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "113",
+    "callSign": "CNBC",
+    "stationId": "10139",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10139_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "114",
+    "callSign": "DJCH",
+    "stationId": "74796",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s74796_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "115",
+    "callSign": "DXD",
+    "stationId": "18279",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18279_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "116",
+    "callSign": "E",
+    "stationId": "10989",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10989_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "117",
+    "callSign": "ESPNU",
+    "stationId": "45654",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s45654_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "118",
+    "callSign": "FBN",
+    "stationId": "58649",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s58649_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "119",
+    "callSign": "FS1",
+    "stationId": "82541",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s82541_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "120",
+    "callSign": "FS2",
+    "stationId": "33178",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s33178_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "121",
+    "callSign": "FREEFRM",
+    "stationId": "10093",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10093_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "122",
+    "callSign": "FXX",
+    "stationId": "17927",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s17927_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "123",
+    "callSign": "GOLF",
+    "stationId": "14899",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14899_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "124",
+    "callSign": "IFC",
+    "stationId": "14873",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14873_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "125",
+    "callSign": "NGC",
+    "stationId": "24959",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s24959_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "127",
+    "callSign": "APL",
+    "stationId": "16331",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16331_ll_h9_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "128",
+    "callSign": "SUNDANC",
+    "stationId": "16108",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16108_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "129",
+    "callSign": "TELE",
+    "stationId": "10239",
+    "affiliateId": "10239",
+    "affiliateCallSign": "TELE",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10239_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "130",
+    "callSign": "FXM",
+    "stationId": "14988",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14988_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "131",
+    "callSign": "NGWILD",
+    "stationId": "66804",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s66804_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "132",
+    "callSign": "FOOD",
+    "stationId": "12574",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12574_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "133",
+    "callSign": "UNVSO",
+    "stationId": "14791",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14791_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "134",
+    "callSign": "WE",
+    "stationId": "16409",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16409_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "135",
+    "callSign": "SYFY",
+    "stationId": "11097",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11097_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "136",
+    "callSign": "CBSSN",
+    "stationId": "16365",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16365_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "138",
+    "callSign": "HGTV",
+    "stationId": "14902",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14902_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "139",
+    "callSign": "ID",
+    "stationId": "16615",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16615_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "140",
+    "callSign": "MTHD",
+    "stationId": "31046",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s31046_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "141",
+    "callSign": "STARZ",
+    "stationId": "12719",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12719_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "142",
+    "callSign": "TASTE",
+    "stationId": "107076",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s107076_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "143",
+    "callSign": "BBCWDNA",
+    "stationId": "89542",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s89542_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "144",
+    "callSign": "BIGTEN",
+    "stationId": "56783",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s56783_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "145",
+    "callSign": "TOON",
+    "stationId": "12131",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12131_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "148",
+    "callSign": "CNN",
+    "stationId": "10142",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10142_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "149",
+    "callSign": "HLN",
+    "stationId": "10145",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10145_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "151",
+    "callSign": "NBATV",
+    "stationId": "32281",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s32281_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "152",
+    "callSign": "SCNEWS",
+    "stationId": "96827",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s96827_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "154",
+    "callSign": "POPSD",
+    "stationId": "16715",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16715_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "155",
+    "callSign": "SMITH",
+    "stationId": "65799",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s65799_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "156",
+    "callSign": "DSC",
+    "stationId": "11150",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11150_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "157",
+    "callSign": "TBS",
+    "stationId": "11867",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11867_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "158",
+    "callSign": "TCM",
+    "stationId": "12852",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12852_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "160",
+    "callSign": "TNT",
+    "stationId": "11164",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11164_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "161",
+    "callSign": "TRUTV",
+    "stationId": "10153",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10153_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "162",
+    "callSign": "TYT",
+    "stationId": "107478",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s107478_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "163",
+    "callSign": "TRAV",
+    "stationId": "11180",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11180_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "164",
+    "callSign": "COMET",
+    "stationId": "97051",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s97051_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "166",
+    "callSign": "GOLFSTR",
+    "stationId": "99380",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14899_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "167",
+    "callSign": "TLC",
+    "stationId": "11158",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11158_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "178",
+    "callSign": "MGM",
+    "stationId": "65669",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s65669_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "180",
+    "callSign": "OWN",
+    "stationId": "70387",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s70387_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "181",
+    "callSign": "OXYGEN",
+    "stationId": "21484",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21484_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "182",
+    "callSign": "SEC",
+    "stationId": "89535",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s89535_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "183",
+    "callSign": "ACC",
+    "stationId": "111871",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s111871_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "186",
+    "callSign": "BET",
+    "stationId": "10051",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10051_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "187",
+    "callSign": "MAX",
+    "stationId": "10120",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10120_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "188",
+    "callSign": "CMTV",
+    "stationId": "10138",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10138_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "189",
+    "callSign": "COMEDY",
+    "stationId": "10149",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10149_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "190",
+    "callSign": "HBO",
+    "stationId": "10240",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10240_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "191",
+    "callSign": "MTV",
+    "stationId": "10986",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10986_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "192",
+    "callSign": "NIK",
+    "stationId": "11006",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11006_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "193",
+    "callSign": "PAR",
+    "stationId": "11163",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11163_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "194",
+    "callSign": "TVLAND",
+    "stationId": "16123",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16123_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "195",
+    "callSign": "VH1",
+    "stationId": "11218",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11218_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "198",
+    "callSign": "RACER",
+    "stationId": "45169",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s45169_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "199",
+    "callSign": "OUTSIDE",
+    "stationId": "68295",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s68295_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "201",
+    "callSign": "BHER",
+    "stationId": "14897",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14897_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "202",
+    "callSign": "CMDYTV",
+    "stationId": "80740",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s80740_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "203",
+    "callSign": "COURT",
+    "stationId": "111043",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s111043_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "204",
+    "callSign": "COZITV",
+    "stationId": "78851",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s78851_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "205",
+    "callSign": "DABL",
+    "stationId": "112157",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112157_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "207",
+    "callSign": "DOVESTR",
+    "stationId": "110480",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s110480_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "208",
+    "callSign": "FN",
+    "stationId": "89093",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s89093_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "209",
+    "callSign": "FOXSOUL",
+    "stationId": "119212",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s119212_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "210",
+    "callSign": "FOXWX",
+    "stationId": "93141",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s93141_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "212",
+    "callSign": "GALA",
+    "stationId": "10222",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10222_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "213",
+    "callSign": "GET",
+    "stationId": "82563",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s82563_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "214",
+    "callSign": "GSN",
+    "stationId": "14909",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14909_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "215",
+    "callSign": "HALL",
+    "stationId": "11221",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11221_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "216",
+    "callSign": "HFMSD",
+    "stationId": "105756",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s105756_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "217",
+    "callSign": "HMYS",
+    "stationId": "61522",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s61522_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "218",
+    "callSign": "IMPACSD",
+    "stationId": "138982",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s138982_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "219",
+    "callSign": "JUST",
+    "stationId": "78850",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s78850_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "221",
+    "callSign": "LCSTR",
+    "stationId": "109553",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s109553_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "222",
+    "callSign": "LIVENOW",
+    "stationId": "119219",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s119219_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "224",
+    "callSign": "MTV2",
+    "stationId": "16361",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16361_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "225",
+    "callSign": "MTVCLAS",
+    "stationId": "22561",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s22561_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "226",
+    "callSign": "NBCNN",
+    "stationId": "114174",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114174_ll_h15_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "227",
+    "callSign": "NEWSNTN",
+    "stationId": "91096",
+    "affiliateId": "Independent",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s91096_ll_h15_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "228",
+    "callSign": "NICJR",
+    "stationId": "19211",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s19211_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "229",
+    "callSign": "NIKTON",
+    "stationId": "30420",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s30420_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "230",
+    "callSign": "QVC",
+    "stationId": "11069",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11069_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "231",
+    "callSign": "RECIPE",
+    "stationId": "71294",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s71294_ll_h6_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "234",
+    "callSign": "STARTTV",
+    "stationId": "109454",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s109454_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "236",
+    "callSign": "TNCK",
+    "stationId": "59036",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s59036_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "238",
+    "callSign": "WEATH",
+    "stationId": "11187",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11187_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "239",
+    "callSign": "UNIMAS",
+    "stationId": "29058",
+    "affiliateId": "29058",
+    "affiliateCallSign": "UNIMAS",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s29058_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "240",
+    "callSign": "UNI",
+    "stationId": "11118",
+    "affiliateId": "11118",
+    "affiliateCallSign": "UNI",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11118_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "241",
+    "callSign": "YTO",
+    "stationId": "112006",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112006_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "243",
+    "callSign": "CRMES",
+    "stationId": "114278",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114278_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "244",
+    "callSign": "TMESP",
+    "stationId": "120352",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s138176_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "245",
+    "callSign": "THITUS",
+    "stationId": "34393",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s15211_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "246",
+    "callSign": "ALLBLKG",
+    "stationId": "124177",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s124177_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "247",
+    "callSign": "TWCE",
+    "stationId": "123478",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123478_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "251",
+    "callSign": "CSTREAM",
+    "stationId": "110951",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s110951_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "254",
+    "callSign": "TEAM1",
+    "stationId": "20810",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s20810_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "255",
+    "callSign": "SCRNPIX",
+    "stationId": "113001",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113001_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "256",
+    "callSign": "VSIN",
+    "stationId": "108970",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "258",
+    "callSign": "BEINS1",
+    "stationId": "76942",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s76942_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "262",
+    "callSign": "PLAYERS",
+    "stationId": "116748",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116748_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "263",
+    "callSign": "BILSTR",
+    "stationId": "120469",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120469_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "264",
+    "callSign": "POKERGO",
+    "stationId": "120620",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120620_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "265",
+    "callSign": "SPOGRID",
+    "stationId": "112732",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112732_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "266",
+    "callSign": "CNNE",
+    "stationId": "58631",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s58631_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "269",
+    "callSign": "FDUELTV",
+    "stationId": "21345",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21345_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "270",
+    "callSign": "BEINSES",
+    "stationId": "76943",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s76943_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "271",
+    "callSign": "ANT3I",
+    "stationId": "16800",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16800_ll_h9_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "272",
+    "callSign": "NTN24",
+    "stationId": "61988",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s61988_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "273",
+    "callSign": "NUESTRT",
+    "stationId": "33431",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s33431_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "274",
+    "callSign": "TYCINUH",
+    "stationId": "111046",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16275_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "275",
+    "callSign": "DSCE",
+    "stationId": "19247",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s19247_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "276",
+    "callSign": "DFAM",
+    "stationId": "58428",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s99630_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "277",
+    "callSign": "BABY1SP",
+    "stationId": "54409",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s50338_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "278",
+    "callSign": "ESPND",
+    "stationId": "25595",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25595_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "279",
+    "callSign": "ESTRLLA",
+    "stationId": "65064",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s65064_ll_h15_af.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "280",
+    "callSign": "CINLUS",
+    "stationId": "62401",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s15296_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "281",
+    "callSign": "PASNUS",
+    "stationId": "61776",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s71621_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "282",
+    "callSign": "WAPAUS",
+    "stationId": "44322",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s63389_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "283",
+    "callSign": "FXDEP",
+    "stationId": "15377",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s15377_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "284",
+    "callSign": "CMEX",
+    "stationId": "44714",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s44714_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "285",
+    "callSign": "SOCINS",
+    "stationId": "102978",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s109720_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "286",
+    "callSign": "BANDAUS",
+    "stationId": "54867",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18101_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "287",
+    "callSign": "DEPELUS",
+    "stationId": "35401",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16288_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "288",
+    "callSign": "DEPELC",
+    "stationId": "33628",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s33628_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "290",
+    "callSign": "THMUIZZ",
+    "stationId": "122096",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s34394_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "291",
+    "callSign": "UNITLNO",
+    "stationId": "74550",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s74550_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "562",
+    "callSign": "NFLNET",
+    "stationId": "34710",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s34710_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "563",
+    "callSign": "NFLNRZ",
+    "stationId": "65024",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s65024_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "564",
+    "callSign": "ABCNL",
+    "stationId": "113380",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113380_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "565",
+    "callSign": "LOCNOW",
+    "stationId": "99988",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s99988_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "566",
+    "callSign": "OUTD",
+    "stationId": "14776",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s14776_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "569",
+    "callSign": "LOCALSH",
+    "stationId": "118952",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s70938_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "573",
+    "callSign": "VD1Y",
+    "stationId": "130457",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123583_h3_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "574",
+    "callSign": "HSN",
+    "stationId": "10269",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10269_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "575",
+    "callSign": "MOVSPH",
+    "stationId": "115944",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115944_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "576",
+    "callSign": "TUDNU",
+    "stationId": "75176",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s75176_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "577",
+    "callSign": "HERETV",
+    "stationId": "45210",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s45210_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "578",
+    "callSign": "BOUNCSD",
+    "stationId": "111710",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s111710_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "579",
+    "callSign": "IONSAT",
+    "stationId": "18774",
+    "affiliateId": "18633",
+    "affiliateCallSign": "ION",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18774_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "580",
+    "callSign": "SCLASSC",
+    "stationId": "114607",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114607_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "582",
+    "callSign": "CHEDDAR",
+    "stationId": "112036",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112036_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "585",
+    "callSign": "CBNSTR",
+    "stationId": "107241",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s107241_ll_h15_ae.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "586",
+    "callSign": "HIYAH",
+    "stationId": "120790",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s120790_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "587",
+    "callSign": "CHARGE",
+    "stationId": "102148",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s102148_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "588",
+    "callSign": "MAGN",
+    "stationId": "18544",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18544_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "589",
+    "callSign": "T2",
+    "stationId": "137752",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s137752_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "590",
+    "callSign": "TENNIS",
+    "stationId": "33395",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s33395_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "591",
+    "callSign": "TR3S",
+    "stationId": "18715",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18715_ll_h15_ao.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "593",
+    "callSign": "HOGAR",
+    "stationId": "87063",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s87063_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "594",
+    "callSign": "TWDU",
+    "stationId": "115540",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115540_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "595",
+    "callSign": "ZEETV",
+    "stationId": "19283",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s19283_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "600",
+    "callSign": "AMCPRES",
+    "stationId": "115539",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115539_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "601",
+    "callSign": "AMCRSH",
+    "stationId": "115678",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115678_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "602",
+    "callSign": "PRTLNDA",
+    "stationId": "122435",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s122435_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "606",
+    "callSign": "NEWSMX",
+    "stationId": "87925",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s87925_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "607",
+    "callSign": "WRLDWAR",
+    "stationId": "165997",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s165997_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "608",
+    "callSign": "NBCSHD1",
+    "stationId": "159319",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "609",
+    "callSign": "NBCSHD2",
+    "stationId": "159324",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "610",
+    "callSign": "NBCSHD3",
+    "stationId": "159327",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "611",
+    "callSign": "WEREAL",
+    "stationId": "115679",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115679_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "612",
+    "callSign": "PBSKSTR",
+    "stationId": "112893",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125394_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "613",
+    "callSign": "COMCLN",
+    "stationId": "115447",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s111668_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "614",
+    "callSign": "GMAPNY",
+    "stationId": "46463",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s46463_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "615",
+    "callSign": "SBOXTV",
+    "stationId": "116607",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116607_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "616",
+    "callSign": "SHUDDTV",
+    "stationId": "117320",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117320_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "617",
+    "callSign": "OTFAST",
+    "stationId": "131737",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131737_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "618",
+    "callSign": "STADSTR",
+    "stationId": "113991",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s96469_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "619",
+    "callSign": "NMASFOR",
+    "stationId": "76964",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s66635_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "620",
+    "callSign": "BABYUSP",
+    "stationId": "117287",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s70337_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "621",
+    "callSign": "5MAX",
+    "stationId": "25620",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25620_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "622",
+    "callSign": "ACMAX",
+    "stationId": "18433",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18433_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "623",
+    "callSign": "ACRM",
+    "stationId": "138396",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s138396_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "624",
+    "callSign": "BEINSTR",
+    "stationId": "120375",
+    "affiliateId": "113143",
+    "affiliateCallSign": "BEINX",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113143_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "625",
+    "callSign": "CMAX",
+    "stationId": "25623",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25623_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "626",
+    "callSign": "CNNMAX",
+    "stationId": "145598",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s145598_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "627",
+    "callSign": "FDUELRC",
+    "stationId": "32258",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s32258_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "628",
+    "callSign": "HBOC",
+    "stationId": "18429",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18429_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "629",
+    "callSign": "HBOF",
+    "stationId": "16585",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s16585_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "630",
+    "callSign": "HBOLAT",
+    "stationId": "24553",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s24553_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "631",
+    "callSign": "HBOSIG",
+    "stationId": "10243",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10243_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "632",
+    "callSign": "HBOZ",
+    "stationId": "18431",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18431_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "633",
+    "callSign": "HBO2",
+    "stationId": "10241",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s68140_h3_ba.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "634",
+    "callSign": "MOMAX",
+    "stationId": "10121",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10121_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "635",
+    "callSign": "MOVIE",
+    "stationId": "25621",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25621_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "636",
+    "callSign": "OMAX",
+    "stationId": "25622",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s25622_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "637",
+    "callSign": "ROARTV",
+    "stationId": "102116",
+    "affiliateId": "102116",
+    "affiliateCallSign": "ROARTV",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s102116_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "638",
+    "callSign": "THMAX",
+    "stationId": "18435",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s18435_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "639",
+    "callSign": "ZENS",
+    "stationId": "171005",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "640",
+    "callSign": "KGODT",
+    "stationId": "19574",
+    "affiliateId": "10003",
+    "affiliateCallSign": "ABC",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s28708_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "641",
+    "callSign": "BTN",
+    "stationId": "49466",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "642",
+    "callSign": "CPTVSPT",
+    "stationId": "10102",
+    "affiliateId": "Independent",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s10102_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "SDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "643",
+    "callSign": "WNYWFST",
+    "stationId": "150390",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s150390_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "644",
+    "callSign": "WDVMDT",
+    "stationId": "34963",
+    "affiliateId": "Independent",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11496_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "645",
+    "callSign": "WWOR",
+    "stationId": "11760",
+    "affiliateId": "51307",
+    "affiliateCallSign": "MNT",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s51307_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "646",
+    "callSign": "WPIX",
+    "stationId": "11779",
+    "affiliateId": "51306",
+    "affiliateCallSign": "CW",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11779_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "647",
+    "callSign": "WFUT",
+    "stationId": "11527",
+    "affiliateId": "29058",
+    "affiliateCallSign": "UNIMAS",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s29058_h3_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "648",
+    "callSign": "WLNY",
+    "stationId": "12492",
+    "affiliateId": "Independent",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s12492_ll_h9_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "649",
+    "callSign": "WNBAION1",
+    "stationId": "157760",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "650",
+    "callSign": "WNBAION2",
+    "stationId": "157762",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "651",
+    "callSign": "WNBAION3",
+    "stationId": "157821",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "652",
+    "callSign": "WXTV",
+    "stationId": "12001",
+    "affiliateId": "11118",
+    "affiliateCallSign": "UNI",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11118_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Analog",
+      "videoType": "",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "653",
+    "callSign": "SMUS68",
+    "stationId": "113296",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113296_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "654",
+    "callSign": "HOGARHD",
+    "stationId": "114881",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114881_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "655",
+    "callSign": "MAX01",
+    "stationId": "131773",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "656",
+    "callSign": "MAX10",
+    "stationId": "146087",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "657",
+    "callSign": "MAX11",
+    "stationId": "153402",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116091_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "658",
+    "callSign": "MAX12",
+    "stationId": "153403",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116091_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "659",
+    "callSign": "MAX02",
+    "stationId": "131807",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131807_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "660",
+    "callSign": "MAX03",
+    "stationId": "131808",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131808_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "661",
+    "callSign": "MAX04",
+    "stationId": "146081",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "662",
+    "callSign": "MAX05",
+    "stationId": "146082",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "663",
+    "callSign": "MAX06",
+    "stationId": "146083",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "664",
+    "callSign": "MAX07",
+    "stationId": "146084",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "665",
+    "callSign": "MAX08",
+    "stationId": "146085",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "666",
+    "callSign": "MAX09",
+    "stationId": "146086",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s131773_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "668",
+    "callSign": "ANT3SPH",
+    "stationId": "91176",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s91176_ll_h9_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "669",
+    "callSign": "ESPN4K",
+    "stationId": "117657",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "UHDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "670",
+    "callSign": "NBC4KY",
+    "stationId": "117038",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s47004_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "UHDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "671",
+    "callSign": "FS4K1",
+    "stationId": "111003",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s11055_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "UHDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "672",
+    "callSign": "NBATV4K",
+    "stationId": "122054",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s32281_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "UHDTV",
+      "truResolution": ""
+    },
+    "lineup_id": "USA-YOUTUBE-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  }
+]

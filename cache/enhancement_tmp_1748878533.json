@@ -1,0 +1,832 @@
+{
+  "type": "Digital Broadcast Network",
+  "name": "3 Angels Broadcasting Network",
+  "channel": "1677",
+  "callSign": "3ANGELS",
+  "stationId": "10002",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10002_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Bangla",
+  "channel": "776",
+  "callSign": "ZBNGL",
+  "stationId": "100075",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100075_ll_h9_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "bn"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "DirecTV GO4IT",
+  "channel": "92",
+  "callSign": "DT310",
+  "stationId": "100082",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "CL beIN Sports English SD in Spanish",
+  "channel": "655",
+  "callSign": "BEINS1S",
+  "stationId": "100109",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Living Foodz",
+  "channel": "714",
+  "callSign": "LFOODZ",
+  "stationId": "100148",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100148_ll_h9_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Vancouver Canucks: NHL Center Ice",
+  "channel": "3095",
+  "callSign": "NHLVAN",
+  "stationId": "100202",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "San Jose Sharks: NHL Center Ice",
+  "channel": "3090",
+  "callSign": "NHLSJ",
+  "stationId": "100203",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Kings: NHL Center Ice",
+  "channel": "3080",
+  "callSign": "NHLLA",
+  "stationId": "100204",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Edmonton Oilers: NHL Center Ice",
+  "channel": "3078",
+  "callSign": "NHLEDM",
+  "stationId": "100205",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Calgary Flames: NHL Center Ice",
+  "channel": "3071",
+  "callSign": "NHLCLG",
+  "stationId": "100206",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Utah Mammoth: NHL Center Ice",
+  "channel": "3068",
+  "callSign": "NHLUT",
+  "stationId": "100207",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Anaheim Ducks: NHL Center Ice",
+  "channel": "3067",
+  "callSign": "NHLANA",
+  "stationId": "100208",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Winnipeg Jets: NHL Center Ice",
+  "channel": "3098",
+  "callSign": "NHLWIN",
+  "stationId": "100209",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "AMC",
+  "channel": "119",
+  "callSign": "AMC",
+  "stationId": "10021",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10021_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "St. Louis Blues: NHL Center Ice",
+  "channel": "3092",
+  "callSign": "NHLSTL",
+  "stationId": "100210",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Nashville Predators: NHL Center Ice",
+  "channel": "3083",
+  "callSign": "NHLNAS",
+  "stationId": "100211",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Alwan US",
+  "channel": "660",
+  "callSign": "ZALWAN",
+  "stationId": "100239",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Aflam US",
+  "channel": "661",
+  "callSign": "ZAFLAM",
+  "stationId": "100240",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Buffalo Sabres: NHL Center Ice",
+  "channel": "3070",
+  "callSign": "NHLBUF",
+  "stationId": "100241",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Boston Bruins: NHL Center Ice",
+  "channel": "3069",
+  "callSign": "NHLBOS",
+  "stationId": "100242",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Rangers: NHL Center Ice",
+  "channel": "3086",
+  "callSign": "NHLNYR",
+  "stationId": "100243",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Washington Capitals: NHL Center Ice",
+  "channel": "3097",
+  "callSign": "NHLWAS",
+  "stationId": "100244",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Pittsburgh Penguins: NHL Center Ice",
+  "channel": "3089",
+  "callSign": "NHLPIT",
+  "stationId": "100245",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Philadelphia Flyers: NHL Center Ice",
+  "channel": "3088",
+  "callSign": "NHLPHL",
+  "stationId": "100246",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New Jersey Devils: NHL Center Ice",
+  "channel": "3084",
+  "callSign": "NHLNJ",
+  "stationId": "100247",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Columbus Blue Jackets: NHL Center Ice",
+  "channel": "3075",
+  "callSign": "NHLCBJ",
+  "stationId": "100248",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Islanders: NHL Center Ice",
+  "channel": "3085",
+  "callSign": "NHLNYI",
+  "stationId": "100249",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Carolina Hurricanes: NHL Center Ice",
+  "channel": "3072",
+  "callSign": "NHLCAR",
+  "stationId": "100250",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Minnesota Wild: NHL Center Ice",
+  "channel": "3081",
+  "callSign": "NHLMIN",
+  "stationId": "100267",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Dallas Stars: NHL Center Ice",
+  "channel": "3076",
+  "callSign": "NHLDAL",
+  "stationId": "100268",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Colorado Avalanche: NHL Center Ice",
+  "channel": "3074",
+  "callSign": "NHLCOL",
+  "stationId": "100269",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Chicago Blackhawks: NHL Center Ice",
+  "channel": "3073",
+  "callSign": "NHLCHG",
+  "stationId": "100270",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "usa",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}

@@ -1,0 +1,1175 @@
+#!/bin/bash
+
+# ============================================================================
+# COMPREHENSIVE API FUNCTIONS MODULE
+# ============================================================================
+# All API function calls for Channels DVR and Dispatcharr with elegant error handling
+# Each function provides single-line replacements for existing curl commands
+
+# ============================================================================
+# DEPENDENCY CHECK
+# ============================================================================
+
+# Ensure auth module is loaded for Dispatcharr functions
+if ! declare -f ensure_dispatcharr_auth >/dev/null 2>&1; then
+    echo "ERROR: auth.sh module must be loaded before api.sh" >&2
+    return 1 2>/dev/null || exit 1
+fi
+
+# ============================================================================
+# CONFIGURATION ACCESS HELPER
+# ============================================================================
+
+# Ensure configuration variables are available in API functions
+ensure_config_loaded() {
+    local config_file="${CONFIG_FILE:-data/globalstationsearch.env}"
+    if [[ -f "$config_file" ]] && [[ -z "${CHANNELS_URL:-}" || -z "${DISPATCHARR_URL:-}" ]]; then
+        source "$config_file" 2>/dev/null
+    fi
+}
+
+url_encode() {
+    local string="$1"
+    local encoded=""
+    local length=${#string}
+    
+    for ((i=0; i<length; i++)); do
+        local char="${string:i:1}"
+        case "$char" in
+            [a-zA-Z0-9.~_-])
+                encoded+="$char"
+                ;;
+            ' ')
+                encoded+="%20"
+                ;;
+            *)
+                # Convert to hex for other special characters
+                printf -v hex "%02X" "'$char"
+                encoded+="%$hex"
+                ;;
+        esac
+    done
+    
+    echo "$encoded"
+}
+
+# ============================================================================
+# API CONFIGURATION
+# ============================================================================
+
+# Default timeouts and retry settings
+readonly API_QUICK_TIMEOUT=5
+readonly API_STANDARD_TIMEOUT=10
+readonly API_EXTENDED_TIMEOUT=15
+readonly API_MAX_RETRIES=3
+
+# ============================================================================
+# CONFIGURATION MANAGEMENT
+# ============================================================================
+
+# Save Channels DVR configuration and refresh
+save_channels_dvr_config() {
+    local config_key="$1"
+    local config_value="$2"
+    local config_file="${CONFIG_FILE:-data/globalstationsearch.env}"
+    
+    if [[ -z "$config_key" ]]; then
+        echo -e "${RED}❌ save_channels_dvr_config: config_key required${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}💾 Saving configuration: $config_key${RESET}" >&2
+    
+    # Use the main script's save_setting function if available
+    if declare -f save_setting >/dev/null 2>&1; then
+        save_setting "$config_key" "$config_value"
+    else
+        # Fallback: direct file manipulation
+        if [[ -f "$config_file" ]]; then
+            sed -i.bak "/^$config_key=/d" "$config_file"
+            echo "$config_key=\"$config_value\"" >> "$config_file"
+        else
+            echo -e "${RED}❌ Config file not found: $config_file${RESET}" >&2
+            return 1
+        fi
+    fi
+    
+    # Reload configuration
+    reload_channels_dvr_config
+    
+    return 0
+}
+
+# Reload Channels DVR configuration
+reload_channels_dvr_config() {
+    local config_file="${CONFIG_FILE:-data/globalstationsearch.env}"
+    
+    echo -e "${CYAN}🔄 Reloading configuration from: $config_file${RESET}" >&2
+    
+    if [[ -f "$config_file" ]]; then
+        source "$config_file" 2>/dev/null || {
+            echo -e "${YELLOW}⚠️ Failed to source config file: $config_file${RESET}" >&2
+            return 1
+        }
+        
+        echo -e "${GREEN}✅ Configuration reloaded successfully${RESET}" >&2
+        return 0
+    else
+        echo -e "${YELLOW}⚠️ Config file not found: $config_file${RESET}" >&2
+        return 1
+    fi
+}
+
+# Update Channels DVR URL and refresh
+update_channels_dvr_url() {
+    local new_url="$1"
+    
+    if [[ -z "$new_url" ]]; then
+        echo -e "${RED}❌ update_channels_dvr_url: URL required${RESET}" >&2
+        return 1
+    fi
+    
+    # Validate URL format
+    if [[ ! "$new_url" =~ ^https?:// ]]; then
+        echo -e "${RED}❌ Invalid URL format: $new_url${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}🔄 Updating Channels DVR URL to: $new_url${RESET}" >&2
+    
+    save_channels_dvr_config "CHANNELS_URL" "$new_url"
+    
+    return $?
+}
+
+# ============================================================================
+# CHANNELS DVR API FUNCTIONS
+# ============================================================================
+
+# Test basic connectivity to Channels DVR
+channels_dvr_test_connection() {
+    ensure_config_loaded
+    
+    if [[ -z "${CHANNELS_URL:-}" ]]; then
+        echo -e "${RED}❌ Channels DVR: No server URL configured${RESET}" >&2
+        echo -e "${CYAN}💡 Configure server in Settings → Channels DVR Server${RESET}" >&2
+        return 1
+    fi
+    
+    if curl -s --connect-timeout $API_QUICK_TIMEOUT "$CHANNELS_URL" >/dev/null 2>&1; then
+        return 0
+    else
+        local curl_exit_code=$?
+        echo -e "${RED}❌ Channels DVR: Connection failed to $CHANNELS_URL${RESET}" >&2
+        case $curl_exit_code in
+            6)
+                echo -e "${CYAN}💡 Could not resolve hostname - check server IP address${RESET}" >&2
+                ;;
+            7)
+                echo -e "${CYAN}💡 Connection refused - verify server is running and port is correct${RESET}" >&2
+                ;;
+            28)
+                echo -e "${CYAN}💡 Connection timeout - server may be slow or unresponsive${RESET}" >&2
+                ;;
+            *)
+                echo -e "${CYAN}💡 Network error (code: $curl_exit_code) - check connection and settings${RESET}" >&2
+                ;;
+        esac
+        return 1
+    fi
+}
+
+# Search for stations by name/call sign
+channels_dvr_search_stations() {
+    local search_term="$1"
+    
+    if [[ -z "$search_term" ]]; then
+        echo -e "${RED}❌ Channels DVR API: Search term required${RESET}" >&2
+        return 1
+    fi
+    
+    ensure_config_loaded
+    
+    if ! channels_dvr_test_connection; then
+        return 1
+    fi
+    
+    # URL encode the search term to handle spaces and special characters
+    local encoded_search_term=$(url_encode "$search_term")
+    
+    echo -e "${CYAN}🔍 Searching Channels DVR API for: '$search_term'${RESET}" >&2
+    echo -e "${CYAN}📡 Encoded URL: $CHANNELS_URL/tms/stations/$encoded_search_term${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_EXTENDED_TIMEOUT \
+        --max-time $((API_EXTENDED_TIMEOUT * 2)) \
+        "$CHANNELS_URL/tms/stations/$encoded_search_term" 2>/dev/null)
+    
+    local curl_exit_code=$?
+    
+    if [[ $curl_exit_code -ne 0 ]]; then
+        case $curl_exit_code in
+            3)
+                echo -e "${RED}❌ Channels DVR API: Invalid URL format${RESET}" >&2
+                echo -e "${CYAN}💡 Check if endpoint exists: $CHANNELS_URL/tms/stations/$encoded_search_term${RESET}" >&2
+                ;;
+            6)
+                echo -e "${RED}❌ Channels DVR API: Cannot resolve hostname${RESET}" >&2
+                echo -e "${CYAN}💡 Check your CHANNELS_URL setting: $CHANNELS_URL${RESET}" >&2
+                ;;
+            7)
+                echo -e "${RED}❌ Channels DVR API: Connection failed${RESET}" >&2
+                echo -e "${CYAN}💡 Is Channels DVR Server running on $CHANNELS_URL?${RESET}" >&2
+                ;;
+            28)
+                echo -e "${RED}❌ Channels DVR API: Connection timeout${RESET}" >&2
+                echo -e "${CYAN}💡 Server may be slow to respond or unreachable${RESET}" >&2
+                ;;
+            *)
+                echo -e "${RED}❌ Channels DVR API: Network error during search (code: $curl_exit_code)${RESET}" >&2
+                ;;
+        esac
+        echo -e "${CYAN}💡 Alternative: Use Local Database Search for reliable results${RESET}" >&2
+        return 1
+    fi
+    
+    if [[ -z "$response" ]]; then
+        echo -e "${YELLOW}⚠️ Channels DVR API: No response from server${RESET}" >&2
+        return 1
+    fi
+    
+    if ! echo "$response" | jq empty 2>/dev/null; then
+        echo -e "${RED}❌ Channels DVR API: Invalid response format${RESET}" >&2
+        echo -e "${CYAN}💡 Server may be returning HTML error page instead of JSON${RESET}" >&2
+        echo -e "${CYAN}💡 Response preview: ${response:0:100}...${RESET}" >&2
+        return 1
+    fi
+    
+    local result_count=$(echo "$response" | jq 'length' 2>/dev/null || echo "0")
+    if [[ "$result_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠️ Channels DVR API: No stations found for '$search_term'${RESET}" >&2
+        echo -e "${CYAN}💡 Try different spelling, call signs (CNN, ESPN), or partial names${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${GREEN}✅ Channels DVR API: Found $result_count station(s)${RESET}" >&2
+    echo "$response"
+    return 0
+}
+
+# Get server version/status
+channels_dvr_get_status() {
+    if ! channels_dvr_test_connection; then
+        return 1
+    fi
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        "$CHANNELS_URL/api/status" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && [[ -n "$response" ]]; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${YELLOW}⚠️ Channels DVR: Status endpoint not available${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# DISPATCHARR CHANNEL API FUNCTIONS
+# ============================================================================
+
+# Get all channels from Dispatcharr
+dispatcharr_get_channels() {
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        echo -e "${CYAN}💡 Check connection settings and credentials${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}📡 Fetching channels from Dispatcharr...${RESET}" >&2
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_EXTENDED_TIMEOUT \
+        --max-time $((API_EXTENDED_TIMEOUT * 2)) \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/channels/" 2>/dev/null)
+    
+    local curl_exit_code=$?
+    
+    if [[ $curl_exit_code -ne 0 ]]; then
+        echo -e "${RED}❌ Dispatcharr: Network error fetching channels (code: $curl_exit_code)${RESET}" >&2
+        return 1
+    fi
+    
+    if ! echo "$response" | jq empty 2>/dev/null; then
+        echo -e "${RED}❌ Dispatcharr: Invalid response format${RESET}" >&2
+        return 1
+    fi
+    
+    local channel_count=$(echo "$response" | jq 'length' 2>/dev/null || echo "0")
+    echo -e "${GREEN}✅ Dispatcharr: Retrieved $channel_count channels${RESET}" >&2
+    
+    echo "$response"
+    return 0
+}
+
+# Get specific channel by ID
+dispatcharr_get_channel() {
+    local channel_id="$1"
+    
+    if [[ -z "$channel_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Channel ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/channels/$channel_id/" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to get channel $channel_id${RESET}" >&2
+        return 1
+    fi
+}
+
+# Update channel fields
+dispatcharr_update_channel() {
+    local channel_id="$1"
+    local update_data="$2"
+    
+    if [[ -z "$channel_id" || -z "$update_data" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Channel ID and update data required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    # Increment interaction counter for token management
+    increment_dispatcharr_interaction "channel updates"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X PATCH \
+        -H "Authorization: Bearer $access_token" \
+        -H "Content-Type: application/json" \
+        -d "$update_data" \
+        "${DISPATCHARR_URL}/api/channels/channels/$channel_id/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo -e "${GREEN}✅ Dispatcharr: Channel $channel_id updated successfully${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to update channel $channel_id${RESET}" >&2
+        local error_msg=$(echo "$response" | jq -r '.detail // .error // "Unknown error"' 2>/dev/null)
+        echo -e "${CYAN}💡 Error details: $error_msg${RESET}" >&2
+        return 1
+    fi
+}
+
+# Update channel station ID (legacy function wrapper)
+dispatcharr_update_channel_station_id() {
+    local channel_id="$1"
+    local station_id="$2"
+    
+    if [[ -z "$channel_id" || -z "$station_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Channel ID and station ID required${RESET}" >&2
+        return 1
+    fi
+    
+    local update_data=$(jq -n --arg station_id "$station_id" \
+        '{tvc_guide_stationid: $station_id}')
+    
+    dispatcharr_update_channel "$channel_id" "$update_data"
+}
+
+# Create new channel
+dispatcharr_create_channel() {
+    local channel_data="$1"
+    
+    if [[ -z "$channel_data" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Channel data required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "channel creation"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${CYAN}🔄 Creating new Dispatcharr channel...${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X POST \
+        -H "Authorization: Bearer $access_token" \
+        -H "Content-Type: application/json" \
+        -d "$channel_data" \
+        "${DISPATCHARR_URL}/api/channels/channels/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        local new_channel_id=$(echo "$response" | jq -r '.id')
+        echo -e "${GREEN}✅ Dispatcharr: Channel created successfully (ID: $new_channel_id)${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to create channel${RESET}" >&2
+        local error_msg=$(echo "$response" | jq -r '.detail // .error // "Unknown error"' 2>/dev/null)
+        echo -e "${CYAN}💡 Error details: $error_msg${RESET}" >&2
+        return 1
+    fi
+}
+
+# Create channel from stream
+dispatcharr_create_channel_from_stream() {
+    local stream_data="$1"
+    
+    if [[ -z "$stream_data" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Stream data required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "channel from stream creation"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${CYAN}🔄 Creating channel from stream...${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X POST \
+        -H "Authorization: Bearer $access_token" \
+        -H "Content-Type: application/json" \
+        -d "$stream_data" \
+        "${DISPATCHARR_URL}/api/channels/channels/from-stream/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        local new_channel_id=$(echo "$response" | jq -r '.id')
+        echo -e "${GREEN}✅ Dispatcharr: Channel created from stream (ID: $new_channel_id)${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to create channel from stream${RESET}" >&2
+        local error_msg=$(echo "$response" | jq -r '.detail // .error // "Unknown error"' 2>/dev/null)
+        echo -e "${CYAN}💡 Error details: $error_msg${RESET}" >&2
+        return 1
+    fi
+}
+
+# Delete channel
+dispatcharr_delete_channel() {
+    local channel_id="$1"
+    
+    if [[ -z "$channel_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Channel ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "channel deletion"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${YELLOW}🗑️ Deleting Dispatcharr channel $channel_id...${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X DELETE \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/channels/$channel_id/" 2>/dev/null)
+    
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X DELETE \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/channels/$channel_id/")
+    
+    if [[ "$http_code" == "204" ]]; then
+        echo -e "${GREEN}✅ Dispatcharr: Channel $channel_id deleted successfully${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to delete channel $channel_id (HTTP: $http_code)${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# DISPATCHARR CHANNEL GROUP API FUNCTIONS
+# ============================================================================
+
+# Get all channel groups
+dispatcharr_get_groups() {
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}📋 Fetching channel groups from Dispatcharr...${RESET}" >&2
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/groups/" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        local group_count=$(echo "$response" | jq 'length' 2>/dev/null || echo "0")
+        echo -e "${GREEN}✅ Dispatcharr: Retrieved $group_count channel groups${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to fetch channel groups${RESET}" >&2
+        return 1
+    fi
+}
+
+# Get specific group by ID
+dispatcharr_get_group() {
+    local group_id="$1"
+    
+    if [[ -z "$group_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Group ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/groups/$group_id/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to get group $group_id${RESET}" >&2
+        return 1
+    fi
+}
+
+# Create new channel group
+dispatcharr_create_group() {
+    local group_name="$1"
+    
+    if [[ -z "$group_name" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Group name required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "group creation"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local group_data=$(jq -n --arg name "$group_name" '{name: $name}')
+    
+    echo -e "${CYAN}🔄 Creating new channel group: '$group_name'${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X POST \
+        -H "Authorization: Bearer $access_token" \
+        -H "Content-Type: application/json" \
+        -d "$group_data" \
+        "${DISPATCHARR_URL}/api/channels/groups/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        local new_group_id=$(echo "$response" | jq -r '.id')
+        echo -e "${GREEN}✅ Dispatcharr: Channel group '$group_name' created (ID: $new_group_id)${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to create channel group '$group_name'${RESET}" >&2
+        local error_msg=$(echo "$response" | jq -r '.detail // .error // "Unknown error"' 2>/dev/null)
+        echo -e "${CYAN}💡 Error details: $error_msg${RESET}" >&2
+        return 1
+    fi
+}
+
+# Update channel group
+dispatcharr_update_group() {
+    local group_id="$1"
+    local group_name="$2"
+    
+    if [[ -z "$group_id" || -z "$group_name" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Group ID and name required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "group updates"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local group_data=$(jq -n --arg name "$group_name" '{name: $name}')
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X PATCH \
+        -H "Authorization: Bearer $access_token" \
+        -H "Content-Type: application/json" \
+        -d "$group_data" \
+        "${DISPATCHARR_URL}/api/channels/groups/$group_id/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo -e "${GREEN}✅ Dispatcharr: Channel group $group_id updated successfully${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to update channel group $group_id${RESET}" >&2
+        return 1
+    fi
+}
+
+# Delete channel group
+dispatcharr_delete_group() {
+    local group_id="$1"
+    
+    if [[ -z "$group_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Group ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "group deletion"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${YELLOW}🗑️ Deleting channel group $group_id...${RESET}" >&2
+    
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X DELETE \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/groups/$group_id/")
+    
+    if [[ "$http_code" == "204" ]]; then
+        echo -e "${GREEN}✅ Dispatcharr: Channel group $group_id deleted successfully${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to delete channel group $group_id (HTTP: $http_code)${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# DISPATCHARR STREAM API FUNCTIONS
+# ============================================================================
+
+# Get all streams
+dispatcharr_get_streams() {
+    local search_term="${1:-}"  # Optional search parameter
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local endpoint="/api/channels/streams/"
+    if [[ -n "$search_term" ]]; then
+        # URL encode the search term for query parameter
+        local encoded_search_term=$(url_encode "$search_term")
+        endpoint+="?search=$encoded_search_term"
+        echo -e "${CYAN}🔍 Searching Dispatcharr streams for: '$search_term'${RESET}" >&2
+        echo -e "${CYAN}📡 Query URL: ${DISPATCHARR_URL}${endpoint}${RESET}" >&2
+    else
+        echo -e "${CYAN}📡 Fetching all streams from Dispatcharr...${RESET}" >&2
+    fi
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_EXTENDED_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}$endpoint" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        # Handle paginated response
+        local results=$(echo "$response" | jq -r '.results // . // empty' 2>/dev/null)
+        if [[ -n "$results" ]]; then
+            local stream_count=$(echo "$results" | jq 'length' 2>/dev/null || echo "0")
+            echo -e "${GREEN}✅ Dispatcharr: Retrieved $stream_count streams${RESET}" >&2
+            echo "$results"
+        else
+            echo -e "${YELLOW}⚠️ Dispatcharr: No streams found${RESET}" >&2
+            echo "[]"
+        fi
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to fetch streams${RESET}" >&2
+        return 1
+    fi
+}
+
+# Get specific stream by ID
+dispatcharr_get_stream() {
+    local stream_id="$1"
+    
+    if [[ -z "$stream_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Stream ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/streams/$stream_id/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to get stream $stream_id${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# DISPATCHARR LOGO API FUNCTIONS
+# ============================================================================
+
+# Get all logos
+dispatcharr_get_logos() {
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${CYAN}🖼️ Fetching logos from Dispatcharr...${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/logos/" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        local logo_count=$(echo "$response" | jq 'length' 2>/dev/null || echo "0")
+        echo -e "${GREEN}✅ Dispatcharr: Retrieved $logo_count logos${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to fetch logos${RESET}" >&2
+        return 1
+    fi
+}
+
+# Upload logo from URL
+dispatcharr_upload_logo() {
+    local logo_name="$1"
+    local logo_url="$2"
+    
+    if [[ -z "$logo_name" || -z "$logo_url" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Logo name and URL required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "logo uploads"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${CYAN}🔄 Uploading logo '$logo_name' from $logo_url${RESET}" >&2
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X POST \
+        -H "Authorization: Bearer $access_token" \
+        -F "name=$logo_name" \
+        -F "url=$logo_url" \
+        "${DISPATCHARR_URL}/api/channels/logos/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        local logo_id=$(echo "$response" | jq -r '.id')
+        echo -e "${GREEN}✅ Dispatcharr: Logo uploaded successfully (ID: $logo_id)${RESET}" >&2
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to upload logo '$logo_name'${RESET}" >&2
+        local error_msg=$(echo "$response" | jq -r '.detail // .error // "Unknown error"' 2>/dev/null)
+        echo -e "${CYAN}💡 Error details: $error_msg${RESET}" >&2
+        return 1
+    fi
+}
+
+# Get logo by ID
+dispatcharr_get_logo() {
+    local logo_id="$1"
+    
+    if [[ -z "$logo_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Logo ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/logos/$logo_id/" 2>/dev/null)
+    
+    if echo "$response" | jq -e '.id' >/dev/null 2>&1; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to get logo $logo_id${RESET}" >&2
+        return 1
+    fi
+}
+
+# Delete logo
+dispatcharr_delete_logo() {
+    local logo_id="$1"
+    
+    if [[ -z "$logo_id" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Logo ID required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    increment_dispatcharr_interaction "logo deletion"
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    echo -e "${YELLOW}🗑️ Deleting logo $logo_id...${RESET}" >&2
+    
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X DELETE \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/channels/logos/$logo_id/")
+    
+    if [[ "$http_code" == "204" ]]; then
+        echo -e "${GREEN}✅ Dispatcharr: Logo $logo_id deleted successfully${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to delete logo $logo_id (HTTP: $http_code)${RESET}" >&2
+        return 1
+    fi
+}
+
+# Download logo file from Dispatcharr
+dispatcharr_download_logo_file() {
+  local logo_id="$1"
+  local output_file="$2"
+  
+  if [[ -z "$logo_id" || -z "$output_file" ]]; then
+    echo -e "${RED}❌ Dispatcharr: Logo ID and output file required${RESET}" >&2
+    return 1
+  fi
+  
+  if ! ensure_dispatcharr_auth; then
+    echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+    return 1
+  fi
+  
+  local access_token
+  access_token=$(get_dispatcharr_access_token)
+  
+  curl -s -H "Authorization: Bearer $access_token" \
+    "${DISPATCHARR_URL}/api/channels/logos/${logo_id}/cache/" \
+    --output "$output_file" 2>/dev/null
+  
+  return $?
+}
+
+# ============================================================================
+# DISPATCHARR SYSTEM API FUNCTIONS
+# ============================================================================
+
+# Get Dispatcharr version/status
+dispatcharr_get_version() {
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local access_token
+    access_token=$(get_dispatcharr_access_token)
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_QUICK_TIMEOUT \
+        -H "Authorization: Bearer $access_token" \
+        "${DISPATCHARR_URL}/api/core/version/" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Failed to get version information${RESET}" >&2
+        return 1
+    fi
+}
+
+# Test Dispatcharr connection and authentication
+dispatcharr_test_connection() {
+    echo -e "${CYAN}🔗 Testing Dispatcharr connection and authentication...${RESET}" >&2
+    
+    if [[ -z "${DISPATCHARR_URL:-}" ]] || [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
+        echo -e "${RED}❌ Dispatcharr: Not configured or disabled${RESET}" >&2
+        echo -e "${CYAN}💡 Configure in Settings → Dispatcharr Integration${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_dispatcharr_auth; then
+        echo -e "${RED}❌ Dispatcharr: Authentication failed${RESET}" >&2
+        echo -e "${CYAN}💡 Check server URL, username, and password${RESET}" >&2
+        return 1
+    fi
+    
+    local version_info
+    version_info=$(dispatcharr_get_version)
+    
+    if [[ $? -eq 0 ]]; then
+        echo -e "${GREEN}✅ Dispatcharr: Connection and authentication successful${RESET}" >&2
+        local version=$(echo "$version_info" | jq -r '.version // "Unknown"' 2>/dev/null)
+        echo -e "${CYAN}💡 Server version: $version${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Dispatcharr: Connection test failed${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# CONVENIENCE FUNCTIONS FOR BACKWARDS COMPATIBILITY
+# ============================================================================
+
+# Legacy function wrappers for existing code
+get_dispatcharr_channels() {
+    dispatcharr_get_channels
+}
+
+update_dispatcharr_channel_epg() {
+    local channel_id="$1"
+    local station_id="$2"
+    dispatcharr_update_channel_station_id "$channel_id" "$station_id"
+}
+
+check_dispatcharr_connection() {
+    dispatcharr_test_connection >/dev/null 2>&1
+}
+
+# ============================================================================
+# API STATUS AND MONITORING
+# ============================================================================
+
+# Get comprehensive API status for both services
+get_api_status() {
+    echo -e "${BOLD}${CYAN}=== API Services Status ===${RESET}"
+    echo
+    
+    # Channels DVR Status
+    echo -e "${BOLD}Channels DVR:${RESET}"
+    if [[ -n "${CHANNELS_URL:-}" ]]; then
+        if channels_dvr_test_connection >/dev/null 2>&1; then
+            echo -e "  Status: ${GREEN}✅ Connected${RESET}"
+            echo -e "  URL: ${CYAN}$CHANNELS_URL${RESET}"
+            
+            # Try to get additional status info
+            local status_info
+            status_info=$(channels_dvr_get_status 2>/dev/null)
+            if [[ $? -eq 0 ]]; then
+                local version=$(echo "$status_info" | jq -r '.version // "Unknown"' 2>/dev/null)
+                echo -e "  Version: ${CYAN}$version${RESET}"
+            fi
+        else
+            echo -e "  Status: ${RED}❌ Connection Failed${RESET}"
+            echo -e "  URL: ${YELLOW}$CHANNELS_URL${RESET}"
+        fi
+    else
+        echo -e "  Status: ${YELLOW}⚠️ Not Configured${RESET}"
+        echo -e "  ${CYAN}💡 Configure in Settings → Channels DVR Server${RESET}"
+    fi
+    echo
+    
+    # Dispatcharr Status
+    echo -e "${BOLD}Dispatcharr:${RESET}"
+    if [[ "$DISPATCHARR_ENABLED" == "true" ]] && [[ -n "${DISPATCHARR_URL:-}" ]]; then
+        if dispatcharr_test_connection >/dev/null 2>&1; then
+            echo -e "  Status: ${GREEN}✅ Connected & Authenticated${RESET}"
+            echo -e "  URL: ${CYAN}$DISPATCHARR_URL${RESET}"
+            echo -e "  Auth: $(get_dispatcharr_auth_status)"
+            
+            # Get version info
+            local version_info
+            version_info=$(dispatcharr_get_version 2>/dev/null)
+            if [[ $? -eq 0 ]]; then
+                local version=$(echo "$version_info" | jq -r '.version // "Unknown"' 2>/dev/null)
+                echo -e "  Version: ${CYAN}$version${RESET}"
+            fi
+        else
+            echo -e "  Status: ${RED}❌ Connection or Authentication Failed${RESET}"
+            echo -e "  URL: ${YELLOW}$DISPATCHARR_URL${RESET}"
+            echo -e "  Auth: $(get_dispatcharr_auth_status)"
+        fi
+    else
+        echo -e "  Status: ${YELLOW}⚠️ Not Configured or Disabled${RESET}"
+        echo -e "  ${CYAN}💡 Configure in Settings → Dispatcharr Integration${RESET}"
+    fi
+}
+
+# Quick API health check (returns 0 if both services are working)
+check_all_api_health() {
+    local channels_ok=false
+    local dispatcharr_ok=false
+    
+    # Check Channels DVR if configured
+    if [[ -n "${CHANNELS_URL:-}" ]]; then
+        if channels_dvr_test_connection >/dev/null 2>&1; then
+            channels_ok=true
+        fi
+    else
+        channels_ok=true  # Not configured = not required
+    fi
+    
+    # Check Dispatcharr if enabled
+    if [[ "$DISPATCHARR_ENABLED" == "true" ]] && [[ -n "${DISPATCHARR_URL:-}" ]]; then
+        if dispatcharr_test_connection >/dev/null 2>&1; then
+            dispatcharr_ok=true
+        fi
+    else
+        dispatcharr_ok=true  # Not enabled = not required
+    fi
+    
+    if $channels_ok && $dispatcharr_ok; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# ============================================================================
+# MODULE INITIALIZATION
+# ============================================================================
+
+# Initialize API system
+init_api_system() {
+    # Ensure log directories exist
+    mkdir -p "$(dirname "${DISPATCHARR_LOG:-/tmp/dispatcharr.log}")" 2>/dev/null
+    mkdir -p "${LOGS_DIR:-/tmp}" 2>/dev/null
+    
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - API module initialized" >> "${LOGS_DIR:-/tmp}/api_general.log"
+    
+    # Test services if they're configured
+    if [[ -n "${CHANNELS_URL:-}" ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Testing Channels DVR connection..." >> "${LOGS_DIR:-/tmp}/api_general.log"
+    fi
+    
+    if [[ "$DISPATCHARR_ENABLED" == "true" ]] && [[ -n "${DISPATCHARR_URL:-}" ]]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Testing Dispatcharr connection..." >> "${LOGS_DIR:-/tmp}/api_general.log"
+    fi
+}
+
+# Auto-initialize when module is loaded
+if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+    init_api_system
+fi

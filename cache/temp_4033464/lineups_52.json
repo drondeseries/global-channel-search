@@ -1,0 +1,10 @@
+{"type":"OTA","device":"","lineupId":"USA-OTA19123","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
+{"type":"CABLE","device":"X","lineupId":"USA-PA71515-X","name":"Verizon Fios Philadelphia","location":"Philadelphia","mso":{"id":"17762","name":"Verizon Fios"}}
+{"type":"CABLE","device":"X","lineupId":"USA-PA37745-X","name":"Xfinity Center City (Area 1)","location":"Philadelphia","mso":{"id":"08010","name":"Comcast Corporation"}}
+{"type":"CABLE","device":"X","lineupId":"USA-PA54787-X","name":"Xfinity Phila NE&NW (Area3&4)","location":"Philadelphia","mso":{"id":"08010","name":"Comcast Corporation"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV504-X","name":"DIRECTV Philadelphia","location":"Philadelphia","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DISH504-X","name":"DISH Philadelphia","location":"Philadelphia","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

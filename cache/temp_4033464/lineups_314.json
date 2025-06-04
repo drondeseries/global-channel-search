@@ -1,0 +1,13 @@
+{"type":"OTA","device":"","lineupId":"USA-OTA48240","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
+{"type":"CABLE","device":"X","lineupId":"USA-MI66566-X","name":"AT&T U-verse TV","location":"Detroit","mso":{"id":"17304","name":"AT&T U-verse TV"}}
+{"type":"CABLE","device":"X","lineupId":"USA-MI21614-X","name":"Charter Spectrum Detroit","location":"Livonia","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"L","lineupId":"USA-MI21614-L","name":"Charter Spectrum Detroit","location":"Livonia","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"L","lineupId":"USA-MI58783-L","name":"WOW Detroit","location":"Plymouth","mso":{"id":"17629","name":"WideOpenWest"}}
+{"type":"CABLE","device":"X","lineupId":"USA-MI58783-X","name":"WOW Detroit","location":"Plymouth","mso":{"id":"17629","name":"WideOpenWest"}}
+{"type":"CABLE","device":"X","lineupId":"USA-MI54964-X","name":"Xfinity","location":"Detroit","mso":{"id":"08010","name":"Comcast Corporation"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV505-X","name":"DIRECTV Detroit","location":"Detroit","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DISH505-X","name":"DISH Detroit","location":"Detroit","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

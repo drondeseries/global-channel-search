@@ -1,0 +1,652 @@
+[
+  {
+    "type": "",
+    "name": "",
+    "channel": "2",
+    "callSign": "ASPTVL",
+    "stationId": "134856",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s134856_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080i"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "4",
+    "callSign": "XMVFCV",
+    "stationId": "138771",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s138771_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "8",
+    "callSign": "XALJFA",
+    "stationId": "115825",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "9",
+    "callSign": "XALXFM",
+    "stationId": "115827",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "11",
+    "callSign": "XCCBLCK",
+    "stationId": "125219",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125219_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "12",
+    "callSign": "XCCBLLW",
+    "stationId": "125213",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125213_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "13",
+    "callSign": "XALBONA",
+    "stationId": "117373",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "14",
+    "callSign": "XCCCMTV",
+    "stationId": "125204",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125204_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "15",
+    "callSign": "XCCFCTV",
+    "stationId": "121098",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121098_ll_h15_bb.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "16",
+    "callSign": "XCCDOC",
+    "stationId": "125205",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125205_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "17",
+    "callSign": "XCCDATV",
+    "stationId": "125212",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125212_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "18",
+    "callSign": "XCCFAM",
+    "stationId": "125217",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125217_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "19",
+    "callSign": "XCCACT",
+    "stationId": "125218",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125218_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "20",
+    "callSign": "XCCCOM",
+    "stationId": "123930",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123930_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "21",
+    "callSign": "XCCFOOD",
+    "stationId": "125221",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125221_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "22",
+    "callSign": "XCCFRMV",
+    "stationId": "121089",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121089_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "23",
+    "callSign": "XCCXNW",
+    "stationId": "136864",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s136864_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "24",
+    "callSign": "XALXOFW",
+    "stationId": "116725",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "25",
+    "callSign": "XCCGME",
+    "stationId": "125216",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125216_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "26",
+    "callSign": "XCCHER",
+    "stationId": "125210",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125210_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "27",
+    "callSign": "XCCHTM",
+    "stationId": "125220",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125220_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "29",
+    "callSign": "XCCKIDS",
+    "stationId": "123980",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123980_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "33",
+    "callSign": "XCCRLY",
+    "stationId": "125207",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125207_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "34",
+    "callSign": "XCCSCF",
+    "stationId": "125206",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s125206_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "36",
+    "callSign": "XCCXTRL",
+    "stationId": "121102",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121102_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "38",
+    "callSign": "XCCFMWS",
+    "stationId": "121094",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s157902_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 720p"
+    },
+    "lineup_id": "USA-XUMO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  }
+]

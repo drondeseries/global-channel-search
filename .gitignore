@@ -1,0 +1,42 @@
+# Global Station Search .gitignore
+
+# ============================================================================
+# SENSITIVE CONFIGURATION (never commit credentials!)
+# ============================================================================
+data/                                  # All user data directory
+
+# ============================================================================
+# RUNTIME/TEMPORARY FILES (recreated during execution)  
+# ============================================================================
+cache/                                 # All cache files are temporary
+
+# ============================================================================
+# USER'S CUSTOM FILES (not for distribution)
+# ============================================================================
+sampled_markets_base_cache.csv         # User's custom market configuration
+
+# ============================================================================
+# DEVELOPMENT/TESTING FILES
+# ============================================================================
+previous_versions/                     # Old versions directory
+tools/                                 # Development tools
+*.debug                                # Debug files (like channel_parsing.sh.debug)
+test_*                                 # Any test files
+debug_*                                # Debug files
+*.bak                                  # Backup files
+*.backup                               # Backup files
+
+# ============================================================================
+# SYSTEM FILES (OS-specific)
+# ============================================================================
+.DS_Store                              # macOS folder settings
+Thumbs.db                              # Windows thumbnail cache
+.vscode/                               # VS Code settings
+.idea/                                 # IntelliJ settings
+
+# ============================================================================
+# TEMPORARY FILES
+# ============================================================================
+*.tmp                                  # Any temporary files
+*.temp                                 # Any temp files
+*.log                                  # Log files anywhere

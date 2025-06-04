@@ -212,8 +212,20 @@ _configure_multi_choice_setting() {
         
         if [[ "$input" =~ [Aa][Ll][Ll] ]]; then
             local all_options=$(IFS=','; echo "${options[*]}")
-            # UPDATE THE ENABLED_RESOLUTIONS VARIABLE DIRECTLY
-            ENABLED_RESOLUTIONS="$all_options"
+            
+            # FIXED: Set the correct variable based on setting name
+            case "$setting_name" in
+                *[Rr]esolution*|*[Qq]uality*)
+                    ENABLED_RESOLUTIONS="$all_options"
+                    ;;
+                *[Cc]ountry*|*[Cc]ountries*)
+                    ENABLED_COUNTRIES="$all_options"
+                    ;;
+                *)
+                    echo -e "${RED}❌ Unknown setting type: $setting_name${RESET}"
+                    return 1
+                    ;;
+            esac
             echo -e "${GREEN}✅ $setting_name set to: All options${RESET}"
             return 0
         fi
@@ -232,8 +244,19 @@ _configure_multi_choice_setting() {
         done
         
         if [[ "$invalid_found" == "false" && -n "$valid_selections" ]]; then
-            # UPDATE THE ENABLED_RESOLUTIONS VARIABLE DIRECTLY
-            ENABLED_RESOLUTIONS="$valid_selections"
+            # FIXED: Set the correct variable based on setting name
+            case "$setting_name" in
+                *[Rr]esolution*|*[Qq]uality*)
+                    ENABLED_RESOLUTIONS="$valid_selections"
+                    ;;
+                *[Cc]ountry*|*[Cc]ountries*)
+                    ENABLED_COUNTRIES="$valid_selections"
+                    ;;
+                *)
+                    echo -e "${RED}❌ Unknown setting type: $setting_name${RESET}"
+                    return 1
+                    ;;
+            esac
             echo -e "${GREEN}✅ $setting_name set to: $valid_selections${RESET}"
             return 0
         elif [[ -z "$valid_selections" ]]; then

@@ -1,0 +1,3902 @@
+[
+  {
+    "type": "",
+    "name": "",
+    "channel": "1",
+    "callSign": "VIZARWE",
+    "stationId": "118891",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "4",
+    "callSign": "VIZAFV",
+    "stationId": "124608",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "8",
+    "callSign": "VIZAMRV",
+    "stationId": "118897",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "10",
+    "callSign": "VIZAWTY",
+    "stationId": "124610",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "11",
+    "callSign": "VIZAWEE",
+    "stationId": "118900",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "12",
+    "callSign": "VIZAXM",
+    "stationId": "122100",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123425_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "13",
+    "callSign": "VIZBBSK",
+    "stationId": "122117",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "16",
+    "callSign": "VIZBLNE",
+    "stationId": "120996",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "17",
+    "callSign": "VIZBAYW",
+    "stationId": "122392",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "19",
+    "callSign": "VIZBLDG",
+    "stationId": "120998",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "20",
+    "callSign": "VIZQUTK",
+    "stationId": "120971",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "21",
+    "callSign": "VIZBNCN",
+    "stationId": "118905",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "22",
+    "callSign": "VIZBONA",
+    "stationId": "118906",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "23",
+    "callSign": "BRB",
+    "stationId": "139208",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s139208_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "HD 1080p"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "24",
+    "callSign": "VIZBUZR",
+    "stationId": "120999",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "25",
+    "callSign": "VIZCA44",
+    "stationId": "118908",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "26",
+    "callSign": "VIZCBCN",
+    "stationId": "118909",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "27",
+    "callSign": "VIZCHED",
+    "stationId": "118910",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s112036_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "28",
+    "callSign": "VIZCSSL",
+    "stationId": "122390",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "30",
+    "callSign": "VIZCDMB",
+    "stationId": "118940",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "31",
+    "callSign": "VIZCDCM",
+    "stationId": "121001",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "33",
+    "callSign": "VIZCNCL",
+    "stationId": "124618",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "34",
+    "callSign": "VIZCV70",
+    "stationId": "120970",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "35",
+    "callSign": "VIZCV80",
+    "stationId": "120969",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "36",
+    "callSign": "VIZWEST",
+    "stationId": "118942",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "37",
+    "callSign": "VIZCIRC",
+    "stationId": "118943",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "40",
+    "callSign": "VIZCRTV",
+    "stationId": "118950",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "41",
+    "callSign": "VIZCRCL",
+    "stationId": "121003",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "42",
+    "callSign": "VIZCRSP",
+    "stationId": "121004",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "44",
+    "callSign": "VIZCRME",
+    "stationId": "120968",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "45",
+    "callSign": "VIZDMTV",
+    "stationId": "118951",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "46",
+    "callSign": "VIZDOND",
+    "stationId": "119035",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "48",
+    "callSign": "VIZDMAF",
+    "stationId": "119036",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "50",
+    "callSign": "VIZDVC",
+    "stationId": "119037",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "54",
+    "callSign": "VIZDOVE",
+    "stationId": "119041",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "55",
+    "callSign": "VIZES16US",
+    "stationId": "121007",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "57",
+    "callSign": "VIZFAIL",
+    "stationId": "119045",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "58",
+    "callSign": "VIZFAW",
+    "stationId": "119047",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "59",
+    "callSign": "VIZFRAC",
+    "stationId": "119048",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "60",
+    "callSign": "VIZFRFA",
+    "stationId": "119050",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "61",
+    "callSign": "VIZFRFM",
+    "stationId": "119051",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "62",
+    "callSign": "VIZFRHR",
+    "stationId": "119052",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "63",
+    "callSign": "VIZFRSF",
+    "stationId": "119053",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "64",
+    "callSign": "VIZFRTC",
+    "stationId": "119054",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "65",
+    "callSign": "VIZFRWT",
+    "stationId": "119055",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "66",
+    "callSign": "VIZFLSH",
+    "stationId": "119056",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "68",
+    "callSign": "VIZFD",
+    "stationId": "119083",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "69",
+    "callSign": "VIZFD52",
+    "stationId": "119084",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "70",
+    "callSign": "VIZFXNN",
+    "stationId": "119085",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "71",
+    "callSign": "VIZFXSL",
+    "stationId": "119086",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "72",
+    "callSign": "VIZFTV",
+    "stationId": "119088",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "74",
+    "callSign": "VIZFUBT",
+    "stationId": "121011",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "75",
+    "callSign": "VIZFSSW",
+    "stationId": "121012",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "76",
+    "callSign": "VIZFSXL",
+    "stationId": "121013",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "77",
+    "callSign": "VIZGSN",
+    "stationId": "119091",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "81",
+    "callSign": "VIZGQ",
+    "stationId": "119095",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "82",
+    "callSign": "VIZGRMV",
+    "stationId": "119096",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "83",
+    "callSign": "VIZGRAV",
+    "stationId": "120995",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "84",
+    "callSign": "VIZGRHH",
+    "stationId": "119097",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "87",
+    "callSign": "VIZHKIT",
+    "stationId": "120976",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "88",
+    "callSign": "VIZHH",
+    "stationId": "133761",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "89",
+    "callSign": "VIZHCAU",
+    "stationId": "121014",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "91",
+    "callSign": "VIZHSN",
+    "stationId": "119102",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "92",
+    "callSign": "VIZHUNG",
+    "stationId": "119191",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "94",
+    "callSign": "VIZIFD",
+    "stationId": "119193",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "95",
+    "callSign": "VIZIGN1",
+    "stationId": "121015",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "98",
+    "callSign": "VIZIWON",
+    "stationId": "119229",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "99",
+    "callSign": "VIZIONP",
+    "stationId": "119228",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s117518_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "100",
+    "callSign": "VIZJACK",
+    "stationId": "121016",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "101",
+    "callSign": "VIZJOCA",
+    "stationId": "119227",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "102",
+    "callSign": "VIZJRNY",
+    "stationId": "122118",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "103",
+    "callSign": "VIZJUDF",
+    "stationId": "119226",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "104",
+    "callSign": "VIZJFLG",
+    "stationId": "119225",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "105",
+    "callSign": "VIZCKBK",
+    "stationId": "124606",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "107",
+    "callSign": "VIZKIDO",
+    "stationId": "119223",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s119223_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "110",
+    "callSign": "VIZLRCR",
+    "stationId": "121017",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "111",
+    "callSign": "VIZLRWD",
+    "stationId": "121018",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "112",
+    "callSign": "VIZLTML",
+    "stationId": "121019",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "115",
+    "callSign": "VIZLVPL",
+    "stationId": "120965",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "117",
+    "callSign": "VIZLOL",
+    "stationId": "119210",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "119",
+    "callSign": "VIZLVNT",
+    "stationId": "122114",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "121",
+    "callSign": "VIZMAVB",
+    "stationId": "119208",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "122",
+    "callSign": "VIZMAV",
+    "stationId": "119207",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "125",
+    "callSign": "VIZMDML",
+    "stationId": "122542",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s123433_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "128",
+    "callSign": "VIZMFL",
+    "stationId": "122539",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "129",
+    "callSign": "VIZMST3",
+    "stationId": "119200",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "132",
+    "callSign": "VIZ12NY",
+    "stationId": "119183",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "133",
+    "callSign": "VIZNSMX",
+    "stationId": "119182",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s119182_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "134",
+    "callSign": "VIZNWSY",
+    "stationId": "119181",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "135",
+    "callSign": "VIZNFL1",
+    "stationId": "119180",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "136",
+    "callSign": "VIZNKID",
+    "stationId": "120963",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "137",
+    "callSign": "VIZNOSY",
+    "stationId": "119179",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "138",
+    "callSign": "VIZNOSE",
+    "stationId": "122106",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "139",
+    "callSign": "VIZOLCR",
+    "stationId": "119176",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "140",
+    "callSign": "VIZOLYC",
+    "stationId": "119163",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "141",
+    "callSign": "VIZOLTC",
+    "stationId": "119162",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "143",
+    "callSign": "VIZOANC",
+    "stationId": "119178",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "144",
+    "callSign": "VIZOTDA",
+    "stationId": "119160",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "145",
+    "callSign": "VIZOUT",
+    "stationId": "119159",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "148",
+    "callSign": "VIZPPTV",
+    "stationId": "119156",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "150",
+    "callSign": "VIZPLWK",
+    "stationId": "119154",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "151",
+    "callSign": "VIZPW",
+    "stationId": "119151",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "156",
+    "callSign": "VIZQELL",
+    "stationId": "119149",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s114791_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "157",
+    "callSign": "VIZQVC",
+    "stationId": "119148",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "159",
+    "callSign": "VIZQWJZ",
+    "stationId": "121025",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "161",
+    "callSign": "VIZRAMV",
+    "stationId": "119147",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "162",
+    "callSign": "VIZRNOS",
+    "stationId": "119146",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "164",
+    "callSign": "VIZREEL",
+    "stationId": "119136",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "165",
+    "callSign": "VIZRTCR",
+    "stationId": "119135",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "166",
+    "callSign": "VIZREV",
+    "stationId": "119133",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s113603_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "169",
+    "callSign": "VIZRUSH",
+    "stationId": "119130",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "170",
+    "callSign": "VIZRTFR",
+    "stationId": "119129",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "171",
+    "callSign": "VIZS2UP",
+    "stationId": "121027",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "172",
+    "callSign": "VIZS5UP",
+    "stationId": "121028",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "173",
+    "callSign": "VIZS8UP",
+    "stationId": "121029",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "176",
+    "callSign": "VIZXTRM",
+    "stationId": "120962",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s116101_ll_h15_ab.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "178",
+    "callSign": "VIZSCCM",
+    "stationId": "119124",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "179",
+    "callSign": "VIZSOCC",
+    "stationId": "119123",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "180",
+    "callSign": "VIZSOCN",
+    "stationId": "119122",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "181",
+    "callSign": "VIZPETC",
+    "stationId": "118981",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "183",
+    "callSign": "VIZWALKD",
+    "stationId": "121719",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "184",
+    "callSign": "VIZLEGO",
+    "stationId": "118979",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "185",
+    "callSign": "VIZTOH",
+    "stationId": "118978",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "186",
+    "callSign": "VIZTHN",
+    "stationId": "122102",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "190",
+    "callSign": "VIZTBN",
+    "stationId": "124614",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "191",
+    "callSign": "VIZTRHST",
+    "stationId": "124611",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "194",
+    "callSign": "VIZUNMY",
+    "stationId": "120973",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "195",
+    "callSign": "VIZUSAT",
+    "stationId": "124607",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "196",
+    "callSign": "VIZUSTN",
+    "stationId": "118972",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "200",
+    "callSign": "VIZVPOP",
+    "stationId": "120972",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s115694_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "202",
+    "callSign": "VZBBR",
+    "stationId": "132164",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "203",
+    "callSign": "VIZFEAR",
+    "stationId": "122113",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "204",
+    "callSign": "VZONO2",
+    "stationId": "132162",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "205",
+    "callSign": "VIZGAMN",
+    "stationId": "122108",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "207",
+    "callSign": "VIZHSE",
+    "stationId": "122120",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "208",
+    "callSign": "VIZINV",
+    "stationId": "122122",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "210",
+    "callSign": "VIZFKFL",
+    "stationId": "120989",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "211",
+    "callSign": "VIZ001",
+    "stationId": "120988",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "213",
+    "callSign": "VIZWAPT",
+    "stationId": "120960",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "214",
+    "callSign": "VIZWTNT",
+    "stationId": "118931",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "217",
+    "callSign": "VIZSOYM",
+    "stationId": "119118",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "218",
+    "callSign": "VIZSPGR",
+    "stationId": "119117",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "220",
+    "callSign": "VIZSRCR",
+    "stationId": "119116",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s67567_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "221",
+    "callSign": "VIZSRHL",
+    "stationId": "119115",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s21640_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "222",
+    "callSign": "VIZSRHC",
+    "stationId": "119114",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s67557_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "224",
+    "callSign": "VIZSRNT",
+    "stationId": "119112",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s90613_ll_h15_ad.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "225",
+    "callSign": "VIZSRSS",
+    "stationId": "119111",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s67563_ll_h15_ac.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "226",
+    "callSign": "VIZSSSG",
+    "stationId": "119110",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "227",
+    "callSign": "VIZSPSW",
+    "stationId": "124609",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "229",
+    "callSign": "VIZTDAM",
+    "stationId": "118993",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s121117_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "232",
+    "callSign": "VIZCABS",
+    "stationId": "118988",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "234",
+    "callSign": "VIZHTV",
+    "stationId": "133760",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "236",
+    "callSign": "VIZWPXT",
+    "stationId": "118927",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "238",
+    "callSign": "VIZWPT",
+    "stationId": "118925",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "240",
+    "callSign": "VIZXPLR",
+    "stationId": "118923",
+    "preferredImage": {
+      "uri": "https://tmsimg.fancybits.co/assets/s118923_ll_h15_aa.png?w=360&h=270",
+      "height": "270",
+      "width": "360",
+      "primary": "true",
+      "category": "Logo",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  },
+  {
+    "type": "",
+    "name": "",
+    "channel": "241",
+    "callSign": "VIZYHFN",
+    "stationId": "118922",
+    "preferredImage": {
+      "uri": "sources/generic/generic_sources_h3.png",
+      "height": "",
+      "width": "",
+      "primary": "",
+      "category": "",
+      "text": "",
+      "tier": ""
+    },
+    "videoQuality": {
+      "signalType": "Digital",
+      "videoType": "HDTV",
+      "truResolution": "TruHD Uncooperative"
+    },
+    "lineup_id": "USA-VIZIO-X",
+    "source": "manual",
+    "country": "USA",
+    "processed_timestamp": "20250531_231433"
+  }
+]

@@ -1,0 +1,13 @@
+{"type":"OTA","device":"","lineupId":"USA-OTA91423","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
+{"type":"CABLE","device":"X","lineupId":"USA-CA66511-X","name":"AT&T U-verse TV","location":"Los Angeles","mso":{"id":"17304","name":"AT&T U-verse TV"}}
+{"type":"CABLE","device":"L","lineupId":"USA-CA67310-L","name":"Charter Spectrum City of Los Angeles","location":"Eagle Rock","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"X","lineupId":"USA-CA67310-X","name":"Charter Spectrum City of Los Angeles","location":"Eagle Rock","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"X","lineupId":"USA-CA54754-X","name":"Charter Spectrum East San Fernando","location":"San Fernando","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"X","lineupId":"USA-CA67309-X","name":"Charter Spectrum Sherman Oaks","location":"Westchester","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"L","lineupId":"USA-CA67309-L","name":"Charter Spectrum Sherman Oaks","location":"Westchester","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV803-X","name":"DIRECTV Los Angeles","location":"Los Angeles","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DISH803-X","name":"DISH Los Angeles","location":"Los Angeles","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

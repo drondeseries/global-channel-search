@@ -255,55 +255,56 @@ _show_settings_menu_status() {
     
     # Server configuration with status
     if [[ -n "${CHANNELS_URL:-}" ]]; then
-        format_status_indicator "success" "Channels DVR Server: $CHANNELS_URL" "configured and ready"
+        echo -e "${GREEN}✅ Channels DVR Server: $CHANNELS_URL${RESET}"
     else
-        format_status_indicator "warning" "Channels DVR Server: Not configured" "required for User Cache Expansion"
+        echo -e "${YELLOW}⚠️  Channels DVR Server: Not configured${RESET}"
     fi
     
     # Logo display with dependency check
     if [[ "$SHOW_LOGOS" == "true" ]]; then
         if command -v viu &> /dev/null; then
-            format_status_indicator "success" "Logo Display: Enabled" "viu installed and ready"
+            echo -e "${GREEN}✅ Logo Display: Enabled${RESET}"
         else
-            format_status_indicator "warning" "Logo Display: Enabled" "viu not installed - install with: cargo install viu"
+            echo -e "${YELLOW}⚠️  Logo Display: Enabled (viu not installed)${RESET}"
         fi
     else
-        format_status_indicator "info" "Logo Display: Disabled" "enable for terminal logo previews"
+        echo -e "${CYAN}💡 Logo Display: Disabled${RESET}"
     fi
     
-    # Resolution filter with details
+    # Resolution filter with enhanced details    
     if [[ "$FILTER_BY_RESOLUTION" == "true" ]]; then
-        format_status_indicator "success" "Resolution Filter: Active" "showing only: $ENABLED_RESOLUTIONS"
-        echo -e "   ${CYAN}💡 Currently filtering to show only: $ENABLED_RESOLUTIONS quality stations${RESET}"
+      if [[ -n "$ENABLED_RESOLUTIONS" ]]; then
+        echo -e "${GREEN}✅ Resolution Filter: Active (${YELLOW}$ENABLED_RESOLUTIONS${RESET})"
+      else
+        echo -e "${RED}❌ Resolution Filter: Enabled but no resolutions selected${RESET}"
+      fi
     else
-        format_status_indicator "info" "Resolution Filter: Disabled" "showing all quality levels (SDTV, HDTV, UHDTV)"
+      echo -e "${CYAN}💡 Resolution Filter: Disabled (showing all quality levels)${RESET}"
     fi
-    
-    # Country filter with details  
-    if [[ "$FILTER_BY_COUNTRY" == "true" ]] && [[ -n "$ENABLED_COUNTRIES" ]]; then
-        format_status_indicator "success" "Country Filter: Active" "showing only: $ENABLED_COUNTRIES"
-        echo -e "   ${CYAN}💡 Currently filtering to show only: $ENABLED_COUNTRIES stations${RESET}"
+
+    if [[ "$FILTER_BY_COUNTRY" == "true" ]]; then
+      if [[ -n "$ENABLED_COUNTRIES" ]]; then
+        echo -e "${GREEN}✅ Country Filter: Active (${YELLOW}$ENABLED_COUNTRIES${RESET})"
+      else
+        echo -e "${RED}❌ Country Filter: Enabled but no countries selected${RESET}"
+      fi
     else
-        format_status_indicator "info" "Country Filter: Disabled" "showing stations from all available countries"
+      echo -e "${CYAN}💡 Country Filter: Disabled (showing all countries)${RESET}"
     fi
 
     # Dispatcharr integration with connection status
     if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
         if [[ -n "${DISPATCHARR_URL:-}" ]]; then
             if check_dispatcharr_connection 2>/dev/null; then
-                format_status_indicator "success" "Dispatcharr Integration: Enabled and Connected" "$DISPATCHARR_URL"
-                echo -e "   ${CYAN}👤 User: ${DISPATCHARR_USERNAME:-"Not configured"}${RESET}"
-                echo -e "   ${CYAN}🔄 Token Refresh: Every ${DISPATCHARR_REFRESH_INTERVAL:-20} interactions${RESET}"
+                echo -e "${GREEN}✅ Dispatcharr Integration: Connected (${CYAN}$DISPATCHARR_URL${RESET})"
             else
-                format_status_indicator "warning" "Dispatcharr Integration: Enabled but Connection Failed" "check server status"
-                echo -e "   ${CYAN}🌐 Configured Server: $DISPATCHARR_URL${RESET}"
-                echo -e "   ${CYAN}🔄 Token Refresh: Every ${DISPATCHARR_REFRESH_INTERVAL:-20} interactions${RESET}"
+                echo -e "${YELLOW}⚠️  Dispatcharr Integration: Configured but connection failed${RESET}"
             fi
         else
-            format_status_indicator "warning" "Dispatcharr Integration: Enabled but Not Configured" "configure server connection"
+            echo -e "${YELLOW}⚠️  Dispatcharr Integration: Enabled but not configured${RESET}"
         fi
     else
-        format_status_indicator "info" "Dispatcharr Integration: Disabled" "enable for channel management features"
+        echo -e "${CYAN}💡 Dispatcharr Integration: Disabled${RESET}"
     fi
     
     # Database status summary
@@ -315,23 +316,23 @@ _show_settings_menu_status() {
     local user_count=$(echo "$breakdown" | cut -d' ' -f2)
     
     if [ "$total_count" -gt 0 ]; then
-        format_status_indicator "success" "Station Database: $total_count stations available" "Local Database Search ready"
+        echo -e "${GREEN}✅ Station Database: $total_count stations available${RESET}"
         if [ "$base_count" -gt 0 ]; then
-            echo -e "   ${CYAN}📊 Base Stations: $base_count (distributed cache)${RESET}"
+            echo -e "${CYAN}   📊 Base Stations: $base_count${RESET}"
         fi
         if [ "$user_count" -gt 0 ]; then
-            echo -e "   ${CYAN}📊 User Stations: $user_count (your additions)${RESET}"
+            echo -e "${CYAN}   📊 User Stations: $user_count${RESET}"
         fi
     else
-        format_status_indicator "warning" "Station Database: No stations available" "build via Market Management"
+        echo -e "${YELLOW}⚠️  Station Database: No stations available${RESET}"
     fi
     
-    # Search filters summary
+    # Active search filters summary
     echo
     echo -e "${BOLD}${BLUE}=== Active Search Filters ===${RESET}"
     local active_filters=0
     
-    if [[ "$FILTER_BY_RESOLUTION" == "true" ]]; then
+    if [[ "$FILTER_BY_RESOLUTION" == "true" ]] && [[ -n "$ENABLED_RESOLUTIONS" ]]; then
         echo -e "${GREEN}✅ Resolution Filter: $ENABLED_RESOLUTIONS${RESET}"
         ((active_filters++))
     fi
@@ -484,8 +485,9 @@ show_settings_menu() {
         "g|Export Settings"
         "h|Export Station Database to CSV"
         "i|Configure Dispatcharr Integration"
-        "j|Configure Dispatcharr Token Refresh"
-        "k|Developer Information"
+        "j|Developer Information"
+        "k|Update Management"
+        "l|Backup Management"
         "q|Back to Main Menu"
     )
     
@@ -515,13 +517,13 @@ show_cache_management_menu() {
 # Dispatcharr integration menu template
 show_dispatcharr_menu() {
     local dispatcharr_options=(
-        "a|Scan Channels for Missing Station IDs|identify channels needing setup"
-        "b|Interactive Station ID Matching|guided channel-to-station assignment"
-        "c|Commit Station ID Changes|apply queued matches to Dispatcharr"
-        "d|Populate Other Dispatcharr Fields|names, logos, TVG-IDs"
-        "e|Configure Dispatcharr Connection|server settings & authentication"
-        "f|View Integration Logs|operation history & troubleshooting"
-        "g|Refresh Authentication Tokens|manual token renewal"
+        "a|Scan Channels for Missing Station IDs"
+        "b|Interactive Station ID Matching"
+        "c|Commit Station ID Changes"
+        "d|Populate Other Dispatcharr Fields|channel names, logos, tvg-ids"
+        "e|Configure Dispatcharr Connection"
+        "f|View Integration Logs"
+        "g|Refresh Authentication Tokens"
         "q|Back to Main Menu"
     )
     

@@ -1,0 +1,238 @@
+{
+  "AUS-1002701-DEFAULT": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "AUS-1007695-DEFAULT": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "AUS-1007697-DEFAULT": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "AUS-1008128-DEFAULT": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "AUS-1008129-DEFAULT": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "AUS-OTA0872": {
+    "country": "AUS",
+    "zip": "0872"
+  },
+  "DEU-1000095-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000096-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000097-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000098-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000099-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000143-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1000231-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1001967-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1001970-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1002445-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1007429-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1007430-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1008142-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1008298-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1009086-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-1010703-DEFAULT": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "DEU-OTA99998": {
+    "country": "DEU",
+    "zip": "99998"
+  },
+  "MEX-1005562-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005563-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005564-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005565-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005566-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005567-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005568-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005569-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005570-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1005571-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1007160-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1007343-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1007908-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1007912-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1008174-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-1008175-DEFAULT": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "MEX-OTA01000": {
+    "country": "MEX",
+    "zip": "01000"
+  },
+  "USA-AFN-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-DISH505-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-DITV505-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-DITV-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-ECHOST-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-GLRYSTR-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-MI21590-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-MI58783-L": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-MI58783-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-MI66566-X": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-OTA48009": {
+    "country": "usa",
+    "zip": "48009"
+  },
+  "USA-MI02206-X": {
+    "country": "USA",
+    "zip": "48124"
+  },
+  "USA-OTA48124": {
+    "country": "USA",
+    "zip": "48124"
+  },
+  "USA-OTA48098": {
+    "country": "USA",
+    "zip": "48098"
+  },
+  "USA-MI21519-X": {
+    "country": "USA",
+    "zip": "48430"
+  },
+  "USA-MI56162-X": {
+    "country": "USA",
+    "zip": "48430"
+  },
+  "USA-MI57806-X": {
+    "country": "USA",
+    "zip": "48430"
+  },
+  "USA-MI66323-X": {
+    "country": "USA",
+    "zip": "48430"
+  },
+  "USA-OTA48430": {
+    "country": "USA",
+    "zip": "48430"
+  }
+}

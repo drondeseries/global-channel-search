@@ -1,0 +1,11 @@
+{"type":"OTA","device":"","lineupId":"USA-OTA10013","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
+{"type":"CABLE","device":"X","lineupId":"USA-NY31519-X","name":"Charter Spectrum Southern Manhattan","location":"New York","mso":{"id":"13890","name":"Charter Spectrum"}}
+{"type":"CABLE","device":"X","lineupId":"USA-NY60152-X","name":"NYU Campus Cable","location":"New York","mso":{"id":"17854","name":"Apogee"}}
+{"type":"CABLE","device":"X","lineupId":"USA-NY63086-X","name":"RCN Cable","location":"New York","mso":{"id":"17857","name":"Astound Broadband"}}
+{"type":"CABLE","device":"X","lineupId":"USA-NY65256-X","name":"Verizon Fios New York Plus","location":"New York","mso":{"id":"17762","name":"Verizon Fios"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DITV501-X","name":"DIRECTV New York","location":"New York","mso":{"id":"17580","name":"DIRECTV"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-DISH501-X","name":"DISH New York","location":"New York","mso":{"id":"17680","name":"Dish Network, LLC"}}
+{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

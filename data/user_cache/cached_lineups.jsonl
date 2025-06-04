@@ -1,0 +1,350 @@
+{
+  "lineup_id": "AUS-1002701-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 39
+}
+{
+  "lineup_id": "AUS-1007695-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 16
+}
+{
+  "lineup_id": "AUS-1007697-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 750
+}
+{
+  "lineup_id": "AUS-1008128-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 157
+}
+{
+  "lineup_id": "AUS-1008129-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 61
+}
+{
+  "lineup_id": "AUS-OTA0872",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 39
+}
+{
+  "lineup_id": "DEU-1000095-DEFAULT",
+  "timestamp": "2025-06-02T10:38:05-04:00",
+  "stations_found": 302
+}
+{
+  "lineup_id": "DEU-1000096-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 456
+}
+{
+  "lineup_id": "DEU-1000097-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 456
+}
+{
+  "lineup_id": "DEU-1000098-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 38
+}
+{
+  "lineup_id": "DEU-1000099-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 303
+}
+{
+  "lineup_id": "DEU-1000143-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 1922
+}
+{
+  "lineup_id": "DEU-1000231-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 304
+}
+{
+  "lineup_id": "DEU-1001967-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 341
+}
+{
+  "lineup_id": "DEU-1001970-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 354
+}
+{
+  "lineup_id": "DEU-1002445-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 64
+}
+{
+  "lineup_id": "DEU-1007429-DEFAULT",
+  "timestamp": "2025-06-02T10:38:06-04:00",
+  "stations_found": 11
+}
+{
+  "lineup_id": "DEU-1007430-DEFAULT",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 594
+}
+{
+  "lineup_id": "DEU-1008142-DEFAULT",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 234
+}
+{
+  "lineup_id": "DEU-1008298-DEFAULT",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 971
+}
+{
+  "lineup_id": "DEU-1009086-DEFAULT",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 431
+}
+{
+  "lineup_id": "DEU-1010703-DEFAULT",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 183
+}
+{
+  "lineup_id": "DEU-OTA99998",
+  "timestamp": "2025-06-02T10:38:07-04:00",
+  "stations_found": 64
+}
+{
+  "lineup_id": "MEX-1005562-DEFAULT",
+  "timestamp": "2025-06-02T10:38:08-04:00",
+  "stations_found": 209
+}
+{
+  "lineup_id": "MEX-1005563-DEFAULT",
+  "timestamp": "2025-06-02T10:38:08-04:00",
+  "stations_found": 177
+}
+{
+  "lineup_id": "MEX-1005564-DEFAULT",
+  "timestamp": "2025-06-02T10:38:09-04:00",
+  "stations_found": 274
+}
+{
+  "lineup_id": "MEX-1005565-DEFAULT",
+  "timestamp": "2025-06-02T10:38:09-04:00",
+  "stations_found": 13
+}
+{
+  "lineup_id": "MEX-1005566-DEFAULT",
+  "timestamp": "2025-06-02T10:38:11-04:00",
+  "stations_found": 1277
+}
+{
+  "lineup_id": "MEX-1005567-DEFAULT",
+  "timestamp": "2025-06-02T10:38:11-04:00",
+  "stations_found": 64
+}
+{
+  "lineup_id": "MEX-1005568-DEFAULT",
+  "timestamp": "2025-06-02T10:38:12-04:00",
+  "stations_found": 8
+}
+{
+  "lineup_id": "MEX-1005569-DEFAULT",
+  "timestamp": "2025-06-02T10:38:13-04:00",
+  "stations_found": 207
+}
+{
+  "lineup_id": "MEX-1005570-DEFAULT",
+  "timestamp": "2025-06-02T10:38:13-04:00",
+  "stations_found": 235
+}
+{
+  "lineup_id": "MEX-1005571-DEFAULT",
+  "timestamp": "2025-06-02T10:38:14-04:00",
+  "stations_found": 176
+}
+{
+  "lineup_id": "MEX-1007160-DEFAULT",
+  "timestamp": "2025-06-02T10:38:14-04:00",
+  "stations_found": 232
+}
+{
+  "lineup_id": "MEX-1007343-DEFAULT",
+  "timestamp": "2025-06-02T10:38:15-04:00",
+  "stations_found": 30
+}
+{
+  "lineup_id": "MEX-1007908-DEFAULT",
+  "timestamp": "2025-06-02T10:38:15-04:00",
+  "stations_found": 313
+}
+{
+  "lineup_id": "MEX-1007912-DEFAULT",
+  "timestamp": "2025-06-02T10:38:16-04:00",
+  "stations_found": 250
+}
+{
+  "lineup_id": "MEX-1008174-DEFAULT",
+  "timestamp": "2025-06-02T10:38:17-04:00",
+  "stations_found": 52
+}
+{
+  "lineup_id": "MEX-1008175-DEFAULT",
+  "timestamp": "2025-06-02T10:38:17-04:00",
+  "stations_found": 207
+}
+{
+  "lineup_id": "MEX-OTA01000",
+  "timestamp": "2025-06-02T10:38:18-04:00",
+  "stations_found": 30
+}
+{
+  "lineup_id": "USA-AFN-X",
+  "timestamp": "2025-06-02T11:28:07-04:00",
+  "stations_found": 14
+}
+{
+  "lineup_id": "USA-DISH505-X",
+  "timestamp": "2025-06-02T11:28:07-04:00",
+  "stations_found": 852
+}
+{
+  "lineup_id": "USA-DITV505-X",
+  "timestamp": "2025-06-02T11:28:07-04:00",
+  "stations_found": 926
+}
+{
+  "lineup_id": "USA-DITV-X",
+  "timestamp": "2025-06-02T11:28:08-04:00",
+  "stations_found": 836
+}
+{
+  "lineup_id": "USA-ECHOST-X",
+  "timestamp": "2025-06-02T11:28:08-04:00",
+  "stations_found": 807
+}
+{
+  "lineup_id": "USA-GLRYSTR-X",
+  "timestamp": "2025-06-02T11:28:08-04:00",
+  "stations_found": 71
+}
+{
+  "lineup_id": "USA-MI21590-X",
+  "timestamp": "2025-06-02T11:28:08-04:00",
+  "stations_found": 619
+}
+{
+  "lineup_id": "USA-MI58783-L",
+  "timestamp": "2025-06-02T11:28:08-04:00",
+  "stations_found": 247
+}
+{
+  "lineup_id": "USA-MI58783-X",
+  "timestamp": "2025-06-02T11:28:09-04:00",
+  "stations_found": 374
+}
+{
+  "lineup_id": "USA-MI66566-X",
+  "timestamp": "2025-06-02T11:28:09-04:00",
+  "stations_found": 663
+}
+{
+  "lineup_id": "USA-OTA48009",
+  "timestamp": "2025-06-02T11:28:09-04:00",
+  "stations_found": 92
+}
+{
+  "lineup_id": "USA-AFN-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 14
+}
+{
+  "lineup_id": "USA-DISH505-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 852
+}
+{
+  "lineup_id": "USA-DITV505-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 926
+}
+{
+  "lineup_id": "USA-DITV-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 836
+}
+{
+  "lineup_id": "USA-ECHOST-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 807
+}
+{
+  "lineup_id": "USA-GLRYSTR-X",
+  "timestamp": "2025-06-02T11:35:31-04:00",
+  "stations_found": 71
+}
+{
+  "lineup_id": "USA-MI21590-X",
+  "timestamp": "2025-06-02T11:35:32-04:00",
+  "stations_found": 619
+}
+{
+  "lineup_id": "USA-MI58783-L",
+  "timestamp": "2025-06-02T11:35:32-04:00",
+  "stations_found": 247
+}
+{
+  "lineup_id": "USA-MI58783-X",
+  "timestamp": "2025-06-02T11:35:32-04:00",
+  "stations_found": 374
+}
+{
+  "lineup_id": "USA-MI66566-X",
+  "timestamp": "2025-06-02T11:35:32-04:00",
+  "stations_found": 663
+}
+{
+  "lineup_id": "USA-OTA48009",
+  "timestamp": "2025-06-02T11:35:32-04:00",
+  "stations_found": 92
+}
+{
+  "lineup_id": "USA-MI02206-X",
+  "timestamp": "2025-06-02T11:37:25-04:00",
+  "stations_found": 632
+}
+{
+  "lineup_id": "USA-OTA48124",
+  "timestamp": "2025-06-02T11:37:26-04:00",
+  "stations_found": 116
+}
+{
+  "lineup_id": "USA-OTA48098",
+  "timestamp": "2025-06-02T15:58:11-04:00",
+  "stations_found": 90
+}
+{
+  "lineup_id": "USA-MI21519-X",
+  "timestamp": "2025-06-02T19:21:48-04:00",
+  "stations_found": 610
+}
+{
+  "lineup_id": "USA-MI56162-X",
+  "timestamp": "2025-06-02T19:21:50-04:00",
+  "stations_found": 625
+}
+{
+  "lineup_id": "USA-MI57806-X",
+  "timestamp": "2025-06-02T19:21:51-04:00",
+  "stations_found": 620
+}
+{
+  "lineup_id": "USA-MI66323-X",
+  "timestamp": "2025-06-02T19:21:52-04:00",
+  "stations_found": 623
+}
+{
+  "lineup_id": "USA-OTA48430",
+  "timestamp": "2025-06-02T19:21:52-04:00",
+  "stations_found": 130
+}

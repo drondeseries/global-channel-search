@@ -1,0 +1,4753 @@
+{
+  "type": "Digital Broadcast Network",
+  "name": "3 Angels Broadcasting Network",
+  "channel": "1677",
+  "callSign": "3ANGELS",
+  "stationId": "10002",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10002_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Bangla",
+  "channel": "776",
+  "callSign": "ZBNGL",
+  "stationId": "100075",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100075_ll_h9_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "bn"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "DirecTV GO4IT",
+  "channel": "92",
+  "callSign": "DT310",
+  "stationId": "100082",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "CL beIN Sports English SD in Spanish",
+  "channel": "655",
+  "callSign": "BEINS1S",
+  "stationId": "100109",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Living Foodz",
+  "channel": "714",
+  "callSign": "LFOODZ",
+  "stationId": "100148",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100148_ll_h9_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Vancouver Canucks: NHL Center Ice",
+  "channel": "3095",
+  "callSign": "NHLVAN",
+  "stationId": "100202",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "San Jose Sharks: NHL Center Ice",
+  "channel": "3090",
+  "callSign": "NHLSJ",
+  "stationId": "100203",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Kings: NHL Center Ice",
+  "channel": "3080",
+  "callSign": "NHLLA",
+  "stationId": "100204",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Edmonton Oilers: NHL Center Ice",
+  "channel": "3078",
+  "callSign": "NHLEDM",
+  "stationId": "100205",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Calgary Flames: NHL Center Ice",
+  "channel": "3071",
+  "callSign": "NHLCLG",
+  "stationId": "100206",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Utah Mammoth: NHL Center Ice",
+  "channel": "3068",
+  "callSign": "NHLUT",
+  "stationId": "100207",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Anaheim Ducks: NHL Center Ice",
+  "channel": "3067",
+  "callSign": "NHLANA",
+  "stationId": "100208",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Winnipeg Jets: NHL Center Ice",
+  "channel": "3098",
+  "callSign": "NHLWIN",
+  "stationId": "100209",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "AMC",
+  "channel": "119",
+  "callSign": "AMC",
+  "stationId": "10021",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10021_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "St. Louis Blues: NHL Center Ice",
+  "channel": "3092",
+  "callSign": "NHLSTL",
+  "stationId": "100210",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Nashville Predators: NHL Center Ice",
+  "channel": "3083",
+  "callSign": "NHLNAS",
+  "stationId": "100211",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Alwan US",
+  "channel": "660",
+  "callSign": "ZALWAN",
+  "stationId": "100239",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Aflam US",
+  "channel": "661",
+  "callSign": "ZAFLAM",
+  "stationId": "100240",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Buffalo Sabres: NHL Center Ice",
+  "channel": "3070",
+  "callSign": "NHLBUF",
+  "stationId": "100241",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Boston Bruins: NHL Center Ice",
+  "channel": "3069",
+  "callSign": "NHLBOS",
+  "stationId": "100242",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Rangers: NHL Center Ice",
+  "channel": "3086",
+  "callSign": "NHLNYR",
+  "stationId": "100243",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Washington Capitals: NHL Center Ice",
+  "channel": "3097",
+  "callSign": "NHLWAS",
+  "stationId": "100244",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Pittsburgh Penguins: NHL Center Ice",
+  "channel": "3089",
+  "callSign": "NHLPIT",
+  "stationId": "100245",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Philadelphia Flyers: NHL Center Ice",
+  "channel": "3088",
+  "callSign": "NHLPHL",
+  "stationId": "100246",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New Jersey Devils: NHL Center Ice",
+  "channel": "3084",
+  "callSign": "NHLNJ",
+  "stationId": "100247",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Columbus Blue Jackets: NHL Center Ice",
+  "channel": "3075",
+  "callSign": "NHLCBJ",
+  "stationId": "100248",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Islanders: NHL Center Ice",
+  "channel": "3085",
+  "callSign": "NHLNYI",
+  "stationId": "100249",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Carolina Hurricanes: NHL Center Ice",
+  "channel": "3072",
+  "callSign": "NHLCAR",
+  "stationId": "100250",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Minnesota Wild: NHL Center Ice",
+  "channel": "3081",
+  "callSign": "NHLMIN",
+  "stationId": "100267",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Dallas Stars: NHL Center Ice",
+  "channel": "3076",
+  "callSign": "NHLDAL",
+  "stationId": "100268",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Colorado Avalanche: NHL Center Ice",
+  "channel": "3074",
+  "callSign": "NHLCOL",
+  "stationId": "100269",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Chicago Blackhawks: NHL Center Ice",
+  "channel": "3073",
+  "callSign": "NHLCHG",
+  "stationId": "100270",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Toronto Maple Leafs: NHL Center Ice",
+  "channel": "3094",
+  "callSign": "NHLTOR",
+  "stationId": "100271",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Tampa Bay Lightning: NHL Center Ice",
+  "channel": "3093",
+  "callSign": "NHLTB",
+  "stationId": "100272",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Ottawa Senators: NHL Center Ice",
+  "channel": "3087",
+  "callSign": "NHLOTT",
+  "stationId": "100273",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Montreal Canadiens: NHL Center Ice",
+  "channel": "3082",
+  "callSign": "NHLMON",
+  "stationId": "100275",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Florida Panthers: NHL Center Ice",
+  "channel": "3079",
+  "callSign": "NHLFLA",
+  "stationId": "100277",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Detroit Red Wings: NHL Center Ice",
+  "channel": "3077",
+  "callSign": "NHLDET",
+  "stationId": "100278",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "DT321",
+  "channel": "96",
+  "callSign": "DT321",
+  "stationId": "100304",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Willow 2",
+  "channel": "722",
+  "callSign": "WILLOW2",
+  "stationId": "100316",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100316_ll_h9_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "A&E",
+  "channel": "132",
+  "callSign": "AETV",
+  "stationId": "10035",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10035_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "DirecTV DT106 4K",
+  "channel": "106",
+  "callSign": "DT106",
+  "stationId": "100372",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "UHDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "SBS HD",
+  "channel": "2080",
+  "callSign": "SBSHD",
+  "stationId": "100432",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s100432_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "ko"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "BET",
+  "channel": "155",
+  "callSign": "BET",
+  "stationId": "10051",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10051_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Bravo",
+  "channel": "181",
+  "callSign": "BRAVO",
+  "stationId": "10057",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10057_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Vegas Golden Knights: NHL Center Ice",
+  "channel": "3096",
+  "callSign": "NHLLV",
+  "stationId": "100592",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s50130_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 720p"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Colors Cineplex USA",
+  "channel": "730",
+  "callSign": "CLRCINUS",
+  "stationId": "100706",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "hi"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Oferta TV",
+  "channel": "455",
+  "callSign": "DT455",
+  "stationId": "100858",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "CBC Television-Windsor 9",
+  "channel": "9",
+  "callSign": "CBET",
+  "stationId": "10088",
+  "affiliateId": "10084",
+  "affiliateCallSign": "CBC",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10084_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Analog",
+    "videoType": "",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Freeform",
+  "channel": "178",
+  "callSign": "FREEFRM",
+  "stationId": "10093",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10093_ll_h15_ae.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{"type":"","name":"","channel":"832","callSign":"MAX","stationId":"10120","preferredImage":{"uri":"https://tmsimg.fancybits.co/assets/s10120_ll_h15_ab.png?w=360&h=270","height":"270","width":"360","primary":"true","category":"Logo","text":"","tier":""},"videoQuality":{"signalType":"Digital","videoType":"SDTV","truResolution":""},"country":"USA","source":"user"}
+{
+  "type": "Satellite",
+  "name": "MoreMAX",
+  "channel": "834",
+  "callSign": "MOMAX",
+  "stationId": "10121",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10121_h3_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "QVC3",
+  "channel": "1271",
+  "callSign": "QVC3",
+  "stationId": "101260",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s101260_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "CMT",
+  "channel": "525",
+  "callSign": "CMTV",
+  "stationId": "10138",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10138_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "CNBC",
+  "channel": "1218",
+  "callSign": "CNBC",
+  "stationId": "10139",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10139_ll_h15_ae.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Real Extreme",
+  "channel": "491",
+  "callSign": "REALXTR",
+  "stationId": "101419",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s101419_ll_h9_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Cable News Network",
+  "channel": "202",
+  "callSign": "CNN",
+  "stationId": "10142",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10142_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "BBC News (North America) HD",
+  "channel": "346",
+  "callSign": "BBCWDEH",
+  "stationId": "101449",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s101449_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HLN",
+  "channel": "203",
+  "callSign": "HLN",
+  "stationId": "10145",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10145_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "CNN International",
+  "channel": "205",
+  "callSign": "CNNI",
+  "stationId": "10146",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10146_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Low Power Broadcast",
+  "name": "WUDL-LD7",
+  "channel": "19.7",
+  "callSign": "WUDLLD7",
+  "stationId": "101474",
+  "affiliateId": "159206",
+  "affiliateCallSign": "DEFY",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s159206_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Comedy Central",
+  "channel": "140",
+  "callSign": "COMEDY",
+  "stationId": "10149",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10149_h3_ba.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "FanDuel Sports Network Ohio- Out of Market",
+  "channel": "660",
+  "callSign": "FDOHOM",
+  "stationId": "101518",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s49691_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "FanDuel Sports Network Ohio HD- Out of Market",
+  "channel": "660",
+  "callSign": "FDOHOMH",
+  "stationId": "101522",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s11106_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "truTV",
+  "channel": "164",
+  "callSign": "TRUTV",
+  "stationId": "10153",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10153_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "CSPAN",
+  "channel": "230",
+  "callSign": "CSPAN",
+  "stationId": "10161",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10161_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "CSPAN2",
+  "channel": "231",
+  "callSign": "CSPAN2",
+  "stationId": "10162",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10162_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "DirecTV GETIT",
+  "channel": "263",
+  "callSign": "GETIT1",
+  "stationId": "101697",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Disney Channel",
+  "channel": "302",
+  "callSign": "DISN",
+  "stationId": "10171",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10171_ll_h15_ae.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Starz Encore",
+  "channel": "932",
+  "callSign": "STZENC",
+  "stationId": "10178",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10178_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "ESPN",
+  "channel": "602",
+  "callSign": "ESPN",
+  "stationId": "10179",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10179_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Digital Broadcast Network",
+  "name": "Eternal Word Television Network",
+  "channel": "562",
+  "callSign": "EWTN",
+  "stationId": "10183",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10183_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Impact TV Network",
+  "channel": "3230",
+  "callSign": "IMPACRU",
+  "stationId": "101850",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "ru"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Primo TV",
+  "channel": "1721",
+  "callSign": "PRIMO",
+  "stationId": "101879",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s101879_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Digital Broadcast Network",
+  "name": "The Cowboy Channel",
+  "channel": "566",
+  "callSign": "COWBOY",
+  "stationId": "10188",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10188_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Flix",
+  "channel": "890",
+  "callSign": "FLIX",
+  "stationId": "10201",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10201_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "WTVS-DT4",
+  "channel": "56.4",
+  "callSign": "WTVSDT4",
+  "stationId": "102095",
+  "affiliateId": "56725",
+  "affiliateCallSign": "WORLD",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s56725_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Zee Cinemalu",
+  "channel": "767",
+  "callSign": "ZCINEMA",
+  "stationId": "102134",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "te"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Galavision Cable Network",
+  "channel": "3003",
+  "callSign": "GALA",
+  "stationId": "10222",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10222_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "St. Louis Cardinals: MLB Extra Innings",
+  "channel": "3026",
+  "callSign": "MLBSTL",
+  "stationId": "102255",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Dodgers: MLB Extra Innings",
+  "channel": "3014",
+  "callSign": "MLBLAD",
+  "stationId": "102260",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "San Diego Padres: MLB Extra Innings",
+  "channel": "3023",
+  "callSign": "MLBSD",
+  "stationId": "102261",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102261_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Atlanta Braves: MLB Extra Innings",
+  "channel": "3002",
+  "callSign": "MLBATL",
+  "stationId": "102262",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Washington Nationals: MLB Extra Innings",
+  "channel": "3030",
+  "callSign": "MLBWSH",
+  "stationId": "102263",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Boston Red Sox: MLB Extra Innings",
+  "channel": "3004",
+  "callSign": "MLBBOS",
+  "stationId": "102264",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Tampa Bay Rays: MLB Extra Innings",
+  "channel": "3027",
+  "callSign": "MLBTB",
+  "stationId": "102265",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Chicago White Sox: MLB Extra Innings",
+  "channel": "3006",
+  "callSign": "MLBCHW",
+  "stationId": "102266",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Pittsburgh Pirates: MLB Extra Innings",
+  "channel": "3022",
+  "callSign": "MLBPIT",
+  "stationId": "102267",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "San Francisco Giants: MLB Extra Innings",
+  "channel": "3024",
+  "callSign": "MLBSF",
+  "stationId": "102268",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Miami Marlins: MLB Extra Innings",
+  "channel": "3015",
+  "callSign": "MLBMIA",
+  "stationId": "102269",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102269_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Athletics: MLB Extra Innings",
+  "channel": "3020",
+  "callSign": "MLBATH",
+  "stationId": "102270",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Baltimore Orioles: MLB Extra Innings",
+  "channel": "3003",
+  "callSign": "MLBBAL",
+  "stationId": "102271",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102271_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Cleveland Guardians: MLB Extra Innings",
+  "channel": "3008",
+  "callSign": "MLBCLE",
+  "stationId": "102272",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Minnesota Twins: MLB Extra Innings",
+  "channel": "3017",
+  "callSign": "MLBMIN",
+  "stationId": "102273",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Texas Rangers: MLB Extra Innings",
+  "channel": "3028",
+  "callSign": "MLBTEX",
+  "stationId": "102275",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Detroit Tigers: MLB Extra Innings",
+  "channel": "3010",
+  "callSign": "MLBDET",
+  "stationId": "102276",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102276_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Yankees: MLB Extra Innings",
+  "channel": "3019",
+  "callSign": "MLBNYY",
+  "stationId": "102277",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Chicago Cubs: MLB Extra Innings",
+  "channel": "3005",
+  "callSign": "MLBCHC",
+  "stationId": "102278",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Cincinnati Reds: MLB Extra Innings",
+  "channel": "3007",
+  "callSign": "MLBCIN",
+  "stationId": "102279",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Arizona Diamondbacks: MLB Extra Innings",
+  "channel": "3001",
+  "callSign": "MLBARI",
+  "stationId": "102280",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Philadelphia Phillies: MLB Extra Innings",
+  "channel": "3021",
+  "callSign": "MLBPHL",
+  "stationId": "102281",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102281_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Angels: MLB Extra Innings",
+  "channel": "3013",
+  "callSign": "MLBLAA",
+  "stationId": "102282",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Seattle Mariners: MLB Extra Innings",
+  "channel": "3025",
+  "callSign": "MLBSEA",
+  "stationId": "102292",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Houston Astros: MLB Extra Innings",
+  "channel": "3011",
+  "callSign": "MLBHOU",
+  "stationId": "102293",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Kansas City Royals: MLB Extra Innings",
+  "channel": "3012",
+  "callSign": "MLBKC",
+  "stationId": "102294",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102294_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Colorado Rockies: MLB Extra Innings",
+  "channel": "3009",
+  "callSign": "MLBCOL",
+  "stationId": "102296",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Mets: MLB Extra Innings",
+  "channel": "3018",
+  "callSign": "MLBNYM",
+  "stationId": "102297",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Toronto Blue Jays: MLB Extra Innings",
+  "channel": "3029",
+  "callSign": "MLBTOR",
+  "stationId": "102298",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Ve Plus",
+  "channel": "409",
+  "callSign": "VEPTVU",
+  "stationId": "102305",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s99240_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Milwaukee Brewers: MLB Extra Innings",
+  "channel": "3016",
+  "callSign": "MLBMIL",
+  "stationId": "102308",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102308_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "i24 News English HD",
+  "channel": "1223",
+  "callSign": "I24NEHD",
+  "stationId": "102309",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102309_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "ViendoMovies HD",
+  "channel": "3447",
+  "callSign": "VMOVHD",
+  "stationId": "102336",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s52208_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "QVC3 HD",
+  "channel": "1047",
+  "callSign": "QVC3HD",
+  "stationId": "102337",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102337_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Network",
+  "name": "Telemundo Television Network",
+  "channel": "611",
+  "callSign": "TELE",
+  "stationId": "10239",
+  "affiliateId": "10239",
+  "affiliateCallSign": "TELE",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10239_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Analog",
+    "videoType": "",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HBO",
+  "channel": "802",
+  "callSign": "HBO",
+  "stationId": "10240",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10240_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HBO2",
+  "channel": "804",
+  "callSign": "HBO2",
+  "stationId": "10241",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s68140_h3_ba.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HBO2 (Pacific)",
+  "channel": "805",
+  "callSign": "HBO2P",
+  "stationId": "10242",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s68140_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HBO Signature",
+  "channel": "808",
+  "callSign": "HBOSIG",
+  "stationId": "10243",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10243_h3_ba.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "HBO (Pacific)",
+  "channel": "803",
+  "callSign": "HBOP",
+  "stationId": "10244",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10240_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Kids Street HD",
+  "channel": "1722",
+  "callSign": "KIDSSHD",
+  "stationId": "102442",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102442_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "ABP Sanjha",
+  "channel": "746",
+  "callSign": "ABPSANJ",
+  "stationId": "102452",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102452_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "hi",
+    "pa"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Scientology Media Productions",
+  "channel": "1569",
+  "callSign": "SCNTV",
+  "stationId": "102490",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102490_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Digital Broadcast Network",
+  "name": "Home Shopping Network",
+  "channel": "422",
+  "callSign": "HSN",
+  "stationId": "10269",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10269_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Digital Broadcast Network",
+  "name": "HSN2",
+  "channel": "423",
+  "callSign": "HSN2",
+  "stationId": "10270",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10270_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Monumental Sports Network",
+  "channel": "424",
+  "callSign": "MNMT",
+  "stationId": "10271",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10271_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Local Origination - LOOR 782",
+  "channel": "782",
+  "callSign": "LOOR782",
+  "stationId": "102830",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Local Origination - LOOR 275",
+  "channel": "275",
+  "callSign": "LOOR275",
+  "stationId": "102832",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "WTVS-DT2 (SD Feed)",
+  "channel": "1150",
+  "callSign": "WTVS2SD",
+  "stationId": "102835",
+  "affiliateId": "101364",
+  "affiliateCallSign": "HD06",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s101364_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Starz Encore Family SD",
+  "channel": "490",
+  "callSign": "STZENFS",
+  "stationId": "102903",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102903_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Starz Encore Español SD",
+  "channel": "426",
+  "callSign": "STZESPS",
+  "stationId": "102905",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102905_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Starz Encore Westerns SD",
+  "channel": "485",
+  "callSign": "STZEWSS",
+  "stationId": "102906",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s102906_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "KABC",
+  "channel": "397",
+  "callSign": "KABC",
+  "stationId": "10309",
+  "affiliateId": "10003",
+  "affiliateCallSign": "ABC",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10003_h3_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Analog",
+    "videoType": "",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Record International HD",
+  "channel": "3212",
+  "callSign": "RECIHD",
+  "stationId": "103397",
+  "affiliateId": "41479",
+  "affiliateCallSign": "RREC",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s103397_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "pt-BR"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Folk",
+  "channel": "813",
+  "callSign": "MC64",
+  "stationId": "103439",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Americana",
+  "channel": "810",
+  "callSign": "MC65",
+  "stationId": "103440",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Bluegrass",
+  "channel": "812",
+  "callSign": "MC66",
+  "stationId": "103442",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: All Xmas",
+  "channel": "858",
+  "callSign": "MC68",
+  "stationId": "103444",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Rock Latino",
+  "channel": "878",
+  "callSign": "MC71",
+  "stationId": "103447",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Latin Jazz",
+  "channel": "879",
+  "callSign": "MC72",
+  "stationId": "103448",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: K-Pop",
+  "channel": "9566",
+  "callSign": "MC73",
+  "stationId": "103449",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Brazilian Pop",
+  "channel": "877",
+  "callSign": "MC74",
+  "stationId": "103450",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Filipino",
+  "channel": "885",
+  "callSign": "MC75",
+  "stationId": "103451",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Funk",
+  "channel": "844",
+  "callSign": "MC56",
+  "stationId": "103452",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Classic Dance",
+  "channel": "845",
+  "callSign": "MC57",
+  "stationId": "103453",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: '80s Rock",
+  "channel": "829",
+  "callSign": "MC58",
+  "stationId": "103454",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Classic Alternative",
+  "channel": "838",
+  "callSign": "MC60",
+  "stationId": "103456",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: New Wave",
+  "channel": "839",
+  "callSign": "MC61",
+  "stationId": "103457",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s66345_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Indie Video",
+  "channel": "831",
+  "callSign": "MC83",
+  "stationId": "103466",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Metal Video",
+  "channel": "830",
+  "callSign": "MC85",
+  "stationId": "103468",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Music Choice: Musica Urbana Video",
+  "channel": "875",
+  "callSign": "MC87",
+  "stationId": "103469",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "es"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "KCBS",
+  "channel": "391",
+  "callSign": "KCBS",
+  "stationId": "10367",
+  "affiliateId": "10098",
+  "affiliateCallSign": "CBS",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10098_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Analog",
+    "videoType": "",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "FanDuel TV SD",
+  "channel": "671",
+  "callSign": "FDUELSD",
+  "stationId": "103679",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s103679_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "WADL-DT5",
+  "channel": "38.5",
+  "callSign": "WADLDT5",
+  "stationId": "103765",
+  "affiliateId": "Independent",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Full Power Broadcast",
+  "name": "WADL-DT6",
+  "channel": "38.6",
+  "callSign": "WADLDT6",
+  "stationId": "103766",
+  "affiliateId": "91496",
+  "affiliateCallSign": "CRIME",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s91496_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Local Origination - LOOR 691",
+  "channel": "691",
+  "callSign": "LOOR691",
+  "stationId": "103793",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "MGM+ Drive-In HD",
+  "channel": "1875",
+  "callSign": "MGMDRHD",
+  "stationId": "103828",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s103828_ll_h15_ad.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Flix HD",
+  "channel": "1771",
+  "callSign": "FLIXHD",
+  "stationId": "103890",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s10201_ll_h15_aa.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Satellite",
+  "name": "Showtime Familyzone HD",
+  "channel": "324",
+  "callSign": "FAMZHD",
+  "stationId": "103892",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s25274_ll_h15_ac.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "HD 1080i"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Americas Auction Channel",
+  "channel": "219",
+  "callSign": "AAC",
+  "stationId": "104787",
+  "preferredImage": {
+    "uri": "",
+    "height": "",
+    "width": "",
+    "primary": "",
+    "category": "",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "SDTV",
+    "truResolution": ""
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Golden State Warriors: NBA League Pass",
+  "channel": "3043",
+  "callSign": "NBAGSW",
+  "stationId": "104854",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Houston Rockets: NBA League Pass",
+  "channel": "3044",
+  "callSign": "NBAHOU",
+  "stationId": "104855",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Indiana Pacers: NBA League Pass",
+  "channel": "3045",
+  "callSign": "NBAIND",
+  "stationId": "104856",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Clippers: NBA League Pass",
+  "channel": "3046",
+  "callSign": "NBALAC",
+  "stationId": "104857",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Los Angeles Lakers: NBA League Pass",
+  "channel": "3047",
+  "callSign": "NBALAL",
+  "stationId": "104858",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Memphis Grizzlies: NBA League Pass",
+  "channel": "3048",
+  "callSign": "NBAMEM",
+  "stationId": "104859",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Miami Heat: NBA League Pass",
+  "channel": "3049",
+  "callSign": "NBAMIA",
+  "stationId": "104860",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Milwaukee Bucks: NBA League Pass",
+  "channel": "3050",
+  "callSign": "NBAMIL",
+  "stationId": "104867",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Boston Celtics: NBA League Pass",
+  "channel": "3035",
+  "callSign": "NBABOS",
+  "stationId": "104868",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Detroit Pistons: NBA League Pass",
+  "channel": "3042",
+  "callSign": "NBADET",
+  "stationId": "104869",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Sacramento Kings: NBA League Pass",
+  "channel": "3059",
+  "callSign": "NBASAC",
+  "stationId": "104870",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "San Antonio Spurs: NBA League Pass",
+  "channel": "3060",
+  "callSign": "NBASAS",
+  "stationId": "104871",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Toronto Raptors: NBA League Pass",
+  "channel": "3061",
+  "callSign": "NBATOR",
+  "stationId": "104872",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Utah Jazz: NBA League Pass",
+  "channel": "3062",
+  "callSign": "NBAUTA",
+  "stationId": "104873",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Washington Wizards: NBA League Pass",
+  "channel": "3063",
+  "callSign": "NBAWAS",
+  "stationId": "104874",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Portland Trail Blazers: NBA League Pass",
+  "channel": "3058",
+  "callSign": "NBAPOR",
+  "stationId": "104875",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Phoenix Suns: NBA League Pass",
+  "channel": "3057",
+  "callSign": "NBAPHX",
+  "stationId": "104876",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Philadelphia 76ers: NBA League Pass",
+  "channel": "3056",
+  "callSign": "NBAPHI",
+  "stationId": "104877",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Orlando Magic: NBA League Pass",
+  "channel": "3055",
+  "callSign": "NBAORL",
+  "stationId": "104878",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Oklahoma City Thunder: NBA League Pass",
+  "channel": "3054",
+  "callSign": "NBAOKC",
+  "stationId": "104879",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Atlanta Hawks: NBA League Pass",
+  "channel": "3034",
+  "callSign": "NBAATL",
+  "stationId": "104880",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New York Knicks: NBA League Pass",
+  "channel": "3053",
+  "callSign": "NBANYK",
+  "stationId": "104881",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "Brooklyn Nets: NBA League Pass",
+  "channel": "3036",
+  "callSign": "NBABKN",
+  "stationId": "104883",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}
+{
+  "type": "Cable Only",
+  "name": "New Orleans Pelicans: NBA League Pass",
+  "channel": "3052",
+  "callSign": "NBANOP",
+  "stationId": "104884",
+  "preferredImage": {
+    "uri": "https://tmsimg.fancybits.co/assets/s95843_ll_h15_ab.png?w=360&h=270",
+    "height": "270",
+    "width": "360",
+    "primary": "true",
+    "category": "Logo",
+    "text": "",
+    "tier": ""
+  },
+  "videoQuality": {
+    "signalType": "Digital",
+    "videoType": "HDTV",
+    "truResolution": "TruHD Uncooperative"
+  },
+  "country": "USA",
+  "source": "user",
+  "bcastLangs": [
+    "en"
+  ]
+}

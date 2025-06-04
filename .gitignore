@@ -24,3 +24,9 @@ previous_versions/
 .idea/
 .*.swp
 .*.swo
+
+# Tools and development files
+tools/
+
+# Base cache build files
+sampled_markets_base_cache.csv

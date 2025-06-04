@@ -1,9 +1,0 @@
-{"type":"OTA","device":"","lineupId":"USA-OTA30334","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
-{"type":"CABLE","device":"X","lineupId":"USA-GA67017-X","name":"AT&T U-verse TV","location":"Atlanta","mso":{"id":"17304","name":"AT&T U-verse TV"}}
-{"type":"CABLE","device":"X","lineupId":"USA-GA67745-X","name":"Xfinity Atlanta","location":"Atlanta","mso":{"id":"08010","name":"Comcast Corporation"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV524-X","name":"DIRECTV Atlanta","location":"Atlanta","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DISH524-X","name":"DISH Atlanta","location":"Atlanta","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

@@ -1,7 +1,0 @@
-{"type":"OTA","device":"","lineupId":"USA-OTA97280","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV820-X","name":"DIRECTV Portland","location":"Portland","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DISH820-X","name":"DISH Portland","location":"Portland","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

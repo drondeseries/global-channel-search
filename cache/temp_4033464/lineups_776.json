@@ -1,9 +1,0 @@
-{"type":"OTA","device":"","lineupId":"USA-OTA32686","name":"Local Over the Air Broadcast","location":"","mso":{"id":"","name":""}}
-{"type":"CABLE","device":"X","lineupId":"USA-FL67603-X","name":"AT&T U-verse TV","location":"Orlando","mso":{"id":"17304","name":"AT&T U-verse TV"}}
-{"type":"CABLE","device":"X","lineupId":"USA-FL68154-X","name":"Xfinity Marion County / Silver Spring Shor","location":"Ocklawaha","mso":{"id":"08010","name":"Comcast Corporation"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-AFN-X","name":"AFN Satellite","location":"USA","mso":{"id":"","name":""}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV-X","name":"DIRECTV","location":"USA","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DITV534-X","name":"DIRECTV Orlando","location":"Orlando","mso":{"id":"17580","name":"DIRECTV"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-ECHOST-X","name":"DISH Network","location":"USA","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-DISH534-X","name":"DISH Orlando","location":"Orlando","mso":{"id":"17680","name":"Dish Network, LLC"}}
-{"type":"SATELLITE","device":"X","lineupId":"USA-GLRYSTR-X","name":"GLORYSTAR","location":"USA","mso":{"id":"","name":""}}

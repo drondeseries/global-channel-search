@@ -4,10 +4,10 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-VERSION="2.0.2"
+VERSION="2.0.3"
 VERSION_INFO="Last Modified: 2025/06/06
-Patch (2.0.2)
-• Fixed incorrect emby API endpoing
+Patch (2.0.3)
+• Definitive fix of Emby integration
 
 Patch (2.0.1)
 • Fixed emby API calls
@@ -1630,60 +1630,6 @@ configure_emby_connection() {
     echo -e "\n${GREEN}✅ Emby configuration completed${RESET}"
 }
 
-# Main Emby workflow function - COMPLETE IMPLEMENTATION with Enhanced User Guidance
-scan_emby_missing_listingsids() {
-    echo -e "\n${BOLD}Emby Channel ListingsId Analysis${RESET}"
-    echo -e "${BLUE}📍 Enhanced workflow: Scan → Extract Station IDs → Report${RESET}"
-    echo -e "${CYAN}This will analyze your Emby channels and extract station IDs for matching.${RESET}"
-    echo
-    
-    # Step 1: Test connection
-    echo -e "${CYAN}🔗 Connecting to Emby server...${RESET}"
-    if ! emby_test_connection >/dev/null 2>&1; then
-        echo -e "${RED}❌ Emby Integration: Connection Failed${RESET}"
-        echo -e "${CYAN}💡 Configure connection in Settings → Emby Integration${RESET}"
-        pause_for_user
-        return 1
-    fi
-    echo -e "${GREEN}✅ Successfully connected to Emby server${RESET}"
-    echo
-    
-    # Step 2: Get all channels
-    echo -e "${CYAN}📡 Fetching all Live TV channels...${RESET}"
-    local channels_data
-    channels_data=$(emby_get_livetv_channels)
-    
-    if [[ $? -ne 0 ]]; then
-        echo -e "${RED}❌ Failed to fetch channels${RESET}"
-        echo -e "${CYAN}💡 Check your Emby Live TV setup and ensure channels are configured${RESET}"
-        pause_for_user
-        return 1
-    fi
-    
-    # Step 3: Find channels missing ListingsId and extract station IDs
-    echo -e "${CYAN}🔍 Analyzing channels for missing ListingsId...${RESET}"
-    local missing_channels_output
-    missing_channels_output=$(emby_find_channels_missing_listingsid)
-    
-    if [[ $? -ne 0 ]]; then
-        echo -e "${RED}❌ Failed to analyze channels${RESET}"
-        pause_for_user
-        return 1
-    fi
-    
-    # Step 4: Generate comprehensive report
-    generate_emby_analysis_report "$channels_data" "$missing_channels_output"
-    
-    # Step 5: Optional endpoint testing for troubleshooting
-    if confirm_action "Test additional Emby endpoints for debugging?"; then
-        test_emby_channel_mapping_endpoints
-    fi
-    
-    echo -e "\n${GREEN}✅ Emby analysis complete${RESET}"
-    pause_for_user
-    return 0
-}
-
 debug_emby_integration() {
     echo -e "\n${BOLD}${CYAN}=== Comprehensive Emby Debug ===${RESET}"
     
@@ -1731,6 +1677,144 @@ debug_emby_integration() {
     fi
     
     echo -e "\n${CYAN}💡 Use this information to troubleshoot any issues${RESET}"
+}
+
+# Main Emby workflow function - COMPLETE IMPLEMENTATION with Enhanced User Guidance
+scan_emby_missing_listingsids() {
+    echo -e "\n${BOLD}Emby Channel ListingsId Auto-Assignment${RESET}"
+    echo -e "${BLUE}📍 Enhanced workflow: Scan → Extract Station IDs → Lookup → Add Listing Providers${RESET}"
+    echo -e "${CYAN}This will add missing listing providers to Emby and let Emby automatically map channels.${RESET}"
+    echo
+    
+    # Step 1: Test connection
+    echo -e "${CYAN}🔗 Connecting to Emby server...${RESET}"
+    if ! emby_test_connection >/dev/null 2>&1; then
+        echo -e "${RED}❌ Emby Integration: Connection Failed${RESET}"
+        echo -e "${CYAN}💡 Configure connection in Settings → Emby Integration${RESET}"
+        pause_for_user
+        return 1
+    fi
+    echo -e "${GREEN}✅ Successfully connected to Emby server${RESET}"
+    echo
+    
+    # Step 2: Find channels missing ListingsId and extract station IDs
+    echo -e "${CYAN}🔍 Scanning Emby Live TV channels for missing ListingsId...${RESET}"
+    local missing_channels
+    missing_channels=$(emby_find_channels_missing_listingsid)
+    
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Failed to scan Emby channels${RESET}"
+        pause_for_user
+        return 1
+    fi
+    
+    # ADD PROCESSING MESSAGE HERE to fill the silent gap
+    echo -e "${CYAN}⚙️  Processing extracted channel data...${RESET}"
+    
+    # Parse the missing channels and extract station IDs
+    local station_ids=()
+    local channel_mapping=()
+    
+    while IFS= read -r channel_line; do
+        if [[ -n "$channel_line" && "$channel_line" != "null" ]]; then
+            local channel_id=$(echo "$channel_line" | jq -r '.Id')
+            local channel_name=$(echo "$channel_line" | jq -r '.Name')
+            local channel_number=$(echo "$channel_line" | jq -r '.ChannelNumber')
+            local extracted_id=$(echo "$channel_line" | jq -r '.ExtractedId')
+            
+            if [[ -n "$extracted_id" && "$extracted_id" != "null" ]]; then
+                station_ids+=("$extracted_id")
+                channel_mapping+=("$channel_id|$channel_name|$channel_number|$extracted_id")
+            fi
+        fi
+    done < <(echo "$missing_channels" | jq -c '.')
+    
+    local channel_count=${#station_ids[@]}
+    
+    # Clean summary - no spam
+    if [[ "$channel_count" -eq 0 ]]; then
+        echo -e "${GREEN}🎉 Excellent! All your Emby channels already have ListingsId assigned${RESET}"
+        echo -e "${CYAN}💡 No action needed - your Emby channels are fully configured${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    echo -e "${GREEN}📊 Found ${BOLD}$channel_count channels${RESET}${GREEN} missing ListingsId${RESET}"
+    echo -e "${CYAN}💡 Station IDs extracted successfully${RESET}"
+    
+    # Step 3: Automatic reverse lookup (no user confirmation needed)
+    echo
+    echo -e "${CYAN}🔍 Starting reverse lookup for ${BOLD}$channel_count Station IDs${RESET}${CYAN}...${RESET}"
+    
+    local lookup_results
+    lookup_results=$(emby_reverse_lookup_station_ids "${station_ids[@]}")
+    
+    if [[ $? -ne 0 ]] || [[ -z "$lookup_results" ]]; then
+        echo -e "${RED}❌ Reverse lookup failed${RESET}"
+        echo -e "${CYAN}💡 Ensure you have a station database built via 'Manage Television Markets'${RESET}"
+        pause_for_user
+        return 1
+    fi
+    
+    # Parse and validate lookup results
+    local lookup_count
+    lookup_count=$(echo "$lookup_results" | jq 'length' 2>/dev/null || echo "0")
+    
+    if [[ "$lookup_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠️  No station matches found in your database${RESET}"
+        echo -e "${CYAN}💡 Try expanding your station database with additional markets${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    # Show unique listing providers that will be added
+    local unique_providers
+    unique_providers=$(echo "$lookup_results" | jq -r '.[] | "\(.lineupId)|\(.country)|\(.lineupName)"' | sort -u)
+    local provider_count=$(echo "$unique_providers" | wc -l)
+    
+    echo
+    echo -e "${BOLD}${CYAN}=== Ready to Add Listing Providers ===${RESET}"
+    echo -e "${CYAN}Found matches for ${BOLD}$lookup_count${RESET}${CYAN} of ${BOLD}$channel_count${RESET}${CYAN} channels${RESET}"
+    echo -e "${CYAN}This creates ${BOLD}$provider_count unique listing providers${RESET}${CYAN} to add to Emby${RESET}"
+    echo
+    
+    # Show the providers (condensed - max 10)
+    printf "${BOLD}${YELLOW}%-20s %-10s %-30s${RESET}\n" "LineupId" "Country" "LineupName"
+    echo "------------------------------------------------------------"
+    echo "$unique_providers" | head -10 | while IFS='|' read -r lineup_id country lineup_name; do
+        [[ -n "$lineup_id" ]] && printf "%-20s %-10s %-30s\n" "$lineup_id" "$country" "$lineup_name"
+    done
+    
+    if [[ "$provider_count" -gt 10 ]]; then
+        echo -e "${CYAN}... and $((provider_count - 10)) more providers${RESET}"
+    fi
+    echo
+    
+    # Final confirmation before adding to Emby
+    echo -e "${BOLD}${YELLOW}Final Step: Add Listing Providers${RESET}"
+    echo -e "${CYAN}This will add ${BOLD}$provider_count listing providers${RESET}${CYAN} to your Emby server.${RESET}"
+    echo -e "${CYAN}Emby will then automatically map your $channel_count channels to these listings.${RESET}"
+    echo
+    
+    if ! confirm_action "Add these $provider_count listing providers to Emby now?"; then
+        echo -e "${YELLOW}⚠️  Operation cancelled by user${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    # Step 4: Add listing providers to Emby
+    echo
+    echo -e "${CYAN}📡 Adding listing providers to Emby server...${RESET}"
+    echo
+    
+    # Call the new function to process listing providers
+    if process_emby_missing_listings "$lookup_results" "${channel_mapping[@]}"; then
+        echo -e "\n${GREEN}✅ Emby listing provider integration complete${RESET}"
+    else
+        echo -e "\n${RED}❌ Some listing providers failed to add${RESET}"
+    fi
+    
+    pause_for_user
 }
 
 # ============================================================================

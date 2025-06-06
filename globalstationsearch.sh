@@ -4,8 +4,15 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025/05/26
-VERSION="1.4.5"
+VERSION="2.0.0"
 VERSION_INFO="Last Modified: 2025/06/04
+MAJOR RELEASE (2.0.0)
+• All data from any previous version must be deleted as it is no longer backward
+  compatible
+• Added multi-country filtering support and lineup tracing when caching is performed
+• Emby integration to populate necessary lineupIds for all channels in m3u playlist
+• Significant enhacnements to codebase
+
 Improvements (1.4.5)
 • Moved all dispatcharr auth functions to lib/core/auth.sh
   - This allows background token refresh without incrementing interactions
@@ -159,7 +166,9 @@ LOGO_DIR="$CACHE_DIR/logos"
 STATION_CACHE_DIR="$CACHE_DIR/stations"
 
 # INPUT FILES
-CSV_FILE="$USER_CACHE_DIR/sampled_markets.csv"
+USER_MARKETS_CSV="$DATA_DIR/sampled_markets_user.csv"    # User's configured markets
+BASE_MARKETS_CSV="$DATA_DIR/sampled_markets_base.csv"    # Base cache source markets (distributed)
+CSV_FILE="$USER_MARKETS_CSV"  # Primary reference for user operations
 VALID_CODES_FILE="$DATA_DIR/valid_country_codes.txt"
 
 # CACHE FILES
@@ -169,9 +178,6 @@ LINEUP_CACHE="$CACHE_DIR/all_lineups.jsonl"
 BASE_STATIONS_JSON="all_stations_base.json"        # Distributed base cache (script directory)
 USER_STATIONS_JSON="$USER_CACHE_DIR/all_stations_user.json"     # User's custom additions
 COMBINED_STATIONS_JSON="$CACHE_DIR/all_stations_combined.json"  # Runtime combination
-
-# BASE CACHE MANIFEST SYSTEM
-BASE_CACHE_MANIFEST="all_stations_base_manifest.json"      # Manifest for smart market skipping (script directory)
 
 # CACHE STATE TRACKING FILES
 CACHED_MARKETS="$USER_CACHE_DIR/cached_markets.jsonl"
@@ -250,7 +256,7 @@ load_remaining_modules() {
         "lib/core/auth.sh|Authentication Management|true"
         "lib/core/api.sh|API Functions|true"
         "lib/core/backup.sh|Unified Backup System|true"       
-        "lib/features/update.sh|Auto-Update System|true"           
+        "lib/features/update.sh|Auto-Update System|true"
     )
     
     echo -e "${CYAN}📦 Loading remaining modules...${RESET}" >&2
@@ -711,72 +717,6 @@ refresh_market_display() {
 }
 
 # ============================================================================
-# BASE CACHE MANIFEST FUNCTIONS
-# ============================================================================
-# 
-# Note: Base cache manifest CREATION is handled by the standalone script:
-#       create_base_cache_manifest.sh
-# 
-# This section contains only manifest READING/CHECKING functions used during
-# normal operation to skip markets already covered by the base cache.
-# 
-# Distribute both all_stations_base.json AND all_stations_base_manifest.json
-# ============================================================================
-
-check_market_in_base_cache() {
-  local country="$1"
-  local zip="$2"
-  
-  if [ ! -f "$BASE_CACHE_MANIFEST" ]; then
-    return 1  # No manifest = not in base cache
-  fi
-  
-  # Check if this exact market was processed for the base cache
-  jq -e --arg country "$country" --arg zip "$zip" \
-    '.markets[] | select(.country == $country and .zip == $zip)' \
-    "$BASE_CACHE_MANIFEST" >/dev/null 2>&1
-}
-
-check_lineup_in_base_cache() {
-  local lineup_id="$1"
-  
-  if [ ! -f "$BASE_CACHE_MANIFEST" ]; then
-    return 1  # No manifest = not in base cache
-  fi
-  
-  # Check if this lineup was processed for the base cache
-  jq -e --arg lineup "$lineup_id" \
-    '.lineups[]? | select(.lineup_id == $lineup)' \
-    "$BASE_CACHE_MANIFEST" >/dev/null 2>&1
-}
-
-get_base_cache_countries() {
-  if [ ! -f "$BASE_CACHE_MANIFEST" ]; then
-    echo ""
-    return 1
-  fi
-  
-  jq -r '.markets[].country' "$BASE_CACHE_MANIFEST" 2>/dev/null | sort -u | tr '\n' ',' | sed 's/,$//'
-}
-
-init_base_cache_manifest() {
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    if [ ! -f "$BASE_CACHE_MANIFEST" ]; then
-      echo -e "${CYAN}Initializing base cache manifest...${RESET}"
-      echo -e "${YELLOW}⚠️  Base cache manifest missing or outdated${RESET}"
-      echo -e "${CYAN}💡 Run: ./create_base_cache_manifest.sh -v${RESET}"
-    else
-      # Check if manifest is older than base cache
-      if [ "$BASE_STATIONS_JSON" -nt "$BASE_CACHE_MANIFEST" ]; then
-        echo -e "${CYAN}Base cache updated, refreshing manifest...${RESET}"
-        echo -e "${YELLOW}⚠️  Base cache manifest missing or outdated${RESET}"
-        echo -e "${CYAN}💡 Run: ./create_base_cache_manifest.sh -v${RESET}"
-      fi
-    fi
-  fi
-}
-
-# ============================================================================
 # RESULTS FILTERING
 # ============================================================================
 
@@ -806,7 +746,7 @@ build_country_filter() {
   
   # Use runtime country if provided, otherwise use configured filter
   if [[ -n "$runtime_country" ]]; then
-    echo "and (.country // \"\" | . == \"$runtime_country\")"
+    echo "and (.availableIn[]? // \"\" | . == \"$runtime_country\")"
   elif [ "$FILTER_BY_COUNTRY" = "true" ] && [ -n "$ENABLED_COUNTRIES" ]; then
     local filter_conditions=""
     IFS=',' read -ra COUNTRIES <<< "$ENABLED_COUNTRIES"
@@ -814,7 +754,7 @@ build_country_filter() {
       if [ -n "$filter_conditions" ]; then
         filter_conditions+=" or "
       fi
-      filter_conditions+="(.country // \"\" | . == \"$country\")"
+      filter_conditions+="(.availableIn[]? // \"\" | . == \"$country\")"
     done
     echo "and ($filter_conditions)"
   else
@@ -826,10 +766,10 @@ get_available_countries() {
   local debug_trace=${DEBUG_COUNTRY_FILTER:-false}
   
   if [ "$debug_trace" = true ]; then
-    echo -e "${CYAN}[DEBUG] get_available_countries() - stations file only${RESET}" >&2
+    echo -e "${CYAN}[DEBUG] get_available_countries() - extracting from availableIn arrays${RESET}" >&2
   fi
   
-  # Get countries directly from the effective stations file
+  # Get countries from availableIn arrays instead of legacy country field
   local stations_file
   if stations_file=$(get_effective_stations_file 2>/dev/null); then
     if [ "$debug_trace" = true ]; then
@@ -837,17 +777,17 @@ get_available_countries() {
     fi
     
     local countries
-    countries=$(jq -r '[.[] | .country // empty | select(. != "")] | unique | join(",")' "$stations_file" 2>/dev/null)
+    countries=$(jq -r '[.[] | .availableIn[]? // empty | select(. != "")] | unique | join(",")' "$stations_file" 2>/dev/null)
     
     if [[ -n "$countries" && "$countries" != "null" && "$countries" != "" ]]; then
       if [ "$debug_trace" = true ]; then
-        echo -e "${CYAN}[DEBUG] Found countries: $countries${RESET}" >&2
+        echo -e "${CYAN}[DEBUG] Found countries from arrays: $countries${RESET}" >&2
       fi
       echo "$countries"
       return 0
     else
       if [ "$debug_trace" = true ]; then
-        echo -e "${CYAN}[DEBUG] No countries found in stations file${RESET}" >&2
+        echo -e "${CYAN}[DEBUG] No countries found in availableIn arrays${RESET}" >&2
       fi
       echo ""
       return 1
@@ -919,7 +859,7 @@ shared_station_search() {
       (.stationId // "") + "\t" + 
       (.name // "") + "\t" + 
       (.callSign // "") + "\t" + 
-      (.country // "UNK")
+      ((.availableIn // []) | if length > 1 then join(",") else .[0] // "UNK" end)
     ' "$stations_file" 2>/dev/null
   else
     # Return full JSON results (for local search display)
@@ -932,7 +872,7 @@ shared_station_search() {
         '"$resolution_filter"'
         '"$country_filter"'
       )] | .[$start:($start + $limit)][] | 
-      [.name, .callSign, (.videoQuality.videoType // "Unknown"), .stationId, (.country // "UNK")] | @tsv
+      [.name, .callSign, (.videoQuality.videoType // "Unknown"), .stationId, ((.availableIn // []) | if length > 1 then join(",") else .[0] // "UNK" end)] | @tsv
     ' "$stations_file" 2>/dev/null
   fi
 }
@@ -1650,6 +1590,318 @@ reverse_station_id_lookup_menu() {
   fi
   
   pause_for_user
+}
+
+# ============================================================================
+# EMBY INTEGRATION FUNCTIONS
+# ============================================================================
+
+configure_emby_connection() {
+    clear
+    echo -e "${BOLD}${CYAN}=== Configure Emby Integration ===${RESET}\n"
+    
+    show_setting_status "EMBY_ENABLED" "$EMBY_ENABLED" "Emby Integration" \
+        "$([ "$EMBY_ENABLED" = "true" ] && echo "enabled" || echo "disabled")"
+    echo
+    
+    if configure_setting "boolean" "Integration" "$EMBY_ENABLED"; then
+        EMBY_ENABLED=true
+        save_setting "EMBY_ENABLED" "$EMBY_ENABLED"
+        
+        # Use the config.sh configure_emby_server function
+        if configure_emby_server; then
+            echo -e "${GREEN}✅ Emby integration configured successfully!${RESET}"
+        else
+            echo -e "${YELLOW}⚠️  Emby integration configuration incomplete${RESET}"
+        fi
+    else
+        EMBY_ENABLED=false
+        save_setting "EMBY_ENABLED" "$EMBY_ENABLED"
+        echo -e "${CYAN}💡 Emby integration disabled${RESET}"
+    fi
+    
+    echo -e "\n${GREEN}✅ Emby configuration completed${RESET}"
+}
+
+# Main Emby workflow function - COMPLETE IMPLEMENTATION with Enhanced User Guidance
+scan_emby_missing_listingsids() {
+    echo -e "\n${BOLD}Emby Channel ListingsId Auto-Assignment${RESET}"
+    echo -e "${BLUE}📍 Complete workflow: Scan → Lookup → Update${RESET}"
+    echo -e "${CYAN}This will automatically assign ListingsId to Emby channels missing them.${RESET}"
+    echo
+    
+    # Step 1: Test connection
+    echo -e "${CYAN}🔗 Connecting to Emby server...${RESET}"
+    if ! emby_test_connection >/dev/null 2>&1; then
+        echo -e "${RED}❌ Emby Integration: Connection Failed${RESET}"
+        echo -e "${CYAN}💡 Configure connection in Settings → Emby Integration${RESET}"
+        echo -e "${CYAN}💡 Verify server is running and credentials are correct${RESET}"
+        pause_for_user
+        return 1
+    fi
+    echo -e "${GREEN}✅ Successfully connected to Emby server${RESET}"
+    echo
+    
+    # Step 2: Find channels missing ListingsId
+    echo -e "${CYAN}🔍 Scanning Emby Live TV channels for missing ListingsId...${RESET}"
+    local missing_channels
+    missing_channels=$(emby_find_channels_missing_listingsid)
+    
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Failed to scan Emby channels${RESET}"
+        echo -e "${CYAN}💡 Check your Emby Live TV setup and ensure channels are configured${RESET}"
+        pause_for_user
+        return 1
+    fi
+    
+    # Parse the missing channels and extract station IDs
+    local station_ids=()
+    local channel_mapping=()
+    
+    while IFS= read -r channel_line; do
+        if [[ -n "$channel_line" && "$channel_line" != "null" ]]; then
+            local channel_id=$(echo "$channel_line" | jq -r '.Id')
+            local channel_name=$(echo "$channel_line" | jq -r '.Name')
+            local channel_number=$(echo "$channel_line" | jq -r '.ChannelNumber')
+            local extracted_id=$(echo "$channel_line" | jq -r '.ExtractedId')
+            
+            if [[ -n "$extracted_id" && "$extracted_id" != "null" ]]; then
+                station_ids+=("$extracted_id")
+                # Store mapping for later use: "channel_id|channel_name|channel_number|station_id"
+                channel_mapping+=("$channel_id|$channel_name|$channel_number|$extracted_id")
+            fi
+        fi
+    done < <(echo "$missing_channels" | jq -c '.')
+    
+    local channel_count=${#station_ids[@]}
+    
+    # ENHANCED USER FEEDBACK: Clear results of channel scan
+    echo -e "${GREEN}✅ Channel scan completed${RESET}"
+    
+    if [[ "$channel_count" -eq 0 ]]; then
+        echo -e "${GREEN}🎉 Excellent! All your Emby channels already have ListingsId assigned${RESET}"
+        echo -e "${CYAN}💡 No action needed - your Emby channels are fully configured${RESET}"
+        echo -e "${CYAN}💡 Your Live TV guide data should be working properly${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    echo -e "${YELLOW}📊 Found ${BOLD}$channel_count channels${RESET}${YELLOW} missing ListingsId assignment${RESET}"
+    echo -e "${CYAN}💡 These channels need ListingsId to display proper guide data${RESET}"
+    echo
+    
+    # Display the channels in a readable format with better guidance
+    echo -e "${BOLD}${BLUE}=== Channels Needing ListingsId Assignment ===${RESET}"
+    printf "${BOLD}${YELLOW}%-6s %-20s %-30s %-15s${RESET}\n" "Ch#" "Station ID" "Channel Name" "Emby ID"
+    echo "--------------------------------------------------------------------"
+    
+    for mapping in "${channel_mapping[@]}"; do
+        IFS='|' read -r ch_id ch_name ch_num station_id <<< "$mapping"
+        printf "%-6s %-20s %-30s %-15s\n" "$ch_num" "$station_id" "$ch_name" "$ch_id"
+    done
+    
+    echo
+    echo -e "${CYAN}💡 Station IDs extracted from ManagementId (the part after the last underscore)${RESET}"
+    echo -e "${CYAN}💡 These will be used to find the corresponding LineupId and Country${RESET}"
+    echo
+    
+    # ENHANCED: Ask user if they want to proceed with reverse lookup
+    echo -e "${BOLD}${YELLOW}Next Step: Reverse Lookup${RESET}"
+    echo -e "${CYAN}I will now search your station database for these ${BOLD}$channel_count Station IDs${RESET}${CYAN} to find:${RESET}"
+    echo -e "${CYAN}  • LineupId (for ListingsId field)${RESET}"
+    echo -e "${CYAN}  • Country (for Country field)${RESET}"
+    echo -e "${CYAN}  • LineupName (for Name field)${RESET}"
+    echo -e "${CYAN}  • Type will be set to 'embygn'${RESET}"
+    echo
+    
+    if ! confirm_action "Proceed with reverse lookup of $channel_count Station IDs?"; then
+        echo -e "${YELLOW}⚠️  Operation cancelled by user${RESET}"
+        echo -e "${CYAN}💡 You can run this again anytime from the Emby Integration menu${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    # Step 3: Reverse lookup station IDs to get lineupId and country
+    echo
+    echo -e "${CYAN}🔍 Performing reverse lookup for ${BOLD}${#station_ids[@]} Station IDs${RESET}${CYAN}...${RESET}"
+    echo -e "${CYAN}💡 Searching your local station database for matching stations...${RESET}"
+    
+    local lookup_results
+    lookup_results=$(emby_reverse_lookup_station_ids "${station_ids[@]}")
+    
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Reverse lookup failed${RESET}"
+        echo -e "${CYAN}💡 This usually means your station database doesn't contain these stations${RESET}"
+        echo -e "${CYAN}💡 Try adding more television markets to expand your database${RESET}"
+        pause_for_user
+        return 1
+    fi
+    
+    # Parse lookup results and provide detailed feedback
+    local lookup_count=$(echo "$lookup_results" | jq 'length' 2>/dev/null || echo "0")
+    local not_found_count=$((channel_count - lookup_count))
+    
+    echo -e "${GREEN}✅ Reverse lookup completed${RESET}"
+    
+    if [[ "$lookup_count" -eq 0 ]]; then
+        echo -e "${RED}❌ No stations found in your database for any of the extracted Station IDs${RESET}"
+        echo -e "${CYAN}💡 This means your local station database doesn't contain these stations${RESET}"
+        echo -e "${CYAN}💡 Recommendations:${RESET}"
+        echo -e "${CYAN}   • Add more television markets via 'Manage Television Markets'${RESET}"
+        echo -e "${CYAN}   • Run 'User Caching' to build a more comprehensive database${RESET}"
+        echo -e "${CYAN}   • Check if your Emby channels are from supported regions${RESET}"
+        pause_for_user
+        return 1
+    fi
+    
+    # ENHANCED: Show detailed lookup statistics
+    echo -e "${GREEN}📊 Lookup Results: ${BOLD}$lookup_count successful${RESET}${GREEN} out of $channel_count total${RESET}"
+    if [[ $not_found_count -gt 0 ]]; then
+        echo -e "${YELLOW}⚠️  ${BOLD}$not_found_count stations${RESET}${YELLOW} were not found in your database${RESET}"
+        echo -e "${CYAN}💡 Only channels with successful lookups will be updated${RESET}"
+    fi
+    echo
+    
+    # ENHANCED: Display detailed lookup results with LineupId/Country format and LineupName
+    echo -e "${BOLD}${BLUE}=== Station Lookup Results ===${RESET}"
+    echo -e "${CYAN}💡 These LineupId/Country pairs and Names will be written to Emby:${RESET}"
+    echo
+    printf "${BOLD}${YELLOW}%-12s %-25s %-20s %-25s${RESET}\n" "Station ID" "Station Name" "LineupId/Country" "Lineup Name"
+    echo "----------------------------------------------------------------------------------------"
+    
+    # Prepare summary for final confirmation
+    local update_summary=()
+    local lineupid_country_list=()
+    
+    echo "$lookup_results" | jq -r '.[] | [.stationId, .name, .lineupId, .country, .lineupName] | @tsv' | \
+    while IFS=$'\t' read -r station_id name lineup_id country lineup_name; do
+        printf "%-12s %-25s %-20s %-25s\n" "$station_id" "$name" "${lineup_id}/${country}" "$lineup_name"
+        # Store for confirmation display
+        lineupid_country_list+=("${lineup_id}/${country}")
+    done
+    
+    echo
+    echo -e "${BOLD}${YELLOW}LineupId/Country pairs to be written:${RESET}"
+    
+    # Create unique list of LineupId/Country combinations
+    local unique_lineups=($(echo "$lookup_results" | jq -r '.[] | "\(.lineupId)/\(.country)"' | sort -u))
+    local lineup_display=""
+    for lineup_country in "${unique_lineups[@]}"; do
+        echo -e "${GREEN}  • $lineup_country${RESET}"
+        if [[ -n "$lineup_display" ]]; then
+            lineup_display="$lineup_display, $lineup_country"
+        else
+            lineup_display="$lineup_country"
+        fi
+    done
+    
+    echo
+    echo -e "${BOLD}${YELLOW}Summary of what will be written to Emby:${RESET}"
+    echo -e "${GREEN}📝 ${BOLD}$lookup_count channels${RESET}${GREEN} will be updated with:${RESET}"
+    echo -e "${CYAN}   • ListingsId: Corresponding LineupId for each channel${RESET}"
+    echo -e "${CYAN}   • Country: First available country for each station${RESET}"
+    echo -e "${CYAN}   • Name: LineupName from the station's lineup tracing${RESET}"
+    echo -e "${CYAN}   • Type: 'embygn' (for all channels)${RESET}"
+    echo
+    
+    # ENHANCED: Final confirmation with clear expectations
+    echo -e "${BOLD}${YELLOW}⚠️  FINAL CONFIRMATION${RESET}"
+    echo -e "${YELLOW}This will make ${BOLD}$lookup_count updates${RESET}${YELLOW} to your Emby server${RESET}"
+    echo -e "${YELLOW}Each channel will get ListingsId, Country, Name, and Type fields updated${RESET}"
+    echo
+    
+    if ! confirm_action "Write these $lookup_count LineupId/Country/Name assignments to Emby now?"; then
+        echo -e "${YELLOW}⚠️  Update cancelled by user${RESET}"
+        echo -e "${CYAN}💡 No changes made to your Emby server${RESET}"
+        echo -e "${CYAN}💡 You can run this again anytime to apply these updates${RESET}"
+        pause_for_user
+        return 0
+    fi
+    
+    # Step 4: Update Emby channels with LineupId, Country, Name, and Type
+    echo
+    echo -e "${CYAN}🔄 Writing updates to Emby server...${RESET}"
+    echo -e "${CYAN}💡 Updating $lookup_count channels with ListingsId, Country, Name, and Type=embygn${RESET}"
+    echo
+    
+    local updated_count=0
+    local failed_count=0
+    local update_details=()
+    
+    # Create lookup map from station_id to lineup/country/name info
+    declare -A station_lookup_map
+    while IFS= read -r lookup_line; do
+        local station_id=$(echo "$lookup_line" | jq -r '.stationId')
+        local country=$(echo "$lookup_line" | jq -r '.country')
+        local lineup_id=$(echo "$lookup_line" | jq -r '.lineupId')
+        local lineup_name=$(echo "$lookup_line" | jq -r '.lineupName')
+        
+        station_lookup_map["$station_id"]="$lineup_id|$country|$lineup_name"
+    done < <(echo "$lookup_results" | jq -c '.[]')
+    
+    # Process each channel mapping and update if we have lookup data
+    for mapping in "${channel_mapping[@]}"; do
+        IFS='|' read -r channel_id channel_name channel_number station_id <<< "$mapping"
+        
+        if [[ -n "${station_lookup_map[$station_id]:-}" ]]; then
+            IFS='|' read -r lineup_id country lineup_name <<< "${station_lookup_map[$station_id]}"
+            
+            echo -e "${CYAN}  📝 Channel ${BOLD}$channel_name${RESET}${CYAN} (Ch $channel_number)${RESET}"
+            echo -e "${CYAN}     Writing: ListingsId=${BOLD}$lineup_id${RESET}${CYAN}, Country=${BOLD}$country${RESET}${CYAN}, Name=${BOLD}$lineup_name${RESET}${CYAN}, Type=${BOLD}embygn${RESET}"
+            
+            if emby_update_channel_complete "$channel_id" "$lineup_id" "$country" "$lineup_name" "embygn"; then
+                ((updated_count++))
+                echo -e "${GREEN}     ✅ Successfully updated${RESET}"
+                update_details+=("${channel_name} (Ch $channel_number): $lineup_id/$country → $lineup_name")
+            else
+                ((failed_count++))
+                echo -e "${RED}     ❌ Update failed${RESET}"
+            fi
+        else
+            echo -e "${YELLOW}  ⚠️  Skipping ${BOLD}$channel_name${RESET}${YELLOW} (Ch $channel_number)${RESET}"
+            echo -e "${YELLOW}     Reason: Station ID $station_id not found in lookup results${RESET}"
+            ((failed_count++))
+        fi
+        
+        echo
+    done
+    
+    # ENHANCED: Comprehensive final summary
+    echo -e "${BOLD}${BLUE}=== Update Operation Complete ===${RESET}"
+    echo
+    
+    if [[ $updated_count -gt 0 ]]; then
+        echo -e "${GREEN}🎉 SUCCESS: ${BOLD}$updated_count channels${RESET}${GREEN} successfully updated!${RESET}"
+        echo
+        echo -e "${BOLD}${GREEN}Channels Updated:${RESET}"
+        for detail in "${update_details[@]}"; do
+            echo -e "${GREEN}  ✅ $detail${RESET}"
+        done
+        echo
+        echo -e "${CYAN}💡 Your Emby channels now have proper guide data configuration${RESET}"
+        echo -e "${CYAN}💡 Live TV guide information should appear correctly${RESET}"
+        echo -e "${CYAN}💡 Changes take effect immediately in Emby${RESET}"
+    fi
+    
+    if [[ $failed_count -gt 0 ]]; then
+        echo -e "${YELLOW}⚠️  ${BOLD}$failed_count channels${RESET}${YELLOW} were skipped or failed${RESET}"
+        echo -e "${CYAN}💡 Skipped channels either weren't found in your database or had update errors${RESET}"
+        echo -e "${CYAN}💡 You can expand your database and run this again to catch missed channels${RESET}"
+    fi
+    
+    echo
+    echo -e "${CYAN}📊 Final Summary:${RESET}"
+    echo -e "${GREEN}  • Total channels processed: $channel_count${RESET}"
+    echo -e "${GREEN}  • Successfully updated: $updated_count${RESET}"
+    echo -e "${YELLOW}  • Skipped/Failed: $failed_count${RESET}"
+    
+    if [[ $updated_count -gt 0 ]]; then
+        echo
+        echo -e "${BOLD}${GREEN}🎯 Emby Integration Complete!${RESET}"
+        echo -e "${CYAN}Your Emby Live TV channels are now properly configured with guide data${RESET}"
+    fi
+    
+    pause_for_user
 }
 
 # ============================================================================
@@ -5078,7 +5330,6 @@ dispatcharr_integration_check() {
   fi
 }
 
-
 run_dispatcharr_integration() {
   # Always refresh tokens when entering Dispatcharr integration
   if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
@@ -5183,8 +5434,11 @@ add_market() {
       return 1
     fi
     
-    # Normalize to uppercase
+    # FIXED: Normalize to uppercase IMMEDIATELY and consistently
     country=$(echo "$country" | tr '[:lower:]' '[:upper:]')
+    
+    # Debug output to confirm normalization
+    echo -e "${CYAN}💡 Normalized country code: '$country'${RESET}"
     
     # Validate against known country codes
     if grep -Fxq "$country" "$VALID_CODES_FILE" 2>/dev/null; then
@@ -5224,7 +5478,7 @@ add_market() {
     echo -e "${GREEN}✅ Postal code '$zip' accepted as-is${RESET}"
   fi
   
-  # Remove any remaining spaces and convert to uppercase for consistency
+  # FIXED: Remove any remaining spaces and convert to uppercase for consistency
   normalized_zip=$(echo "$normalized_zip" | tr -d ' ' | tr '[:lower:]' '[:upper:]')
   
   if [[ "$normalized_zip" != "$zip" ]]; then
@@ -5242,17 +5496,18 @@ add_market() {
     echo -e "${GREEN}✅ Created new markets configuration file${RESET}"
   fi
   
-  # Check for duplicates with clear messaging
+  # ENHANCED: Check for duplicates with clear messaging
   if grep -q "^$country,$normalized_zip$" "$CSV_FILE"; then
-    echo -e "${RED}❌ Market Already Exists: $country/$normalized_zip${RESET}"
-    echo -e "${CYAN}💡 This exact market is already in your configuration${RESET}"
-    echo -e "${CYAN}💡 Check 'Current Markets' in the main menu to see all configured markets${RESET}"
+    echo -e "${RED}❌ Market Already Exists${RESET}"
+    echo -e "${YELLOW}⚠️  The market $country/$normalized_zip is already in your configuration${RESET}"
     echo
-    return 1  # Don't call pause_for_user here - just return
+    return 1
   else
     # STANDARDIZED: Successful addition with confirmation
+    # FIXED: Use the normalized, uppercase country code in the CSV
+    echo -e "${CYAN}💡 Writing to CSV: '$country,$normalized_zip'${RESET}"
     echo "$country,$normalized_zip" >> "$CSV_FILE"
-    echo -e "${GREEN}✅ Market Added Successfully: $country/$normalized_zip${RESET}"
+    echo -e "${GREEN}✅ Market Added Successfully: ${BOLD}$country/$normalized_zip${RESET}"
     echo
     
     # Show current market count
@@ -5284,7 +5539,6 @@ remove_market() {
     echo -e "${CYAN}💡 No markets found to remove${RESET}"
     echo -e "${CYAN}💡 Use 'Add Market' to configure markets first${RESET}"
     echo
-    pause_for_user
     return 1
   fi
   
@@ -5317,15 +5571,31 @@ remove_market() {
   echo -e "${CYAN}Enter the country code and ZIP/postal code exactly as shown above:${RESET}"
   echo
   
-  read -p "Country code to remove: " country < /dev/tty
-  if [[ -z "$country" ]]; then
-    echo -e "${YELLOW}⚠️  Remove Market: Operation cancelled${RESET}"
-    return 1
-  fi
+  local country
+  while true; do
+    read -p "Country code to remove: " country < /dev/tty
+    if [[ -z "$country" ]]; then
+      echo -e "${YELLOW}⚠️  Remove Market: Operation cancelled${RESET}"
+      return 1
+    fi
+    
+    # Normalize country to uppercase
+    country=$(echo "$country" | tr '[:lower:]' '[:upper:]')
+    
+    # Validate against known country codes
+    if grep -Fxq "$country" "$VALID_CODES_FILE" 2>/dev/null; then
+      echo -e "${GREEN}✅ Country code '$country' is valid${RESET}"
+      break
+    else
+      echo -e "${RED}❌ Invalid country code: '$country'${RESET}"
+      echo -e "${CYAN}💡 Must be a valid 3-letter ISO code from the table above${RESET}"
+      echo -e "${CYAN}💡 Examples: USA, CAN, GBR, AUS, DEU, FRA${RESET}"
+      echo
+      echo -e "${YELLOW}Please try again or press Enter to cancel:${RESET}"
+    fi
+  done
   
-  # Normalize country to uppercase
-  country=$(echo "$country" | tr '[:lower:]' '[:upper:]')
-  
+  local zip
   read -p "ZIP/Postal code to remove: " zip < /dev/tty
   if [[ -z "$zip" ]]; then
     echo -e "${YELLOW}⚠️  Remove Market: Operation cancelled${RESET}"
@@ -5347,33 +5617,33 @@ remove_market() {
     # STANDARDIZED: Impact analysis and confirmation with table display
     echo -e "${BOLD}${BLUE}Removal Impact Analysis:${RESET}"
     
-    # STANDARDIZED: Impact summary table
-    printf "${BOLD}${YELLOW}%-20s %s${RESET}\n" "Impact Category" "Details"
+    # FIXED: Use echo -e instead of printf for colored text
+    echo -e "${BOLD}${YELLOW}Impact Category          Details${RESET}"
     echo "----------------------------------------"
     
-    # Check if market was cached
+    # Check if market was cached and use echo -e for proper color rendering
     if is_market_cached "$country" "$zip"; then
-      printf "%-20s %s\n" "Cached Status:" "${YELLOW}Market has been cached${RESET}"
-      printf "%-20s %s\n" "Station Impact:" "${CYAN}Stations remain in database${RESET}"
-      printf "%-20s %s\n" "Future Processing:" "${CYAN}Market will be skipped${RESET}"
+      echo -e "Cached Status:           ${YELLOW}Market has been cached${RESET}"
+      echo -e "Station Impact:          ${CYAN}Stations remain in database${RESET}"
+      echo -e "Future Processing:       ${CYAN}Market will be skipped${RESET}"
     else
-      printf "%-20s %s\n" "Cached Status:" "${GREEN}Market not cached yet${RESET}"
-      printf "%-20s %s\n" "Station Impact:" "${CYAN}No impact on database${RESET}"
-      printf "%-20s %s\n" "Future Processing:" "${CYAN}Market removed from queue${RESET}"
+      echo -e "Cached Status:           ${GREEN}Market not cached yet${RESET}"
+      echo -e "Station Impact:          ${CYAN}No impact on database${RESET}"
+      echo -e "Future Processing:       ${CYAN}Market removed from queue${RESET}"
     fi
-    printf "%-20s %s\n" "Configuration:" "${RED}Will be removed${RESET}"
+    echo -e "Configuration:           ${RED}Will be removed${RESET}"
     echo
     
     # STANDARDIZED: Confirmation with clear consequences
     echo -e "${BOLD}Confirm Market Removal:${RESET}"
     
-    # STANDARDIZED: Confirmation details table
-    printf "${BOLD}${YELLOW}%-15s %s${RESET}\n" "Field" "Value"
+    # FIXED: Use echo -e instead of printf for colored confirmation details
+    echo -e "${BOLD}${YELLOW}Field               Value${RESET}"
     echo "--------------------------------"
-    printf "%-15s %s\n" "Market:" "${YELLOW}$country/$zip${RESET}"
-    printf "%-15s %s\n" "Action:" "${RED}Remove from configuration${RESET}"
-    printf "%-15s %s\n" "Impact:" "${CYAN}Configuration only${RESET}"
-    printf "%-15s %s\n" "Cached Data:" "${CYAN}Preserved${RESET}"
+    echo -e "Market:             ${YELLOW}$country/$zip${RESET}"
+    echo -e "Action:             ${RED}Remove from configuration${RESET}"
+    echo -e "Impact:             ${CYAN}Configuration only${RESET}"
+    echo -e "Cached Data:        ${CYAN}Preserved${RESET}"
     echo
     
     if confirm_action "Remove market $country/$zip from configuration?"; then
@@ -5397,12 +5667,12 @@ remove_market() {
         local new_market_count=$(awk 'END {print NR-1}' "$CSV_FILE")
         echo
         
-        # STANDARDIZED: Results summary table
-        printf "${BOLD}${YELLOW}%-20s %s${RESET}\n" "Removal Results" "Status"
+        # FIXED: Use echo -e instead of printf for colored results summary
+        echo -e "${BOLD}${YELLOW}Removal Results Summary${RESET}"
         echo "------------------------------------"
-        printf "%-20s %s\n" "Market Removed:" "${GREEN}$country/$zip${RESET}"
-        printf "%-20s %s\n" "Remaining Markets:" "${CYAN}$new_market_count${RESET}"
-        printf "%-20s %s\n" "Backup Created:" "${GREEN}$(basename "$backup_file")${RESET}"
+        echo -e "Market Removed:          ${GREEN}$country/$zip${RESET}"
+        echo -e "Remaining Markets:       ${CYAN}$new_market_count${RESET}"
+        echo -e "Backup Created:          ${GREEN}$(basename "$backup_file")${RESET}"
         echo
         
         # STANDARDIZED: Next steps guidance
@@ -5418,40 +5688,36 @@ remove_market() {
         fi
         echo
         
-        pause_for_user
         return 0
       else
         echo -e "${RED}❌ Market Removal Failed${RESET}"
         echo -e "${CYAN}💡 Market may not have been found or file may be read-only${RESET}"
         echo
-        pause_for_user
         return 1
       fi
     else
       echo -e "${YELLOW}⚠️  Market removal cancelled${RESET}"
       echo -e "${CYAN}💡 Market configuration unchanged${RESET}"
       echo
-      pause_for_user
       return 1
     fi
   else
     echo -e "${RED}❌ Market Not Found: $country/$zip${RESET}"
     echo
     
-    # STANDARDIZED: Error analysis table
+    # FIXED: Use echo -e instead of printf for colored troubleshooting table
     echo -e "${BOLD}${BLUE}Troubleshooting Analysis:${RESET}"
-    printf "${BOLD}${YELLOW}%-20s %s${RESET}\n" "Issue Category" "Suggestion"
+    echo -e "${BOLD}${YELLOW}Issue Category       Suggestion${RESET}"
     echo "--------------------------------------------"
-    printf "%-20s %s\n" "Market Format:" "${CYAN}Check exact spelling and format${RESET}"
-    printf "%-20s %s\n" "Case Sensitivity:" "${CYAN}Country codes are case-sensitive${RESET}"
-    printf "%-20s %s\n" "ZIP Format:" "${CYAN}Check for spaces or formatting${RESET}"
-    printf "%-20s %s\n" "Market List:" "${CYAN}Verify against table above${RESET}"
+    echo -e "Market Format:       ${CYAN}Check exact spelling and format${RESET}"
+    echo -e "Case Sensitivity:    ${CYAN}Country codes are case-sensitive${RESET}"
+    echo -e "ZIP Format:          ${CYAN}Check for spaces or formatting${RESET}"
+    echo -e "Market List:         ${CYAN}Verify against table above${RESET}"
     echo
     
     echo -e "${CYAN}💡 This market is not in your current configuration${RESET}"
     echo -e "${CYAN}💡 Check the market list above for exact spelling and format${RESET}"
     echo
-    pause_for_user
     return 1
   fi
 }
@@ -5551,8 +5817,6 @@ cleanup_existing_postal_codes() {
 
 force_refresh_market() {
   echo -e "\n${BOLD}Force Refresh Market${RESET}"
-  echo -e "${CYAN}This will process a market even if it's in the base cache manifest.${RESET}"
-  echo -e "${YELLOW}Use this to add unique stations that may not be in base cache.${RESET}"
   echo
   
   # Show available markets with their status
@@ -5560,7 +5824,7 @@ force_refresh_market() {
     echo -e "${BOLD}Configured Markets:${RESET}"
     tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
       local status=""
-      if check_market_in_base_cache "$country" "$zip"; then
+      if is_market_processed "$country" "$zip"; then
         status="${YELLOW}(exact market in base cache)${RESET}"
       elif is_market_cached "$country" "$zip"; then
         status="${GREEN}(processed in user cache)${RESET}"
@@ -5572,13 +5836,54 @@ force_refresh_market() {
     echo
   fi
   
-  read -p "Enter country code to force refresh: " country
-  read -p "Enter ZIP code to force refresh: " zip
-  
-  if [[ -z "$country" || -z "$zip" ]]; then
-    echo -e "${YELLOW}Operation cancelled${RESET}"
-    return 1
-  fi
+  # Country input with validation
+  local country
+  while true; do
+    read -p "Enter country code to force refresh (3-letter, e.g., USA): " country
+    
+    if [[ -z "$country" ]]; then
+      echo -e "${YELLOW}Operation cancelled${RESET}"
+      return 1
+    fi
+    
+    # Normalize to uppercase
+    country=$(echo "$country" | tr '[:lower:]' '[:upper:]')
+    
+    # Validate format (3 letters)
+    if [[ ! "$country" =~ ^[A-Z]{3}$ ]]; then
+      echo -e "${RED}❌ Invalid format. Country code must be exactly 3 letters (e.g., USA, CAN, GBR)${RESET}"
+      continue
+    fi
+    
+    # Validate against known country codes if file exists
+    if [[ -f "$VALID_CODES_FILE" ]] && ! grep -Fxq "$country" "$VALID_CODES_FILE" 2>/dev/null; then
+      echo -e "${YELLOW}⚠️ '$country' is not a recognized country code, but will proceed anyway${RESET}"
+    fi
+    
+    break
+  done
+
+  # ZIP input with validation
+  local zip
+  while true; do
+    read -p "Enter ZIP/postal code to force refresh: " zip
+    
+    if [[ -z "$zip" ]]; then
+      echo -e "${YELLOW}Operation cancelled${RESET}"
+      return 1
+    fi
+    
+    # Remove spaces and normalize to uppercase
+    zip=$(echo "$zip" | tr -d ' ' | tr '[:lower:]' '[:upper:]')
+    
+    # Basic validation (alphanumeric, reasonable length)
+    if [[ ! "$zip" =~ ^[A-Z0-9]{2,10}$ ]]; then
+      echo -e "${RED}❌ Invalid format. ZIP/postal code should be 2-10 alphanumeric characters${RESET}"
+      continue
+    fi
+    
+    break
+  done
   
   # Check if market exists in CSV
   if ! grep -q "^$country,$zip$" "$CSV_FILE" 2>/dev/null; then
@@ -5592,7 +5897,7 @@ force_refresh_market() {
   fi
   
   # Show what will happen
-  if check_market_in_base_cache "$country" "$zip"; then
+  if is_market_processed "$country" "$zip"; then
     echo -e "${CYAN}This exact market is in base cache but will be processed anyway${RESET}"
     echo -e "${CYAN}Any unique stations will be added to your user cache${RESET}"
   else
@@ -5625,7 +5930,7 @@ force_refresh_market() {
   CSV_FILE="$temp_csv"
   
   # Use the consolidated function with force refresh
-  perform_incremental_user_caching true
+   perform_user_caching true
   
   # Restore original CSV and clear force flag
   CSV_FILE="$original_csv"
@@ -5703,6 +6008,7 @@ manage_markets() {
 # ============================================================================
 
 run_user_caching() {
+  local show_pause="${1:-true}"
   clear
   echo -e "${BOLD}${CYAN}=== User Cache Expansion ===${RESET}\n"
   
@@ -5769,7 +6075,13 @@ run_user_caching() {
     return 1
   fi
   
-  perform_incremental_user_caching false
+   perform_user_caching false
+
+  if [[ "$show_pause" == "true" ]]; then
+  echo
+  echo -e "${CYAN}💡 User caching process completed - press any key to continue...${RESET}"
+  pause_for_user
+fi
 }
 
 run_incremental_update() {
@@ -5784,7 +6096,7 @@ run_incremental_update() {
   fi
   
   # The new function handles all the incremental logic
-  perform_incremental_user_caching false
+   perform_user_caching false
 }
 
 run_full_user_refresh() {
@@ -5817,7 +6129,7 @@ run_full_user_refresh() {
     
     echo -e "${CYAN}Starting full refresh...${RESET}"
     # Use force refresh mode to reprocess everything
-    perform_incremental_user_caching true
+     perform_user_caching true
     
     echo -e "${GREEN}✅ Full user cache refresh complete${RESET}"
   else
@@ -5915,7 +6227,7 @@ refresh_specific_market() {
   if [ -f "$CSV_FILE" ] && [ -s "$CSV_FILE" ]; then
     echo -e "${BOLD}Configured Markets:${RESET}"
     tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
-      if check_market_in_base_cache "$country" "$zip"; then
+      if is_market_processed "$country" "$zip"; then
         echo -e "   • $country / $zip ${YELLOW}(exact market in base cache)${RESET}"
       else
         echo -e "   • $country / $zip ${GREEN}(will be processed normally)${RESET}"
@@ -5944,7 +6256,7 @@ refresh_specific_market() {
   fi
   
   # Check if exact market is in base cache and inform user
-  if check_market_in_base_cache "$country" "$zip"; then
+  if is_market_processed "$country" "$zip"; then
     echo -e "${YELLOW}⚠️  Exact market $country/$zip is in base cache${RESET}"
     echo -e "${CYAN}This refresh will process it anyway and add any unique stations${RESET}"
     if ! confirm_action "Continue with refresh anyway?"; then
@@ -5974,7 +6286,7 @@ refresh_specific_market() {
   local original_csv="$CSV_FILE"
   CSV_FILE="$temp_csv"
   
-  perform_incremental_user_caching false
+   perform_user_caching false
   
   # Restore original CSV and clear force flag
   CSV_FILE="$original_csv"
@@ -6163,9 +6475,10 @@ advanced_cache_operations() {
       "1|Refresh Specific Market (ZIP code)"
       "2|Refresh Specific Lineup"
       "3|Reset State Tracking"
-      "4|Rebuild Base Cache from User Cache"
-      "5|View Raw Cache Files"
-      "6|Validate Cache Integrity"
+      "4|Force Rebuild Combined Cache"          # NEW OPTION
+      "5|Rebuild Base Cache from User Cache"
+      "6|View Raw Cache Files"
+      "7|Validate Cache Integrity"
       "q|Back to Cache Management"
     )
     
@@ -6180,9 +6493,10 @@ advanced_cache_operations() {
       1) refresh_specific_market && pause_for_user ;;
       2) refresh_specific_lineup && pause_for_user ;;
       3) reset_state_tracking && pause_for_user ;;
-      4) rebuild_base_from_user && pause_for_user ;;
-      5) view_raw_cache_files && pause_for_user ;;
-      6) validate_cache_integrity && pause_for_user ;;
+      4) force_rebuild_combined_cache && pause_for_user ;;  # NEW CASE
+      5) rebuild_base_from_user && pause_for_user ;;
+      6) view_raw_cache_files && pause_for_user ;;
+      7) validate_cache_integrity && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_menu_choice "Advanced Cache Operations" "$choice" ;;
     esac
@@ -6653,9 +6967,13 @@ while true; do
         g|G) export_settings && pause_for_user ;;
         h|H) export_stations_to_csv && pause_for_user ;;
         i|I) configure_dispatcharr_connection && pause_for_user ;;
-        j|J) developer_information && pause_for_user ;;
-        k|K) show_update_management_menu ;;
-        l|L) show_backup_management_menu ;;
+        j|J) 
+          show_menu_transition "configuring" "Emby integration"
+          configure_emby_connection && pause_for_user 
+          ;;
+        k|K) developer_information && pause_for_user ;;
+        l|L) show_update_management_menu ;;
+        m|M) show_backup_management_menu ;;
         q|Q|"") break ;; 
       *) show_invalid_menu_choice "Settings" "$choice" ;;
     esac
@@ -6665,167 +6983,6 @@ while true; do
 # ============================================================================
 # DEVELOPER INFORMATION FUNCTIONS
 # ============================================================================
-
-show_filesystem_layout() {
-  echo -e "\n${BOLD}${BLUE}=== File System Layout ===${RESET}"
-  echo -e "${CYAN}Critical file paths and their purposes:${RESET}"
-  echo
-  
-  echo -e "${BOLD}Core Files (Script Directory):${RESET}"
-  echo "  Script: $(realpath "$0" 2>/dev/null || echo "globalstationsearch.sh")"
-  echo "  Version: $VERSION ($(date '+%Y-%m-%d'))"
-  echo "  Base Cache: $BASE_STATIONS_JSON"
-  echo "  Base Manifest: $BASE_CACHE_MANIFEST"
-  echo "  Documentation: readme.md"
-  echo
-  
-  echo -e "${BOLD}Modular Components: lib/${RESET}"
-  echo "  Core Infrastructure:"
-  echo "    lib/core/utils.sh           - Core utility functions"
-  echo "    lib/core/config.sh          - Configuration management"
-  echo "    lib/core/settings.sh        - Settings framework"
-  echo "    lib/core/channel_parsing.sh - Channel name parsing"
-  echo "    lib/core/cache.sh           - Cache management"
-  echo "    lib/core/auth.sh            - Enhanced authentication"
-  echo "    lib/core/api.sh             - API functions"
-  echo "    lib/core/backup.sh          - Backup infrastructure"
-  echo "  User Interface:"
-  echo "    lib/ui/display.sh           - Display framework"
-  echo "    lib/ui/menus.sh             - Menu system"
-  echo "  Features:"
-  echo "    lib/features/update.sh      - Auto-update system"
-  echo
-  
-  echo -e "${BOLD}Configuration & Data: $DATA_DIR${RESET}"
-  echo "  Configuration:"
-  echo "    $CONFIG_FILE                - All script settings"
-  echo "    data/valid_country_codes.txt - ISO country codes"
-  echo "  User Cache & Markets:"
-  echo "    $CSV_FILE                   - Configured markets"
-  echo "    $USER_STATIONS_JSON         - User's station additions"
-  echo "    $CACHED_MARKETS             - Market processing state"
-  echo "    $CACHED_LINEUPS             - Lineup processing state"
-  echo "    $LINEUP_TO_MARKET           - Lineup mappings"
-  echo "  Generated Content:"
-  echo "    data/exports/               - User-generated exports"
-  echo "  System Data:"
-  echo "    data/logs/                  - Application logs"
-  echo "    data/backups/               - Backup storage"
-  echo
-  
-  echo -e "${BOLD}Runtime Cache: $CACHE_DIR${RESET}"
-  echo "  Combined Database:"
-  echo "    $COMBINED_STATIONS_JSON     - Runtime merged cache"
-  echo "  Search Results:"
-  echo "    $SEARCH_RESULTS             - Local search results"
-  echo "    $API_SEARCH_RESULTS         - API search results"
-  echo "  Dispatcharr Integration:"
-  echo "    $DISPATCHARR_CACHE          - Channel data cache"
-  echo "    $DISPATCHARR_MATCHES        - Pending station matches"
-  echo "    $DISPATCHARR_TOKENS         - JWT authentication tokens"
-  echo "    $DISPATCHARR_LOGOS          - Logo upload cache"
-  echo "  Working Directories:"
-  echo "    cache/stations/             - Individual station files"
-  echo "    cache/logos/                - Downloaded logos"
-  echo
-  
-  echo -e "${BOLD}File Status Check:${RESET}"
-  local files_to_check=(
-    "$CONFIG_FILE:Configuration"
-    "$CSV_FILE:Markets CSV"
-    "$BASE_STATIONS_JSON:Base Cache"
-    "$BASE_CACHE_MANIFEST:Base Manifest"
-    "$USER_STATIONS_JSON:User Cache"
-    "lib/core/auth.sh:Enhanced Authentication"
-    "lib/features/update.sh:Auto-Update System"
-    "$CACHED_MARKETS:Market State"
-    "$CACHE_STATE_LOG:Cache Log"
-    "$DISPATCHARR_LOG:Dispatcharr Log"
-  )
-  
-  for file_info in "${files_to_check[@]}"; do
-    IFS=':' read -r file_path file_desc <<< "$file_info"
-    if [ -f "$file_path" ]; then
-      local size=$(ls -lh "$file_path" 2>/dev/null | awk '{print $5}')
-      echo -e "  ${GREEN}✅ $file_desc: $size${RESET}"
-    else
-      echo -e "  ${RED}❌ $file_desc: Missing${RESET}"
-    fi
-  done
-  echo
-  
-  echo -e "${BOLD}Architecture Highlights:${RESET}"
-  echo -e "${GREEN}✅ Modular Design${RESET} - 11 specialized modules across core/ui/features"
-  echo -e "${GREEN}✅ Enhanced Authentication${RESET} - Smart token management in auth.sh"
-  echo -e "${GREEN}✅ Organized Data${RESET} - Clear separation of config/cache/exports"
-  echo -e "${GREEN}✅ Two-Tier Cache${RESET} - Base cache + user additions"
-  echo -e "${GREEN}✅ State Tracking${RESET} - Incremental processing with resume capability"
-  echo -e "${GREEN}✅ Backup System${RESET} - Automated data protection"
-  echo
-  
-  echo -e "${BOLD}Recent Enhancements:${RESET}"
-  echo -e "${CYAN}• Smart Token Management${RESET} - Proactive refresh, no workflow interruption"
-  echo -e "${CYAN}• Organized Exports${RESET} - User files in data/exports/"
-  echo -e "${CYAN}• Modular Features${RESET} - Features separated from core infrastructure"
-  echo -e "${CYAN}• Enhanced Logging${RESET} - Comprehensive operation tracking"
-}
-
-show_manifest_status() {
-  echo -e "\n${BOLD}${BLUE}=== Base Cache Manifest Status ===${RESET}"
-  
-  if [ ! -f "$BASE_CACHE_MANIFEST" ]; then
-    echo -e "${RED}❌ Base cache manifest not found${RESET}"
-    echo -e "${CYAN}Expected location: $BASE_CACHE_MANIFEST${RESET}"
-    echo -e "${YELLOW}Use create_base_cache_manifest.sh to generate${RESET}"
-    return 1
-  fi
-  
-  echo -e "${GREEN}✅ Base cache manifest found${RESET}"
-  echo
-  
-  # Show manifest metadata
-  echo -e "${BOLD}Manifest Metadata:${RESET}"
-  local created=$(jq -r '.created // "Unknown"' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-  local version=$(jq -r '.manifest_version // "Unknown"' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-  local base_file=$(jq -r '.base_cache_file // "Unknown"' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-  echo "  Created: $created"
-  echo "  Version: $version"
-  echo "  Base File: $base_file"
-  echo
-  
-  # Show statistics
-  echo -e "${BOLD}Coverage Statistics:${RESET}"
-  if command -v jq >/dev/null 2>&1; then
-    local total_stations=$(jq -r '.stats.total_stations // 0' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-    local total_markets=$(jq -r '.stats.total_markets // 0' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-    local total_lineups=$(jq -r '.stats.total_lineups // 0' "$BASE_CACHE_MANIFEST" 2>/dev/null)
-    local countries=$(jq -r '.stats.countries_covered[]? // empty' "$BASE_CACHE_MANIFEST" 2>/dev/null | tr '\n' ',' | sed 's/,$//')
-    
-    echo "  Total Stations: $total_stations"
-    echo "  Total Markets: $total_markets"
-    echo "  Total Lineups: $total_lineups"
-    echo "  Countries: $countries"
-  else
-    echo "  jq not available for detailed stats"
-  fi
-  echo
-  
-  # Show file info
-  local manifest_size=$(ls -lh "$BASE_CACHE_MANIFEST" 2>/dev/null | awk '{print $5}')
-  echo -e "${BOLD}File Information:${RESET}"
-  echo "  File Size: $manifest_size"
-  echo "  Location: $BASE_CACHE_MANIFEST"
-  echo
-  
-  # Show usage info
-  echo -e "${BOLD}Integration Status:${RESET}"
-  local covered_countries=$(get_base_cache_countries)
-  if [ -n "$covered_countries" ]; then
-    echo -e "  ${GREEN}✅ Active - Markets from these countries may be skipped: $covered_countries${RESET}"
-  else
-    echo -e "  ${YELLOW}⚠️  Manifest exists but no country data found${RESET}"
-  fi
-}
 
 show_cache_state_details() {
   echo -e "\n${BOLD}${BLUE}=== Cache State Tracking Details ===${RESET}"
@@ -6895,80 +7052,6 @@ show_cache_state_details() {
   echo "  get_unprocessed_markets() - Gets markets needing processing"
 }
 
-show_manifest_creation_guide() {
-  echo -e "\n${BOLD}${BLUE}=== Base Cache Manifest Creation Guide ===${RESET}"
-  echo -e "${CYAN}Information for maintaining the base cache manifest system:${RESET}"
-  echo
-  
-  echo -e "${BOLD}Purpose:${RESET}"
-  echo "The base cache manifest enables efficient user caching by preventing"
-  echo "redundant processing of markets already covered by the distributed base cache."
-  echo
-  
-  echo -e "${BOLD}When to Create/Update Manifest:${RESET}"
-  echo -e "${GREEN}✅ Required:${RESET}"
-  echo "  • After building a fresh base cache from scratch"
-  echo "  • When adding new markets/countries to existing base cache"
-  echo "  • Before packaging base cache for distribution"
-  echo "  • When migrating from legacy cache systems"
-  echo
-  echo -e "${YELLOW}🔄 Optional:${RESET}"
-  echo "  • To verify existing manifest accuracy"
-  echo "  • When troubleshooting incorrect skipping behavior"
-  echo
-  echo -e "${RED}❌ Never Needed:${RESET}"
-  echo "  • Regular end-user operations (searching, user caching)"
-  echo "  • Configuration changes (settings, markets, filters)"
-  echo "  • Script updates that don't affect base cache content"
-  echo
-  
-  echo -e "${BOLD}Prerequisites:${RESET}"
-  echo "Files needed in script directory:"
-  echo "  • all_stations_base.json (base station cache)"
-  echo "  • sampled_markets.csv (markets used to build base cache)"
-  echo "  • cache/cached_markets.jsonl (market processing state)"
-  echo "  • cache/cached_lineups.jsonl (lineup processing state)"
-  echo "  • cache/lineup_to_market.json (lineup-to-market mapping)"
-  echo
-  
-  echo -e "${BOLD}Usage (Separate Tool):${RESET}"
-  echo -e "${CYAN}Note: create_base_cache_manifest.sh is NOT bundled with this script${RESET}"
-  echo
-  echo "Basic usage:"
-  echo "  ./create_base_cache_manifest.sh"
-  echo
-  echo "With options:"
-  echo "  ./create_base_cache_manifest.sh -v              # Verbose output"
-  echo "  ./create_base_cache_manifest.sh -f              # Force overwrite"
-  echo "  ./create_base_cache_manifest.sh --dry-run       # Preview only"
-  echo
-  echo "Custom files:"
-  echo "  ./create_base_cache_manifest.sh \\"
-  echo "    --base-cache custom_base.json \\"
-  echo "    --manifest custom_manifest.json \\"
-  echo "    --csv custom_markets.csv"
-  echo
-  
-  echo -e "${BOLD}Output:${RESET}"
-  echo "Creates: all_stations_base_manifest.json"
-  echo "Contains: Complete market/lineup coverage data for skipping logic"
-  echo
-  
-  echo -e "${BOLD}Distribution:${RESET}"
-  echo "When distributing the script, include BOTH files:"
-  echo "  • all_stations_base.json (station data)"
-  echo "  • all_stations_base_manifest.json (coverage manifest)"
-  echo
-  echo "Place both in the same directory as the main script."
-  echo
-  
-  echo -e "${BOLD}Validation:${RESET}"
-  echo "After creating manifest:"
-  echo "  jq empty all_stations_base_manifest.json        # Check validity"
-  echo "  jq '.stats' all_stations_base_manifest.json     # View statistics"
-  echo "  jq '.markets | length' all_stations_base_manifest.json  # Market count"
-}
-
 show_raw_cache_debug() {
   echo -e "\n${BOLD}${BLUE}=== Debug: Raw Cache Files ===${RESET}"
   echo -e "${YELLOW}⚠️  This shows technical file contents for debugging purposes${RESET}"
@@ -7021,7 +7104,7 @@ show_raw_cache_debug() {
   local issues=0
   
   # Check JSON validity of key files
-  for file in "$USER_STATIONS_JSON" "$BASE_CACHE_MANIFEST" "$LINEUP_TO_MARKET"; do
+  for file in "$USER_STATIONS_JSON" "$LINEUP_TO_MARKET"; do
     if [ -f "$file" ]; then
       if jq empty "$file" 2>/dev/null; then
         echo -e "${GREEN}✅ Valid JSON: $(basename "$file")${RESET}"
@@ -7042,14 +7125,11 @@ show_raw_cache_debug() {
 developer_information() {
   while true; do
     # Define developer menu options
-    local dev_options=(
-      "a|File System Layout"
-      "b|Base Cache Manifest Status"
-      "c|Cache State Tracking Details"
-      "d|Base Cache Manifest Creation Guide"
-      "e|Debug: Raw Cache Files"
-      "q|Back to Settings"
-    )
+  local dev_options=(
+    "a|Cache State Tracking Details"
+    "b|Debug: Raw Cache Files"
+    "q|Back to Settings"
+)
     
     # Use standardized menu display with clear warning
     show_menu_header "Developer Information" "Technical details for script developers and maintainers"
@@ -7063,11 +7143,8 @@ developer_information() {
     read -p "Select option: " dev_choice
     
     case $dev_choice in
-      a|A) show_filesystem_layout && pause_for_user ;;
-      b|B) show_manifest_status && pause_for_user ;;
-      c|C) show_cache_state_details && pause_for_user ;;
-      d|D) show_manifest_creation_guide && pause_for_user ;;
-      e|E) show_raw_cache_debug && pause_for_user ;;
+      a|A) show_cache_state_details && pause_for_user ;;
+      b|B) show_raw_cache_debug && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_menu_choice "Developer Information" "$dev_choice" ;;
     esac
@@ -7081,6 +7158,90 @@ developer_information() {
 # Handle command line arguments before main execution
 check_version_flags "$@"
 
+detect_cache_format() {
+    local cache_file="$1"
+    local cache_name="$2"
+    
+    if [[ ! -f "$cache_file" ]] || [[ ! -s "$cache_file" ]]; then
+        echo "missing"
+        return 0
+    fi
+    
+    local new_format_count=$(jq '[.[] | select(.availableIn)] | length' "$cache_file" 2>/dev/null || echo "0")
+    local total_count=$(jq 'length' "$cache_file" 2>/dev/null || echo "0")
+    
+    if [[ "$total_count" -eq 0 ]]; then
+        echo "empty"
+    elif [[ "$new_format_count" -eq "$total_count" ]]; then
+        echo "clean"
+    elif [[ "$new_format_count" -gt 0 ]]; then
+        echo "mixed"
+    else
+        echo "legacy"
+    fi
+}
+
+validate_cache_formats_on_startup() {
+    echo -e "${CYAN}🔍 Validating cache file formats...${RESET}"
+    
+    local base_format=$(detect_cache_format "$BASE_STATIONS_JSON" "base")
+    local user_format=$(detect_cache_format "$USER_STATIONS_JSON" "user")
+    local critical_issues=false
+    
+    echo -e "${CYAN}📊 Cache Format Analysis:${RESET}"
+    echo -e "  Base cache: $base_format"
+    echo -e "  User cache: $user_format"
+    
+    # FORCE FUNCTION: Check for any problematic formats
+    if [[ "$base_format" == "legacy" ]] || [[ "$base_format" == "mixed" ]]; then
+        echo -e "\n${RED}❌ CRITICAL: Base Cache Format Issue Detected${RESET}"
+        echo -e "${RED}❌ Base cache uses legacy format and CANNOT be used${RESET}"
+        echo -e "${CYAN}💡 You need an updated base cache file with clean multi-country format${RESET}"
+        echo -e "${CYAN}💡 Contact script distributor for updated base cache${RESET}"
+        echo -e "${CYAN}💡 Or use Base Cache Distribution Builder to convert existing cache${RESET}"
+        critical_issues=true
+    fi
+    
+    if [[ "$user_format" == "legacy" ]] || [[ "$user_format" == "mixed" ]]; then
+        echo -e "\n${RED}❌ CRITICAL: User Cache Format Issue Detected${RESET}"
+        echo -e "${RED}❌ User cache uses legacy format and CANNOT be used${RESET}"
+        echo -e "${YELLOW}⚠️  Script will delete legacy user cache to prevent data corruption${RESET}"
+        
+        if confirm_action "Delete legacy user cache and allow script to continue?"; then
+            echo -e "${CYAN}🔄 Deleting legacy user cache...${RESET}"
+            rm -f "$USER_STATIONS_JSON"
+            echo '[]' > "$USER_STATIONS_JSON"
+            echo -e "${GREEN}✅ Legacy user cache deleted - you can rebuild with clean format${RESET}"
+            echo -e "${CYAN}💡 Use 'Manage Television Markets' → 'Run User Caching' to rebuild${RESET}"
+        else
+            echo -e "${RED}❌ Cannot continue with legacy user cache${RESET}"
+            critical_issues=true
+        fi
+    fi
+    
+    # FORCE FUNCTION: Prevent script operation if critical issues found
+    if [[ "$critical_issues" == "true" ]]; then
+        echo -e "\n${RED}❌ SCRIPT CANNOT CONTINUE WITH LEGACY FORMAT DATA${RESET}"
+        echo -e "${CYAN}💡 Fix the format issues above and restart the script${RESET}"
+        echo -e "${CYAN}💡 Use Base Cache Distribution Builder for cache conversion${RESET}"
+        echo -e "${CYAN}💡 Or contact script distributor for updated files${RESET}"
+        echo
+        echo -e "${YELLOW}Press any key to exit...${RESET}"
+        read -n 1 -s
+        exit 1
+    fi
+    
+    # Clear combined cache aggressively if any format issues were resolved
+    if [[ "$user_format" == "legacy" ]] || [[ "$user_format" == "mixed" ]]; then
+        cleanup_combined_cache
+        echo -e "${CYAN}💡 Combined cache cleared - will rebuild when needed${RESET}"
+    fi
+    
+    if [[ "$base_format" == "clean" ]] && [[ "$user_format" == "clean" || "$user_format" == "missing" || "$user_format" == "empty" ]]; then
+        echo -e "${GREEN}✅ All cache formats are compatible${RESET}"
+    fi
+}
+
 main_menu() {
   while true; do
     maintain_session_tokens
@@ -7092,12 +7253,13 @@ main_menu() {
     case $choice in
       1) search_local_database ;;
       2) dispatcharr_integration_check ;;
-      3) manage_markets ;;
-      4) run_user_caching && pause_for_user ;;
-      5) run_direct_api_search ;;
-      6) reverse_station_id_lookup_menu ;;
-      7) cache_management_main_menu ;;
-      8) settings_menu ;;
+      3) scan_emby_missing_listingsids ;;
+      4) manage_markets ;;
+      5) run_user_caching "false" && pause_for_user ;;
+      6) run_direct_api_search ;;
+      7) reverse_station_id_lookup_menu ;;
+      8) cache_management_main_menu ;;
+      9) settings_menu ;;
       q|Q|"") echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
       *) show_invalid_menu_choice "Main Menu" "$choice" ;;
     esac
@@ -7120,6 +7282,9 @@ check_dependencies
 
 # Load all remaining modules (they can now safely use config variables)
 load_remaining_modules
+
+# Validate cache formats before proceeding
+validate_cache_formats_on_startup
 
 # Initialize cache optimization system
 init_combined_cache_startup

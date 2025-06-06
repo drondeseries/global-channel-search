@@ -900,29 +900,28 @@ perform_startup_update_check() {
             
             # Perform check with enhanced context
             local check_result=0
-            if check_for_updates false false; then
-                check_result=$?
-                case $check_result in
-                    0) 
-                        echo -e "${GREEN}✅ Repository is up to date${RESET}"
-                        ;;
-                    2)
-                        # Updates available - show enhanced notification
-                        show_enhanced_update_notification
-                        ;;
-                esac
-            else
-                echo -e "${YELLOW}⚠️  Update check failed${RESET}"
-            fi
+            check_for_updates false false
+            check_result=$?
+            
+            case $check_result in
+                0) 
+                    echo -e "${GREEN}✅ Repository is up to date${RESET}"
+                    ;;
+                2)
+                    # Updates available - show enhanced notification
+                    show_enhanced_update_notification
+                    ;;
+                *)
+                    echo -e "${YELLOW}⚠️  Update check failed${RESET}"
+                    ;;
+            esac
             echo  # Add spacing after update check
             ;;
         "daily"|"weekly")
             # For time-based frequencies, check if it's time
             if should_check_for_updates; then
                 # Perform silent background check
-                (
-                    check_for_updates false false >/dev/null 2>&1 &
-                )
+                check_for_updates false false >/dev/null 2>&1 &
             fi
             
             # Show enhanced notification if update was previously found

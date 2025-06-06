@@ -1059,10 +1059,285 @@ check_dispatcharr_connection() {
 }
 
 # ============================================================================
+# EMBY API FUNCTIONS
+# ============================================================================
+
+# Get Emby server information
+emby_get_server_info() {
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_QUICK_TIMEOUT \
+        -H "X-Emby-Token: $EMBY_API_KEY" \
+        "${EMBY_URL}/emby/System/Info" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Emby: Failed to get server information${RESET}" >&2
+        return 1
+    fi
+}
+
+# Test Emby connection and authentication
+emby_test_connection() {
+    echo -e "${CYAN}🔗 Testing Emby connection and authentication...${RESET}" >&2
+    
+    if [[ -z "${EMBY_URL:-}" ]] || [[ "$EMBY_ENABLED" != "true" ]]; then
+        echo -e "${RED}❌ Emby: Not configured or disabled${RESET}" >&2
+        echo -e "${CYAN}💡 Configure in Settings → Emby Integration${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
+        echo -e "${CYAN}💡 Check server URL, username, and password${RESET}" >&2
+        return 1
+    fi
+    
+    local server_info
+    server_info=$(emby_get_server_info)
+    
+    if [[ $? -eq 0 ]]; then
+        local server_name=$(echo "$server_info" | jq -r '.ServerName // "Unknown"')
+        local version=$(echo "$server_info" | jq -r '.Version // "Unknown"')
+        echo -e "${GREEN}✅ Emby: Connected to '$server_name' (v$version)${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Emby: Connection test failed${RESET}" >&2
+        return 1
+    fi
+}
+
+# Get Emby Live TV channels - CORE FUNCTIONALITY FOR YOUR USE CASE
+emby_get_livetv_channels() {
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -H "X-Emby-Token: $EMBY_API_KEY" \
+        "${EMBY_URL}/emby/LiveTv/Manage/Channels?Fields=ManagementId,ListingsId,Name,ChannelNumber,Id&Limit=100" 2>/dev/null)
+    
+    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
+        echo "$response"
+        return 0
+    else
+        echo -e "${RED}❌ Emby: Failed to get Live TV channels${RESET}" >&2
+        return 1
+    fi
+}
+
+# Find Emby channels missing ListingsId and extract Station IDs
+emby_find_channels_missing_listingsid() {
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}🔍 Scanning Emby channels for missing ListingsId...${RESET}" >&2
+    
+    local channels_data
+    channels_data=$(emby_get_livetv_channels)
+    
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Failed to retrieve channel data${RESET}" >&2
+        return 1
+    fi
+    
+    # Extract channels missing ListingsId and add ExtractedId field
+    local missing_channels
+    missing_channels=$(echo "$channels_data" | jq '.Items[] | select(.ListingsId == null or .ListingsId == "") | {Id, Name, ChannelNumber, ListingsId, ManagementId, ExtractedId: (.ManagementId | split("_") | .[-1])}')
+    
+    if [[ -n "$missing_channels" ]]; then
+        echo "$missing_channels"
+        return 0
+    else
+        echo -e "${GREEN}✅ All channels have ListingsId assigned${RESET}" >&2
+        return 0
+    fi
+}
+
+# Reverse lookup station IDs to get lineupId, country, and lineupName - STEP 3 IMPLEMENTATION
+emby_reverse_lookup_station_ids() {
+    local station_ids_array=("$@")
+    
+    echo -e "${CYAN}🔍 Performing reverse lookup for ${#station_ids_array[@]} station IDs...${RESET}" >&2
+    
+    # Check if we have a station database
+    if ! has_stations_database; then
+        echo -e "${RED}❌ No station database available for reverse lookup${RESET}" >&2
+        echo -e "${CYAN}💡 Build database via 'Manage Television Markets' → 'Run User Caching'${RESET}" >&2
+        return 1
+    fi
+    
+    local stations_file
+    stations_file=$(get_effective_stations_file)
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Failed to access station database${RESET}" >&2
+        return 1
+    fi
+    
+    # Create result array for lookup results
+    local lookup_results=()
+    local found_count=0
+    local not_found_count=0
+    
+    for station_id in "${station_ids_array[@]}"; do
+        echo -e "${CYAN}  🔍 Looking up station ID: $station_id${RESET}" >&2
+        
+        # Query the station database for this station ID including lineupName
+        local station_data
+        station_data=$(jq -r --arg id "$station_id" '
+            .[] | select(.stationId == $id) | 
+            {
+                stationId: .stationId,
+                name: .name,
+                country: (.availableIn[0] // "Unknown"),
+                lineupId: (.lineupTracing[0].lineupId // "Unknown"),
+                lineupName: (.lineupTracing[0].lineupName // "Unknown")
+            }' "$stations_file" 2>/dev/null)
+        
+        if [[ -n "$station_data" && "$station_data" != "null" ]]; then
+            # Station found, extract the data
+            local station_name=$(echo "$station_data" | jq -r '.name // "Unknown"')
+            local country=$(echo "$station_data" | jq -r '.country // "Unknown"') 
+            local lineup_id=$(echo "$station_data" | jq -r '.lineupId // "Unknown"')
+            local lineup_name=$(echo "$station_data" | jq -r '.lineupName // "Unknown"')
+            
+            echo -e "${GREEN}  ✅ Found: $station_name (LineupId: $lineup_id, Country: $country, Lineup: $lineup_name)${RESET}" >&2
+            
+            # Store result as JSON string for easy parsing later
+            local result_json=$(jq -n \
+                --arg sid "$station_id" \
+                --arg name "$station_name" \
+                --arg country "$country" \
+                --arg lineup "$lineup_id" \
+                --arg lineupname "$lineup_name" \
+                '{stationId: $sid, name: $name, country: $country, lineupId: $lineup, lineupName: $lineupname}')
+            
+            lookup_results+=("$result_json")
+            ((found_count++))
+        else
+            echo -e "${RED}  ❌ Station ID $station_id not found in database${RESET}" >&2
+            ((not_found_count++))
+        fi
+    done
+    
+    echo -e "${CYAN}📊 Reverse lookup complete: ${GREEN}$found_count found${RESET}, ${RED}$not_found_count not found${RESET}" >&2
+    
+    # Output results as JSON array for caller to process
+    if [[ ${#lookup_results[@]} -gt 0 ]]; then
+        printf '%s\n' "${lookup_results[@]}" | jq -s '.'
+        return 0
+    else
+        echo "[]"
+        return 1
+    fi
+}
+
+# Update Emby channel with ListingsId, Type, Country, and Name - STEP 4 IMPLEMENTATION  
+emby_update_channel_complete() {
+    local channel_id="$1"
+    local listings_id="$2"
+    local country="$3"
+    local lineup_name="$4"
+    local type="${5:-embygn}"  # Default to embygn as specified
+    
+    if [[ -z "$channel_id" || -z "$listings_id" || -z "$country" || -z "$lineup_name" ]]; then
+        echo -e "${RED}❌ emby_update_channel_complete: channel_id, listings_id, country, and lineup_name required${RESET}" >&2
+        return 1
+    fi
+    
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
+        return 1
+    fi
+    
+    echo -e "${CYAN}🔄 Updating channel $channel_id with ListingsId: $listings_id, Country: $country, Name: $lineup_name, Type: $type${RESET}" >&2
+    
+    # Prepare the JSON payload for the update including Name field
+    local update_payload
+    update_payload=$(jq -n \
+        --arg listings_id "$listings_id" \
+        --arg type "$type" \
+        --arg country "$country" \
+        --arg name "$lineup_name" \
+        '{ListingsId: $listings_id, Type: $type, Country: $country, Name: $name}')
+    
+    # NOTE: You mentioned the endpoint needs to be confirmed - using a placeholder
+    # Replace "/emby/LiveTv/[ENDPOINT_TO_CONFIRM]" with the correct endpoint
+    local response
+    response=$(curl -s \
+        --connect-timeout $API_STANDARD_TIMEOUT \
+        -X POST \
+        -H "Content-Type: application/json" \
+        -H "X-Emby-Token: $EMBY_API_KEY" \
+        -d "$update_payload" \
+        "${EMBY_URL}/emby/LiveTv/Manage/Channels/$channel_id" 2>/dev/null)
+    
+    local curl_exit_code=$?
+    
+    if [[ $curl_exit_code -eq 0 ]]; then
+        echo -e "${GREEN}✅ Successfully updated channel $channel_id${RESET}" >&2
+        echo -e "${CYAN}   📍 ListingsId: $listings_id${RESET}" >&2
+        echo -e "${CYAN}   🌍 Country: $country${RESET}" >&2
+        echo -e "${CYAN}   📺 Name: $lineup_name${RESET}" >&2
+        echo -e "${CYAN}   🏷️  Type: $type${RESET}" >&2
+        return 0
+    else
+        echo -e "${RED}❌ Failed to update channel $channel_id (curl exit: $curl_exit_code)${RESET}" >&2
+        return 1
+    fi
+}
+
+# Legacy function for backwards compatibility
+emby_update_channel_listingsid() {
+    local channel_id="$1"
+    local listings_id="$2"
+    
+    # Call the complete update function with minimal parameters
+    emby_update_channel_complete "$channel_id" "$listings_id" "Unknown" "Unknown" "embygn"
+}
+
+# ============================================================================
+# EMBY API HEALTH CHECK INTEGRATION
+# ============================================================================
+
+# Get Emby API status for health monitoring
+get_emby_api_status() {
+    if [[ "$EMBY_ENABLED" != "true" ]]; then
+        echo "disabled"
+        return 1
+    fi
+    
+    if [[ -z "${EMBY_URL:-}" ]]; then
+        echo "not_configured"
+        return 1
+    fi
+    
+    if emby_test_connection >/dev/null 2>&1; then
+        echo "healthy"
+        return 0
+    else
+        echo "unhealthy"
+        return 1
+    fi
+}
+
+# ============================================================================
 # API STATUS AND MONITORING
 # ============================================================================
 
-# Get comprehensive API status for both services
+# Get comprehensive API status for all services
 get_api_status() {
     echo -e "${BOLD}${CYAN}=== API Services Status ===${RESET}"
     echo
@@ -1115,12 +1390,41 @@ get_api_status() {
         echo -e "  Status: ${YELLOW}⚠️ Not Configured or Disabled${RESET}"
         echo -e "  ${CYAN}💡 Configure in Settings → Dispatcharr Integration${RESET}"
     fi
+    echo
+    
+    # Emby Status
+    echo -e "${BOLD}Emby:${RESET}"
+    if [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]]; then
+        if emby_test_connection >/dev/null 2>&1; then
+            echo -e "  Status: ${GREEN}✅ Connected & Authenticated${RESET}"
+            echo -e "  URL: ${CYAN}$EMBY_URL${RESET}"
+            echo -e "  Auth: $(get_emby_auth_status)"
+            
+            # Get server info
+            local server_info
+            server_info=$(emby_get_server_info 2>/dev/null)
+            if [[ $? -eq 0 ]]; then
+                local server_name=$(echo "$server_info" | jq -r '.ServerName // "Unknown"' 2>/dev/null)
+                local version=$(echo "$server_info" | jq -r '.Version // "Unknown"' 2>/dev/null)
+                echo -e "  Server: ${CYAN}$server_name${RESET}"
+                echo -e "  Version: ${CYAN}$version${RESET}"
+            fi
+        else
+            echo -e "  Status: ${RED}❌ Connection or Authentication Failed${RESET}"
+            echo -e "  URL: ${YELLOW}$EMBY_URL${RESET}"
+            echo -e "  Auth: $(get_emby_auth_status)"
+        fi
+    else
+        echo -e "  Status: ${YELLOW}⚠️ Not Configured or Disabled${RESET}"
+        echo -e "  ${CYAN}💡 Configure in Settings → Emby Integration${RESET}"
+    fi
 }
 
-# Quick API health check (returns 0 if both services are working)
+# Quick API health check (returns 0 if all services are working)
 check_all_api_health() {
     local channels_ok=false
     local dispatcharr_ok=false
+    local emby_ok=false
     
     # Check Channels DVR if configured
     if [[ -n "${CHANNELS_URL:-}" ]]; then
@@ -1140,7 +1444,16 @@ check_all_api_health() {
         dispatcharr_ok=true  # Not enabled = not required
     fi
     
-    if $channels_ok && $dispatcharr_ok; then
+    # Check Emby if enabled
+    if [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]]; then
+        if emby_test_connection >/dev/null 2>&1; then
+            emby_ok=true
+        fi
+    else
+        emby_ok=true  # Not enabled = not required
+    fi
+    
+    if $channels_ok && $dispatcharr_ok && $emby_ok; then
         return 0
     else
         return 1

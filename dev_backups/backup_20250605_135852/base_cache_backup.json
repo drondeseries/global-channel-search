@@ -1,0 +1,89 @@
+[
+  {
+    "stationId": "67890",
+    "name": "Multi Country Station",
+    "callSign": "MULTI",
+    "source": "base",
+    "availableIn": [
+      "USA",
+      "CAN"
+    ],
+    "multiCountry": true,
+    "lineupTracing": [
+      {
+        "country": "USA",
+        "lineup": "MULTI-LINEUP-USA",
+        "lineupName": "Multi USA Lineup",
+        "provider": "Test Provider",
+        "discoveredOrder": 1,
+        "isPrimary": true
+      },
+      {
+        "country": "CAN",
+        "lineup": "MULTI-LINEUP-CAN",
+        "lineupName": "Multi Canada Lineup",
+        "provider": "Test Provider",
+        "discoveredOrder": 2,
+        "isPrimary": false
+      }
+    ],
+    "videoQuality": {
+      "videoType": "UHDTV"
+    },
+    "network": "Multi Network"
+  },
+  {
+    "stationId": "11111",
+    "name": "Sports Channel",
+    "callSign": "SPORT",
+    "source": "base",
+    "availableIn": [
+      "USA"
+    ],
+    "multiCountry": false,
+    "lineupTracing": [
+      {
+        "country": "USA",
+        "lineup": "SPORT-LINEUP",
+        "lineupName": "Sports Lineup",
+        "provider": "Sports Provider",
+        "discoveredOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "videoQuality": {
+      "videoType": "HDTV"
+    },
+    "network": "Sports Network",
+    "genre": [
+      "Sports"
+    ]
+  },
+  {
+    "stationId": "12345",
+    "name": "Test Station USA",
+    "callSign": "TEST",
+    "source": "base",
+    "availableIn": [
+      "USA"
+    ],
+    "multiCountry": false,
+    "lineupTracing": [
+      {
+        "country": "USA",
+        "lineup": "TEST-LINEUP-USA",
+        "lineupName": "Test USA Lineup",
+        "provider": "Test Provider",
+        "discoveredOrder": 1,
+        "isPrimary": true
+      }
+    ],
+    "videoQuality": {
+      "videoType": "HDTV"
+    },
+    "network": "Test Network",
+    "preferredImage": {
+      "uri": "https://example.com/logo.png"
+    }
+  }
+]

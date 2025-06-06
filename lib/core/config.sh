@@ -23,6 +23,14 @@ setup_config() {
       DISPATCHARR_PASSWORD=${DISPATCHARR_PASSWORD:-""}
       DISPATCHARR_ENABLED=${DISPATCHARR_ENABLED:-false}
       DISPATCHARR_REFRESH_INTERVAL=${DISPATCHARR_REFRESH_INTERVAL:-25}
+
+      # Set defaults for Emby settings
+      EMBY_URL=${EMBY_URL:-"http://localhost:8096"}
+      EMBY_USERNAME=${EMBY_USERNAME:-""}
+      EMBY_PASSWORD=${EMBY_PASSWORD:-""}
+      EMBY_ENABLED=${EMBY_ENABLED:-false}
+      EMBY_API_KEY=${EMBY_API_KEY:-""}
+      EMBY_USER_ID=${EMBY_USER_ID:-""}
       
       # Resume state - ONLY channel number now
       LAST_PROCESSED_CHANNEL_NUMBER=${LAST_PROCESSED_CHANNEL_NUMBER:-""}
@@ -196,6 +204,182 @@ configure_channels_server() {
         ;;
     esac
   fi
+}
+
+configure_emby_server() {
+  echo -e "${BOLD}${CYAN}=== Emby Server Configuration ===${RESET}"
+  echo -e "${CYAN}Configure your Emby server connection for TV channel management${RESET}"
+  echo
+  
+  echo -e "${BOLD}Step 1: Server Address${RESET}"
+  echo -e "${CYAN}💡 Enter your Emby server IP address or hostname${RESET}"
+  echo
+  
+  while true; do
+    read -p "Enter Emby server IP/hostname [default: localhost]: " ip < /dev/tty
+    ip=${ip:-localhost}
+    
+    # Basic validation - allow localhost, domain names, and IP addresses
+    if [[ "$ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]] || [[ "$ip" == "localhost" ]] || [[ "$ip" =~ ^[a-zA-Z0-9.-]+$ ]]; then
+      echo -e "${GREEN}✅ Server address accepted: $ip${RESET}"
+      break
+    else
+      echo -e "${RED}❌ Invalid server address format${RESET}"
+      echo -e "${CYAN}💡 Use format like: 192.168.1.100, localhost, or emby.example.com${RESET}"
+      echo
+    fi
+  done
+  
+  echo
+  
+  while true; do
+    echo -e "${BOLD}Step 2: Server Port${RESET}"
+    read -p "Enter Emby server port [default: 8096]: " port < /dev/tty
+    port=${port:-8096}
+    
+    # Validate port number
+    if [[ "$port" =~ ^[0-9]+$ ]] && (( port >= 1 && port <= 65535 )); then
+      echo -e "${GREEN}✅ Port accepted: $port${RESET}"
+      break
+    else
+      echo -e "${RED}❌ Invalid port number${RESET}"
+      echo -e "${CYAN}💡 Port must be a number between 1 and 65535${RESET}"
+      echo
+    fi
+  done
+  
+  EMBY_URL="http://$ip:$port"
+  
+  echo
+  echo -e "${BOLD}Step 3: Authentication${RESET}"
+  echo -e "${CYAN}Enter your Emby server credentials${RESET}"
+  echo
+  
+  while true; do
+    read -p "Enter Emby username: " username < /dev/tty
+    if [[ -n "$username" ]]; then
+      EMBY_USERNAME="$username"
+      echo -e "${GREEN}✅ Username accepted${RESET}"
+      break
+    else
+      echo -e "${RED}❌ Username cannot be empty${RESET}"
+    fi
+  done
+  
+  while true; do
+    read -s -p "Enter Emby password: " password < /dev/tty
+    echo
+    if [[ -n "$password" ]]; then
+      EMBY_PASSWORD="$password"
+      echo -e "${GREEN}✅ Password accepted${RESET}"
+      break
+    else
+      echo -e "${RED}❌ Password cannot be empty${RESET}"
+    fi
+  done
+  
+  echo
+  echo -e "${BOLD}Step 4: Connection Test${RESET}"
+  echo -e "${CYAN}🔗 Testing connection to $EMBY_URL...${RESET}"
+  
+  # Test basic connectivity first
+  if curl -s --connect-timeout 5 "$EMBY_URL/emby/System/Info/Public" >/dev/null 2>&1; then
+    echo -e "${GREEN}✅ Server connection successful!${RESET}"
+    
+    # Test authentication
+    echo -e "${CYAN}🔐 Testing authentication...${RESET}"
+    if test_emby_authentication; then
+      echo -e "${GREEN}✅ Authentication successful!${RESET}"
+      echo -e "${CYAN}💡 Emby server is configured and ready for use${RESET}"
+      
+      # Save all settings
+      save_setting "EMBY_URL" "$EMBY_URL"
+      save_setting "EMBY_USERNAME" "$EMBY_USERNAME"
+      save_setting "EMBY_PASSWORD" "$EMBY_PASSWORD"
+      save_setting "EMBY_ENABLED" "true"
+      return 0
+    else
+      echo -e "${RED}❌ Authentication failed${RESET}"
+      echo -e "${CYAN}💡 Please check your username and password${RESET}"
+    fi
+  else
+    echo -e "${RED}❌ Connection test failed${RESET}"
+    echo -e "${CYAN}💡 This could be normal if the server is currently offline${RESET}"
+    echo -e "${CYAN}💡 Common issues: Server not running, wrong IP/port, firewall blocking${RESET}"
+  fi
+  
+  echo
+  echo -e "${BOLD}${YELLOW}Connection/Authentication Failed - What would you like to do?${RESET}"
+  echo -e "${GREEN}1)${RESET} Save settings anyway (connection will be tested when needed)"
+  echo -e "${GREEN}2)${RESET} Try different server/credentials"
+  echo -e "${GREEN}3)${RESET} Cancel configuration"
+  echo
+  
+  read -p "Select option: " choice < /dev/tty
+  
+  case $choice in
+    1)
+      echo -e "${YELLOW}⚠️  Settings saved with failed connection test${RESET}"
+      echo -e "${CYAN}💡 Connection will be tested again when features are used${RESET}"
+      
+      # Save the configured settings
+      save_setting "EMBY_URL" "$EMBY_URL"
+      save_setting "EMBY_USERNAME" "$EMBY_USERNAME"
+      save_setting "EMBY_PASSWORD" "$EMBY_PASSWORD"
+      save_setting "EMBY_ENABLED" "true"
+      return 0
+      ;;
+    2)
+      echo -e "${CYAN}🔄 Restarting Emby server configuration...${RESET}"
+      echo
+      configure_emby_server  # Recursive call to restart
+      return $?
+      ;;
+    3|"")
+      echo -e "${YELLOW}⚠️  Emby server configuration cancelled${RESET}"
+      EMBY_URL="http://localhost:8096"
+      EMBY_USERNAME=""
+      EMBY_PASSWORD=""
+      save_setting "EMBY_ENABLED" "false"
+      return 1
+      ;;
+    *)
+      echo -e "${RED}❌ Invalid option${RESET}"
+      sleep 1
+      # Default to cancelling
+      EMBY_URL="http://localhost:8096"
+      EMBY_USERNAME=""
+      EMBY_PASSWORD=""
+      save_setting "EMBY_ENABLED" "false"
+      return 1
+      ;;
+  esac
+}
+
+# Test Emby authentication (helper function)
+test_emby_authentication() {
+  local auth_response
+  auth_response=$(curl -s \
+    --connect-timeout 10 \
+    --max-time 20 \
+    -H "Content-Type: application/json" \
+    -H "X-Emby-Authorization: MediaBrowser Client=\"GlobalStationSearch\", Device=\"Script\", DeviceId=\"gss-$(hostname)\", Version=\"1.0\"" \
+    -d "{\"Username\":\"$EMBY_USERNAME\",\"Pw\":\"$EMBY_PASSWORD\"}" \
+    "${EMBY_URL}/emby/Users/AuthenticateByName" 2>/dev/null)
+  
+  if echo "$auth_response" | jq empty 2>/dev/null; then
+    local access_token=$(echo "$auth_response" | jq -r '.AccessToken // empty' 2>/dev/null)
+    local user_id=$(echo "$auth_response" | jq -r '.User.Id // empty' 2>/dev/null)
+    
+    if [[ -n "$access_token" && -n "$user_id" ]]; then
+      # Store the API key and user ID for future use
+      EMBY_API_KEY="$access_token"
+      EMBY_USER_ID="$user_id"
+      return 0
+    fi
+  fi
+  
+  return 1
 }
 
 # ============================================================================

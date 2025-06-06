@@ -1,0 +1,12 @@
+Developer Base Cache Builder Backup
+Created: Thu Jun  5 01:18:30 PM EDT 2025
+Operation: menu
+Script Version: 1.0.0
+
+Files backed up:
+total 20
+drwxr-sr-x 2 root root 4096 Jun  5 13:18 .
+drwxr-sr-x 3 root root 4096 Jun  5 13:18 ..
+-rw-r--r-- 1 root root    0 Jun  5 13:18 backup_info.txt
+-rwxr-xr-x 1 root root 1879 Jun  5 13:18 base_cache_backup.json
+-rwxr-xr-x 1 root root 6706 Jun  5 13:18 base_markets_backup.csv

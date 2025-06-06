@@ -1112,28 +1112,60 @@ emby_test_connection() {
         echo -e "${RED}❌ Emby: Connection test failed${RESET}" >&2
         return 1
     fi
-}
+} 
 
-# Get Emby Live TV channels - CORE FUNCTIONALITY FOR YOUR USE CASE
+# Get Emby Live TV channels
 emby_get_livetv_channels() {
     if ! ensure_emby_auth; then
         echo -e "${RED}❌ Emby: Authentication failed${RESET}" >&2
         return 1
     fi
     
+    echo -e "${CYAN}📡 Fetching ALL Emby Live TV channels...${RESET}" >&2
+    
     local response
     response=$(curl -s \
         --connect-timeout $API_STANDARD_TIMEOUT \
+        --max-time $((API_STANDARD_TIMEOUT * 3)) \
         -H "X-Emby-Token: $EMBY_API_KEY" \
-        "${EMBY_URL}/emby/LiveTv/Manage/Channels?Fields=ManagementId,ListingsId,Name,ChannelNumber,Id&Limit=100" 2>/dev/null)
+        "${EMBY_URL}/emby/LiveTv/Manage/Channels?Fields=ManagementId,ListingsId,Name,ChannelNumber,Id" 2>/dev/null)
     
-    if [[ $? -eq 0 ]] && echo "$response" | jq empty 2>/dev/null; then
-        echo "$response"
-        return 0
-    else
-        echo -e "${RED}❌ Emby: Failed to get Live TV channels${RESET}" >&2
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Emby: Network error fetching channels${RESET}" >&2
         return 1
     fi
+    
+    # Check if response is valid JSON
+    if ! echo "$response" | jq empty 2>/dev/null; then
+        echo -e "${RED}❌ Emby: Invalid JSON response${RESET}" >&2
+        echo -e "${CYAN}Response preview: ${response:0:200}...${RESET}" >&2
+        return 1
+    fi
+    
+    # Handle both array and object responses
+    local channels
+    if echo "$response" | jq -e 'type == "array"' >/dev/null 2>&1; then
+        # Direct array
+        channels="$response"
+    elif echo "$response" | jq -e '.Items' >/dev/null 2>&1; then
+        # Object with Items property
+        channels=$(echo "$response" | jq '.Items')
+    else
+        echo -e "${RED}❌ Emby: Unexpected response structure${RESET}" >&2
+        echo -e "${CYAN}Response keys: $(echo "$response" | jq 'keys' 2>/dev/null)${RESET}" >&2
+        return 1
+    fi
+    
+    local channel_count=$(echo "$channels" | jq 'length' 2>/dev/null || echo "0")
+    echo -e "${GREEN}✅ Retrieved $channel_count Live TV channels${RESET}" >&2
+    
+    if [[ "$channel_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠️  No channels found${RESET}" >&2
+        return 1
+    fi
+    
+    echo "$channels"
+    return 0
 }
 
 # Find Emby channels missing ListingsId and extract Station IDs
@@ -1148,25 +1180,70 @@ emby_find_channels_missing_listingsid() {
     local channels_data
     channels_data=$(emby_get_livetv_channels)
     
-    if [[ $? -ne 0 ]]; then
-        echo -e "${RED}❌ Failed to retrieve channel data${RESET}" >&2
+    if [[ $? -ne 0 ]] || [[ -z "$channels_data" ]]; then
+        echo -e "${RED}❌ Failed to get channel data${RESET}" >&2
         return 1
     fi
     
-    # Extract channels missing ListingsId and add ExtractedId field
-    local missing_channels
-    missing_channels=$(echo "$channels_data" | jq '.Items[] | select(.ListingsId == null or .ListingsId == "") | {Id, Name, ChannelNumber, ListingsId, ManagementId, ExtractedId: (.ManagementId | split("_") | .[-1])}')
+    echo -e "${CYAN}🔍 Processing channels to find missing ListingsId...${RESET}" >&2
     
-    if [[ -n "$missing_channels" ]]; then
-        echo "$missing_channels"
+    # Filter channels missing ListingsId and extract station IDs
+    local missing_channels_with_station_ids
+    missing_channels_with_station_ids=$(echo "$channels_data" | jq -c '
+        [.[] | 
+         select(.ListingsId == null or .ListingsId == "" or .ListingsId == "null") |
+         . + {
+           "ExtractedId": (if .ManagementId then (.ManagementId | split("_") | last) else null end)
+         } |
+         select(.ExtractedId != null and (.ExtractedId | test("^[0-9]+$")) and (.ExtractedId | length >= 4) and (.ExtractedId | length <= 10))
+        ]
+    ')
+    
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ Failed to process channel data${RESET}" >&2
+        return 1
+    fi
+    
+    local missing_count=$(echo "$missing_channels_with_station_ids" | jq 'length' 2>/dev/null || echo "0")
+    
+    echo -e "${GREEN}✅ Found $missing_count channels missing ListingsId with extractable station IDs${RESET}" >&2
+    
+    if [[ "$missing_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠️  No channels need ListingsId updates${RESET}" >&2
+        echo "[]"
+        return 0
+    fi
+    
+    # Show summary of what we found
+    echo -e "${CYAN}📊 Sample missing channels:${RESET}" >&2
+    echo "$missing_channels_with_station_ids" | jq -r '.[:5][] | "   \(.ChannelNumber // "No#") - \(.Name // "No Name") (Station: \(.ExtractedId))"' >&2
+    
+    # Return the processed channels as individual JSON objects (same format as before)
+    echo "$missing_channels_with_station_ids" | jq -c '.[]'
+    return 0
+}
+
+# Extract station ID from Emby ManagementId
+extract_station_id_from_management_id() {
+    local management_id="$1"
+    
+    if [[ -z "$management_id" || "$management_id" == "null" ]]; then
+        return 1
+    fi
+    
+    # Extract everything after the last underscore
+    local station_id="${management_id##*_}"
+    
+    # Validate it's a reasonable station ID (numeric, reasonable length)
+    if [[ "$station_id" =~ ^[0-9]+$ ]] && [[ ${#station_id} -ge 4 ]] && [[ ${#station_id} -le 10 ]]; then
+        echo "$station_id"
         return 0
     else
-        echo -e "${GREEN}✅ All channels have ListingsId assigned${RESET}" >&2
-        return 0
+        return 1
     fi
 }
 
-# Reverse lookup station IDs to get lineupId, country, and lineupName - STEP 3 IMPLEMENTATION
+# Reverse lookup station IDs to get lineupId, country, and lineupName
 emby_reverse_lookup_station_ids() {
     local station_ids_array=("$@")
     
@@ -1244,7 +1321,7 @@ emby_reverse_lookup_station_ids() {
     fi
 }
 
-# Update Emby channel with ListingsId, Type, Country, and Name - STEP 4 IMPLEMENTATION  
+# Update Emby channel with ListingsId, Type, Country, and Name
 emby_update_channel_complete() {
     local channel_id="$1"
     local listings_id="$2"
@@ -1299,13 +1376,81 @@ emby_update_channel_complete() {
     fi
 }
 
-# Legacy function for backwards compatibility
-emby_update_channel_listingsid() {
-    local channel_id="$1"
-    local listings_id="$2"
+test_emby_channel_mapping_endpoints() {
+    echo -e "\n${BOLD}${CYAN}=== Testing Emby Channel Mapping Endpoints ===${RESET}"
     
-    # Call the complete update function with minimal parameters
-    emby_update_channel_complete "$channel_id" "$listings_id" "Unknown" "Unknown" "embygn"
+    if ! ensure_emby_auth; then
+        echo -e "${RED}❌ Authentication required${RESET}"
+        return 1
+    fi
+    
+    local test_endpoints=(
+        "/emby/LiveTv/ChannelMappingOptions"
+        "/emby/LiveTv/GuideInfo" 
+        "/emby/LiveTv/SetChannelMapping"
+        "/emby/LiveTv/TunerChannels"
+    )
+    
+    for endpoint in "${test_endpoints[@]}"; do
+        echo -e "${CYAN}   Testing: $endpoint${RESET}"
+        
+        local response
+        response=$(curl -s \
+            --connect-timeout 10 \
+            -w "HTTPSTATUS:%{http_code}" \
+            -H "X-Emby-Token: $EMBY_API_KEY" \
+            "${EMBY_URL}${endpoint}" 2>/dev/null)
+        
+        local status=$(echo "$response" | grep -o "HTTPSTATUS:[0-9]*" | cut -d: -f2)
+        echo -e "      📊 Status: $status"
+        
+        if [[ "$status" == "200" ]]; then
+            echo -e "${GREEN}      ✅ Endpoint exists${RESET}"
+        elif [[ "$status" == "404" ]]; then
+            echo -e "${RED}      ❌ Not found${RESET}"
+        else
+            echo -e "${YELLOW}      ⚠️  Status: $status${RESET}"
+        fi
+    done
+}
+
+generate_emby_analysis_report() {
+    local channels_data="$1"
+    local missing_channels="$2"
+    
+    echo -e "\n${BOLD}${CYAN}=== EMBY CHANNEL ANALYSIS REPORT ===${RESET}"
+    
+    # Count channels
+    local total_count missing_count complete_count
+    total_count=$(echo "$channels_data" | jq 'length' 2>/dev/null || echo "0")
+    missing_count=$(echo "$missing_channels" | jq -s 'length' 2>/dev/null || echo "0")
+    complete_count=$((total_count - missing_count))
+    
+    echo -e "\n${BOLD}📊 Channel Statistics:${RESET}"
+    echo -e "• Total channels found: ${CYAN}$total_count${RESET}"
+    echo -e "• Channels with ListingsId: ${GREEN}$complete_count${RESET}"
+    echo -e "• Channels missing ListingsId: ${YELLOW}$missing_count${RESET}"
+    
+    if [[ "$total_count" -gt 0 ]]; then
+        echo -e "• Coverage percentage: ${CYAN}$(( complete_count * 100 / total_count ))%${RESET}"
+    fi
+    
+    echo -e "\n${BOLD}🔍 Technical Status:${RESET}"
+    echo -e "• Emby API connectivity: ${GREEN}✅ Working${RESET}"
+    echo -e "• Channel data retrieval: ${GREEN}✅ Working${RESET}"
+    echo -e "• Station ID extraction: ${GREEN}✅ Working${RESET}"
+    echo -e "• Direct API updates: ${RED}❌ Not supported${RESET}"
+    
+    if [[ "$missing_count" -gt 0 ]]; then
+        echo -e "\n${BOLD}📋 Sample Channels Needing ListingsId:${RESET}"
+        echo "$missing_channels" | jq -r 'select(type == "object") | "• \(.ChannelNumber // "No#") - \(.Name // "No Name") (Station: \(.ExtractedId))"' | head -10
+    fi
+    
+    echo -e "\n${BOLD}💡 Recommendations:${RESET}"
+    echo -e "• Station IDs are successfully extracted from ManagementId"
+    echo -e "• Use these station IDs with your existing station matching workflow"
+    echo -e "• Emby channel mapping should be done through the web interface"
+    echo -e "• Focus on providing station matching data rather than direct updates"
 }
 
 # ============================================================================

@@ -1625,9 +1625,9 @@ configure_emby_connection() {
 
 # Main Emby workflow function - COMPLETE IMPLEMENTATION with Enhanced User Guidance
 scan_emby_missing_listingsids() {
-    echo -e "\n${BOLD}Emby Channel ListingsId Auto-Assignment${RESET}"
-    echo -e "${BLUE}📍 Complete workflow: Scan → Lookup → Update${RESET}"
-    echo -e "${CYAN}This will automatically assign ListingsId to Emby channels missing them.${RESET}"
+    echo -e "\n${BOLD}Emby Channel ListingsId Analysis${RESET}"
+    echo -e "${BLUE}📍 Enhanced workflow: Scan → Extract Station IDs → Report${RESET}"
+    echo -e "${CYAN}This will analyze your Emby channels and extract station IDs for matching.${RESET}"
     echo
     
     # Step 1: Test connection
@@ -1635,273 +1635,95 @@ scan_emby_missing_listingsids() {
     if ! emby_test_connection >/dev/null 2>&1; then
         echo -e "${RED}❌ Emby Integration: Connection Failed${RESET}"
         echo -e "${CYAN}💡 Configure connection in Settings → Emby Integration${RESET}"
-        echo -e "${CYAN}💡 Verify server is running and credentials are correct${RESET}"
         pause_for_user
         return 1
     fi
     echo -e "${GREEN}✅ Successfully connected to Emby server${RESET}"
     echo
     
-    # Step 2: Find channels missing ListingsId
-    echo -e "${CYAN}🔍 Scanning Emby Live TV channels for missing ListingsId...${RESET}"
-    local missing_channels
-    missing_channels=$(emby_find_channels_missing_listingsid)
+    # Step 2: Get all channels
+    echo -e "${CYAN}📡 Fetching all Live TV channels...${RESET}"
+    local channels_data
+    channels_data=$(emby_get_livetv_channels)
     
     if [[ $? -ne 0 ]]; then
-        echo -e "${RED}❌ Failed to scan Emby channels${RESET}"
+        echo -e "${RED}❌ Failed to fetch channels${RESET}"
         echo -e "${CYAN}💡 Check your Emby Live TV setup and ensure channels are configured${RESET}"
         pause_for_user
         return 1
     fi
     
-    # Parse the missing channels and extract station IDs
-    local station_ids=()
-    local channel_mapping=()
-    
-    while IFS= read -r channel_line; do
-        if [[ -n "$channel_line" && "$channel_line" != "null" ]]; then
-            local channel_id=$(echo "$channel_line" | jq -r '.Id')
-            local channel_name=$(echo "$channel_line" | jq -r '.Name')
-            local channel_number=$(echo "$channel_line" | jq -r '.ChannelNumber')
-            local extracted_id=$(echo "$channel_line" | jq -r '.ExtractedId')
-            
-            if [[ -n "$extracted_id" && "$extracted_id" != "null" ]]; then
-                station_ids+=("$extracted_id")
-                # Store mapping for later use: "channel_id|channel_name|channel_number|station_id"
-                channel_mapping+=("$channel_id|$channel_name|$channel_number|$extracted_id")
-            fi
-        fi
-    done < <(echo "$missing_channels" | jq -c '.')
-    
-    local channel_count=${#station_ids[@]}
-    
-    # ENHANCED USER FEEDBACK: Clear results of channel scan
-    echo -e "${GREEN}✅ Channel scan completed${RESET}"
-    
-    if [[ "$channel_count" -eq 0 ]]; then
-        echo -e "${GREEN}🎉 Excellent! All your Emby channels already have ListingsId assigned${RESET}"
-        echo -e "${CYAN}💡 No action needed - your Emby channels are fully configured${RESET}"
-        echo -e "${CYAN}💡 Your Live TV guide data should be working properly${RESET}"
-        pause_for_user
-        return 0
-    fi
-    
-    echo -e "${YELLOW}📊 Found ${BOLD}$channel_count channels${RESET}${YELLOW} missing ListingsId assignment${RESET}"
-    echo -e "${CYAN}💡 These channels need ListingsId to display proper guide data${RESET}"
-    echo
-    
-    # Display the channels in a readable format with better guidance
-    echo -e "${BOLD}${BLUE}=== Channels Needing ListingsId Assignment ===${RESET}"
-    printf "${BOLD}${YELLOW}%-6s %-20s %-30s %-15s${RESET}\n" "Ch#" "Station ID" "Channel Name" "Emby ID"
-    echo "--------------------------------------------------------------------"
-    
-    for mapping in "${channel_mapping[@]}"; do
-        IFS='|' read -r ch_id ch_name ch_num station_id <<< "$mapping"
-        printf "%-6s %-20s %-30s %-15s\n" "$ch_num" "$station_id" "$ch_name" "$ch_id"
-    done
-    
-    echo
-    echo -e "${CYAN}💡 Station IDs extracted from ManagementId (the part after the last underscore)${RESET}"
-    echo -e "${CYAN}💡 These will be used to find the corresponding LineupId and Country${RESET}"
-    echo
-    
-    # ENHANCED: Ask user if they want to proceed with reverse lookup
-    echo -e "${BOLD}${YELLOW}Next Step: Reverse Lookup${RESET}"
-    echo -e "${CYAN}I will now search your station database for these ${BOLD}$channel_count Station IDs${RESET}${CYAN} to find:${RESET}"
-    echo -e "${CYAN}  • LineupId (for ListingsId field)${RESET}"
-    echo -e "${CYAN}  • Country (for Country field)${RESET}"
-    echo -e "${CYAN}  • LineupName (for Name field)${RESET}"
-    echo -e "${CYAN}  • Type will be set to 'embygn'${RESET}"
-    echo
-    
-    if ! confirm_action "Proceed with reverse lookup of $channel_count Station IDs?"; then
-        echo -e "${YELLOW}⚠️  Operation cancelled by user${RESET}"
-        echo -e "${CYAN}💡 You can run this again anytime from the Emby Integration menu${RESET}"
-        pause_for_user
-        return 0
-    fi
-    
-    # Step 3: Reverse lookup station IDs to get lineupId and country
-    echo
-    echo -e "${CYAN}🔍 Performing reverse lookup for ${BOLD}${#station_ids[@]} Station IDs${RESET}${CYAN}...${RESET}"
-    echo -e "${CYAN}💡 Searching your local station database for matching stations...${RESET}"
-    
-    local lookup_results
-    lookup_results=$(emby_reverse_lookup_station_ids "${station_ids[@]}")
+    # Step 3: Find channels missing ListingsId and extract station IDs
+    echo -e "${CYAN}🔍 Analyzing channels for missing ListingsId...${RESET}"
+    local missing_channels_output
+    missing_channels_output=$(emby_find_channels_missing_listingsid)
     
     if [[ $? -ne 0 ]]; then
-        echo -e "${RED}❌ Reverse lookup failed${RESET}"
-        echo -e "${CYAN}💡 This usually means your station database doesn't contain these stations${RESET}"
-        echo -e "${CYAN}💡 Try adding more television markets to expand your database${RESET}"
+        echo -e "${RED}❌ Failed to analyze channels${RESET}"
         pause_for_user
         return 1
     fi
     
-    # Parse lookup results and provide detailed feedback
-    local lookup_count=$(echo "$lookup_results" | jq 'length' 2>/dev/null || echo "0")
-    local not_found_count=$((channel_count - lookup_count))
+    # Step 4: Generate comprehensive report
+    generate_emby_analysis_report "$channels_data" "$missing_channels_output"
     
-    echo -e "${GREEN}✅ Reverse lookup completed${RESET}"
-    
-    if [[ "$lookup_count" -eq 0 ]]; then
-        echo -e "${RED}❌ No stations found in your database for any of the extracted Station IDs${RESET}"
-        echo -e "${CYAN}💡 This means your local station database doesn't contain these stations${RESET}"
-        echo -e "${CYAN}💡 Recommendations:${RESET}"
-        echo -e "${CYAN}   • Add more television markets via 'Manage Television Markets'${RESET}"
-        echo -e "${CYAN}   • Run 'User Caching' to build a more comprehensive database${RESET}"
-        echo -e "${CYAN}   • Check if your Emby channels are from supported regions${RESET}"
-        pause_for_user
-        return 1
+    # Step 5: Optional endpoint testing for troubleshooting
+    if confirm_action "Test additional Emby endpoints for debugging?"; then
+        test_emby_channel_mapping_endpoints
     fi
     
-    # ENHANCED: Show detailed lookup statistics
-    echo -e "${GREEN}📊 Lookup Results: ${BOLD}$lookup_count successful${RESET}${GREEN} out of $channel_count total${RESET}"
-    if [[ $not_found_count -gt 0 ]]; then
-        echo -e "${YELLOW}⚠️  ${BOLD}$not_found_count stations${RESET}${YELLOW} were not found in your database${RESET}"
-        echo -e "${CYAN}💡 Only channels with successful lookups will be updated${RESET}"
-    fi
-    echo
-    
-    # ENHANCED: Display detailed lookup results with LineupId/Country format and LineupName
-    echo -e "${BOLD}${BLUE}=== Station Lookup Results ===${RESET}"
-    echo -e "${CYAN}💡 These LineupId/Country pairs and Names will be written to Emby:${RESET}"
-    echo
-    printf "${BOLD}${YELLOW}%-12s %-25s %-20s %-25s${RESET}\n" "Station ID" "Station Name" "LineupId/Country" "Lineup Name"
-    echo "----------------------------------------------------------------------------------------"
-    
-    # Prepare summary for final confirmation
-    local update_summary=()
-    local lineupid_country_list=()
-    
-    echo "$lookup_results" | jq -r '.[] | [.stationId, .name, .lineupId, .country, .lineupName] | @tsv' | \
-    while IFS=$'\t' read -r station_id name lineup_id country lineup_name; do
-        printf "%-12s %-25s %-20s %-25s\n" "$station_id" "$name" "${lineup_id}/${country}" "$lineup_name"
-        # Store for confirmation display
-        lineupid_country_list+=("${lineup_id}/${country}")
-    done
-    
-    echo
-    echo -e "${BOLD}${YELLOW}LineupId/Country pairs to be written:${RESET}"
-    
-    # Create unique list of LineupId/Country combinations
-    local unique_lineups=($(echo "$lookup_results" | jq -r '.[] | "\(.lineupId)/\(.country)"' | sort -u))
-    local lineup_display=""
-    for lineup_country in "${unique_lineups[@]}"; do
-        echo -e "${GREEN}  • $lineup_country${RESET}"
-        if [[ -n "$lineup_display" ]]; then
-            lineup_display="$lineup_display, $lineup_country"
-        else
-            lineup_display="$lineup_country"
-        fi
-    done
-    
-    echo
-    echo -e "${BOLD}${YELLOW}Summary of what will be written to Emby:${RESET}"
-    echo -e "${GREEN}📝 ${BOLD}$lookup_count channels${RESET}${GREEN} will be updated with:${RESET}"
-    echo -e "${CYAN}   • ListingsId: Corresponding LineupId for each channel${RESET}"
-    echo -e "${CYAN}   • Country: First available country for each station${RESET}"
-    echo -e "${CYAN}   • Name: LineupName from the station's lineup tracing${RESET}"
-    echo -e "${CYAN}   • Type: 'embygn' (for all channels)${RESET}"
-    echo
-    
-    # ENHANCED: Final confirmation with clear expectations
-    echo -e "${BOLD}${YELLOW}⚠️  FINAL CONFIRMATION${RESET}"
-    echo -e "${YELLOW}This will make ${BOLD}$lookup_count updates${RESET}${YELLOW} to your Emby server${RESET}"
-    echo -e "${YELLOW}Each channel will get ListingsId, Country, Name, and Type fields updated${RESET}"
-    echo
-    
-    if ! confirm_action "Write these $lookup_count LineupId/Country/Name assignments to Emby now?"; then
-        echo -e "${YELLOW}⚠️  Update cancelled by user${RESET}"
-        echo -e "${CYAN}💡 No changes made to your Emby server${RESET}"
-        echo -e "${CYAN}💡 You can run this again anytime to apply these updates${RESET}"
-        pause_for_user
-        return 0
-    fi
-    
-    # Step 4: Update Emby channels with LineupId, Country, Name, and Type
-    echo
-    echo -e "${CYAN}🔄 Writing updates to Emby server...${RESET}"
-    echo -e "${CYAN}💡 Updating $lookup_count channels with ListingsId, Country, Name, and Type=embygn${RESET}"
-    echo
-    
-    local updated_count=0
-    local failed_count=0
-    local update_details=()
-    
-    # Create lookup map from station_id to lineup/country/name info
-    declare -A station_lookup_map
-    while IFS= read -r lookup_line; do
-        local station_id=$(echo "$lookup_line" | jq -r '.stationId')
-        local country=$(echo "$lookup_line" | jq -r '.country')
-        local lineup_id=$(echo "$lookup_line" | jq -r '.lineupId')
-        local lineup_name=$(echo "$lookup_line" | jq -r '.lineupName')
-        
-        station_lookup_map["$station_id"]="$lineup_id|$country|$lineup_name"
-    done < <(echo "$lookup_results" | jq -c '.[]')
-    
-    # Process each channel mapping and update if we have lookup data
-    for mapping in "${channel_mapping[@]}"; do
-        IFS='|' read -r channel_id channel_name channel_number station_id <<< "$mapping"
-        
-        if [[ -n "${station_lookup_map[$station_id]:-}" ]]; then
-            IFS='|' read -r lineup_id country lineup_name <<< "${station_lookup_map[$station_id]}"
-            
-            echo -e "${CYAN}  📝 Channel ${BOLD}$channel_name${RESET}${CYAN} (Ch $channel_number)${RESET}"
-            echo -e "${CYAN}     Writing: ListingsId=${BOLD}$lineup_id${RESET}${CYAN}, Country=${BOLD}$country${RESET}${CYAN}, Name=${BOLD}$lineup_name${RESET}${CYAN}, Type=${BOLD}embygn${RESET}"
-            
-            if emby_update_channel_complete "$channel_id" "$lineup_id" "$country" "$lineup_name" "embygn"; then
-                ((updated_count++))
-                echo -e "${GREEN}     ✅ Successfully updated${RESET}"
-                update_details+=("${channel_name} (Ch $channel_number): $lineup_id/$country → $lineup_name")
-            else
-                ((failed_count++))
-                echo -e "${RED}     ❌ Update failed${RESET}"
-            fi
-        else
-            echo -e "${YELLOW}  ⚠️  Skipping ${BOLD}$channel_name${RESET}${YELLOW} (Ch $channel_number)${RESET}"
-            echo -e "${YELLOW}     Reason: Station ID $station_id not found in lookup results${RESET}"
-            ((failed_count++))
-        fi
-        
-        echo
-    done
-    
-    # ENHANCED: Comprehensive final summary
-    echo -e "${BOLD}${BLUE}=== Update Operation Complete ===${RESET}"
-    echo
-    
-    if [[ $updated_count -gt 0 ]]; then
-        echo -e "${GREEN}🎉 SUCCESS: ${BOLD}$updated_count channels${RESET}${GREEN} successfully updated!${RESET}"
-        echo
-        echo -e "${BOLD}${GREEN}Channels Updated:${RESET}"
-        for detail in "${update_details[@]}"; do
-            echo -e "${GREEN}  ✅ $detail${RESET}"
-        done
-        echo
-        echo -e "${CYAN}💡 Your Emby channels now have proper guide data configuration${RESET}"
-        echo -e "${CYAN}💡 Live TV guide information should appear correctly${RESET}"
-        echo -e "${CYAN}💡 Changes take effect immediately in Emby${RESET}"
-    fi
-    
-    if [[ $failed_count -gt 0 ]]; then
-        echo -e "${YELLOW}⚠️  ${BOLD}$failed_count channels${RESET}${YELLOW} were skipped or failed${RESET}"
-        echo -e "${CYAN}💡 Skipped channels either weren't found in your database or had update errors${RESET}"
-        echo -e "${CYAN}💡 You can expand your database and run this again to catch missed channels${RESET}"
-    fi
-    
-    echo
-    echo -e "${CYAN}📊 Final Summary:${RESET}"
-    echo -e "${GREEN}  • Total channels processed: $channel_count${RESET}"
-    echo -e "${GREEN}  • Successfully updated: $updated_count${RESET}"
-    echo -e "${YELLOW}  • Skipped/Failed: $failed_count${RESET}"
-    
-    if [[ $updated_count -gt 0 ]]; then
-        echo
-        echo -e "${BOLD}${GREEN}🎯 Emby Integration Complete!${RESET}"
-        echo -e "${CYAN}Your Emby Live TV channels are now properly configured with guide data${RESET}"
-    fi
-    
+    echo -e "\n${GREEN}✅ Emby analysis complete${RESET}"
     pause_for_user
+    return 0
+}
+
+debug_emby_integration() {
+    echo -e "\n${BOLD}${CYAN}=== Comprehensive Emby Debug ===${RESET}"
+    
+    # Basic connectivity
+    echo -e "\n${BOLD}1️⃣ Basic Connectivity${RESET}"
+    if curl -s --connect-timeout 10 "$EMBY_URL" >/dev/null; then
+        echo -e "${GREEN}✅ Server reachable at $EMBY_URL${RESET}"
+    else
+        echo -e "${RED}❌ Cannot reach $EMBY_URL${RESET}"
+        return 1
+    fi
+    
+    # Authentication
+    echo -e "\n${BOLD}2️⃣ Authentication Test${RESET}"
+    if emby_test_connection >/dev/null 2>&1; then
+        echo -e "${GREEN}✅ Authentication successful${RESET}"
+        echo -e "${CYAN}   🔑 API Key: ${EMBY_API_KEY:0:8}...${RESET}"
+    else
+        echo -e "${RED}❌ Authentication failed${RESET}"
+        return 1
+    fi
+    
+    # Channel data structure
+    echo -e "\n${BOLD}3️⃣ Channel Data Analysis${RESET}"
+    local test_response
+    test_response=$(curl -s -H "X-Emby-Token: $EMBY_API_KEY" "${EMBY_URL}/emby/LiveTv/Manage/Channels?Fields=ManagementId,ListingsId,Name,ChannelNumber,Id&Limit=1")
+    
+    if echo "$test_response" | jq empty 2>/dev/null; then
+        echo -e "${GREEN}✅ Valid JSON response${RESET}"
+        
+        if echo "$test_response" | jq -e 'type == "array"' >/dev/null 2>&1; then
+            echo -e "${CYAN}   📋 Response type: Direct array${RESET}"
+        elif echo "$test_response" | jq -e '.Items' >/dev/null 2>&1; then
+            echo -e "${CYAN}   📋 Response type: Object with Items property${RESET}"
+        else
+            echo -e "${YELLOW}   ⚠️  Unknown response structure${RESET}"
+        fi
+        
+        # Show first channel structure
+        echo -e "${CYAN}   📋 Sample channel structure:${RESET}"
+        echo "$test_response" | jq '.[0] // .Items[0] // . | {Id, Name, ChannelNumber, ListingsId, ManagementId}' 2>/dev/null | sed 's/^/     /'
+    else
+        echo -e "${RED}❌ Invalid JSON response${RESET}"
+        echo -e "${CYAN}Response: ${test_response:0:200}...${RESET}"
+    fi
+    
+    echo -e "\n${CYAN}💡 Use this information to troubleshoot any issues${RESET}"
 }
 
 # ============================================================================

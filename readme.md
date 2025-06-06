@@ -2,9 +2,15 @@
 
 A comprehensive television station search tool that (optionally) integrates with Channels DVR and Dispatcharr to provide enhanced station discovery and automated Dispatcharr field population.
 
-## Version 1.4.5
+## Version 2.0.0
 
-**Latest Release (1.4.5) - 2025-06-04**
+**MAJOR RELEASE (2.0.0)**
+- All data from any previous version must be deleted as it is no longer backward compatible
+- Added multi-country filtering support and lineup tracing when caching is performed
+- Emby integration to populate necessary lineupIds for all channels in m3u playlist
+- Significant enhacnements to codebase
+
+**Previous Release (1.4.5) - 2025-06-04**
 - **Enhanced Authentication** - Moved all Dispatcharr auth functions to `lib/core/auth.sh` for background token refresh without user interaction
 - **API Consolidation** - Centralized all API calls in `lib/core/api.sh`
 - **Improved Channel Selection** - Added option to select specific channels from station ID scan results

@@ -26,3 +26,5 @@ previous_versions/
 
 # Base cache build files
 sampled_markets_base_cache.csv
+dev_tools
+dev_backups

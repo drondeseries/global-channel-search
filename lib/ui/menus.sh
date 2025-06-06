@@ -210,6 +210,39 @@ _show_dispatcharr_menu_status() {
     fi
 }
 
+# Emby menu status
+_show_emby_menu_status() {
+    echo -e "${BOLD}${BLUE}=== Emby Integration Status ===${RESET}"
+    
+    if [[ "$EMBY_ENABLED" == "true" ]]; then
+        if [[ -n "${EMBY_URL:-}" ]]; then
+            local auth_status
+            auth_status=$(get_emby_auth_status)
+            local status_code=$?
+            
+            echo -e "${GREEN}✅ Emby Integration: Enabled${RESET}"
+            echo -e "${CYAN}   📍 Server: $EMBY_URL${RESET}"
+            echo -e "${CYAN}   🔐 Authentication: $auth_status${RESET}"
+            
+            if [[ $status_code -eq 0 ]]; then
+                # Try to get server info for additional details
+                local server_info
+                server_info=$(emby_get_server_info 2>/dev/null)
+                if [[ $? -eq 0 ]]; then
+                    local server_name=$(echo "$server_info" | jq -r '.ServerName // "Unknown"' 2>/dev/null)
+                    local version=$(echo "$server_info" | jq -r '.Version // "Unknown"' 2>/dev/null)
+                    echo -e "${CYAN}   🖥️  Server: $server_name (v$version)${RESET}"
+                fi
+            fi
+        else
+            echo -e "${YELLOW}⚠️  Emby Integration: Enabled but not configured${RESET}"
+        fi
+    else
+        echo -e "${CYAN}💡 Emby Integration: Disabled${RESET}"
+    fi
+    echo
+}
+
 # Markets menu status
 _show_markets_menu_status() {
     echo -e "${BOLD}${BLUE}Current Market Configuration:${RESET}"
@@ -305,6 +338,21 @@ _show_settings_menu_status() {
         fi
     else
         echo -e "${CYAN}💡 Dispatcharr Integration: Disabled${RESET}"
+    fi
+
+    # Emby integration with connection status
+    if [[ "$EMBY_ENABLED" == "true" ]]; then
+        if [[ -n "${EMBY_URL:-}" ]]; then
+            if is_emby_authenticated 2>/dev/null; then
+                echo -e "${GREEN}✅ Emby Integration: Connected (${CYAN}$EMBY_URL${RESET})"
+            else
+                echo -e "${YELLOW}⚠️  Emby Integration: Configured but connection failed${RESET}"
+            fi
+        else
+            echo -e "${YELLOW}⚠️  Emby Integration: Enabled but not configured${RESET}"
+        fi
+    else
+        echo -e "${CYAN}💡 Emby Integration: Disabled${RESET}"
     fi
     
     # Database status summary
@@ -440,12 +488,13 @@ show_main_menu() {
   local main_options=(
     "1|Search Local Database"
     "2|Dispatcharr Integration" 
-    "3|Manage Television Markets for User Cache"
-    "4|Run User Caching"
-    "5|Direct API Search"
-    "6|Reverse Station ID Lookup"
-    "7|Local Cache Management"
-    "8|Settings"
+    "3|Emby Intergation"
+    "4|Manage Television Markets for User Cache"
+    "5|Run User Caching"
+    "6|Direct API Search"
+    "7|Reverse Station ID Lookup"
+    "8|Local Cache Management"
+    "9|Settings"
     "q|Quit"
   )
   
@@ -485,9 +534,10 @@ show_settings_menu() {
         "g|Export Settings"
         "h|Export Station Database to CSV"
         "i|Configure Dispatcharr Integration"
-        "j|Developer Information"
-        "k|Update Management"
-        "l|Backup Management"
+        "j|Configure Emby Integration"
+        "k|Developer Information"
+        "l|Update Management"
+        "m|Backup Management"
         "q|Back to Main Menu"
     )
     

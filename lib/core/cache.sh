@@ -58,10 +58,10 @@ init_combined_cache_startup() {
       build_combined_cache_with_progress # Show the progress output
     fi
   elif [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    # Only base cache exists
-    echo -e "${GREEN}✅ Station database ready (base cache only)${RESET}"
+    # Only base database exists
+    echo -e "${GREEN}✅ Station database ready (base database only)${RESET}"
   elif [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    # Only user cache exists
+    # Only user database exists
     local user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
     echo -e "${GREEN}✅ Station database ready ($user_count user stations)${RESET}"
   fi
@@ -128,8 +128,8 @@ cleanup_cache() {
   echo "  ✓ Lineup cache removed"
   
   # CRITICAL: PRESERVE these important files:
-  # - $BASE_STATIONS_JSON (distributed base cache)
-  # - $USER_STATIONS_JSON (user's personal cache) - BACKED UP ABOVE
+  # - $BASE_STATIONS_JSON (distributed base database)
+  # - $USER_STATIONS_JSON (user's personal database) - BACKED UP ABOVE
   # - Station metadata provides all coverage information
   # - $CACHED_MARKETS (state tracking)
   # - $CACHED_LINEUPS (state tracking)
@@ -137,7 +137,7 @@ cleanup_cache() {
   # - $CACHE_STATE_LOG (state tracking)
   # - $DISPATCHARR_* files (Dispatcharr integration)
   
-  echo "  ✓ User cache, base cache, and state tracking files preserved"
+  echo "  ✓ User database, base database, and state tracking files preserved"
   echo -e "${GREEN}Cache cleanup completed (important files preserved and backed up)${RESET}"
 }
 
@@ -170,32 +170,32 @@ build_combined_cache_with_progress() {
   
   if [[ -f "$BASE_STATIONS_JSON" ]] && [[ -s "$BASE_STATIONS_JSON" ]]; then
     if ! jq empty "$BASE_STATIONS_JSON" 2>/dev/null; then
-      echo -e "${RED}❌ Base cache is invalid JSON${RESET}" >&2
+      echo -e "${RED}❌ Base database is invalid JSON${RESET}" >&2
       return 1
     fi
     
-    # CRITICAL: Validate base cache format - REJECT if legacy
+    # CRITICAL: Validate base database format - REJECT if legacy
     local base_legacy_count=$(jq '[.[] | select(.country and (.availableIn | not))] | length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
     if [[ "$base_legacy_count" -gt 0 ]]; then
-      echo -e "${RED}❌ Base cache contains $base_legacy_count legacy format stations${RESET}" >&2
-      echo -e "${RED}❌ Base cache must use clean format (availableIn array)${RESET}" >&2
-      echo -e "${CYAN}💡 Update your base cache to use the new format${RESET}" >&2
+      echo -e "${RED}❌ Base database contains $base_legacy_count legacy format stations${RESET}" >&2
+      echo -e "${RED}❌ Base database must use clean format (availableIn array)${RESET}" >&2
+      echo -e "${CYAN}💡 Update your base database to use the new format${RESET}" >&2
       return 1
     fi
   fi
   
   if [[ -f "$USER_STATIONS_JSON" ]] && [[ -s "$USER_STATIONS_JSON" ]]; then
     if ! jq empty "$USER_STATIONS_JSON" 2>/dev/null; then
-      echo -e "${RED}❌ User cache is invalid JSON${RESET}" >&2
+      echo -e "${RED}❌ User database is invalid JSON${RESET}" >&2
       return 1
     fi
     
-    # CRITICAL: Validate user cache format - REJECT if legacy
+    # CRITICAL: Validate user database format - REJECT if legacy
     local user_legacy_count=$(jq '[.[] | select(.country and (.availableIn | not))] | length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
     if [[ "$user_legacy_count" -gt 0 ]]; then
-      echo -e "${RED}❌ User cache contains $user_legacy_count legacy format stations${RESET}" >&2
-      echo -e "${RED}❌ User cache must use clean format (availableIn array)${RESET}" >&2
-      echo -e "${CYAN}💡 Delete user cache and rebuild with User Cache Expansion${RESET}" >&2
+      echo -e "${RED}❌ User database contains $user_legacy_count legacy format stations${RESET}" >&2
+      echo -e "${RED}❌ User database must use clean format (availableIn array)${RESET}" >&2
+      echo -e "${CYAN}💡 Delete user database and rebuild with User Database Expansion${RESET}" >&2
       return 1
     fi
   fi
@@ -217,10 +217,10 @@ build_combined_cache_with_progress() {
   echo -e "${CYAN}🔄 [3/3] Merging clean format caches...${RESET}" >&2
 
   if [[ "$base_count" -eq 0 ]]; then
-    # Only user cache - copy directly
+    # Only user database - copy directly
     cp "$USER_STATIONS_JSON" "$COMBINED_STATIONS_JSON"
   elif [[ "$user_count" -eq 0 ]]; then
-    # Only base cache - copy directly  
+    # Only base database - copy directly  
     cp "$BASE_STATIONS_JSON" "$COMBINED_STATIONS_JSON"
   else
     # Both exist - perform clean format merge
@@ -252,7 +252,7 @@ build_combined_cache_with_progress() {
 
 force_rebuild_combined_cache() {
   echo -e "\n${BOLD}Force Rebuild Combined Cache${RESET}"
-  echo -e "${YELLOW}This will rebuild the combined station database from base and user caches.${RESET}"
+  echo -e "${YELLOW}This will rebuild the combined station database from base and user databases.${RESET}"
   echo -e "${CYAN}Use this if you suspect the combined cache is corrupted or outdated.${RESET}"
   echo
   
@@ -277,7 +277,7 @@ force_rebuild_combined_cache() {
   # Check if rebuild is actually needed
   if [ "$base_count" -eq 0 ] && [ "$user_count" -eq 0 ]; then
     echo -e "${RED}❌ No source caches available to rebuild from${RESET}"
-    echo -e "${CYAN}💡 You need either a base cache or user cache to rebuild${RESET}"
+    echo -e "${CYAN}💡 You need either a base database or user database to rebuild${RESET}"
     return 1
   fi
   
@@ -349,7 +349,7 @@ get_effective_stations_file() {
       echo "$COMBINED_STATIONS_JSON"
       return 0
     else
-      # Fallback to base cache if combine fails
+      # Fallback to base database if combine fails
       echo "$BASE_STATIONS_JSON"
       return 0
     fi
@@ -357,13 +357,13 @@ get_effective_stations_file() {
 }
 
 # ============================================================================
-# USER CACHE MANAGEMENT
+# USER DATABASE MANAGEMENT
 # ============================================================================
 
 add_stations_to_user_cache() {
   local new_stations_file="$1"
   
-  echo -e "${CYAN}🔄 Starting user cache integration process...${RESET}"
+  echo -e "${CYAN}🔄 Starting user database integration process...${RESET}"
   
   # File validation with detailed feedback
   if [ ! -f "$new_stations_file" ]; then
@@ -378,7 +378,7 @@ add_stations_to_user_cache() {
     echo -e "${RED}❌ File Validation: New stations file contains invalid JSON${RESET}"
     echo -e "${CYAN}💡 File: $new_stations_file${RESET}"
     echo -e "${CYAN}💡 File may be corrupted or incomplete${RESET}"
-    echo -e "${CYAN}💡 Try running User Cache Expansion again${RESET}"
+    echo -e "${CYAN}💡 Try running User Database Expansion again${RESET}"
     return 1
   fi
   echo -e "${GREEN}✅ New stations file validation passed${RESET}"
@@ -389,7 +389,7 @@ add_stations_to_user_cache() {
   if [[ "$new_legacy_count" -gt 0 ]]; then
     echo -e "${RED}❌ Format Validation: New stations file contains $new_legacy_count legacy format stations${RESET}"
     echo -e "${RED}❌ REJECTED: Legacy format stations cannot be processed${RESET}"
-    echo -e "${CYAN}💡 The user cache creation process should only generate clean format stations${RESET}"
+    echo -e "${CYAN}💡 The user database creation process should only generate clean format stations${RESET}"
     echo -e "${CYAN}💡 This indicates a bug in the station creation logic${RESET}"
     echo -e "${CYAN}💡 Action: Report this issue - stations should have 'availableIn' arrays${RESET}"
     return 1
@@ -406,15 +406,15 @@ add_stations_to_user_cache() {
     return 1
   fi
 
-  # ENHANCED: Clean existing user cache by removing ONLY legacy entries
+  # ENHANCED: Clean existing user database by removing ONLY legacy entries
   if [[ -f "$USER_STATIONS_JSON" ]] && [[ -s "$USER_STATIONS_JSON" ]]; then
-    echo -e "${CYAN}🔍 Validating existing user cache format...${RESET}"
+    echo -e "${CYAN}🔍 Validating existing user database format...${RESET}"
     
     if ! jq empty "$USER_STATIONS_JSON" 2>/dev/null; then
-      echo -e "${RED}❌ Existing user cache contains invalid JSON${RESET}"
-      echo -e "${CYAN}💡 Creating fresh user cache to replace corrupted file${RESET}"
+      echo -e "${RED}❌ Existing user database contains invalid JSON${RESET}"
+      echo -e "${CYAN}💡 Creating fresh user database to replace corrupted file${RESET}"
       echo '[]' > "$USER_STATIONS_JSON" || {
-        echo -e "${RED}❌ Cannot create fresh user cache file${RESET}"
+        echo -e "${RED}❌ Cannot create fresh user database file${RESET}"
         return 1
       }
       echo -e "${GREEN}✅ Corrupted cache replaced with empty cache${RESET}"
@@ -445,19 +445,19 @@ add_stations_to_user_cache() {
           return 1
         fi
       elif [[ "$user_clean_count" -eq "$user_total_count" ]] && [[ "$user_total_count" -gt 0 ]]; then
-        echo -e "${GREEN}✅ Existing user cache ($user_total_count stations) uses clean format${RESET}"
-        echo -e "${CYAN}💡 New stations will be appended to existing cache${RESET}"
+        echo -e "${GREEN}✅ Existing user database ($user_total_count stations) uses clean format${RESET}"
+        echo -e "${CYAN}💡 New stations will be appended to existing database${RESET}"
       elif [[ "$user_total_count" -eq 0 ]]; then
-        echo -e "${CYAN}💡 Existing user cache is empty - will add new stations${RESET}"
+        echo -e "${CYAN}💡 Existing user database is empty - will add new stations${RESET}"
       else
-        echo -e "${RED}❌ Existing user cache has mixed or unknown format${RESET}"
+        echo -e "${RED}❌ Existing user database has mixed or unknown format${RESET}"
         echo -e "${CYAN}💡 Clean: $user_clean_count, Legacy: $user_legacy_count, Total: $user_total_count${RESET}"
         echo -e "${CYAN}💡 Cache must be in consistent clean format${RESET}"
         return 1
       fi
     fi
   else
-    echo -e "${CYAN}💡 No existing user cache - will create new cache${RESET}"
+    echo -e "${CYAN}💡 No existing user database - will create new database${RESET}"
     init_user_cache
   fi
 
@@ -475,14 +475,14 @@ add_stations_to_user_cache() {
 
   # Backup original cache with feedback
   if [ -s "$USER_STATIONS_JSON" ]; then
-    echo -e "${CYAN}💾 Creating backup of current user cache...${RESET}"
+    echo -e "${CYAN}💾 Creating backup of current user database...${RESET}"
     local backup_file="${USER_STATIONS_JSON}.backup.$(date +%Y%m%d_%H%M%S)"
     if ! cp "$USER_STATIONS_JSON" "$backup_file" 2>/dev/null; then
       echo -e "${YELLOW}⚠️  Backup Warning: Could not create safety backup${RESET}"
       echo -e "${CYAN}💡 Continuing without backup (original cache will be overwritten)${RESET}"
       
       if ! confirm_action "Continue without backup?"; then
-        echo -e "${YELLOW}⚠️  User cache merge cancelled by user${RESET}"
+        echo -e "${YELLOW}⚠️  User database merge cancelled by user${RESET}"
         rm -f "$temp_file" 2>/dev/null
         return 1
       fi
@@ -492,9 +492,9 @@ add_stations_to_user_cache() {
   fi
   
   # Replace original with merged data
-  echo -e "${CYAN}💾 Finalizing user cache update...${RESET}"
+  echo -e "${CYAN}💾 Finalizing user database update...${RESET}"
   if ! mv "$temp_file" "$USER_STATIONS_JSON" 2>/dev/null; then
-    echo -e "${RED}❌ Cache Update: Cannot finalize user cache file${RESET}"
+    echo -e "${RED}❌ Database Update: Cannot finalize user database file${RESET}"
     echo -e "${CYAN}💡 Check file permissions: $USER_STATIONS_JSON${RESET}"
     echo -e "${CYAN}💡 Check disk space and try again${RESET}"
     
@@ -503,7 +503,7 @@ add_stations_to_user_cache() {
     if [[ -n "$latest_backup" ]]; then
       echo -e "${CYAN}🔄 Attempting to restore from backup...${RESET}"
       if cp "$latest_backup" "$USER_STATIONS_JSON" 2>/dev/null; then
-        echo -e "${GREEN}✅ User cache restored from backup${RESET}"
+        echo -e "${GREEN}✅ User database restored from backup${RESET}"
       fi
     fi
     
@@ -512,16 +512,16 @@ add_stations_to_user_cache() {
   fi
   
   # Success validation and reporting
-  echo -e "${CYAN}🔍 Validating final user cache...${RESET}"
+  echo -e "${CYAN}🔍 Validating final user database...${RESET}"
   local new_count
   if new_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null); then
-    echo -e "${GREEN}✅ User cache integration completed successfully${RESET}"
-    echo -e "${CYAN}📊 Total stations in user cache: $new_count${RESET}"
+    echo -e "${GREEN}✅ User database integration completed successfully${RESET}"
+    echo -e "${CYAN}📊 Total stations in user database: $new_count${RESET}"
     
     # Validate final format compliance
     local final_clean_count=$(jq '[.[] | select(.availableIn)] | length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
     if [[ "$final_clean_count" -eq "$new_count" ]]; then
-      echo -e "${GREEN}✅ All stations in final cache use clean format${RESET}"
+      echo -e "${GREEN}✅ All stations in final database use clean format${RESET}"
     else
       echo -e "${RED}❌ WARNING: $((new_count - final_clean_count)) stations do not use clean format${RESET}"
       echo -e "${CYAN}💡 This indicates a merge logic error${RESET}"
@@ -550,7 +550,7 @@ add_stations_to_user_cache() {
       
     return 0
   else
-    echo -e "${RED}❌ Final Validation: Cannot read final user cache${RESET}"
+    echo -e "${RED}❌ Final Validation: Cannot read final user database${RESET}"
     return 1
   fi
 }
@@ -629,7 +629,7 @@ is_market_in_user_cache() {
 is_market_processed() {
   local country="$1"
   local zip="$2"
-  # Check if market is covered by EITHER base or user cache
+  # Check if market is covered by EITHER base or user database
   is_market_in_base_cache "$country" "$zip" || is_market_in_user_cache "$country" "$zip"
 }
 
@@ -656,7 +656,7 @@ is_lineup_cached() {
 
 is_lineup_processed() {
   local lineup_id="$1"
-  # Check if lineup is covered by EITHER base or user cache
+  # Check if lineup is covered by EITHER base or user database
   is_lineup_in_base_cache "$lineup_id" || is_lineup_cached "$lineup_id"
 }
 
@@ -680,7 +680,7 @@ get_user_cache_countries() {
 }
 
 get_all_cache_countries() {
-  # Get countries from both base and user caches, combined and deduplicated
+  # Get countries from both base and user databases, combined and deduplicated
   local base_countries=$(get_base_cache_countries)
   local user_countries=$(get_user_cache_countries)
   
@@ -689,16 +689,16 @@ get_all_cache_countries() {
 }
 
 # ============================================================================
-# USER CACHING - COMPONENT FUNCTIONS
+# USER DATABASE EXPANSION - COMPONENT FUNCTIONS
 # ============================================================================
 
 validate_caching_prerequisites() {
   local force_refresh="${1:-false}"
   
-  # Check if server is configured for API operations - REQUIRED for user caching
+  # Check if server is configured for API operations - REQUIRED for user database expansion
   if [[ -z "${CHANNELS_URL:-}" ]]; then
     echo -e "${RED}❌ Channels DVR Integration: Server not configured${RESET}"
-    echo -e "${CYAN}💡 User Cache Expansion requires a Channels DVR server to function${RESET}"
+    echo -e "${CYAN}💡 User Database Expansion requires a Channels DVR server to function${RESET}"
     return 1
   fi
 
@@ -710,7 +710,7 @@ validate_caching_prerequisites() {
     echo -e "${RED}❌ Channels DVR Integration: Cannot connect to server${RESET}"
     echo -e "${CYAN}💡 Server: $CHANNELS_URL${RESET}"
     if ! confirm_action "Continue anyway? (caching will likely fail)"; then
-      echo -e "${YELLOW}⚠️  User Cache Expansion cancelled${RESET}"
+      echo -e "${YELLOW}⚠️  User Database Expansion cancelled${RESET}"
       return 1
     fi
   else
@@ -746,14 +746,14 @@ analyze_markets_for_processing() {
       ((will_process++))
       echo -e "${CYAN}🔄 Will force refresh: $country/$zip${RESET}" >&2
     elif is_market_cached "$country" "$zip"; then
-      # Market already processed in user cache
+      # Market already processed in user database
       ((already_cached++))
       echo -e "${GREEN}✅ Already cached: $country/$zip${RESET}" >&2
     elif [[ "$FORCE_REFRESH_ACTIVE" != "true" ]] && is_market_in_base_cache "$country" "$zip"; then
-      # Market exactly covered by base cache
+      # Market exactly covered by base database
       ((base_cache_skipped++))
-      echo -e "${YELLOW}⏭️  Skipping (in base cache): $country/$zip${RESET}" >&2
-      # Record as processed since it's covered by base cache
+      echo -e "${YELLOW}⏭️  Skipping (in base database): $country/$zip${RESET}" >&2
+      # Record as processed since it's covered by base database
       record_market_processed "$country" "$zip" 0
     else
       # Market needs processing
@@ -767,13 +767,13 @@ analyze_markets_for_processing() {
   echo -e "\n${BOLD}${BLUE}=== Market Analysis Results ===${RESET}" >&2
   echo -e "${CYAN}📊 Total configured markets: $total_configured${RESET}" >&2
   echo -e "${GREEN}📊 Already cached: $already_cached${RESET}" >&2
-  echo -e "${YELLOW}📊 Skipped (base cache): $base_cache_skipped${RESET}" >&2
+  echo -e "${YELLOW}📊 Skipped (base database): $base_cache_skipped${RESET}" >&2
   echo -e "${BLUE}📊 Will process: $will_process${RESET}" >&2
   
   # Early exit if nothing to process
   if [ "$will_process" -eq 0 ]; then
     echo -e "\n${GREEN}✅ All markets are already processed!${RESET}" >&2
-    echo -e "${CYAN}💡 No new stations to add to user cache${RESET}" >&2
+    echo -e "${CYAN}💡 No new stations to add to user database${RESET}" >&2
     echo -e "${CYAN}💡 Add new markets or use force refresh to reprocess existing ones${RESET}" >&2
     return 1  # Signal no processing needed
   fi
@@ -788,7 +788,7 @@ analyze_markets_for_processing() {
 }
 
 setup_caching_environment() {
-  # Clean up temporary files (but preserve user and base caches)
+  # Clean up temporary files (but preserve user and base databases)
   echo -e "${CYAN}🧹 Preparing cache environment...${RESET}" >&2
   rm -f "$LINEUP_CACHE" cache/unique_lineups.txt "$STATION_CACHE_DIR"/*.json cache/enhanced_stations.log >&2 2>/dev/null
   rm -f "$CACHE_DIR"/all_stations_master.json* "$CACHE_DIR"/working_stations.json* >&2 2>/dev/null || true
@@ -807,7 +807,7 @@ setup_caching_environment() {
 validate_user_building_prerequisites() {
     local force_refresh="$1"
     
-    echo -e "${CYAN}🔍 Validating user caching prerequisites...${RESET}" >&2
+    echo -e "${CYAN}🔍 Validating user database expansion prerequisites...${RESET}" >&2
     
     # Check for Channels DVR server connectivity
     if ! curl -s --connect-timeout $QUICK_TIMEOUT "$CHANNELS_URL" >/dev/null 2>&1; then
@@ -841,15 +841,15 @@ process_single_market_for_user_cache() {
     
     # MARKET-LEVEL CACHING CHECK - Skip if already processed
     if [[ "$force_refresh" != "true" ]]; then
-        # Check if market is already cached in user cache
+        # Check if market is already cached in user database
         if is_market_cached "$country" "$zip"; then
             return 0  # Already processed, skip silently
         fi
         
-        # Check if market is covered by base cache
+        # Check if market is covered by base database
         if is_market_in_base_cache "$country" "$zip"; then
             record_market_processed "$country" "$zip" 0
-            return 0  # Covered by base cache, skip silently
+            return 0  # Covered by base database, skip silently
         fi
     fi
     
@@ -920,15 +920,15 @@ process_single_market_for_user_cache() {
         
         # Cache skip check (if not force refresh)
         if [[ "$force_refresh" != "true" ]] && is_lineup_cached "$lineup_id"; then
-            echo -e "${YELLOW}⏭️  Cache Skip: $lineup_id (in user cache)${RESET}" >&2
+            echo -e "${YELLOW}⏭️  Database Skip: $lineup_id (in user database)${RESET}" >&2
             ((skipped_cache_lineups++))
             record_lineup_processed "$lineup_id" "$country" "$zip" 0
             continue  # ZERO API calls
         fi
         
-        # Base cache skip check (if not force refresh)  
+        # Base database skip check (if not force refresh)  
         if [[ "$force_refresh" != "true" ]] && is_lineup_in_base_cache "$lineup_id"; then
-            echo -e "${GREEN}⏭️  Base Skip: $lineup_id (in base cache)${RESET}" >&2
+            echo -e "${GREEN}⏭️  Base Skip: $lineup_id (in base database)${RESET}" >&2
             ((skipped_base_lineups++))
             record_lineup_processed "$lineup_id" "$country" "$zip" 0
             continue  # ZERO API calls
@@ -1362,15 +1362,15 @@ finalize_user_cache_update() {
   local lineups_skipped_base="$9"
   local lineups_skipped_user="${10}"
   
-  # APPEND to existing USER cache
-  echo -e "\n${BOLD}${BLUE}Phase 7: Incremental User Cache Integration${RESET}"
-  echo -e "${CYAN}💾 Appending new stations to existing user cache...${RESET}"
+  # APPEND to existing USER database
+  echo -e "\n${BOLD}${BLUE}Phase 7: Incremental User Database Integration${RESET}"
+  echo -e "${CYAN}💾 Appending new stations to existing user database...${RESET}"
   
   if add_stations_to_user_cache "$temp_stations_file"; then
-    echo -e "${GREEN}✅ User cache updated successfully${RESET}"
-    echo -e "${CYAN}📊 Added $post_dedup_stations new stations to user cache${RESET}"
+    echo -e "${GREEN}✅ User database updated successfully${RESET}"
+    echo -e "${CYAN}📊 Added $post_dedup_stations new stations to user database${RESET}"
   else
-    echo -e "${RED}❌ Failed to update user cache${RESET}"
+    echo -e "${RED}❌ Failed to update user database${RESET}"
     rm -f "$temp_stations_file"
     return 1
   fi
@@ -1409,22 +1409,7 @@ finalize_user_cache_update() {
 # ============================================================================
 # PROGRESS TRACKING HELPER FUNCTIONS FOR MARKET PROCESSING
 # ============================================================================
-
-# Get completed markets from progress file
-get_completed_markets_from_progress() {
-    local operation="$1"
-    
-    if ! init_progress_context "$operation"; then
-        return 1
-    fi
-    
-    if [[ ! -f "$PROGRESS_FILE" ]]; then
-        return 1
-    fi
-    
-    # Extract completed markets array from progress file
-    jq -r '.completed_markets[]?' "$PROGRESS_FILE" 2>/dev/null || return 1
-}
+# Note: get_completed_markets_from_progress() is now provided by progress_tracker.sh
 
 # Mark a market as completed
 mark_market_completed() {
@@ -1822,11 +1807,16 @@ update_enhancement_progress_simple() {
 }
 
 # ============================================================================
-# USER CACHING - ORCHESTRATOR FUNCTION
+# USER DATABASE EXPANSION - ORCHESTRATOR FUNCTION
 # ============================================================================
 
-perform_user_caching() {
+perform_user_database_expansion() {
   local force_refresh="${1:-false}"  # Optional parameter: false=incremental, true=complete refresh
+  
+  # Check if CDVR is configured before proceeding
+  if ! check_integration_requirement "Channels DVR" "is_cdvr_configured" "configure_cdvr_integration" "User Database Expansion"; then
+    return 1
+  fi
   
   # RECOVERY PHASE: CHECK FOR INTERRUPTED SESSION AND HANDLE RECOVERY
   local recovery_choice=""
@@ -1883,7 +1873,7 @@ perform_user_caching() {
   
   if [[ "$recovery_choice" == "fresh" ]]; then
     # Initialize fresh progress tracking
-    echo -e "${CYAN}🆕 Starting fresh user caching session...${RESET}"
+    echo -e "${CYAN}🆕 Starting fresh user database expansion session...${RESET}"
     if ! init_progress_tracking "user_caching" "$total_markets" "$force_refresh" "$CSV_FILE"; then
       echo -e "${RED}❌ Failed to initialize progress tracking${RESET}"
       return 1
@@ -2033,7 +2023,7 @@ perform_user_caching() {
       done < "$CSV_FILE"
     fi
 
-    # PHASE 4: FINALIZE USER CACHE UPDATE
+    # PHASE 4: FINALIZE USER DATABASE UPDATE
     update_progress "cache_finalization" "" 0
     
     # Get start time for summary (convert to Unix timestamp if needed)

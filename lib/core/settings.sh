@@ -11,7 +11,7 @@
 configure_setting() {
     local setting_type="$1"
     local setting_name="$2"
-    local current_value="$3"
+    local current_value="${3:-}"
     shift 3
     local options=("$@")
     

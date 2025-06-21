@@ -435,8 +435,8 @@ download_and_install_update() {
         # Create backup if enabled
         if [[ "$BACKUP_BEFORE_UPDATE" == "true" ]]; then
             echo -e "${CYAN}📦 Creating backup before update...${RESET}"
-            if backup_path=$(backup_script_version "Pre-git-pull backup"); then
-                echo -e "${GREEN}✅ Backup created: $(basename "$backup_path")${RESET}"
+            if backup_create "pre_git_pull_update"; then
+                echo -e "${GREEN}✅ Backup created successfully${RESET}"
             else
                 echo -e "${YELLOW}⚠️  Backup failed, but continuing...${RESET}"
             fi
@@ -946,8 +946,14 @@ perform_startup_update_check() {
 
 log_update_operation() {
     local message="$1"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$timestamp] $message" >> "$UPDATE_LOG"
+    
+    # Use centralized logging if available, fallback to file
+    if declare -f log_info >/dev/null 2>&1; then
+        log_info "update" "$message"
+    else
+        local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+        echo "[$timestamp] $message" >> "$UPDATE_LOG"
+    fi
 }
 
 # ============================================================================

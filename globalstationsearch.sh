@@ -3,75 +3,20 @@
 # === Global Station Search ===
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
-# Created: 2025/05/26
-VERSION="2.1.0"
-VERSION_INFO="Last Modified: 2025/06/11
-Minor Update Release (2.1.0)
-• Improved User Caching (resume from interruption, more efficient, fewer API calls)
-• Significantly improved dispatcharr authentication and token management
-• Continue process of code cleaning and reorganization
-• New complete USA, CAN, GBR base databse
+# Created: 2025-05-26
+VERSION="2.5.0"
+VERSION_INFO="Last Modified: 2025-06-21
 
-Patch (2.0.4)
-• Bugfixes
+Update (2.5.0)
 
-Patch (2.0.3)
-• Definitive fix of Emby integration
-
-Patch (2.0.1)
-• Fixed emby API calls
-• Fixed module loading order/dependency chain 
-
-MAJOR RELEASE (2.0.0)
-• All data from any previous version must be deleted as it is no longer backward
-  compatible
-• Added multi-country filtering support and lineup tracing when caching is performed
-• Emby integration to populate necessary lineupIds for all channels in m3u playlist
-• Significant enhacnements to codebase
-
-Improvements (1.4.5)
-• Moved all dispatcharr auth functions to lib/core/auth.sh
-  - This allows background token refresh without incrementing interactions
-    or requiring user input
-• Move all API calls to lib/core/api.sh
-• Option to select a specific channel from the 'scan for missing station IDs'
-• Addid lib/features/update.sh to manage in-script update management, including 
-  update check on startup (or at user-defined intervals)
-
-Patch (1.4.2)
-• Removed unused channel parsing fields (language, confidence)
-  These were intended for future update but broke core functionality
-
-Patch (1.4.1)
-• Fixed issues with first time setup
-• Fixed some poor regex
-• Fixed terminal style formatting
-• Clear all automatically applied filters if user enters their own search term 
-  in Dispatcharr matching 
-
-MAJOR RELEASE (1.4.0)
-• New modular script framework with many functions moved to subcscripts in lib/ folder
-• New filesystem layout
-• Channels DVR API search was broken - fixed
-• User caching was broken - fixed
-
-Previous Versions:
-• 1.3.3 - New menu system, improved regex logic, better Dispatcharr integration
-• 1.2.0 - Major base cache overhaul, better user cache handling
-• 1.1.0 - Added comprehensive local base cache
-• 1.0.0 - Initial release with Dispatcharr integration
-
-System Requirements:
-• Required: jq, curl, bash 4.0+
-• Optional: viu (logo previews), bc (progress calculations)
-• Integration: Channels DVR server (optional), Dispatcharr (optional)
-
-Quick Start:
-1. Run: ./globalstationsearch.sh
-2. Use 'Search Local Database' for immediate access
-3. Use 'Dispatcharr Integration' for automated Dispatcharr field population
-3. Add custom markets via 'Manage Television Markets' (optional)
-4. Configure integrations in 'Settings' (optional)"
+- New Emby Integration submenu                                                                                                                                              
+- Complete Dispatcharr Channel Management System (create, edit, manage channels/groups/streams)                                                                             
+- Enhanced logging system with comprehensive submenu (view, configure, clear logs)                                                                                          
+- Complete menu restructuring: Search, Dispatcharr, Emby, Settings                                                                                                          
+- Submenus also reorganized                                                                                                                                                 
+-  Updated terminology: base/user cache → base/user database                                                                                                                 
+- Fixed Bash compatibility issues and modular architecture/code improvements
+"
 
 check_version_flags() {
   case "${1:-}" in
@@ -144,7 +89,7 @@ CONFIG_FILE="$DATA_DIR/globalstationsearch.env"
 
 # SUBDIRECTORIES
 LOGS_DIR="$DATA_DIR/logs"
-USER_CACHE_DIR="$DATA_DIR/user_cache"
+USER_DATABASE_DIR="$DATA_DIR/user_database"
 BACKUP_DIR="$DATA_DIR/backups"
 LOGO_DIR="$CACHE_DIR/logos"
 STATION_CACHE_DIR="$CACHE_DIR/stations"
@@ -160,13 +105,13 @@ LINEUP_CACHE="$CACHE_DIR/all_lineups.jsonl"
 
 # MODERN TWO-FILE CACHE SYSTEM
 BASE_STATIONS_JSON="all_stations_base.json"
-USER_STATIONS_JSON="$USER_CACHE_DIR/all_stations_user.json"
+USER_STATIONS_JSON="$USER_DATABASE_DIR/all_stations_user.json"
 COMBINED_STATIONS_JSON="$CACHE_DIR/all_stations_combined.json"
 
 # CACHE STATE TRACKING FILES
-CACHED_MARKETS="$USER_CACHE_DIR/cached_markets.jsonl"
-CACHED_LINEUPS="$USER_CACHE_DIR/cached_lineups.jsonl"
-LINEUP_TO_MARKET="$USER_CACHE_DIR/lineup_to_market.json"
+CACHED_MARKETS="$USER_DATABASE_DIR/cached_markets.jsonl"
+CACHED_LINEUPS="$USER_DATABASE_DIR/cached_lineups.jsonl"
+LINEUP_TO_MARKET="$USER_DATABASE_DIR/lineup_to_market.json"
 CACHE_STATE_LOG="$LOGS_DIR/cache_state.log"
 
 # SEARCH RESULT FILES
@@ -218,7 +163,7 @@ load_essential_modules() {
         "lib/core/utils.sh|Core Utility Functions|true"
         "lib/ui/colors.sh|Terminal Colors Framework|true"
         "lib/core/config.sh|Configuration Management|true"
-
+        "lib/core/logging.sh|Centralized Logging System|true"
     )
     
     echo -e "${INFO_STYLE}📦 Loading essential modules...${RESET}" >&2
@@ -238,10 +183,12 @@ load_remaining_modules() {
         "lib/ui/menus.sh|Menu Framework|true"
         "lib/core/channel_parsing.sh|Channel Name Parsing|true"
         "lib/core/cache.sh|Cache Management Module|true"
-        "lib/core/auth.sh|Authentication Management|true"
-        "lib/core/api.sh|API Functions|true"
         "lib/integrations/dispatcharr.sh|Enhanced Dispatcharr Integration|true"
-        "lib/core/backup.sh|Unified Backup System|true"       
+        "lib/integrations/emby.sh|Emby Server Integration|true"
+        "lib/integrations/cdvr.sh|Channels DVR Integration|true"
+        "lib/core/search.sh|Search and Filtering Utilities|true"
+        "lib/core/database.sh|Database Operations|true"
+        "lib/core/backup.sh|Simple Backup System|true"       
         "lib/features/update.sh|Auto-Update System|true"
         "lib/core/progress_tracker.sh|Progress Tracking & Recovery|false"
     )
@@ -254,6 +201,17 @@ load_remaining_modules() {
     
     echo -e "${SUCCESS_STYLE}✅ All remaining modules loaded successfully${RESET}" >&2
 }
+
+# ============================================================================
+# DATABASE COMPATIBILITY FUNCTIONS
+# ============================================================================
+
+# Database compatibility functions that delegate to database.sh module
+has_stations_database() { db_has_stations_database "$@"; }
+has_stations_database_fast() { db_has_stations_database_fast "$@"; }
+get_total_stations_count() { db_get_total_stations_count "$@"; }
+get_total_stations_count_fast() { db_get_total_stations_count_fast "$@"; }
+get_stations_breakdown() { db_get_stations_breakdown "$@"; }
 
 # ============================================================================
 # CONFIGURATION & SETUP FUNCTIONS
@@ -290,7 +248,7 @@ setup_directories() {
   local directories=(
     "$DATA_DIR"
     "$CACHE_DIR"
-    "$USER_CACHE_DIR" 
+    "$USER_DATABASE_DIR" 
     "$BACKUP_DIR"
     "$LOGS_DIR"
     "$STATION_CACHE_DIR"
@@ -388,147 +346,7 @@ cleanup_combined_cache() {
   COMBINED_CACHE_TIMESTAMP=0
 }
 
-has_stations_database() {
-  local context="${1:-normal}"
-  
-  case "$context" in
-    "startup"|"menu"|"status")
-      has_stations_database_fast
-      ;;
-    *)
-      # Full check for actual operations
-      local effective_file
-      effective_file=$(get_effective_stations_file 2>/dev/null)
-      return $?
-      ;;
-  esac
-}
-
-has_stations_database_fast() {
-  # Check if any individual cache exists
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    return 0
-  fi
-  
-  if [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    return 0
-  fi
-  
-  return 1
-}
-
-get_total_stations_count() {
-  local context="${1:-normal}"
-  local debug_trace=${DEBUG_CACHE_TRACE:-false}
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${INFO_STYLE}[TRACE] get_total_stations_count($context) called${RESET}" >&2
-  fi
-  
-  case "$context" in
-    "startup"|"menu"|"status")
-      # Use fast count for menu display, avoiding cache rebuilds
-      get_total_stations_count_fast
-      ;;
-    *)
-      # Full merge for actual operations
-      local effective_file
-      effective_file=$(get_effective_stations_file 2>/dev/null)
-      if [ $? -eq 0 ] && [ -f "$effective_file" ]; then
-        local count=$(jq 'length' "$effective_file" 2>/dev/null || echo "0")
-        if [ "$debug_trace" = true ]; then
-          echo -e "${INFO_STYLE}[TRACE] Full count from $effective_file: $count${RESET}" >&2
-        fi
-        echo "$count"
-      else
-        if [ "$debug_trace" = true ]; then
-          echo -e "${ERROR_STYLE}[TRACE] No effective file found, returning 0${RESET}" >&2
-        fi
-        echo "0"
-      fi
-      ;;
-  esac
-}
-
-get_total_stations_count_fast() {
-  local debug_trace=${DEBUG_CACHE_TRACE:-false}
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${INFO_STYLE}[TRACE] get_total_stations_count_fast() called${RESET}" >&2
-  fi
-  
-  # If we have a valid combined cache, use it (no rebuild)
-  if [ "$COMBINED_CACHE_VALID" = "true" ] && [ -f "$COMBINED_STATIONS_JSON" ]; then
-    local count=$(jq 'length' "$COMBINED_STATIONS_JSON" 2>/dev/null || echo "0")
-    if [ "$debug_trace" = true ]; then
-      echo -e "${SUCCESS_STYLE}[TRACE] Using valid combined cache: $count${RESET}" >&2
-    fi
-    echo "$count"
-    return 0
-  fi
-  
-  # Check if combined cache exists and is readable without triggering rebuild
-  if [ -f "$COMBINED_STATIONS_JSON" ]; then
-    local count=$(jq 'length' "$COMBINED_STATIONS_JSON" 2>/dev/null || echo "0")
-    if [ "$count" != "0" ]; then
-      if [ "$debug_trace" = true ]; then
-        echo -e "${INFO_STYLE}[TRACE] Using existing combined cache: $count${RESET}" >&2
-      fi
-      echo "$count"
-      return 0
-    fi
-  fi
-  
-  # Otherwise, estimate without triggering a merge
-  local base_count=0
-  local user_count=0
-  
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    base_count=$(jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
-  fi
-  
-  if [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
-  fi
-  
-  local total=$((base_count + user_count))
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${WARNING_STYLE}[TRACE] Estimated count (no merge): base=$base_count + user=$user_count = $total${RESET}" >&2
-  fi
-  
-  # Return sum (slight overestimate due to potential duplicates, but avoids rebuild)
-  echo "$total"
-}
-
-get_stations_breakdown() {
-  local debug_trace=${DEBUG_CACHE_TRACE:-false}
-  local base_count=0
-  local user_count=0
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${INFO_STYLE}[TRACE] get_stations_breakdown() called${RESET}" >&2
-  fi
-  
-  # Get counts directly from files without triggering merges
-  if [ -f "$BASE_STATIONS_JSON" ] && [ -s "$BASE_STATIONS_JSON" ]; then
-    base_count=$(jq 'length' "$BASE_STATIONS_JSON" 2>/dev/null || echo "0")
-  fi
-  
-  if [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
-    user_count=$(jq 'length' "$USER_STATIONS_JSON" 2>/dev/null || echo "0")
-  fi
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${SUCCESS_STYLE}[TRACE] Breakdown: base=$base_count user=$user_count${RESET}" >&2
-  fi
-  
-  echo "$base_count $user_count"
-}
-
-# ============================================================================
 # DATABASE STATE TRACKING FUNCTIONS
-# ============================================================================
 
 init_cache_state_tracking() {
   touch "$CACHED_MARKETS" "$CACHED_LINEUPS"
@@ -602,8 +420,6 @@ record_lineup_processed() {
 
 }
 
-# Review complete to here
-
 is_market_cached() {
   local country="$1"
   local zip="$2"
@@ -637,292 +453,69 @@ get_unprocessed_markets() {
     return 0
   fi
   
-  # Compare CSV against cached markets, accounting for base cache coverage
+  # Compare CSV against cached markets, accounting for base database coverage
   tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
-    # Skip if already processed in user cache
+    # Skip if already processed in user database
     if is_market_cached "$country" "$zip"; then
       continue
     fi
     
-    # Include market for processing (base cache filtering happens elsewhere)
+    # Include market for processing (base database filtering happens elsewhere)
     echo "$country,$zip"
   done
 }
 
 refresh_market_display() {
-  echo -e "${CYAN}🔄 Refreshing market status display...${RESET}"
+  echo -e "${INFO_STYLE}🔄 Refreshing market status display...${RESET}"
   
   # Clear any cached state in the manage_markets function
   # Force re-read of state files
   if [ -f "$CACHED_MARKETS" ]; then
-    echo -e "${GREEN}✅ State file exists with $(jq -s 'length' "$CACHED_MARKETS" 2>/dev/null || echo "0") entries${RESET}"
+    echo -e "${SUCCESS_STYLE}✅ State file exists with $(jq -s 'length' "$CACHED_MARKETS" 2>/dev/null || echo "0") entries${RESET}"
   else
-    echo -e "${YELLOW}⚠️  State file missing - creating minimal state${RESET}"
+    echo -e "${WARNING_STYLE}⚠️  State file missing - creating minimal state${RESET}"
     > "$CACHED_MARKETS"
   fi
   
-  echo -e "${GREEN}✅ Market display refreshed${RESET}"
-}
-
-# ============================================================================
-# RESULTS FILTERING
-# ============================================================================
-
-build_resolution_filter() {
-  local runtime_resolution="${1:-}"  # Optional runtime override
-  
-  # Use runtime resolution if provided, otherwise use configured filter
-  if [[ -n "$runtime_resolution" ]]; then
-    echo "and (.videoQuality.videoType // \"\" | . == \"$runtime_resolution\")"
-  elif [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-    local filter_conditions=""
-    IFS=',' read -ra RESOLUTIONS <<< "$ENABLED_RESOLUTIONS"
-    for res in "${RESOLUTIONS[@]}"; do
-      if [ -n "$filter_conditions" ]; then
-        filter_conditions+=" or "
-      fi
-      filter_conditions+="(.videoQuality.videoType // \"\" | . == \"$res\")"
-    done
-    echo "and ($filter_conditions)"
-  else
-    echo ""
-  fi
-}
-
-build_country_filter() {
-  local runtime_country="${1:-}"  # Optional runtime override
-  
-  # Use runtime country if provided, otherwise use configured filter
-  if [[ -n "$runtime_country" ]]; then
-    echo "and (.availableIn[]? // \"\" | . == \"$runtime_country\")"
-  elif [ "$FILTER_BY_COUNTRY" = "true" ] && [ -n "$ENABLED_COUNTRIES" ]; then
-    local filter_conditions=""
-    IFS=',' read -ra COUNTRIES <<< "$ENABLED_COUNTRIES"
-    for country in "${COUNTRIES[@]}"; do
-      if [ -n "$filter_conditions" ]; then
-        filter_conditions+=" or "
-      fi
-      filter_conditions+="(.availableIn[]? // \"\" | . == \"$country\")"
-    done
-    echo "and ($filter_conditions)"
-  else
-    echo ""
-  fi
-}
-
-get_available_countries() {
-  local debug_trace=${DEBUG_COUNTRY_FILTER:-false}
-  
-  if [ "$debug_trace" = true ]; then
-    echo -e "${CYAN}[DEBUG] get_available_countries() - extracting from availableIn arrays${RESET}" >&2
-  fi
-  
-  # Get countries from availableIn arrays instead of legacy country field
-  local stations_file
-  if stations_file=$(get_effective_stations_file 2>/dev/null); then
-    if [ "$debug_trace" = true ]; then
-      echo -e "${CYAN}[DEBUG] Using stations file: $stations_file${RESET}" >&2
-    fi
-    
-    local countries
-    countries=$(jq -r '[.[] | .availableIn[]? // empty | select(. != "")] | unique | join(",")' "$stations_file" 2>/dev/null)
-    
-    if [[ -n "$countries" && "$countries" != "null" && "$countries" != "" ]]; then
-      if [ "$debug_trace" = true ]; then
-        echo -e "${CYAN}[DEBUG] Found countries from arrays: $countries${RESET}" >&2
-      fi
-      echo "$countries"
-      return 0
-    else
-      if [ "$debug_trace" = true ]; then
-        echo -e "${CYAN}[DEBUG] No countries found in availableIn arrays${RESET}" >&2
-      fi
-      echo ""
-      return 1
-    fi
-  else
-    if [ "$debug_trace" = true ]; then
-      echo -e "${CYAN}[DEBUG] No effective stations file available${RESET}" >&2
-    fi
-    echo ""
-    return 1
-  fi
+  echo -e "${SUCCESS_STYLE}✅ Market display refreshed${RESET}"
 }
 
 # ============================================================================
 # SEARCH FUNCTIONS
 # ============================================================================
 
-shared_station_search() {
-  local search_term="$1"
-  local page="${2:-1}"
-  local output_format="${3:-tsv}"     # "tsv", "count", or "full"
-  local runtime_country="${4:-}"      # For future channel name parsing
-  local runtime_resolution="${5:-}"   # For future channel name parsing
-  local results_per_page=$DEFAULT_RESULTS_PER_PAGE
-  
-  local start_index=$(( (page - 1) * results_per_page ))
-  
-  # Get effective stations file (same source for all searches)
-  local stations_file
-  stations_file=$(get_effective_stations_file)
-  if [ $? -ne 0 ]; then
-    if [[ "$output_format" == "count" ]]; then
-      echo "0"
-    fi
-    return 1
-  fi
-  
-  # Escape special regex characters for safety (same as local search)
-  local escaped_term=$(echo "$search_term" | sed 's/[[\.*^$()+?{|]/\\&/g')
-  
-  # Build filters with runtime override capability (for future parsing)
-  local resolution_filter=$(build_resolution_filter "$runtime_resolution")
-  local country_filter=$(build_country_filter "$runtime_country")
-  
-  # Core search logic - identical for all callers
-  if [[ "$output_format" == "count" ]]; then
-    # Return count only
-    jq -r --arg term "$escaped_term" --arg exact_term "$search_term" '
-      [.[] | select(
-        ((.name // "" | test($term; "i")) or
-         (.callSign // "" | test($term; "i")) or
-         (.name // "" | . == $exact_term) or
-         (.callSign // "" | . == $exact_term))
-        '"$resolution_filter"'
-        '"$country_filter"'
-      )] | length
-    ' "$stations_file" 2>/dev/null || echo "0"
-  elif [[ "$output_format" == "tsv" ]]; then
-    # Return paginated TSV results (for Dispatcharr tables)
-    jq -r --arg term "$escaped_term" --arg exact_term "$search_term" --argjson start "$start_index" --argjson limit "$results_per_page" '
-      [.[] | select(
-        ((.name // "" | test($term; "i")) or
-         (.callSign // "" | test($term; "i")) or
-         (.name // "" | . == $exact_term) or
-         (.callSign // "" | . == $exact_term))
-        '"$resolution_filter"'
-        '"$country_filter"'
-      )] | .[$start:($start + $limit)][] | 
-      (.stationId // "") + "\t" + 
-      (.name // "") + "\t" + 
-      (.callSign // "") + "\t" + 
-      ((.availableIn // []) | if length > 1 then join(",") else .[0] // "UNK" end)
-    ' "$stations_file" 2>/dev/null
-  else
-    # Return full JSON results (for local search display)
-    jq -r --arg term "$escaped_term" --arg exact_term "$search_term" --argjson start "$start_index" --argjson limit "$results_per_page" '
-      [.[] | select(
-        ((.name // "" | test($term; "i")) or
-         (.callSign // "" | test($term; "i")) or
-         (.name // "" | . == $exact_term) or
-         (.callSign // "" | . == $exact_term))
-        '"$resolution_filter"'
-        '"$country_filter"'
-      )] | .[$start:($start + $limit)][] | 
-      [.name, .callSign, (.videoQuality.videoType // "Unknown"), .stationId, ((.availableIn // []) | if length > 1 then join(",") else .[0] // "UNK" end)] | @tsv
-    ' "$stations_file" 2>/dev/null
-  fi
-}
-
-get_station_quality() {
-  local station_id="$1"
-  
-  # Get effective stations file
-  local stations_file
-  stations_file=$(get_effective_stations_file)
-  if [ $? -ne 0 ]; then
-    echo "Unknown"
-    return 1
-  fi
-  
-  # Extract quality for this station
-  local quality=$(jq -r --arg id "$station_id" \
-    '.[] | select(.stationId == $id) | .videoQuality.videoType // "Unknown"' \
-    "$stations_file" 2>/dev/null | head -n 1)
-  
-  echo "${quality:-Unknown}"
-}
-
-display_logo() {
-  local stid="$1"
-  local logo_file="$LOGO_DIR/${stid}.png"
-  
-  if [[ "$SHOW_LOGOS" == true ]]; then
-    if [[ ! -f "$logo_file" ]]; then
-      # Get effective stations file for logo lookup
-      local stations_file
-      stations_file=$(get_effective_stations_file)
-      if [ $? -eq 0 ]; then
-        local logo_url=$(jq -r --arg id "$stid" '.[] | select(.stationId == $id) | .preferredImage.uri // empty' "$stations_file" | head -n 1)
-        
-        # CRITICAL FIX: Check if logo_url is valid HTTP URL before curl
-        if [[ -n "$logo_url" ]] && [[ "$logo_url" =~ ^https?:// ]] && [[ ! "$logo_url" =~ ^sources/ ]]; then
-          curl -sL --connect-timeout 5 --max-time 10 "$logo_url" --output "$logo_file" 2>/dev/null
-        fi
-      fi
-    fi
-    
-    if [[ -f "$logo_file" ]]; then
-      local mime_type=$(file --mime-type -b "$logo_file")
-      if [[ "$mime_type" == image/* ]]; then
-        viu -h 3 -w 20 "$logo_file" || echo "[no logo available]"
-      else
-        echo "[no logo available]"
-      fi
-    else
-      echo "[no logo available]"
-    fi
-  else
-    echo "[logo previews disabled]"
-  fi
-}
-
 search_local_database() {
-  # Check if any database exists, provide helpful guidance if not
+  # CHECK IF DATABASE EXISTS
   if ! has_stations_database; then
     clear
     echo -e "${BOLD}${YELLOW}Local Database Search${RESET}\n"
     
-    echo -e "${RED}❌ Local Database Search: No station data available${RESET}"
+    echo -e "${ERROR_STYLE}❌ Local Database Search: No station data available${RESET}"
     echo
     
     # Provide detailed status of what's available/missing
     local breakdown=$(get_stations_breakdown)
-    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+    local base_count=$(echo "$breakdown" | sed 's/Base: \([0-9]*\).*/\1/')
+    local user_count=$(echo "$breakdown" | sed 's/.*User: \([0-9]*\).*/\1/')
     
-    echo -e "${BOLD}${BLUE}Database Status Analysis:${RESET}"
-    
-    if [ "$base_count" -eq 0 ]; then
-      echo -e "${RED}❌ Base Station Database: Not found${RESET}"
-      echo -e "${CYAN}💡 Expected location: $(basename "$BASE_STATIONS_JSON") in script directory${RESET}"
-      echo -e "${CYAN}💡 Contact script distributor for base database file${RESET}"
-    else
-      echo -e "${GREEN}✅ Base Station Database: $base_count stations available${RESET}"
-    fi
-    
-    if [ "$user_count" -eq 0 ]; then
-      echo -e "${YELLOW}⚠️  User Station Database: Empty${RESET}"
-      echo -e "${CYAN}💡 Build via 'Manage Television Markets' → 'Run User Caching'${RESET}"
-    else
-      echo -e "${GREEN}✅ User Station Database: $user_count stations available${RESET}"
-    fi
+    display_status_block_header "Database Status Analysis"
+    display_status_base_database
+    display_status_user_database
     
     echo
     
     # Show guidance based on what's available
     if [ "$base_count" -gt 0 ] && [ "$user_count" -eq 0 ]; then
-      echo -e "${CYAN}💡 You have the base database - Local Database Search should work!${RESET}"
-      echo -e "${CYAN}💡 You can search immediately or add custom markets for expansion${RESET}"
+      echo -e "${INFO_STYLE}💡 You have the base database - Local Database Search should work!${RESET}"
+      echo -e "${INFO_STYLE}💡 You can search immediately or add custom markets for expansion${RESET}"
     elif [ "$base_count" -eq 0 ] && [ "$user_count" -gt 0 ]; then
-      echo -e "${CYAN}💡 You have user stations - Local Database Search should work!${RESET}"
-      echo -e "${CYAN}💡 Consider getting base database for broader coverage${RESET}"
+      echo -e "${INFO_STYLE}💡 You have user stations - Local Database Search should work!${RESET}"
     elif [ "$base_count" -eq 0 ] && [ "$user_count" -eq 0 ]; then
-      echo -e "${CYAN}💡 No station database found - need to build or obtain one${RESET}"
+      echo -e "${INFO_STYLE}💡 No station database found - need to build or obtain one${RESET}"
       show_workflow_guidance
     fi
     
+    # If no database available for local search, show submenu of available options
     echo
     echo -e "${BOLD}${CYAN}Available Options:${RESET}"
     echo -e "${GREEN}1.${RESET} Manage Television Markets → Build User Station Database"
@@ -949,7 +542,7 @@ search_local_database() {
         return
         ;;
       *)
-        echo -e "${RED}❌ Invalid option. Please try again.${RESET}"
+        echo -e "${ERROR_STYLE}❌ Invalid option. Please try again.${RESET}"
         sleep 1
         return
         ;;
@@ -967,8 +560,8 @@ run_search_interface() {
     
     # Show database status with standardized patterns
     local breakdown=$(get_stations_breakdown)
-    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+    local base_count=$(echo "$breakdown" | sed 's/Base: \([0-9]*\).*/\1/')
+    local user_count=$(echo "$breakdown" | sed 's/.*User: \([0-9]*\).*/\1/')
     local total_count=$(get_total_stations_count)
     
     echo -e "${GREEN}✅ Database Available: $total_count stations${RESET}"
@@ -980,21 +573,12 @@ run_search_interface() {
     fi
     echo
     
-    # STANDARDIZED: Current Search Filters with consistent patterns
-    echo -e "${BOLD}${BLUE}Current Search Filters:${RESET}"
-    if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-      echo -e "${GREEN}✅ Resolution Filter: Active ${RESET}(${YELLOW}$ENABLED_RESOLUTIONS${RESET})"
-    else
-      echo -e "${YELLOW}⚠️  Resolution Filter: Disabled ${RESET}(${YELLOW}Showing all resolutions${RESET})"
-    fi
-    
-    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
-      echo -e "${GREEN}✅ Country Filter: Active ${RESET}(${YELLOW}$ENABLED_COUNTRIES${RESET})"
-    else
-      echo -e "${YELLOW}⚠️  Country Filter: Disabled ${RESET}(${YELLOW}Showing all countries${RESET})"
-    fi
-    
-    echo -e "${CYAN}💡 Configure filters in Settings to narrow results${RESET}"
+    # STANDARDIZED: Current Search Filters using modular system
+    display_status_block_header "Current Search Filters"
+    display_status_resolution_filter
+    display_status_country_filter
+    echo
+    display_status_summary "Configure filters in Settings to narrow results"
     echo
     
     read -p "Enter search term (station name or call sign) or 'q' to return: " search_term < /dev/tty
@@ -1024,79 +608,22 @@ perform_search() {
     echo -e "${BOLD}${CYAN}=== Local Database Search Results ===${RESET}\n"
     echo -e "${YELLOW}Search: '$search_term' (Page $page)${RESET}"
     
-    # STANDARDIZED: Show active filters with consistent formatting
-    local filter_status=""
-    if [ "$FILTER_BY_RESOLUTION" = "true" ]; then
-      filter_status+="Resolution: ${GREEN}$ENABLED_RESOLUTIONS${RESET} "
-    fi
-    if [ "$FILTER_BY_COUNTRY" = "true" ]; then
-      filter_status+="Country: ${GREEN}$ENABLED_COUNTRIES${RESET} "
-    fi
-    if [ -n "$filter_status" ]; then
-      echo -e "${BLUE}🔍 Active Filters: $filter_status${RESET}"
-    else
-      echo -e "${CYAN}🔍 No filters active - showing all available stations${RESET}"
-    fi
-    echo
+    # STANDARDIZED: Show search status using modular system
+    display_status_search_context
 
     # STANDARDIZED: Progress indicator for search
     echo -e "${CYAN}🔄 Searching database...${RESET}"
-    
+
     # Get search results using shared function
     local results
     results=$(shared_station_search "$search_term" "$page" "full")
-    
+
     local total_results
     total_results=$(shared_station_search "$search_term" 1 "count")
 
-    # STANDARDIZED: Result display with consistent error handling
-    if [[ -z "$results" ]]; then
-      echo -e "\n${YELLOW}⚠️  No results found for '$search_term'${RESET}"
-      echo
-      echo -e "${BOLD}${CYAN}Suggestions to improve your search:${RESET}"
-      if [ "$FILTER_BY_RESOLUTION" = "true" ] || [ "$FILTER_BY_COUNTRY" = "true" ]; then
-        echo -e "${CYAN}💡 Try disabling filters in Settings → Search Filters${RESET}"
-      fi
-      echo -e "${CYAN}💡 Try partial names: 'ESPN' instead of 'ESPN Sports Center'${RESET}"
-      echo -e "${CYAN}💡 Try call signs: 'CNN' for CNN stations${RESET}"
-      echo -e "${CYAN}💡 Check spelling and try alternative names${RESET}"
-      echo
-    else
-      echo -e "\n${GREEN}✅ Found $total_results total results${RESET}"
-      echo -e "${CYAN}💡 Showing page $page with up to $results_per_page results${RESET}"
-      echo
-
-      # Enhanced table header with selection column (in perform_search function)
-      printf "${BOLD}${YELLOW}%-3s %-30s %-10s %-8s %-12s %s${RESET}\n" "Key" "Channel Name" "Call Sign" "Quality" "Station ID" "Country"
-      echo "---------------------------------------------------------------------------------"
-
-      local result_count=0
-      local key_letters=("a" "b" "c" "d" "e" "f" "g" "h" "i" "j")
-
-      # FIXED: Process search results with GREEN selection highlighting
-      while IFS=$'\t' read -r name call_sign quality station_id country; do
-        [[ -z "$name" ]] && continue
-
-        local key="${key_letters[$result_count]}"
-
-        # FIXED: Format table row with GREEN selection highlighting
-        printf "${GREEN}%-3s${RESET} " "${key})"
-        printf "%-30s %-10s %-8s " "${name:0:30}" "${call_sign:0:10}" "${quality:0:8}"
-        echo -n -e "${CYAN}${station_id}${RESET}"
-        printf "%*s" $((12 - ${#station_id})) ""
-        echo -e "${GREEN}${country}${RESET}"
-
-        # STANDARDIZED: Logo display with consistent messaging
-        if [[ "$SHOW_LOGOS" == true ]]; then
-          display_logo "$station_id"
-        else
-          echo "   [logo previews disabled - enable in Settings]"
-        fi
-        echo
-
-        ((result_count++))
-      done <<< "$results"
-    fi
+    # Display results and get count using display module  
+    display_search_results "$search_term" "$page" "$results" "$total_results" "$results_per_page" "local"
+    local result_count=$SEARCH_RESULT_COUNT
 
     # STANDARDIZED: Calculate pagination info with error handling
     local total_pages=$(( (total_results + results_per_page - 1) / results_per_page ))
@@ -1110,50 +637,97 @@ perform_search() {
     [[ $result_count -gt 0 ]] && echo -e "${GREEN}a-j)${RESET} View detailed info for selected station"
     [[ $page -lt $total_pages ]] && echo -e "${GREEN}n)${RESET} Next page"
     [[ $page -gt 1 ]] && echo -e "${GREEN}p)${RESET} Previous page"
+    echo -e "${GREEN}*)${RESET} Configure search filters"
     echo -e "${GREEN}s)${RESET} New search"
     echo -e "${GREEN}q)${RESET} Back to search menu"
     echo
 
-    read -p "Your choice: " choice < /dev/tty
+    read -p "Select option: " choice < /dev/tty
 
-    case "$choice" in
-      a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
-        if [[ $result_count -gt 0 ]]; then
-          show_station_details "$choice" "$results"
-        else
-          echo -e "${RED}❌ No results to select from${RESET}"
-          echo -e "${CYAN}💡 Try a different search term${RESET}"
-          sleep 2
-        fi
-        ;;
-      n|N)
-        if [[ $page -lt $total_pages ]]; then
-          ((page++))
-        else
-          echo -e "${YELLOW}⚠️  Already on last page${RESET}"
-          sleep 1
-        fi
-        ;;
-      p|P)
-        if [[ $page -gt 1 ]]; then
-          ((page--))
-        else
-          echo -e "${YELLOW}⚠️  Already on first page${RESET}"
-          sleep 1
-        fi
-        ;;
-      s|S)
-        return 0  # Return to search interface for new search
-        ;;
-      q|Q|"")
-        return 0  # Return to search interface
-        ;;
-      *)
-        echo -e "${RED}❌ Invalid option. Please try again.${RESET}"
-        sleep 1
-        ;;
+    # Handle navigation using extracted function
+    local action
+    action=$(handle_search_navigation "$choice" "$page" "$total_pages" "$result_count" "$results")
+
+    case "$action" in
+        "next_page")
+            ((page++))
+            ;;
+        "prev_page")
+            ((page--))
+            ;;
+        "new_search")
+            return 0  # Return to search interface for new search
+            ;;
+        "quit")
+            return 0  # Return to search interface
+            ;;
+        "filters")
+            search_filters_submenu
+            # Continue with same search after returning from filters
+            ;;
+        show_details:*)
+            # Extract the choice from the action and show details
+            local selected_choice="${action#show_details:}"
+            show_station_details "$selected_choice" "$results"
+            ;;
+        "stay")
+            # Continue loop
+            ;;
     esac
   done
+}
+
+handle_search_navigation() {
+    local choice="$1"
+    local page="$2"
+    local total_pages="$3"
+    local result_count="$4"
+    local results="$5"
+    
+    case "$choice" in
+        a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
+            if [[ $result_count -gt 0 ]]; then
+                echo "show_details:$choice"  # Return action with parameter
+            else
+                echo -e "${RED}❌ No results to select from${RESET}"
+                echo -e "${CYAN}💡 Try a different search term${RESET}"
+                sleep 2
+                echo "stay"
+            fi
+            ;;
+        n|N)
+            if [[ $page -lt $total_pages ]]; then
+                echo "next_page"
+            else
+                echo -e "${YELLOW}⚠️  Already on last page${RESET}"
+                sleep 1
+                echo "stay"
+            fi
+            ;;
+        p|P)
+            if [[ $page -gt 1 ]]; then
+                echo "prev_page"
+            else
+                echo -e "${YELLOW}⚠️  Already on first page${RESET}"
+                sleep 1
+                echo "stay"
+            fi
+            ;;
+        s|S)
+            echo "new_search"
+            ;;
+        q|Q|"")
+            echo "quit"
+            ;;
+        "*")
+            echo "filters"
+            ;;
+        *)
+            echo -e "${RED}❌ Invalid option. Please try again.${RESET}"
+            sleep 1
+            echo "stay"
+            ;;
+    esac
 }
 
 show_station_details() {
@@ -1182,243 +756,34 @@ show_station_details() {
       clear
       echo -e "${BOLD}${CYAN}=== Station Details ===${RESET}\n"
       
-      # STANDARDIZED: Basic Information with enhanced formatting
-      echo -e "${BOLD}${BLUE}Basic Information:${RESET}"
-      echo -e "${CYAN}Station Name:${RESET} ${GREEN}$name${RESET}"
-      echo -e "${CYAN}Call Sign:${RESET} ${GREEN}$call_sign${RESET}"
-      echo -e "${CYAN}Station ID:${RESET} ${GREEN}$station_id${RESET}"
-      echo -e "${CYAN}Country:${RESET} ${GREEN}$country${RESET}"
-      echo -e "${CYAN}Video Quality:${RESET} ${GREEN}$quality${RESET}"
-      echo
-      
-      # STANDARDIZED: Progress indicator for additional data lookup
-      echo -e "${CYAN}🔄 Retrieving additional station information...${RESET}"
-      
-      # Get additional details from database with error handling
-      local stations_file
-      stations_file=$(get_effective_stations_file)
-      if [[ $? -eq 0 ]]; then
-        local details=$(jq -r --arg id "$station_id" \
-          '.[] | select(.stationId == $id) | 
-           "Network: " + (.network // "N/A") + "\n" +
-           "Language: " + (.language // "N/A") + "\n" +
-           "Logo URL: " + (.preferredImage.uri // "N/A") + "\n" +
-           "Description: " + (.description // "N/A")' \
-          "$stations_file" 2>/dev/null)
-        
-        if [[ -n "$details" ]]; then
-          echo -e "${BOLD}${BLUE}Extended Information:${RESET}"
-          echo "$details"
-          echo
-        else
-          echo -e "${YELLOW}⚠️  Extended information not available for this station${RESET}"
-          echo -e "${CYAN}💡 This may occur with manually-added or API-sourced stations${RESET}"
-          echo
-        fi
-      else
-        echo -e "${RED}❌ Station Database: Unable to access extended information${RESET}"
-        echo -e "${CYAN}💡 Database may be temporarily unavailable${RESET}"
-        echo
-      fi
-      
-      # STANDARDIZED: Logo display with enhanced messaging
-      echo -e "${BOLD}${BLUE}Station Logo:${RESET}"
-      if [[ "$SHOW_LOGOS" == true ]]; then
-        echo -e "${CYAN}🖼️  Logo preview:${RESET}"
-        display_logo "$station_id"
-        echo
-      else
-        echo -e "${YELLOW}⚠️  Logo previews disabled${RESET}"
-        echo -e "${CYAN}💡 Enable in Settings → Logo Display for visual previews${RESET}"
-        echo -e "${CYAN}💡 Requires 'viu' tool for terminal image display${RESET}"
-        echo
-      fi
-      
-      # STANDARDIZED: Usage guidance
-      echo -e "${BOLD}${BLUE}Usage Information:${RESET}"
-      echo -e "${CYAN}💡 This station can be used for:${RESET}"
-      echo -e "${GREEN}• Search results and filtering${RESET}"
-      echo -e "${GREEN}• Dispatcharr integration and channel matching${RESET}"
-      echo -e "${GREEN}• Station ID lookups and reverse searches${RESET}"
-      echo -e "${GREEN}• Export to CSV for external use${RESET}"
-      echo
-      
-      # STANDARDIZED: Data source information
-      local data_source="Unknown"
-      local stations_data=$(jq -r --arg id "$station_id" '.[] | select(.stationId == $id) | .source // "Unknown"' "$stations_file" 2>/dev/null)
-      if [[ -n "$stations_data" && "$stations_data" != "null" ]]; then
-        data_source="$stations_data"
-      fi
-      
-      echo -e "${BOLD}${BLUE}Data Source:${RESET}"
-      case "$data_source" in
-        "user")
-          echo -e "${GREEN}✅ User Station Database${RESET} (from your configured markets)"
-          ;;
-        "base"|"combined")
-          echo -e "${GREEN}✅ Base Station Database${RESET} (distributed with script)"
-          ;;
-        *)
-          echo -e "${CYAN}💡 Combined Database${RESET} (merged from available sources)"
-          ;;
-      esac
-      echo
-      
+      # Display comprehensive station information using extracted function
+      display_station_info "$name" "$call_sign" "$station_id" "$country" "$quality"
+
       pause_for_user
+
     else
-      echo -e "${RED}❌ Station Details: Could not retrieve information${RESET}"
-      echo -e "${CYAN}💡 The selected station may no longer be available${RESET}"
-      echo -e "${CYAN}💡 Try refreshing your search results${RESET}"
+      echo -e "${ERROR_STYLE}❌ Station Details: Could not retrieve information${RESET}"
+      echo -e "${INFO_STYLE}💡 The selected station may no longer be available${RESET}"
+      echo -e "${INFO_STYLE}💡 Try refreshing your search results${RESET}"
       sleep 2
     fi
   else
-    echo -e "${RED}❌ Invalid Selection: '$choice' is not a valid option${RESET}"
-    echo -e "${CYAN}💡 Use letters a-j to select from the displayed results${RESET}"
+    echo -e "${ERROR_STYLE}❌ Invalid Selection: '$choice' is not a valid option${RESET}"
+    echo -e "${INFO_STYLE}💡 Use letters a-j to select from the displayed results${RESET}"
     sleep 2
   fi
 }
 
-run_direct_api_search() {
-  # Validate server is configured and accessible
-  if [[ -z "${CHANNELS_URL:-}" ]]; then
-    echo -e "${RED}❌ Channels DVR Integration: No server configured${RESET}"
-    echo -e "${CYAN}💡 Configure server in Settings → Channels DVR Server first${RESET}"
-    pause_for_user
-    return 1
-  fi
-  
-  # Test server connection
-  echo -e "${CYAN}🔗 Testing connection to Channels DVR server...${RESET}"
-  if ! channels_dvr_test_connection; then
-      pause_for_user
-      return 1
-  fi
-  
-  echo -e "${GREEN}✅ Connection to Channels DVR server confirmed${RESET}"
-  
-  while true; do
-    clear
-    echo -e "${BOLD}${CYAN}=== Direct Channels DVR API Search ===${RESET}\n"
-    
-    echo -e "${GREEN}✅ Connected to: $CHANNELS_URL${RESET}"
-    echo
-    echo -e "${BOLD}${YELLOW}⚠️  IMPORTANT API LIMITATIONS:${RESET}"
-    echo -e "${RED}• Results limited to 6 stations per search${RESET}"
-    echo -e "${RED}• No country information available${RESET}"
-    echo -e "${RED}• Search filters (resolution, country) not available${RESET}"
-    echo -e "${RED}• Less comprehensive than Local Database Search${RESET}"
-    echo
-    echo -e "${GREEN}💡 For better results: Use 'Local Database Search' instead${RESET}"
-    echo
-    
-    read -p "Search API by station name or call sign (or 'q' to return): " SEARCH_TERM < /dev/tty
-    
-    case "$SEARCH_TERM" in
-      q|Q|"") break ;;
-      *)
-        if [[ -z "$SEARCH_TERM" || "$SEARCH_TERM" =~ ^[[:space:]]*$ ]]; then
-          echo -e "${RED}❌ Please enter a search term${RESET}"
-          echo -e "${CYAN}💡 Try station names like 'CNN' or call signs like 'ESPN'${RESET}"
-          pause_for_user
-          continue
-        fi
+# Function moved to lib/integrations/cdvr.sh
 
-        perform_direct_api_search "$SEARCH_TERM"
-        ;;
-    esac
-  done
-}
+# Function moved to lib/integrations/cdvr.sh
 
-perform_direct_api_search() {
-  local search_term="$1"
-  
-  echo -e "\n${CYAN}🔍 Searching Channels DVR API for '$search_term'...${RESET}"
-  echo -e "${CYAN}💡 This may take a moment to query the server${RESET}"
-  
-  # Call the TMS API using the API module
-  local api_response
-  echo -e "${CYAN}📡 Querying: $CHANNELS_URL/tms/stations/$search_term${RESET}"
-  
-  api_response=$(channels_dvr_search_stations "$search_term")
-  if [[ $? -ne 0 ]]; then
-    echo -e "${CYAN}💡 Alternative: Use Local Database Search for reliable results${RESET}"
-    pause_for_user
-    return
-  fi
-  
-  # Process the response and convert to TSV format
-  echo "$api_response" | jq -r '
-    .[] | [
-      .name // "Unknown", 
-      .callSign // "N/A", 
-      .videoQuality.videoType // "Unknown", 
-      .stationId // "Unknown",
-      "API-Direct"
-    ] | @tsv
-  ' > "$API_SEARCH_RESULTS" 2>/dev/null
-  
-  if [[ $? -ne 0 ]]; then
-    clear
-    echo -e "${BOLD}${CYAN}=== Direct Channels DVR API Search ===${RESET}"
-    echo -e "${CYAN}Searched for: '$search_term' on $CHANNELS_URL${RESET}"
-    echo
-    echo -e "${RED}❌ API Response Processing: Failed to parse station data${RESET}"
-    echo -e "${CYAN}💡 API response format may have changed${RESET}"
-    echo -e "${CYAN}💡 Try Local Database Search as alternative${RESET}"
-    pause_for_user
-    return
-  fi
-  
-  # Success case - pass search context to display function
-  display_direct_api_results "$search_term"
-}
-
-display_direct_api_results() {
-  local search_term="$1"
-  
-  mapfile -t RESULTS < "$API_SEARCH_RESULTS"
-  local count=${#RESULTS[@]}
-  
-  clear
-  echo -e "${BOLD}${CYAN}=== Direct Channels DVR API Search ===${RESET}"
-  echo -e "${CYAN}Searched for: '$search_term' on $CHANNELS_URL${RESET}"
-  echo -e "${GREEN}✅ API search completed successfully${RESET}"
-  echo
-  
-  if [[ $count -eq 0 ]]; then
-    echo -e "${YELLOW}⚠️  No results found for '$search_term' in API${RESET}"
-    echo -e "${CYAN}💡 Try: Different spelling, call signs, or partial names${RESET}"
-    echo -e "${GREEN}💡 Local Database Search may have more comprehensive results${RESET}"
-  else
-    echo -e "${GREEN}✅ Found $count result(s) for '$search_term'${RESET}"
-    echo -e "${YELLOW}⚠️  Direct API results (limited to 6 maximum)${RESET}"
-    echo -e "${CYAN}💡 No country data available, no filtering applied${RESET}"
-    echo -e "${RED}⚠️  Station details not available for API results${RESET}"
-    echo
-
-    # Table header WITHOUT selection column (no Key column)
-    printf "${BOLD}${YELLOW}%-30s %-10s %-8s %-12s${RESET}\n" "Channel Name" "Call Sign" "Quality" "Station ID"
-    echo "----------------------------------------------------------------"
-
-    for ((i = 0; i < count; i++)); do
-      IFS=$'\t' read -r NAME CALLSIGN RES STID SOURCE <<< "${RESULTS[$i]}" 
-      printf "%-30s %-10s %-8s ${CYAN}%-12s${RESET}\n" "$NAME" "$CALLSIGN" "$RES" "$STID"
-
-      # Display logo if available
-      display_logo "$STID"
-      echo
-    done
-
-    echo -e "${CYAN}💡 Tip: For detailed station information and filtering, use Local Database Search${RESET}"
-    echo -e "${CYAN}💡 Local Database Search provides comprehensive station details and advanced features${RESET}"
-  fi
-  
-  pause_for_user
-}
+# Function moved to lib/integrations/cdvr.sh
 
 reverse_station_id_lookup() {
   local station_id="$1"
   
+  # Input validation
   if [[ -z "$station_id" ]]; then
     echo -e "${RED}❌ Station ID required for lookup${RESET}"
     return 1
@@ -1426,11 +791,9 @@ reverse_station_id_lookup() {
   
   echo -e "${CYAN}🔍 Looking up station ID: $station_id${RESET}"
   
-  # Check local database only
-  if ! has_stations_database; then
-    echo -e "${RED}❌ No station database available${RESET}"
-    echo -e "${CYAN}💡 Build database via 'Manage Television Markets' → 'Run User Caching'${RESET}"
-    return 1
+  # Database validation
+  if ! ensure_stations_database; then
+      return 1
   fi
   
   local stations_file
@@ -1445,27 +808,28 @@ reverse_station_id_lookup() {
      "Logo: " + (.preferredImage.uri // "No logo available")' \
     "$stations_file" 2>/dev/null)
   
-  if [[ -n "$local_result" ]]; then
-    echo -e "${GREEN}✅ Station found:${RESET}"
-    echo "$local_result"
-    echo
-    
-    # Show logo if available and enabled
-    if [[ "$SHOW_LOGOS" == true ]]; then
-      echo -e "${CYAN}Logo preview:${RESET}"
-      display_logo "$station_id"
-    fi
-    
-    echo -e "${GREEN}✅ Lookup completed successfully${RESET}"
-    return 0
+  # Perform lookup
+  local stations_file
+  stations_file=$(get_effective_stations_file)
+  local station_data
+  station_data=$(jq -r --arg id "$station_id" \
+      '.[] | select(.stationId == $id)' \
+      "$stations_file" 2>/dev/null)
+  
+  if [[ -n "$station_data" && "$station_data" != "null" ]]; then
+      # Success case - use display function
+      display_reverse_lookup_result "$station_id" "$station_data"
+      return 0
   else
+    # Error - keep inline only used here
     echo -e "${RED}❌ Station ID '$station_id' not found${RESET}"
     echo
     echo -e "${BOLD}${CYAN}Troubleshooting:${RESET}"
     echo -e "${CYAN}• Verify the station ID is correct${RESET}"
     echo -e "${CYAN}• Try searching by name using 'Search Local Database'${RESET}"
-    echo -e "${CYAN}• Add more markets for broader coverage${RESET}"
-    
+    echo -e "${CYAN}• The station ID may not be in the current database${RESET}"
+    echo -e "${CYAN}• Consider adding more markets using User Database Expansion${RESET}"
+
     local total_count=$(get_total_stations_count)
     echo -e "${CYAN}• Database contains $total_count stations total${RESET}"
     
@@ -1474,77 +838,62 @@ reverse_station_id_lookup() {
 }
 
 reverse_station_id_lookup_menu() {
-  clear
-  echo -e "${BOLD}${CYAN}=== Reverse Station ID Lookup ===${RESET}\n"
-  echo -e "${BLUE}📍 Station Information Retrieval${RESET}"
-  echo -e "${YELLOW}Enter a station ID to get comprehensive information about that station.${RESET}"
-  echo
-  
-  # Show database status
-  local total_count=$(get_total_stations_count)
-  if [ "$total_count" -gt 0 ]; then
-    echo -e "${GREEN}✅ Database Available: $total_count stations ready for lookup${RESET}"
-    
-    # Show sample station IDs for guidance
-    local stations_file
-    stations_file=$(get_effective_stations_file)
-    if [ $? -eq 0 ]; then
-      local sample_ids=$(jq -r '.[] | .stationId' "$stations_file" 2>/dev/null | head -5 | tr '\n' ', ' | sed 's/,$//')
-      if [ -n "$sample_ids" ]; then
-        echo -e "${CYAN}Examples: $sample_ids${RESET}"
-      fi
-    fi
-  else
-    echo -e "${RED}❌ No station database available${RESET}"
-    echo -e "${CYAN}💡 Use 'Manage Television Markets' → 'Run User Caching' to build database${RESET}"
-    pause_for_user
-    return 1
-  fi
-  echo
-  
-  # Station ID input with validation
-  local lookup_id
-  while true; do
-    read -p "Enter station ID (or press Enter to return): " lookup_id < /dev/tty
-    
-    # Handle empty input (user wants to exit)
-    if [[ -z "$lookup_id" ]]; then
-      return 0
-    fi
-    
-    # Remove any whitespace
-    lookup_id=$(echo "$lookup_id" | tr -d '[:space:]')
-    
-    # Validate station ID format
-    if [[ "$lookup_id" =~ ^[0-9]+$ ]]; then
-      if (( lookup_id >= 1 && lookup_id <= 999999 )); then
-        echo -e "${GREEN}✅ Station ID accepted: $lookup_id${RESET}"
-        break
-      else
-        echo -e "${RED}❌ Station ID out of valid range (1-999999)${RESET}"
-      fi
-    else
-      echo -e "${RED}❌ Station ID must be numeric only${RESET}"
-    fi
-  done
-  
-  echo
-  
-  # Perform lookup
-  if reverse_station_id_lookup "$lookup_id"; then
-    echo
-    echo -e "${BOLD}${CYAN}Next Steps:${RESET}"
-    echo -e "${GREEN}• Search for more stations using 'Search Local Database'${RESET}"
-    echo -e "${GREEN}• Look up additional station IDs${RESET}"
-    echo -e "${GREEN}• Use this information in Dispatcharr integration${RESET}"
-  fi
-  
-  pause_for_user
+    while true; do
+        clear
+        echo -e "${BOLD}${CYAN}=== Reverse Station ID Lookup ===${RESET}\n"
+        echo -e "${BLUE}📍 Station Information Retrieval${RESET}"
+        echo -e "${YELLOW}Enter a station ID to get comprehensive information about that station.${RESET}"
+        echo
+        
+        # Show database status using extracted function
+        if ! display_database_status; then
+            echo -e "${CYAN}💡 No database available. Required for reverse lookup.${RESET}"
+            pause_for_user
+            return 1
+        fi
+        echo -e "${CYAN}Example, test with station ID 32645 (should return ESPN HD)${RESET}"
+        echo
+        
+        # Station ID input with validation
+        local lookup_id
+        while true; do
+            read -p "Enter station ID (or 'q' to return to main menu): " user_input < /dev/tty
+            
+            # Handle exit request
+            if [[ "$user_input" =~ ^[qQ]$ ]] || [[ -z "$user_input" ]]; then
+                return 0
+            fi
+            
+            # Validate input using extracted function
+            if lookup_id=$(validate_station_id_input "$user_input"); then
+                echo -e "${GREEN}✅ Station ID accepted: $lookup_id${RESET}"
+                break
+            fi
+            # Error messages already shown by validation function
+        done
+        
+        echo
+        
+        # Perform lookup
+        if reverse_station_id_lookup "$lookup_id"; then
+            echo
+            echo -e "${CYAN}💡 Press Enter to lookup another station ID, or 'q' to return to main menu${RESET}"
+            pause_for_user
+        else
+            echo
+            echo -e "${CYAN}💡 Press Enter to try another station ID, or 'q' to return to main menu${RESET}"
+            pause_for_user
+        fi
+        
+        # Loop continues - user returns to lookup screen
+    done
 }
 
 # ============================================================================
 # EMBY INTEGRATION FUNCTIONS
 # ============================================================================
+
+# Line by line code review done through this point
 
 configure_emby_connection() {
     clear
@@ -1568,6 +917,17 @@ configure_emby_connection() {
         EMBY_ENABLED=false
         save_setting "EMBY_ENABLED" "$EMBY_ENABLED"
         echo -e "${CYAN}💡 Emby integration disabled${RESET}"
+    fi
+    
+    # Auto-test connection after configuration
+    if [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]]; then
+        echo
+        echo -e "${CYAN}🔄 Testing Emby connection...${RESET}"
+        if emby_test_connection; then
+            echo -e "${GREEN}✅ Connection test successful!${RESET}"
+        else
+            echo -e "${YELLOW}⚠️  Connection test failed. Please check your settings.${RESET}"
+        fi
     fi
     
     echo -e "\n${GREEN}✅ Emby configuration completed${RESET}"
@@ -1811,7 +1171,7 @@ scan_missing_stationids() {
   if ! has_stations_database; then
     echo -e "${RED}❌ Local Database Search: No station data available${RESET}"
     echo -e "${CYAN}💡 Base Station Database: Add $(basename "$BASE_STATIONS_JSON") to script directory${RESET}"
-    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'Run User Caching'${RESET}"
+    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'User Database Expansion'${RESET}"
     pause_for_user
     return 1
   fi
@@ -1878,14 +1238,21 @@ scan_missing_stationids() {
   # Helper function to get group name from group ID
   get_group_name() {
     local group_id="$1"
-    if [[ -z "$group_id" || "$group_id" == "null" || "$group_id" == "Ungrouped" ]]; then
-      echo "Ungrouped"
+    
+    # Use the robust function from the Dispatcharr module
+    if command -v dispatcharr_get_group_name >/dev/null 2>&1; then
+      dispatcharr_get_group_name "$group_id"
     else
-      local group_name=$(echo "$groups_data" | jq -r --arg id "$group_id" '.[] | select(.id == ($id | tonumber)) | .name // empty' 2>/dev/null)
-      if [[ -n "$group_name" && "$group_name" != "null" ]]; then
-        echo "$group_name"
+      # Fallback to local logic if function not available
+      if [[ -z "$group_id" || "$group_id" == "null" || "$group_id" == "Ungrouped" ]]; then
+        echo "Ungrouped"
       else
-        echo "Group $group_id"
+        local group_name=$(echo "$groups_data" | jq -r --arg id "$group_id" '.[] | select(.id == ($id | tonumber)) | .name // empty' 2>/dev/null)
+        if [[ -n "$group_name" && "$group_name" != "null" ]]; then
+          echo "$group_name"
+        else
+          echo "Group $group_id"
+        fi
       fi
     fi
   }
@@ -1915,7 +1282,7 @@ scan_missing_stationids() {
     echo
     
     # Table header
-    printf "${BOLD}${YELLOW}%-3s %-8s %-8s %-30s %-15s %s${RESET}\n" "Key" "Number" "Ch ID" "Channel Name" "Group" "Station ID"
+    printf "${BOLD}${YELLOW}%-3s %-8s %-8s %-25s %-20s %s${RESET}\n" "Key" "Number" "Ch ID" "Channel Name" "Group" "Station ID"
     echo "--------------------------------------------------------------------------------"
     
     # Store channels for selection
@@ -1935,7 +1302,7 @@ scan_missing_stationids() {
       local key="${key_letters[$result_count]}"
       
       printf "${GREEN}%-3s${RESET} " "${key})"
-      printf "%-8s %-8s %-30s %-15s " "$number" "$id" "${name:0:30}" "${group_name:0:15}"
+      printf "%-8s %-8s %-25s %-20s " "$number" "$id" "${name:0:25}" "${group_name:0:20}"
       echo -e "${RED}Missing${RESET}"
       
       # Store channel data as JSON
@@ -2200,11 +1567,8 @@ process_single_channel_station_id() {
         local result_count=0
         
         # Process TSV results with selection highlighting
-        while IFS=$'\t' read -r station_id name call_sign country; do
+        while IFS=$'\t' read -r station_id name call_sign quality country; do
           [[ -z "$station_id" ]] && continue
-          
-          # Get additional station info for better display
-          local quality=$(get_station_quality "$station_id")
           
           local key="${key_letters[$result_count]}"
           
@@ -2244,7 +1608,7 @@ process_single_channel_station_id() {
       echo "q) Cancel and return to Dispatcharr menu"
       echo
       
-      read -p "Your choice: " choice < /dev/tty
+      read -p "Select option: " choice < /dev/tty
       
       case "$choice" in
         a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
@@ -2376,7 +1740,7 @@ interactive_stationid_matching() {
   if ! has_stations_database; then
     echo -e "${RED}❌ Local Database Search: No station data available${RESET}"
     echo -e "${CYAN}💡 Base Station Database: Add $(basename "$BASE_STATIONS_JSON") to script directory${RESET}"
-    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'Run User Caching'${RESET}"
+    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'User Database Expansion'${RESET}"
     pause_for_user
     return 1
   fi
@@ -2553,11 +1917,8 @@ interactive_stationid_matching() {
           local result_count=0
           
           # Process TSV results with FIXED selection highlighting
-          while IFS=$'\t' read -r station_id name call_sign country; do
+          while IFS=$'\t' read -r station_id name call_sign quality country; do
             [[ -z "$station_id" ]] && continue
-            
-            # Get additional station info for better display
-            local quality=$(get_station_quality "$station_id")
             
             local key="${key_letters[$result_count]}"
             
@@ -2594,10 +1955,10 @@ interactive_stationid_matching() {
         echo "s) Search with different term"
         echo "m) Enter station ID manually"
         echo "k) Skip this channel"
-        echo "q) Quit matching"
+        echo "q) Quit matching (or press Enter)"
         echo
 
-        read -p "Your choice: " choice < /dev/tty
+        read -p "Select option: " choice < /dev/tty
         
         case "$choice" in
           a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J)
@@ -2722,7 +2083,7 @@ interactive_stationid_matching() {
             sleep 1
             break 2  # Exit both loops, move to next channel
             ;;
-          q|Q)
+          q|Q|"")
             echo -e "${CYAN}🔄 Ending matching session...${RESET}"
             # Check for pending matches or show immediate results
             if [[ "$apply_mode" == "immediate" ]]; then
@@ -2799,7 +2160,7 @@ populate_dispatcharr_fields() {
   if ! has_stations_database; then
     echo -e "${RED}❌ Local Database Search: No station data available${RESET}"
     echo -e "${CYAN}💡 Base Station Database: Add $(basename "$BASE_STATIONS_JSON") to script directory${RESET}"
-    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'Run User Caching'${RESET}"
+    echo -e "${CYAN}💡 User Station Database: Use 'Manage Television Markets' → 'User Database Expansion'${RESET}"
     pause_for_user
     return 1
   fi
@@ -3553,7 +2914,7 @@ process_single_channel_fields() {
       echo -e "${RED}q)${RESET} Quit field population ${CYAN}(stop entire batch processing)${RESET}"
       echo
       
-      read -p "Your choice: " auto_choice < /dev/tty
+      read -p "Select option: " auto_choice < /dev/tty
       
       case "$auto_choice" in
         c|C|"")
@@ -3621,7 +2982,7 @@ process_single_channel_fields() {
     echo -e "${RED}q)${RESET} Quit field population ${CYAN}(stop entire batch processing)${RESET}"
     echo
     
-    read -p "Your choice: " manual_choice < /dev/tty
+    read -p "Select option: " manual_choice < /dev/tty
     
     case "$manual_choice" in
       c|C|"")
@@ -3706,11 +3067,8 @@ process_single_channel_fields() {
       local result_count=0
       
       # IDENTICAL RESULT PROCESSING TO STATION ID WORKFLOW with FIXED selection highlighting
-      while IFS=$'\t' read -r station_id name call_sign country; do
+      while IFS=$'\t' read -r station_id name call_sign quality country; do
         [[ -z "$station_id" ]] && continue
-        
-        # Get additional station info for better display
-        local quality=$(get_station_quality "$station_id")
         
         local key="${key_letters[$result_count]}"
         
@@ -3752,7 +3110,7 @@ process_single_channel_fields() {
     echo -e "${RED}q) Quit field population${RESET} ${CYAN}(stop entire batch processing)${RESET}"
     echo
     
-    read -p "Your choice: " choice < /dev/tty
+    read -p "Select option: " choice < /dev/tty
     
     # IDENTICAL OPTION HANDLING TO STATION ID WORKFLOW
     case "$choice" in
@@ -3916,7 +3274,7 @@ process_single_channel_fields_standalone() {
       echo -e "${RED}q)${RESET} Back to main menu"
       echo
       
-      read -p "Your choice: " auto_choice < /dev/tty
+      read -p "Select option: " auto_choice < /dev/tty
       
       case "$auto_choice" in
         c|C|"")
@@ -3984,7 +3342,7 @@ process_single_channel_fields_standalone() {
     echo -e "${RED}q)${RESET} Back to main menu"
     echo
     
-    read -p "Your choice: " manual_choice < /dev/tty
+    read -p "Select option: " manual_choice < /dev/tty
     
     case "$manual_choice" in
       c|C|"")
@@ -4069,11 +3427,8 @@ process_single_channel_fields_standalone() {
       local result_count=0
       
       # RESULT PROCESSING with FIXED selection highlighting
-      while IFS=$'\t' read -r station_id name call_sign country; do
+      while IFS=$'\t' read -r station_id name call_sign quality country; do
         [[ -z "$station_id" ]] && continue
-        
-        # Get additional station info for better display
-        local quality=$(get_station_quality "$station_id")
         
         local key="${key_letters[$result_count]}"
         
@@ -4115,7 +3470,7 @@ process_single_channel_fields_standalone() {
     echo -e "${RED}q) Back to main menu${RESET}"
     echo
     
-    read -p "Your choice: " choice < /dev/tty
+    read -p "Select option: " choice < /dev/tty
     
     # OPTION HANDLING FOR SINGLE CHANNEL
     case "$choice" in
@@ -4719,10 +4074,10 @@ update_dispatcharr_channel_with_logo() {
     [[ "$update_tvg" =~ ^[Yy]$ ]] && log_msg+=" tvg=yes"
     [[ "$update_station_id" =~ ^[Yy]$ ]] && log_msg+=" station=yes"
     [[ "$update_logo" =~ ^[Yy]$ ]] && log_msg+=" logo=$logo_id"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $log_msg" >> "$DISPATCHARR_LOG"
+    log_info "dispatcharr" "$log_msg"
     return 0
   else
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to update channel ID $channel_id: $response" >> "$DISPATCHARR_LOG"
+    log_error "dispatcharr" "Failed to update channel ID $channel_id: $response"
     return 1
   fi
 }
@@ -4847,32 +4202,80 @@ view_dispatcharr_logs() {
 }
 
 dispatcharr_integration_check() {
-  if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
-    run_dispatcharr_integration
-  else
-    echo -e "${YELLOW}Dispatcharr integration is disabled${RESET}"
-    echo -e "${CYAN}Enable it in Settings > Dispatcharr Configuration${RESET}"
-    pause_for_user
+  # Check if Dispatcharr is configured before proceeding
+  if ! check_integration_requirement "Dispatcharr" "is_dispatcharr_configured" "configure_dispatcharr_integration" "Dispatcharr Integration"; then
+    return 1
   fi
+  
+  run_dispatcharr_integration
 }
 
 run_dispatcharr_integration() {
-  # Always refresh tokens when entering Dispatcharr integration
+  # Test connection once at entry and store result
+  local connection_verified=false
+  
   if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
-    echo -e "${CYAN}🔄 Initializing Dispatcharr Integration...${RESET}"
+    echo -e "${CYAN}🔄 Checking Dispatcharr connection...${RESET}"
     
-    if ! authenticate_dispatcharr; then
-      echo -e "${RED}❌ Cannot continue without valid authentication${RESET}"
-      echo -e "${CYAN}💡 Please check your Dispatcharr connection settings${RESET}"
+    # Suppress verbose logging temporarily
+    local saved_log_level="${LOG_DISPATCHARR_OPS:-}"
+    export LOG_DISPATCHARR_OPS="false"
+    
+    if authenticate_dispatcharr >/dev/null 2>&1; then
+      connection_verified=true
+      echo -e "${GREEN}✅ Connection successful${RESET}"
+      
+      # Get server version without logs
+      local version=$(dispatcharr_api_wrapper "GET" "/api/core/version/" "" "{}" 2>/dev/null | jq -r '.version // "Unknown"' 2>/dev/null)
+      [[ -n "$version" && "$version" != "Unknown" ]] && echo -e "${CYAN}💡 Server version: $version${RESET}"
+    else
+      echo -e "${RED}❌ Connection failed${RESET}"
+      echo -e "${CYAN}💡 Please check your settings in Settings → Integration Configuration${RESET}"
+      export LOG_DISPATCHARR_OPS="$saved_log_level"
       pause_for_user
       return 1
     fi
+    
+    # Restore logging
+    export LOG_DISPATCHARR_OPS="$saved_log_level"
+    export DISPATCHARR_CONNECTION_VERIFIED="$connection_verified"
     echo
   fi
   
   while true; do
     
     show_dispatcharr_menu
+    
+    read -p "Select option: " choice < /dev/tty
+    
+    case $choice in
+      1) 
+        show_menu_transition "opening" "station ID matching"
+        run_dispatcharr_stationid_menu
+        ;;
+      2) 
+        show_menu_transition "opening" "channel management"
+        run_dispatcharr_channel_menu
+        ;;
+      3) 
+        show_menu_transition "opening" "group management"
+        run_dispatcharr_group_menu
+        ;;
+      q|Q|"") 
+        show_menu_transition "returning" "main menu"
+        break 
+        ;;
+      *) 
+        show_invalid_menu_choice "Dispatcharr Integration" "$choice"
+        ;;
+    esac
+  done
+}
+
+# Station ID matching submenu handler
+run_dispatcharr_stationid_menu() {
+  while true; do
+    show_dispatcharr_stationid_menu
     
     read -p "Select option: " choice < /dev/tty
     
@@ -4889,28 +4292,110 @@ run_dispatcharr_integration() {
         show_menu_transition "starting" "station ID changes processing"
         batch_update_stationids && pause_for_user 
         ;;
-      d|D) 
-        show_menu_transition "starting" "field population"
-        populate_dispatcharr_fields 
-        ;;
-      e|E) 
-        show_menu_transition "opening" "connection configuration"
-        configure_dispatcharr_connection && pause_for_user 
-        ;;
-      f|F) 
-        show_menu_transition "loading" "integration logs"
-        view_dispatcharr_logs && pause_for_user 
-        ;;
-      g|G) 
-        show_menu_transition "starting" "token refresh"
-        authenticate_dispatcharr && pause_for_user 
-        ;;
       q|Q|"") 
-        show_menu_transition "returning" "main menu"
+        show_menu_transition "returning" "Dispatcharr menu"
         break 
         ;;
       *) 
-        show_invalid_menu_choice "Dispatcharr Integration" "$choice"
+        show_invalid_menu_choice "Station ID Matching" "$choice"
+        ;;
+    esac
+  done
+}
+
+# Channel management submenu handler
+run_dispatcharr_channel_menu() {
+  while true; do
+    show_dispatcharr_channel_menu
+    
+    read -p "Select option: " choice < /dev/tty
+    
+    case $choice in
+      a|A) 
+        show_menu_transition "starting" "field population"
+        populate_dispatcharr_fields 
+        ;;
+      b|B) 
+        show_menu_transition "starting" "channel creation"
+        dispatcharr_create_channel_workflow
+        ;;
+      c|C) 
+        show_menu_transition "starting" "channel management"
+        dispatcharr_manage_channels_workflow
+        ;;
+      q|Q|"") 
+        show_menu_transition "returning" "Dispatcharr menu"
+        break 
+        ;;
+      *) 
+        show_invalid_menu_choice "Channel Management" "$choice"
+        ;;
+    esac
+  done
+}
+
+# Group management submenu handler
+run_dispatcharr_group_menu() {
+  while true; do
+    show_dispatcharr_group_menu
+    
+    # Display guidance for group management
+    echo -e "${BOLD}${BLUE}Group Management Guide:${RESET}"
+    echo -e "${CYAN}• Groups organize channels in Dispatcharr for easier management${RESET}"
+    echo -e "${CYAN}• View existing groups first to understand current structure${RESET}"
+    echo -e "${CYAN}• Create new groups to organize channels by type, source, or region${RESET}"
+    echo
+    echo -e "${YELLOW}⚠️  Important: Only modify or delete groups that YOU created${RESET}"
+    echo -e "${CYAN}• Do not modify groups that were imported by playlists${RESET}"
+    echo -e "${CYAN}• Use 'Batch Assign Group' in Channel Management to assign multiple channels${RESET}"
+    echo
+    
+    read -p "Select option: " choice < /dev/tty
+    
+    case $choice in
+      a|A) 
+        show_menu_transition "loading" "channel groups"
+        dispatcharr_view_groups && pause_for_user
+        ;;
+      b|B) 
+        show_menu_transition "starting" "group creation"
+        if command -v dispatcharr_create_group >/dev/null 2>&1; then
+            dispatcharr_create_group
+            pause_for_user
+        else
+            echo -e "${ERROR_STYLE}❌ Group creation function not available${RESET}"
+            echo -e "${CYAN}💡 Please check if the Dispatcharr module is loaded properly${RESET}"
+            pause_for_user
+        fi
+        ;;
+      c|C) 
+        show_menu_transition "starting" "group modification"
+        if command -v dispatcharr_modify_group >/dev/null 2>&1; then
+            dispatcharr_modify_group
+            pause_for_user
+        else
+            echo -e "${ERROR_STYLE}❌ Group modification function not available${RESET}"
+            echo -e "${CYAN}💡 Please check if the Dispatcharr module is loaded properly${RESET}"
+            pause_for_user
+        fi
+        ;;
+      d|D) 
+        show_menu_transition "starting" "group deletion"
+        if command -v dispatcharr_delete_group >/dev/null 2>&1; then
+            dispatcharr_delete_group
+            pause_for_user
+        else
+            echo -e "${ERROR_STYLE}❌ Group deletion function not available${RESET}"
+            echo -e "${CYAN}💡 Please check if the Dispatcharr module is loaded properly${RESET}"
+            pause_for_user
+        fi
+        ;;
+      q|Q|"") 
+        show_menu_transition "returning" "Dispatcharr menu"
+        break 
+        ;;
+      *) 
+        show_invalid_menu_choice "Group Management" "$choice"
         ;;
     esac
   done
@@ -5043,7 +4528,7 @@ add_market() {
     # STANDARDIZED: Next steps guidance
     echo -e "${BOLD}${CYAN}Next Steps:${RESET}"
     echo -e "${GREEN}• Add more markets if needed (different regions expand station coverage)${RESET}"
-    echo -e "${GREEN}• Use 'Run User Caching' to download stations from all configured markets${RESET}"
+    echo -e "${GREEN}• Use 'User Database Expansion' to download stations from all configured markets${RESET}"
     echo -e "${GREEN}• Stations from all markets will be combined and deduplicated automatically${RESET}"
     echo
     
@@ -5350,9 +4835,9 @@ force_refresh_market() {
     tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
       local status=""
       if is_market_processed "$country" "$zip"; then
-        status="${YELLOW}(exact market in base cache)${RESET}"
+        status="${YELLOW}(exact market in base database)${RESET}"
       elif is_market_cached "$country" "$zip"; then
-        status="${GREEN}(processed in user cache)${RESET}"
+        status="${GREEN}(processed in user database)${RESET}"
       else
         status="${CYAN}(unprocessed)${RESET}"
       fi
@@ -5423,10 +4908,10 @@ force_refresh_market() {
   
   # Show what will happen
   if is_market_processed "$country" "$zip"; then
-    echo -e "${CYAN}This exact market is in base cache but will be processed anyway${RESET}"
-    echo -e "${CYAN}Any unique stations will be added to your user cache${RESET}"
+    echo -e "${CYAN}This exact market is in base database but will be processed anyway${RESET}"
+    echo -e "${CYAN}Any unique stations will be added to your user database${RESET}"
   else
-    echo -e "${CYAN}This market is not in base cache and will be fully processed${RESET}"
+    echo -e "${CYAN}This market is not in base database and will be fully processed${RESET}"
   fi
   
   if ! confirm_action "Force refresh market $country/$zip?"; then
@@ -5455,7 +4940,7 @@ force_refresh_market() {
   CSV_FILE="$temp_csv"
   
   # Use the consolidated function with force refresh
-   perform_user_caching true
+   perform_user_database_expansion true
   
   # Restore original CSV and clear force flag
   CSV_FILE="$original_csv"
@@ -5472,45 +4957,45 @@ manage_markets() {
     read -p "Select option: " choice < /dev/tty
     
     case $choice in
-      a|A) 
+      1) 
         add_market && pause_for_user 
         ;;
-      b|B) 
+      2) 
         remove_market && pause_for_user 
         ;;
-      c|C) 
+      3) 
         import_markets && pause_for_user 
         ;;
-      d|D) 
+      4) 
         export_markets && pause_for_user 
         ;;
-      e|E) 
+      5) 
         cleanup_existing_postal_codes && pause_for_user 
         ;;
-      f|F) 
+      6) 
         force_refresh_market && pause_for_user 
         ;;
-      r|R)
+      7)
         # Ready to cache validation and transition
         local market_count
         market_count=$(awk 'END {print NR-1}' "$CSV_FILE" 2>/dev/null || echo "0")
         
         if [[ "$market_count" -gt 0 ]]; then
           clear
-          echo -e "${BOLD}${CYAN}=== Ready for User Cache Expansion ===${RESET}\n"
+          echo -e "${BOLD}${CYAN}=== Ready for User Database Expansion ===${RESET}\n"
           echo -e "${GREEN}✅ Excellent! You have $market_count markets configured.${RESET}"
           echo
           
-          if confirm_action "Proceed to User Cache Expansion?"; then
-            show_menu_transition "starting" "User Cache Expansion"
-            run_user_caching
+          if confirm_action "Proceed to User Database Expansion?"; then
+            show_menu_transition "starting" "User Database Expansion"
+            perform_user_database_expansion
           else
             echo -e "${YELLOW}⚠️  Staying in Market Management${RESET}"
             pause_for_user
           fi
         else
           echo -e "\n${RED}❌ No Markets Configured${RESET}"
-          echo -e "${CYAN}💡 Please add at least one market before proceeding to caching${RESET}"
+          echo -e "${CYAN}💡 Please add at least one market before proceeding to database expansion${RESET}"
           
           if confirm_action "Add your first market now?"; then
             add_market
@@ -5535,13 +5020,13 @@ manage_markets() {
 run_user_caching() {
   local show_pause="${1:-true}"
   clear
-  echo -e "${BOLD}${CYAN}=== User Cache Expansion ===${RESET}\n"
+  echo -e "${BOLD}${CYAN}=== User Database Expansion ===${RESET}\n"
   
   echo -e "${BLUE}📊 Step 2 of 3: Build Local Station Database${RESET}"
   echo -e "${YELLOW}This process will:${RESET}"
   echo -e "• Query configured markets for available stations"
-  echo -e "• Skip markets already processed or covered by base cache"
-  echo -e "• Add only new stations to your user cache (incremental)"
+  echo -e "• Skip markets already processed or covered by base database"
+  echo -e "• Add only new stations to your user database (incremental)"
   echo -e "• Enable full-featured local search with filtering"
   echo
   
@@ -5563,8 +5048,8 @@ run_user_caching() {
   
   # Show current cache status
   local breakdown=$(get_stations_breakdown)
-  local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-  local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+  local base_count=$(echo "$breakdown" | sed 's/Base: \([0-9]*\).*/\1/')
+  local user_count=$(echo "$breakdown" | sed 's/.*User: \([0-9]*\).*/\1/')
   local total_count=$(get_total_stations_count)
   
   echo
@@ -5579,7 +5064,7 @@ run_user_caching() {
     echo -e "${GREEN}✅ User stations: $user_count${RESET}"
     echo -e "${CYAN}   New stations will be added to your existing collection${RESET}"
   else
-    echo -e "${YELLOW}⚠️  User stations: 0 (this will be your first user cache)${RESET}"
+    echo -e "${YELLOW}⚠️  User stations: 0 (this will be your first user database)${RESET}"
   fi
   
   echo -e "${CYAN}📊 Total currently available: $total_count${RESET}"
@@ -5587,7 +5072,7 @@ run_user_caching() {
   # Show what will be processed
   echo -e "\n${BOLD}Processing Strategy:${RESET}"
   echo -e "${CYAN}✅ Smart Processing: Only unprocessed markets will be cached${RESET}"
-  echo -e "${CYAN}✅ Base Cache Aware: Markets in base cache will be skipped${RESET}"
+  echo -e "${CYAN}✅ Base Database Aware: Markets in base database will be skipped${RESET}"
   echo -e "${CYAN}✅ Incremental: New stations append to existing cache${RESET}"
   echo -e "${CYAN}✅ State Tracking: Progress is saved and resumable${RESET}"
   echo
@@ -5596,15 +5081,15 @@ run_user_caching() {
   echo
   
   if ! confirm_action "Continue with smart incremental caching?"; then
-    echo -e "${YELLOW}User caching cancelled${RESET}"
+    echo -e "${YELLOW}User database expansion cancelled${RESET}"
     return 1
   fi
   
-   perform_user_caching false
+   perform_user_database_expansion false
 
   if [[ "$show_pause" == "true" ]]; then
   echo
-  echo -e "${CYAN}💡 User caching process completed - press any key to continue...${RESET}"
+  echo -e "${CYAN}💡 User database expansion process completed - press any key to continue...${RESET}"
   pause_for_user
 fi
 }
@@ -5612,7 +5097,7 @@ fi
 run_incremental_update() {
   echo -e "\n${BOLD}Incremental Cache Update${RESET}"
   echo -e "${CYAN}This will process only markets that haven't been cached yet.${RESET}"
-  echo -e "${YELLOW}Markets with exact matches in base cache will be automatically skipped.${RESET}"
+  echo -e "${YELLOW}Markets with exact matches in base database will be automatically skipped.${RESET}"
   echo
   
   if ! confirm_action "Run incremental cache update?"; then
@@ -5621,42 +5106,42 @@ run_incremental_update() {
   fi
   
   # The new function handles all the incremental logic
-   perform_user_caching false
+   perform_user_database_expansion false
 }
 
 run_full_user_refresh() {
   echo -e "\n${BOLD}Full User Cache Refresh${RESET}"
-  echo -e "${YELLOW}This will reprocess ALL configured markets and rebuild your user cache.${RESET}"
-  echo -e "${RED}Your existing user cache will be backed up and replaced.${RESET}"
+  echo -e "${YELLOW}This will reprocess ALL configured markets and rebuild your user database.${RESET}"
+  echo -e "${RED}Your existing user database will be backed up and replaced.${RESET}"
   echo
   
-  local user_count=$(echo "$(get_stations_breakdown)" | cut -d' ' -f2)
+  local user_count=$(echo "$(get_stations_breakdown)" | sed 's/.*User: \([0-9]*\).*/\1/')
   if [ "$user_count" -gt 0 ]; then
-    echo -e "${YELLOW}Current user cache: $user_count stations${RESET}"
+    echo -e "${YELLOW}Current user database: $user_count stations${RESET}"
     echo -e "${CYAN}This will be backed up before refresh${RESET}"
     echo
   fi
   
-  if confirm_action "Perform full user cache refresh?"; then
+  if confirm_action "Perform full user database refresh?"; then
     # Clear state tracking to force full refresh
     echo -e "${CYAN}Clearing cache state to force full refresh...${RESET}"
     > "$CACHED_MARKETS"
     > "$CACHED_LINEUPS"
     echo '{}' > "$LINEUP_TO_MARKET"
     
-    # Backup current user cache
+    # Backup current user database
     if [ -f "$USER_STATIONS_JSON" ] && [ -s "$USER_STATIONS_JSON" ]; then
       backup_existing_data
     fi
     
-    # Clear user cache
+    # Clear user database
     echo '[]' > "$USER_STATIONS_JSON"
     
     echo -e "${CYAN}Starting full refresh...${RESET}"
     # Use force refresh mode to reprocess everything
-     perform_user_caching true
+     perform_user_database_expansion true
     
-    echo -e "${GREEN}✅ Full user cache refresh complete${RESET}"
+    echo -e "${GREEN}✅ Full user database refresh complete${RESET}"
   else
     echo -e "${YELLOW}Full refresh cancelled${RESET}"
   fi
@@ -5710,25 +5195,26 @@ clear_logo_cache() {
   fi
 }
 
-clear_user_cache() {
-  echo -e "\n${BOLD}Clear User Cache${RESET}"
+clear_user_database() {
+  echo -e "\n${BOLD}Clear User Database${RESET}"
   
-  local user_count=$(echo "$(get_stations_breakdown)" | cut -d' ' -f2)
+  # Extract user count correctly from "Base: X | User: Y | Total: Z" format
+  local user_count=$(echo "$(get_stations_breakdown)" | sed 's/.*User: \([0-9]*\).*/\1/')
   if [ "$user_count" -eq 0 ]; then
     echo -e "${YELLOW}User cache is already empty${RESET}"
     return 0
   fi
   
-  echo -e "${YELLOW}This will remove $user_count stations from your user cache.${RESET}"
-  echo -e "${GREEN}Base cache and state tracking will be preserved.${RESET}"
-  echo -e "${CYAN}You can rebuild the user cache anytime using 'Run User Caching'.${RESET}"
+  echo -e "${YELLOW}This will remove $user_count stations from your user database.${RESET}"
+  echo -e "${GREEN}Base database and state tracking will be preserved.${RESET}"
+  echo -e "${CYAN}You can rebuild the user database anytime using 'User Database Expansion'.${RESET}"
   echo
   
-  if confirm_action "Clear user cache ($user_count stations)?"; then
+  if confirm_action "Clear user database ($user_count stations)?"; then
     # Backup before clearing
     backup_existing_data
     
-    # Clear user cache
+    # Clear user database
     echo '[]' > "$USER_STATIONS_JSON"
     
     # Clear state tracking
@@ -5736,7 +5222,7 @@ clear_user_cache() {
     > "$CACHED_LINEUPS"
     echo '{}' > "$LINEUP_TO_MARKET"
     
-    echo -e "${GREEN}✅ User cache cleared${RESET}"
+    echo -e "${GREEN}✅ User database cleared${RESET}"
     echo -e "${CYAN}💡 State tracking reset - next caching will process all markets${RESET}"
   else
     echo -e "${YELLOW}Clear operation cancelled${RESET}"
@@ -5753,7 +5239,7 @@ refresh_specific_market() {
     echo -e "${BOLD}Configured Markets:${RESET}"
     tail -n +2 "$CSV_FILE" | while IFS=, read -r country zip; do
       if is_market_processed "$country" "$zip"; then
-        echo -e "   • $country / $zip ${YELLOW}(exact market in base cache)${RESET}"
+        echo -e "   • $country / $zip ${YELLOW}(exact market in base database)${RESET}"
       else
         echo -e "   • $country / $zip ${GREEN}(will be processed normally)${RESET}"
       fi
@@ -5780,15 +5266,15 @@ refresh_specific_market() {
     fi
   fi
   
-  # Check if exact market is in base cache and inform user
+  # Check if exact market is in base database and inform user
   if is_market_processed "$country" "$zip"; then
-    echo -e "${YELLOW}⚠️  Exact market $country/$zip is in base cache${RESET}"
+    echo -e "${YELLOW}⚠️  Exact market $country/$zip is in base database${RESET}"
     echo -e "${CYAN}This refresh will process it anyway and add any unique stations${RESET}"
     if ! confirm_action "Continue with refresh anyway?"; then
       echo -e "${YELLOW}Refresh cancelled${RESET}"
       return 1
     fi
-    # Set force refresh flag to bypass base cache checking
+    # Set force refresh flag to bypass base database checking
     export FORCE_REFRESH_ACTIVE=true
   fi
   
@@ -5811,7 +5297,7 @@ refresh_specific_market() {
   local original_csv="$CSV_FILE"
   CSV_FILE="$temp_csv"
   
-   perform_user_caching false
+   perform_user_database_expansion false
   
   # Restore original CSV and clear force flag
   CSV_FILE="$original_csv"
@@ -5825,7 +5311,7 @@ reset_state_tracking() {
   echo -e "\n${BOLD}Reset State Tracking${RESET}"
   echo -e "${YELLOW}This will clear all state tracking data.${RESET}"
   echo -e "${CYAN}Next caching operation will process all markets as if first time.${RESET}"
-  echo -e "${GREEN}User cache and base cache will not be affected.${RESET}"
+  echo -e "${GREEN}User database and base database will not be affected.${RESET}"
   echo
   
   if confirm_action "Reset all state tracking?"; then
@@ -5894,7 +5380,7 @@ show_user_caching_summary() {
   local total_count=$(get_total_stations_count)
 
   echo
-  echo -e "${BOLD}${GREEN}=== User Caching Summary ===${RESET}"
+  echo -e "${BOLD}${GREEN}=== User Database Expansion Summary ===${RESET}"
   echo "Total Countries:            $num_countries"
   echo "Total Markets:              $num_markets"
   echo "Total Lineups:              $num_lineups"
@@ -5915,7 +5401,7 @@ show_user_caching_summary() {
   echo "User Stations:              $user_count"
   echo "Total Available:            $total_count"
   echo
-  echo -e "${GREEN}✅ User caching completed successfully!${RESET}"
+  echo -e "${GREEN}✅ User database expansion completed successfully!${RESET}"
   echo -e "${CYAN}💡 Your stations are now available for local search${RESET}"
 }
 
@@ -5926,7 +5412,7 @@ refresh_specific_lineup() {
 }
 
 rebuild_base_from_user() {
-  echo -e "\n${BOLD}Rebuild Base Cache from User Cache${RESET}"
+  echo -e "\n${BOLD}Rebuild Base Database from User Database${RESET}"
   echo -e "${YELLOW}This feature is reserved for script distribution management.${RESET}"
   echo -e "${CYAN}Contact the script maintainer if you need this functionality.${RESET}"
 }
@@ -5937,9 +5423,9 @@ view_raw_cache_files() {
   echo
   
   if [ -f "$BASE_STATIONS_JSON" ]; then
-    echo "Base cache: $(ls -lh "$BASE_STATIONS_JSON" | awk '{print $5}') (script directory)"
+    echo "Base database: $(ls -lh "$BASE_STATIONS_JSON" | awk '{print $5}') (script directory)"
   else
-    echo "Base cache: Not found (should be $(basename "$BASE_STATIONS_JSON") in script directory)"
+    echo "Base database: Not found (should be $(basename "$BASE_STATIONS_JSON") in script directory)"
   fi
   
   if [ -f "$USER_STATIONS_JSON" ]; then
@@ -5980,9 +5466,9 @@ validate_cache_integrity() {
   if [ -f "$USER_STATIONS_JSON" ]; then
     local duplicates=$(jq -r '.[] | .stationId' "$USER_STATIONS_JSON" | sort | uniq -d | wc -l)
     if [ "$duplicates" -gt 0 ]; then
-      echo -e "${YELLOW}⚠️  Found $duplicates duplicate station IDs in user cache${RESET}"
+      echo -e "${YELLOW}⚠️  Found $duplicates duplicate station IDs in user database${RESET}"
     else
-      echo -e "${GREEN}✅ No duplicate station IDs in user cache${RESET}"
+      echo -e "${GREEN}✅ No duplicate station IDs in user database${RESET}"
     fi
   fi
   
@@ -6001,7 +5487,7 @@ advanced_cache_operations() {
       "2|Refresh Specific Lineup"
       "3|Reset State Tracking"
       "4|Force Rebuild Combined Cache"          # NEW OPTION
-      "5|Rebuild Base Cache from User Cache"
+      "5|Rebuild Base Database from User Database"
       "6|View Raw Cache Files"
       "7|Validate Cache Integrity"
       "q|Back to Cache Management"
@@ -6028,42 +5514,42 @@ advanced_cache_operations() {
   done
 }
 
-cache_management_main_menu() {
+database_management_main_menu() {
   while true; do
-    show_cache_management_menu
+    show_database_management_menu
     
     read -p "Select option: " choice
     
     case "$choice" in
-      a|A) 
+      1) 
         show_menu_transition "starting" "incremental cache update"
         run_incremental_update && pause_for_user 
         ;;
-      b|B) 
-        show_menu_transition "starting" "full user cache refresh"
+      2) 
+        show_menu_transition "starting" "full user database refresh"
         run_full_user_refresh && pause_for_user 
         ;;
-      c|C) 
+      3) 
         show_menu_transition "loading" "detailed cache statistics"
         show_unified_cache_stats "detailed" && pause_for_user 
         ;;
-      d|D) 
+      4) 
         show_menu_transition "starting" "database export"
         export_stations_to_csv && pause_for_user 
         ;;
-      e|E) 
-        show_menu_transition "opening" "user cache management"
-        clear_user_cache && pause_for_user 
+      5) 
+        show_menu_transition "opening" "user database management"
+        clear_user_database && pause_for_user 
         ;;
-      f|F) 
+      6) 
         show_menu_transition "starting" "temporary file cleanup"
         clear_temp_files && pause_for_user 
         ;;
-      g|G) 
+      7) 
         show_menu_transition "opening" "advanced cache operations"
         advanced_cache_operations 
         ;;
-      h|H) 
+      8) 
         show_menu_transition "starting" "Dispatcharr logo cache cleanup"
         cleanup_dispatcharr_logo_cache && echo -e "${GREEN}✅ Dispatcharr logo cache cleaned successfully${RESET}" && pause_for_user 
         ;;
@@ -6082,47 +5568,137 @@ cache_management_main_menu() {
 # SETTINGS MANAGEMENT FUNCTIONS
 # ============================================================================
 
-change_server_settings() {
+# Function moved to lib/integrations/cdvr.sh
+
+simple_update_check() {
     clear
-    echo -e "${BOLD}${CYAN}=== Channels DVR Server Configuration ===${RESET}\n"
+    echo -e "${BOLD}${CYAN}=== Check for Updates ===${RESET}\n"
     
-    show_setting_status "CHANNELS_URL" "$CHANNELS_URL" "Channels DVR Server" "configured"
+    # Display version information
+    echo -e "${BOLD}Version Information:${RESET}"
+    echo -e "Current Version: ${GREEN}v$VERSION${RESET}"
+    echo -e "Repository URL: ${CYAN}https://github.com/egyptiangio/global-channel-search${RESET}"
     echo
     
-    if configure_setting "network" "CHANNELS_URL" "$CHANNELS_URL"; then
-        save_setting "CHANNELS_URL" "$CHANNELS_URL"
-        # Reload config to get the updated CHANNELS_URL
-        source "$CONFIG_FILE" 2>/dev/null
+    echo -e "${CYAN}🔄 Checking for repository updates...${RESET}"
+    
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir >/dev/null 2>&1; then
+        echo -e "${RED}❌ Not a git repository${RESET}"
+        echo
+        echo -e "${BOLD}${YELLOW}Update Instructions:${RESET}"
+        echo -e "${CYAN}If you did not install using git clone, please update using the same method as your original installation.${RESET}"
+        echo
+        echo -e "${BOLD}To install via git:${RESET}"
+        echo -e "${GREEN}git clone https://github.com/egyptiangio/global-channel-search${RESET}"
+        echo
+        echo -e "${BOLD}Alternative download methods:${RESET}"
+        echo -e "• Download ZIP: ${CYAN}https://github.com/egyptiangio/global-channel-search/archive/refs/heads/main.zip${RESET}"
+        echo -e "• View releases: ${CYAN}https://github.com/egyptiangio/global-channel-search/releases${RESET}"
+        return 1
     fi
     
-    echo -e "\n${GREEN}✅ Server settings updated${RESET}"
+    # Get current commit info
+    local current_commit=$(git rev-parse HEAD 2>/dev/null)
+    local current_branch=$(git branch --show-current 2>/dev/null)
+    local current_date=$(git log -1 --format="%ci" 2>/dev/null)
+    
+    echo -e "${CYAN}📍 Local git repository detected${RESET}"
+    echo -e "   Branch: ${GREEN}$current_branch${RESET}"
+    echo -e "   Commit: ${GREEN}${current_commit:0:8}${RESET}"
+    echo -e "   Date: ${GREEN}$current_date${RESET}"
+    
+    # Fetch latest from remote
+    echo -e "   ${CYAN}Checking remote branch: $current_branch${RESET}"
+    
+    if ! git fetch origin "$current_branch" >/dev/null 2>&1; then
+        echo -e "${RED}❌ Failed to fetch from remote repository${RESET}"
+        echo -e "${CYAN}💡 Check your internet connection and repository access${RESET}"
+        return 1
+    fi
+    
+    # Compare with remote
+    local remote_commit=$(git rev-parse "origin/$current_branch" 2>/dev/null)
+    
+    if [[ "$current_commit" == "$remote_commit" ]]; then
+        echo -e "${GREEN}✅ Your repository is up to date${RESET}"
+        echo -e "${CYAN}💡 Local and remote commits match: ${current_commit:0:8}${RESET}"
+    else
+        echo -e "${YELLOW}⚠️  Update available!${RESET}"
+        echo -e "   Local:  ${RED}${current_commit:0:8}${RESET}"
+        echo -e "   Remote: ${GREEN}${remote_commit:0:8}${RESET}"
+        echo
+        echo -e "${BOLD}${CYAN}Update Instructions:${RESET}"
+        echo -e "${BOLD}To update your git installation:${RESET}"
+        echo -e "${GREEN}   git pull origin $current_branch${RESET}"
+        echo
+        echo -e "${CYAN}After updating, restart the script to use the new version.${RESET}"
+        echo
+        echo -e "${YELLOW}⚠️  Note: If you have made local modifications, you may need to:${RESET}"
+        echo -e "   1. Backup your changes: ${GREEN}git stash${RESET}"
+        echo -e "   2. Update: ${GREEN}git pull origin $current_branch${RESET}"
+        echo -e "   3. Restore your changes: ${GREEN}git stash pop${RESET}"
+        echo
+        echo -e "${CYAN}If you did not install using git clone, please update using the same method as your original installation.${RESET}"
+    fi
 }
 
 toggle_logo_display() {
     clear
     echo -e "${BOLD}${CYAN}=== Logo Display Configuration ===${RESET}\n"
     
-    # Check viu dependency
-    if ! command -v viu &> /dev/null; then
-        echo -e "${RED}❌ Logo display requires 'viu' terminal image viewer${RESET}"
-        echo -e "${CYAN}💡 Install with: cargo install viu${RESET}"
-        pause_for_user
-        return 1
-    fi
-    
-    show_setting_status "SHOW_LOGOS" "$SHOW_LOGOS" "Logo Display" \
-        "$([ "$SHOW_LOGOS" = "true" ] && echo "enabled" || echo "disabled")"
+    # Show current status
+    echo -e "${BOLD}Logo Display:${RESET}"
+    echo -e "Status: $([ "$SHOW_LOGOS" = "true" ] && echo "${GREEN}Enabled${RESET}" || echo "${YELLOW}Disabled${RESET}")"
+    echo -e "Value: ${CYAN}$SHOW_LOGOS${RESET}"
     echo
     
-    if configure_setting "boolean" "Logo Display" "$SHOW_LOGOS"; then
-        # UPDATE THE ACTUAL VARIABLE
-        SHOW_LOGOS=true
+    # Check and display viu dependency status
+    echo -e "${BOLD}Dependencies:${RESET}"
+    if command -v viu &> /dev/null; then
+        echo -e "viu image viewer: ${GREEN}✅ Available${RESET}"
     else
-        # UPDATE THE ACTUAL VARIABLE  
-        SHOW_LOGOS=false
+        echo -e "viu image viewer: ${RED}❌ Not installed${RESET}"
+        echo -e "${CYAN}💡 Install with: cargo install viu${RESET}"
     fi
+    echo
     
-    save_setting "SHOW_LOGOS" "$SHOW_LOGOS"
+    # Configuration options
+    echo -e "${BOLD}Configuration Options:${RESET}"
+    echo -e "${GREEN}1)${RESET} Enable Logo Display"
+    echo -e "${YELLOW}2)${RESET} Disable Logo Display"
+    echo -e "${CYAN}3)${RESET} No change (keep current setting)"
+    echo
+    
+    read -p "Select option [3]: " choice
+    choice=${choice:-3}
+    
+    case "$choice" in
+        1)
+            # Check viu dependency before enabling
+            if ! command -v viu &> /dev/null; then
+                echo -e "${RED}❌ Cannot enable: 'viu' terminal image viewer not found${RESET}"
+                echo -e "${CYAN}💡 Install with: cargo install viu${RESET}"
+                echo -e "${YELLOW}💡 Logo display setting unchanged${RESET}"
+                return 1
+            fi
+            SHOW_LOGOS=true
+            save_setting "SHOW_LOGOS" "$SHOW_LOGOS"
+            echo -e "${GREEN}✅ Logo display enabled${RESET}"
+            ;;
+        2)
+            SHOW_LOGOS=false
+            save_setting "SHOW_LOGOS" "$SHOW_LOGOS"
+            echo -e "${YELLOW}✅ Logo display disabled${RESET}"
+            ;;
+        3|"")
+            echo -e "${CYAN}💡 Logo Display unchanged${RESET}"
+            ;;
+        *)
+            echo -e "${RED}❌ Invalid option. Logo Display unchanged.${RESET}"
+            return 1
+            ;;
+    esac
     
     echo -e "\n${GREEN}✅ Logo display configuration saved${RESET}"
 }
@@ -6148,63 +5724,61 @@ configure_resolution_filter() {
     fi
     
     echo -e "${BOLD}${BLUE}Resolution Filter Options:${RESET}"
-    echo -e "${GREEN}1)${RESET} Turn Off Resolution Filter ${CYAN}(show all quality levels)${RESET}"
-    echo -e "${GREEN}2)${RESET} Turn On Resolution Filter ${CYAN}(select specific quality levels)${RESET}"
+    echo -e "${GREEN}1)${RESET} Turn On Resolution Filter ${CYAN}(select specific quality levels)${RESET}"
+    echo -e "${YELLOW}2)${RESET} Turn Off Resolution Filter ${CYAN}(show all quality levels)${RESET}"
+    echo -e "${CYAN}3)${RESET} No change (keep current setting)"
     echo
     
     local choice
-    while true; do
-        read -p "Select option (1-2): " choice
-        
-        case "$choice" in
-            1)
-                # Turn OFF resolution filter
-                echo -e "\n${CYAN}🔄 Turning off resolution filter...${RESET}"
+    read -p "Select option [3]: " choice
+    choice=${choice:-3}
+    
+    case "$choice" in
+        1)
+            # Turn ON resolution filter and proceed to selection
+            echo -e "\n${CYAN}🔄 Enabling resolution filter...${RESET}"
+            FILTER_BY_RESOLUTION=true
+            
+            echo -e "${CYAN}Select which resolution levels to show in search results:${RESET}"
+            echo
+            
+            # Call multi_choice configuration with explicit resolution options
+            configure_setting "multi_choice" "Resolution Levels" "$ENABLED_RESOLUTIONS" "SDTV" "HDTV" "UHDTV"
+            
+            # Verify selection was made
+            if [ -z "$ENABLED_RESOLUTIONS" ]; then
+                echo -e "${RED}❌ No resolutions selected - disabling resolution filter${RESET}"
                 FILTER_BY_RESOLUTION=false
-                ENABLED_RESOLUTIONS="SDTV,HDTV,UHDTV"  # Reset to default (all)
-                
-                # Save settings
-                save_setting "FILTER_BY_RESOLUTION" "$FILTER_BY_RESOLUTION"
-                save_setting "ENABLED_RESOLUTIONS" "$ENABLED_RESOLUTIONS"
-                
-                echo -e "${GREEN}✅ Resolution filter disabled${RESET}"
-                echo -e "${CYAN}💡 Search results will now show stations of all quality levels${RESET}"
-                break
-                ;;
-            2)
-                # Turn ON resolution filter and proceed to selection
-                echo -e "\n${CYAN}🔄 Enabling resolution filter...${RESET}"
-                FILTER_BY_RESOLUTION=true
-                
-                echo -e "${CYAN}Select which resolution levels to show in search results:${RESET}"
-                echo
-                
-                # Call multi_choice configuration with explicit resolution options
-                configure_setting "multi_choice" "Resolution Levels" "$ENABLED_RESOLUTIONS" "SDTV" "HDTV" "UHDTV"
-                
-                # Verify selection was made
-                if [ -z "$ENABLED_RESOLUTIONS" ]; then
-                    echo -e "${RED}❌ No resolutions selected - disabling resolution filter${RESET}"
-                    FILTER_BY_RESOLUTION=false
-                    ENABLED_RESOLUTIONS="SDTV,HDTV,UHDTV"
-                else
-                    echo -e "${GREEN}✅ Resolution filter enabled: $ENABLED_RESOLUTIONS${RESET}"
-                fi
-                
-                # Save settings
-                save_setting "FILTER_BY_RESOLUTION" "$FILTER_BY_RESOLUTION"
-                save_setting "ENABLED_RESOLUTIONS" "$ENABLED_RESOLUTIONS"
-                break
-                ;;
-            "")
-                echo -e "${YELLOW}⚠️  Configuration cancelled${RESET}"
-                return 1
-                ;;
-            *)
-                echo -e "${RED}❌ Invalid option. Please enter 1 or 2${RESET}"
-                ;;
-        esac
-    done
+                ENABLED_RESOLUTIONS="SDTV,HDTV,UHDTV"
+            else
+                echo -e "${GREEN}✅ Resolution filter enabled: $ENABLED_RESOLUTIONS${RESET}"
+            fi
+            
+            # Save settings
+            save_setting "FILTER_BY_RESOLUTION" "$FILTER_BY_RESOLUTION"
+            save_setting "ENABLED_RESOLUTIONS" "$ENABLED_RESOLUTIONS"
+            ;;
+        2)
+            # Turn OFF resolution filter
+            echo -e "\n${CYAN}🔄 Turning off resolution filter...${RESET}"
+            FILTER_BY_RESOLUTION=false
+            ENABLED_RESOLUTIONS="SDTV,HDTV,UHDTV"  # Reset to default (all)
+            
+            # Save settings
+            save_setting "FILTER_BY_RESOLUTION" "$FILTER_BY_RESOLUTION"
+            save_setting "ENABLED_RESOLUTIONS" "$ENABLED_RESOLUTIONS"
+            
+            echo -e "${YELLOW}✅ Resolution filter disabled${RESET}"
+            echo -e "${CYAN}💡 Search results will now show stations of all quality levels${RESET}"
+            ;;
+        3|"")
+            echo -e "${CYAN}💡 Resolution filter unchanged${RESET}"
+            ;;
+        *)
+            echo -e "${RED}❌ Invalid option. Resolution filter unchanged.${RESET}"
+            return 1
+            ;;
+    esac
     
     echo
     echo -e "${BOLD}${GREEN}=== Configuration Complete ===${RESET}"
@@ -6232,37 +5806,24 @@ configure_country_filter() {
     fi
     
     echo -e "${BOLD}${BLUE}Country Filter Options:${RESET}"
-    echo -e "${GREEN}1)${RESET} Turn Off Country Filter ${CYAN}(show stations from all countries)${RESET}"
-    echo -e "${GREEN}2)${RESET} Turn On Country Filter ${CYAN}(select specific countries)${RESET}"
+    echo -e "${GREEN}1)${RESET} Turn On Country Filter ${CYAN}(select specific countries)${RESET}"
+    echo -e "${YELLOW}2)${RESET} Turn Off Country Filter ${CYAN}(show stations from all countries)${RESET}"
+    echo -e "${CYAN}3)${RESET} No change (keep current setting)"
     echo
     
     local choice
-    while true; do
-        read -p "Select option (1-2): " choice
-        
-        case "$choice" in
-            1)
-                # Turn OFF country filter
-                echo -e "\n${CYAN}🔄 Turning off country filter...${RESET}"
-                FILTER_BY_COUNTRY=false
-                ENABLED_COUNTRIES=""  # Clear country selection
-                
-                # Save settings
-                save_setting "FILTER_BY_COUNTRY" "$FILTER_BY_COUNTRY"
-                save_setting "ENABLED_COUNTRIES" "$ENABLED_COUNTRIES"
-                
-                echo -e "${GREEN}✅ Country filter disabled${RESET}"
-                echo -e "${CYAN}💡 Search results will now show stations from all available countries${RESET}"
-                break
-                ;;
-            2)
+    read -p "Select option [3]: " choice
+    choice=${choice:-3}
+    
+    case "$choice" in
+        1)
                 # Turn ON country filter and proceed to selection
                 echo -e "\n${CYAN}🔄 Enabling country filter...${RESET}"
                 echo -e "${CYAN}🔍 Detecting countries from station database...${RESET}"
                 
                 # Get available countries from station database
                 local available_countries
-                available_countries=$(get_available_countries)
+                available_countries=$(search_get_available_countries)
                 
                 if [ -z "$available_countries" ]; then
                     echo -e "${RED}❌ No countries found in station database${RESET}"
@@ -6270,8 +5831,8 @@ configure_country_filter() {
                     
                     # Show helpful diagnostics
                     local breakdown=$(get_stations_breakdown)
-                    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-                    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+                    local base_count=$(echo "$breakdown" | sed 's/Base: \([0-9]*\).*/\1/')
+                    local user_count=$(echo "$breakdown" | sed 's/.*User: \([0-9]*\).*/\1/')
                     local total_count=$((base_count + user_count))
                     
                     echo -e "${BOLD}${BLUE}Database Status:${RESET}"
@@ -6283,7 +5844,7 @@ configure_country_filter() {
                     if [ "$total_count" -eq 0 ]; then
                         echo -e "${CYAN}💡 No station database found. Build it first:${RESET}"
                         echo -e "${CYAN}   1. Use 'Manage Television Markets' to configure markets${RESET}"
-                        echo -e "${CYAN}   2. Use 'Run User Caching' to build station database${RESET}"
+                        echo -e "${CYAN}   2. Use 'User Database Expansion' to build station database${RESET}"
                     else
                         echo -e "${CYAN}💡 Station database exists but no country data found${RESET}"
                         echo -e "${CYAN}   This may indicate a data quality issue${RESET}"
@@ -6320,17 +5881,28 @@ configure_country_filter() {
                 # Save settings
                 save_setting "FILTER_BY_COUNTRY" "$FILTER_BY_COUNTRY"
                 save_setting "ENABLED_COUNTRIES" "$ENABLED_COUNTRIES"
-                break
                 ;;
-            "")
-                echo -e "${YELLOW}⚠️  Configuration cancelled${RESET}"
+        2)
+                # Turn OFF country filter
+                echo -e "\n${CYAN}🔄 Turning off country filter...${RESET}"
+                FILTER_BY_COUNTRY=false
+                ENABLED_COUNTRIES=""  # Clear country selection
+                
+                # Save settings
+                save_setting "FILTER_BY_COUNTRY" "$FILTER_BY_COUNTRY"
+                save_setting "ENABLED_COUNTRIES" "$ENABLED_COUNTRIES"
+                
+                echo -e "${YELLOW}✅ Country filter disabled${RESET}"
+                echo -e "${CYAN}💡 Search results will now show stations from all available countries${RESET}"
+                ;;
+        3|"")
+                echo -e "${CYAN}💡 Country filter unchanged${RESET}"
+                ;;
+        *)
+                echo -e "${RED}❌ Invalid option. Country filter unchanged.${RESET}"
                 return 1
                 ;;
-            *)
-                echo -e "${RED}❌ Invalid option. Please enter 1 or 2${RESET}"
-                ;;
-        esac
-    done
+    esac
     
     echo
     echo -e "${BOLD}${GREEN}=== Configuration Complete ===${RESET}"
@@ -6395,8 +5967,8 @@ export_stations_to_csv() {
   stations_file=$(get_effective_stations_file)
   if [ $? -ne 0 ]; then
     echo -e "${RED}No station database found.${RESET}"
-    echo -e "${CYAN}Expected: Base cache file ($(basename "$BASE_STATIONS_JSON")) in script directory${RESET}"
-    echo -e "${CYAN}Alternative: Build user cache via 'Manage Television Markets' → 'Run User Caching'${RESET}"
+    echo -e "${CYAN}Expected: Base database file ($(basename "$BASE_STATIONS_JSON")) in script directory${RESET}"
+    echo -e "${CYAN}Alternative: Build user database via 'Manage Television Markets' → 'User Database Expansion'${RESET}"
     return 1
   fi
   
@@ -6474,206 +6046,466 @@ export_stations_to_csv() {
   return 0
 }
 
+# Database Management submenu
+database_management_submenu() {
+  while true; do
+    # Define database menu options
+    database_options=(
+      "1|Market Management"
+      "2|User Database Expansion"
+      "3|Clear User Database"
+      "4|Export Database to CSV"
+      "5|Database Statistics"
+      "6|Rebuild Combined Database"
+      "q|Back to Settings"
+    )
+    
+    # Display menu
+    clear
+    show_menu_header "Database Management"
+    
+    # Show database status
+    local breakdown=$(get_stations_breakdown)
+    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
+    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+    local total_count=$(get_total_stations_count)
+    
+    echo -e "${BOLD}${BLUE}=== Database Status ===${RESET}"
+    echo -e "Base Database: ${GREEN}$base_count stations${RESET}"
+    echo -e "User Database: ${GREEN}$user_count stations${RESET}"
+    echo -e "Total Available: ${CYAN}$total_count stations${RESET}"
+    echo
+    
+    # Show menu options
+    show_menu_options "${database_options[@]}"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr '[:upper:]' '[:lower:]')
+    
+    case $choice in
+      1) manage_markets ;;
+      2) perform_user_database_expansion "false" && pause_for_user ;;
+      3) 
+        echo -e "${YELLOW}⚠️  This will remove all user-added stations${RESET}"
+        read -p "Are you sure? (y/n): " confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+          clear_user_database
+        fi
+        pause_for_user
+        ;;
+      4) export_stations_to_csv && pause_for_user ;;
+      5) show_unified_cache_stats "detailed" && pause_for_user ;;
+      6) rebuild_combined_database && pause_for_user ;;
+      q|Q|"") break ;;
+      *) show_invalid_menu_choice "Database Management" "$choice" ;;
+    esac
+  done
+}
+
+# Search Filters submenu (formerly Global Filters)
+search_filters_submenu() {
+  while true; do
+    # Define filter menu options
+    filter_options=(
+      "1|Resolution Filter"
+      "2|Country Filter"
+      "q|Back"
+    )
+    
+    # Display menu
+    clear
+    show_menu_header "Search Filters"
+    
+    # Show current filters using modular system
+    display_status_block_header "Active Filters"
+    display_status_resolution_filter
+    display_status_country_filter
+    echo
+    
+    # Show menu options
+    show_menu_options "${filter_options[@]}"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case $choice in
+      1) configure_resolution_filter && pause_for_user ;;
+      2) configure_country_filter && pause_for_user ;;
+      q|Q|"") break ;;
+      *) show_invalid_menu_choice "Search Filters" "$choice" ;;
+    esac
+  done
+}
+
+# Standardized integration configuration function
+configure_integration() {
+    local service_name="$1"           # "Channels DVR", "Dispatcharr", "Emby"
+    local service_key="$2"            # "CHANNELS", "DISPATCHARR", "EMBY" 
+    local requires_auth="${3:-false}" # true/false - whether service needs username/password
+    local test_function="$4"          # function name to test connection
+    
+    clear
+    echo -e "${BOLD}${CYAN}=== $service_name Configuration ===${RESET}\n"
+    
+    # Get current status variables - handle Channels DVR special case
+    local enabled_var="${service_key}_ENABLED"
+    local url_var="${service_key}_URL"
+    local username_var="${service_key}_USERNAME"
+    local password_var="${service_key}_PASSWORD"
+    
+    # Special handling for Channels DVR (no _ENABLED variable)
+    if [[ "$service_key" == "CHANNELS" ]]; then
+        local current_enabled="$([[ -n "${CHANNELS_URL:-}" ]] && echo "true" || echo "false")"
+    else
+        local current_enabled="${!enabled_var:-false}"
+    fi
+    
+    local current_url="${!url_var:-}"
+    local current_username="${!username_var:-}"
+    local current_password="${!password_var:-}"
+    
+    # Show current status
+    echo -e "${BOLD}Current Status:${RESET}"
+    if [[ "$current_enabled" == "true" ]]; then
+        echo -e "Status: ${GREEN}Enabled${RESET}"
+        [[ -n "$current_url" ]] && echo -e "Server: ${CYAN}$current_url${RESET}"
+        [[ "$requires_auth" == "true" && -n "$current_username" ]] && echo -e "Username: ${CYAN}$current_username${RESET}"
+    else
+        echo -e "Status: ${YELLOW}Disabled${RESET}"
+    fi
+    echo
+    
+    # Step 1: Enable/Disable
+    echo -e "${BOLD}Step 1: Integration Status${RESET}"
+    echo -e "${CYAN}Enable $service_name integration?${RESET}"
+    echo
+    echo -e "${GREEN}1)${RESET} Enable"
+    echo -e "${YELLOW}2)${RESET} Disable"  
+    echo -e "${CYAN}3)${RESET} Cancel (keep current settings)"
+    echo
+    
+    read -p "Select option [3]: " enable_choice
+    enable_choice=${enable_choice:-3}
+    
+    case "$enable_choice" in
+        1)
+            # Continue to configuration
+            ;;
+        2)
+            # Disable service - handle Channels DVR special case
+            if [[ "$service_key" == "CHANNELS" ]]; then
+                save_setting "CHANNELS_URL" ""
+            else
+                save_setting "$enabled_var" "false"
+            fi
+            echo -e "${YELLOW}$service_name integration disabled${RESET}"
+            return 0
+            ;;
+        3|"")
+            echo -e "${CYAN}Configuration cancelled${RESET}"
+            return 0
+            ;;
+        *)
+            echo -e "${RED}Invalid option. Configuration cancelled.${RESET}"
+            return 1
+            ;;
+    esac
+    
+    # Step 2: Server IP/Hostname
+    echo
+    echo -e "${BOLD}Step 2: Server Address${RESET}"
+    echo -e "${CYAN}Enter the IP address or hostname of your $service_name server${RESET}"
+    echo
+    
+    while true; do
+        read -p "IP/Hostname [default: localhost]: " server_ip
+        server_ip=${server_ip:-localhost}
+        
+        # Basic validation
+        if [[ "$server_ip" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]] || [[ "$server_ip" == "localhost" ]] || [[ "$server_ip" =~ ^[a-zA-Z0-9.-]+$ ]]; then
+            echo -e "${GREEN}✅ Server address: $server_ip${RESET}"
+            break
+        else
+            echo -e "${RED}❌ Invalid format. Use: 192.168.1.100, localhost, or server.example.com${RESET}"
+        fi
+    done
+    
+    # Step 3: Server Port
+    echo
+    echo -e "${BOLD}Step 3: Server Port${RESET}"
+    echo -e "${CYAN}Enter the port number for your $service_name server${RESET}"
+    echo -e "${YELLOW}💡 Common ports: Channels DVR (8089), Dispatcharr (9191), Emby (8096)${RESET}"
+    echo -e "${CYAN}💡 Press Enter (blank) to use no port in URL${RESET}"
+    echo
+    
+    while true; do
+        read -p "Port [press Enter for no port]: " server_port
+        
+        # Allow blank port (no port in URL)
+        if [[ -z "$server_port" ]]; then
+            echo -e "${GREEN}✅ No port specified - using base URL${RESET}"
+            server_port=""
+            break
+        # Port validation for non-empty input
+        elif [[ "$server_port" =~ ^[0-9]+$ ]] && [[ "$server_port" -ge 1 ]] && [[ "$server_port" -le 65535 ]]; then
+            echo -e "${GREEN}✅ Server port: $server_port${RESET}"
+            break
+        else
+            echo -e "${RED}❌ Invalid port. Enter a number between 1 and 65535, or press Enter for no port${RESET}"
+        fi
+    done
+    
+    # Build URL - handle empty port
+    if [[ -n "$server_port" ]]; then
+        local server_url="http://${server_ip}:${server_port}"
+    else
+        local server_url="http://${server_ip}"
+    fi
+    
+    # Step 4: Authentication (if required)
+    local auth_username=""
+    local auth_password=""
+    
+    if [[ "$requires_auth" == "true" ]]; then
+        echo
+        echo -e "${BOLD}Step 4: Authentication${RESET}"
+        echo -e "${CYAN}Enter your $service_name login credentials${RESET}"
+        echo
+        
+        read -p "Username: " auth_username
+        read -s -p "Password: " auth_password
+        echo
+        
+        if [[ -z "$auth_username" || -z "$auth_password" ]]; then
+            echo -e "${RED}❌ Username and password are required for $service_name${RESET}"
+            return 1
+        fi
+        
+        echo -e "${GREEN}✅ Credentials entered${RESET}"
+    fi
+    
+    # Step 5: Save and Test
+    echo
+    echo -e "${BOLD}Step $([[ "$requires_auth" == "true" ]] && echo "5" || echo "4"): Save and Test${RESET}"
+    echo -e "${CYAN}Configuration Summary:${RESET}"
+    echo -e "Server: ${GREEN}$server_url${RESET}"
+    [[ "$requires_auth" == "true" ]] && echo -e "Username: ${GREEN}$auth_username${RESET}"
+    echo
+    
+    read -p "Save these settings? (y/N): " confirm
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}Configuration cancelled${RESET}"
+        return 1
+    fi
+    
+    # Save settings - handle Channels DVR special case
+    if [[ "$service_key" == "CHANNELS" ]]; then
+        save_setting "CHANNELS_URL" "$server_url"
+    else
+        save_setting "$enabled_var" "true"
+        save_setting "$url_var" "$server_url"
+        
+        if [[ "$requires_auth" == "true" ]]; then
+            save_setting "$username_var" "$auth_username"
+            save_setting "$password_var" "$auth_password"
+        fi
+    fi
+    
+    # Reload config to update variables
+    source "$CONFIG_FILE" 2>/dev/null
+    
+    echo -e "${GREEN}✅ Settings saved successfully!${RESET}"
+    
+    # Test connection if test function provided
+    if [[ -n "$test_function" ]] && declare -f "$test_function" >/dev/null 2>&1; then
+        echo
+        echo -e "${CYAN}🔄 Testing connection to $service_name...${RESET}"
+        
+        if "$test_function"; then
+            echo -e "${GREEN}✅ Connection test successful!${RESET}"
+            echo -e "${GREEN}🎉 $service_name integration is ready to use!${RESET}"
+        else
+            echo -e "${RED}❌ Connection test failed${RESET}"
+            echo -e "${YELLOW}⚠️  Please verify your settings and server status${RESET}"
+        fi
+    fi
+    
+    return 0
+}
+
+# Check integration requirement and offer setup
+check_integration_requirement() {
+    local integration_name="$1"
+    local check_function="$2"
+    local config_function="$3"
+    local feature_name="$4"
+    
+    # Check if integration is configured
+    if ! $check_function; then
+        clear
+        echo -e "${BOLD}${YELLOW}=== Integration Required ===${RESET}\n"
+        echo -e "${RED}❌ $feature_name is not available without $integration_name configuration.${RESET}\n"
+        echo -e "${CYAN}This feature requires a configured $integration_name server to function.${RESET}"
+        echo
+        echo -e "${BOLD}Would you like to set up $integration_name now?${RESET}"
+        echo
+        echo -e "  ${GREEN}1)${RESET} Yes, configure $integration_name"
+        echo -e "  ${RED}2)${RESET} No, return to menu"
+        echo
+        
+        read -p "Select option (1-2): " setup_choice
+        
+        case "$setup_choice" in
+            1)
+                # Navigate to appropriate configuration
+                case "$integration_name" in
+                    "Channels DVR")
+                        configure_cdvr_integration
+                        # After configuration, check again
+                        if $check_function; then
+                            return 0  # Success, can proceed
+                        else
+                            echo -e "\n${YELLOW}Configuration incomplete. Returning to menu...${RESET}"
+                            pause_for_user
+                            return 1
+                        fi
+                        ;;
+                    "Dispatcharr")
+                        configure_dispatcharr_integration
+                        if $check_function; then
+                            return 0
+                        else
+                            echo -e "\n${YELLOW}Configuration incomplete. Returning to menu...${RESET}"
+                            pause_for_user
+                            return 1
+                        fi
+                        ;;
+                    "Emby")
+                        configure_emby_integration
+                        if $check_function; then
+                            return 0
+                        else
+                            echo -e "\n${YELLOW}Configuration incomplete. Returning to menu...${RESET}"
+                            pause_for_user
+                            return 1
+                        fi
+                        ;;
+                    *)
+                        echo -e "${RED}Unknown integration: $integration_name${RESET}"
+                        pause_for_user
+                        return 1
+                        ;;
+                esac
+                ;;
+            2|*)
+                echo -e "\n${YELLOW}Returning to menu...${RESET}"
+                return 1
+                ;;
+        esac
+    fi
+    
+    return 0  # Integration is already configured
+}
+
+# Helper functions to check if integrations are configured
+is_cdvr_configured() {
+    [[ -n "${CHANNELS_URL:-}" ]] && curl -s --connect-timeout 2 "$CHANNELS_URL" >/dev/null 2>&1
+}
+
+is_dispatcharr_configured() {
+    [[ "$DISPATCHARR_ENABLED" == "true" ]] && command -v dispatcharr_test_connection >/dev/null 2>&1 && dispatcharr_test_connection >/dev/null 2>&1
+}
+
+is_emby_configured() {
+    [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]] && command -v emby_test_connection >/dev/null 2>&1 && emby_test_connection >/dev/null 2>&1
+}
+
+# Integration Configuration submenu
+integration_configuration_submenu() {
+  while true; do
+    # Define integration menu options
+    integration_options=(
+      "1|Channels DVR Configuration"
+      "2|Dispatcharr Configuration"
+      "3|Emby Configuration"
+      "q|Back to Settings"
+    )
+    
+    # Display menu
+    clear
+    show_menu_header "Integration Configuration"
+    
+    # Show current integration status
+    echo -e "${BOLD}${BLUE}=== Integration Status ===${RESET}"
+    
+    # Channels DVR status
+    if [[ -n "${CHANNELS_URL:-}" ]]; then
+      echo -e "Channels DVR: ${GREEN}Enabled${RESET} ($CHANNELS_URL)"
+    else
+      echo -e "Channels DVR: ${YELLOW}Disabled${RESET}"
+    fi
+    
+    # Dispatcharr status
+    if [[ "$DISPATCHARR_ENABLED" == "true" ]] && [[ -n "${DISPATCHARR_URL:-}" ]]; then
+      echo -e "Dispatcharr: ${GREEN}Enabled${RESET} ($DISPATCHARR_URL)"
+    elif [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
+      echo -e "Dispatcharr: ${YELLOW}Enabled but not configured${RESET}"
+    else
+      echo -e "Dispatcharr: ${YELLOW}Disabled${RESET}"
+    fi
+    
+    # Emby status
+    if [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]]; then
+      echo -e "Emby: ${GREEN}Enabled${RESET} ($EMBY_URL)"
+    elif [[ "$EMBY_ENABLED" == "true" ]]; then
+      echo -e "Emby: ${YELLOW}Enabled but not configured${RESET}"
+    else
+      echo -e "Emby: ${YELLOW}Disabled${RESET}"
+    fi
+    echo
+    
+    # Show menu options
+    show_menu_options "${integration_options[@]}"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case $choice in
+      1) configure_integration "Channels DVR" "CHANNELS" "false" "cdvr_test_connection" && pause_for_user ;;
+      2) configure_integration "Dispatcharr" "DISPATCHARR" "true" "dispatcharr_test_connection" && pause_for_user ;;
+      3) configure_integration "Emby" "EMBY" "true" "emby_test_connection" && pause_for_user ;;
+      q|Q|"") break ;;
+      *) show_invalid_menu_choice "Integration Configuration" "$choice" ;;
+    esac
+  done
+}
+
 settings_menu() {
-while true; do
+  while true; do
     
     show_settings_menu
     
     read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
     
     case $choice in
-        a|A) change_server_settings && pause_for_user ;;
-        b|B) toggle_logo_display && pause_for_user ;;
-        c|C) configure_resolution_filter && pause_for_user ;;
-        d|D) configure_country_filter && pause_for_user ;;
-        e|E) show_unified_cache_stats "detailed" && pause_for_user ;;
-        f|F) reset_all_settings && pause_for_user ;;
-        g|G) export_settings && pause_for_user ;;
-        h|H) export_stations_to_csv && pause_for_user ;;
-        i|I) configure_dispatcharr_connection && pause_for_user ;;
-        j|J) 
-          show_menu_transition "configuring" "Emby integration"
-          configure_emby_connection && pause_for_user 
-          ;;
-        k|K) developer_information && pause_for_user ;;
-        l|L) show_update_management_menu ;;
-        m|M) show_backup_management_menu ;;
-        q|Q|"") break ;; 
+      1) database_management_submenu ;;
+      2) integration_configuration_submenu ;;
+      3) toggle_logo_display && pause_for_user ;;
+      4) search_filters_submenu ;;
+      5) logging_submenu ;;
+      6) simple_update_check && pause_for_user ;;
+      7) simple_backup_menu ;;
+      8) clear_temp_files && pause_for_user ;;
+      q|Q|"") break ;;
       *) show_invalid_menu_choice "Settings" "$choice" ;;
     esac
   done
 }
 
-# ============================================================================
-# DEVELOPER INFORMATION FUNCTIONS
-# ============================================================================
-
-show_cache_state_details() {
-  echo -e "\n${BOLD}${BLUE}=== Cache State Tracking Details ===${RESET}"
-  echo -e "${CYAN}Technical details about cache state management:${RESET}"
-  echo
-  
-  echo -e "${BOLD}State Files Purpose:${RESET}"
-  echo "  $CACHED_MARKETS - JSONL file tracking processed markets"
-  echo "  $CACHED_LINEUPS - JSONL file tracking processed lineups"
-  echo "  $LINEUP_TO_MARKET - JSON mapping lineups to source markets"
-  echo "  $CACHE_STATE_LOG - Human-readable processing log"
-  echo
-  
-  echo -e "${BOLD}Current State:${RESET}"
-  
-  # Markets state
-  if [ -f "$CACHED_MARKETS" ] && [ -s "$CACHED_MARKETS" ]; then
-    local market_entries=$(jq -s 'length' "$CACHED_MARKETS" 2>/dev/null || echo "0")
-    echo "  Cached Markets: $market_entries entries"
-    
-    # Show last few markets processed
-    echo "  Recent Markets:"
-    tail -3 "$CACHED_MARKETS" 2>/dev/null | jq -r '"    " + .country + "/" + .zip + " (" + .timestamp + ")"' 2>/dev/null || echo "    (unable to parse recent entries)"
-  else
-    echo "  Cached Markets: No data"
-  fi
-  echo
-  
-  # Lineups state
-  if [ -f "$CACHED_LINEUPS" ] && [ -s "$CACHED_LINEUPS" ]; then
-    local lineup_entries=$(jq -s 'length' "$CACHED_LINEUPS" 2>/dev/null || echo "0")
-    echo "  Cached Lineups: $lineup_entries entries"
-    
-    # Show total stations tracked
-    local total_stations=$(jq -s '.[] | .stations_found' "$CACHED_LINEUPS" 2>/dev/null | awk '{sum+=$1} END {print sum+0}')
-    echo "  Total Stations (pre-dedup): $total_stations"
-  else
-    echo "  Cached Lineups: No data"
-  fi
-  echo
-  
-  # Mapping state
-  if [ -f "$LINEUP_TO_MARKET" ] && [ -s "$LINEUP_TO_MARKET" ]; then
-    local mapping_count=$(jq 'length' "$LINEUP_TO_MARKET" 2>/dev/null || echo "0")
-    echo "  Lineup-to-Market Mappings: $mapping_count"
-  else
-    echo "  Lineup-to-Market Mappings: No data"
-  fi
-  echo
-  
-  # Log state
-  if [ -f "$CACHE_STATE_LOG" ] && [ -s "$CACHE_STATE_LOG" ]; then
-    local log_lines=$(wc -l < "$CACHE_STATE_LOG" 2>/dev/null || echo "0")
-    local last_entry=$(tail -1 "$CACHE_STATE_LOG" 2>/dev/null | cut -d' ' -f1-2)
-    echo "  State Log: $log_lines entries"
-    echo "  Last Activity: $last_entry"
-  else
-    echo "  State Log: No data"
-  fi
-  echo
-  
-  echo -e "${BOLD}Functions Using State:${RESET}"
-  echo "  record_market_processed() - Adds market entries"
-  echo "  record_lineup_processed() - Adds lineup entries"
-  echo "  is_market_cached() - Checks if market already processed"
-  echo "  is_lineup_cached() - Checks if lineup already processed"
-  echo "  get_unprocessed_markets() - Gets markets needing processing"
-}
-
-show_raw_cache_debug() {
-  echo -e "\n${BOLD}${BLUE}=== Debug: Raw Cache Files ===${RESET}"
-  echo -e "${YELLOW}⚠️  This shows technical file contents for debugging purposes${RESET}"
-  echo
-  
-  echo -e "${BOLD}Cache Directory Contents:${RESET}"
-  if [ -d "$CACHE_DIR" ]; then
-    echo "Directory: $CACHE_DIR"
-    ls -la "$CACHE_DIR" 2>/dev/null | head -20
-    local total_files=$(find "$CACHE_DIR" -type f 2>/dev/null | wc -l)
-    echo "Total files: $total_files"
-    echo
-  else
-    echo "Cache directory not found: $CACHE_DIR"
-    return 1
-  fi
-  
-  echo -e "${BOLD}State File Samples:${RESET}"
-  
-  if [ -f "$CACHED_MARKETS" ] && [ -s "$CACHED_MARKETS" ]; then
-    echo "Recent market entries (last 3):"
-    tail -3 "$CACHED_MARKETS" | jq . 2>/dev/null || tail -3 "$CACHED_MARKETS"
-    echo
-  fi
-  
-  if [ -f "$CACHED_LINEUPS" ] && [ -s "$CACHED_LINEUPS" ]; then
-    echo "Recent lineup entries (last 2):"
-    tail -2 "$CACHED_LINEUPS" | jq . 2>/dev/null || tail -2 "$CACHED_LINEUPS"
-    echo
-  fi
-  
-  if [ -f "$LINEUP_TO_MARKET" ] && [ -s "$LINEUP_TO_MARKET" ]; then
-    echo "Lineup mapping sample (first 3 entries):"
-    jq 'to_entries | .[0:3]' "$LINEUP_TO_MARKET" 2>/dev/null || echo "Unable to parse mapping file"
-    echo
-  fi
-  
-  echo -e "${BOLD}Temporary Files:${RESET}"
-  local temp_count=$(find "$CACHE_DIR" -name "last_raw_*.json" 2>/dev/null | wc -l)
-  echo "Temporary API response files: $temp_count"
-  if [ "$temp_count" -gt 0 ] && [ "$temp_count" -lt 10 ]; then
-    echo "Recent temp files:"
-    find "$CACHE_DIR" -name "last_raw_*.json" -exec basename {} \; | head -5
-  elif [ "$temp_count" -ge 10 ]; then
-    echo "Many temp files found - consider cleanup"
-  fi
-  echo
-  
-  echo -e "${BOLD}Cache Integrity Check:${RESET}"
-  local issues=0
-  
-  # Check JSON validity of key files
-  for file in "$USER_STATIONS_JSON" "$LINEUP_TO_MARKET"; do
-    if [ -f "$file" ]; then
-      if jq empty "$file" 2>/dev/null; then
-        echo -e "${GREEN}✅ Valid JSON: $(basename "$file")${RESET}"
-      else
-        echo -e "${RED}❌ Invalid JSON: $(basename "$file")${RESET}"
-        ((issues++))
-      fi
-    fi
-  done
-  
-  if [ "$issues" -eq 0 ]; then
-    echo -e "${GREEN}✅ No JSON integrity issues found${RESET}"
-  else
-    echo -e "${RED}❌ Found $issues JSON integrity issues${RESET}"
-  fi
-}
-
-developer_information() {
-  while true; do
-    # Define developer menu options
-  local dev_options=(
-    "a|Cache State Tracking Details"
-    "b|Debug: Raw Cache Files"
-    "q|Back to Settings"
-)
-    
-    # Use standardized menu display with clear warning
-    show_menu_header "Developer Information" "Technical details for script developers and maintainers"
-    echo -e "${YELLOW}This section contains technical details for script developers and maintainers.${RESET}"
-    echo -e "${CYAN}End users typically don't need this information.${RESET}"
-    echo
-    
-    show_menu_options "${dev_options[@]}"
-    echo
-    
-    read -p "Select option: " dev_choice
-    
-    case $dev_choice in
-      a|A) show_cache_state_details && pause_for_user ;;
-      b|B) show_raw_cache_debug && pause_for_user ;;
-      q|Q|"") break ;;
-      *) show_invalid_menu_choice "Developer Information" "$dev_choice" ;;
-    esac
-  done
-}
 
 # ============================================================================
 # MAIN APPLICATION ENTRY POINT
@@ -6713,32 +6545,32 @@ validate_cache_formats_on_startup() {
     local critical_issues=false
     
     echo -e "${CYAN}📊 Cache Format Analysis:${RESET}"
-    echo -e "  Base cache: $base_format"
-    echo -e "  User cache: $user_format"
+    echo -e "  Base database: $base_format"
+    echo -e "  User database: $user_format"
     
     # FORCE FUNCTION: Check for any problematic formats
     if [[ "$base_format" == "legacy" ]] || [[ "$base_format" == "mixed" ]]; then
-        echo -e "\n${RED}❌ CRITICAL: Base Cache Format Issue Detected${RESET}"
-        echo -e "${RED}❌ Base cache uses legacy format and CANNOT be used${RESET}"
-        echo -e "${CYAN}💡 You need an updated base cache file with clean multi-country format${RESET}"
-        echo -e "${CYAN}💡 Contact script distributor for updated base cache${RESET}"
-        echo -e "${CYAN}💡 Or use Base Cache Distribution Builder to convert existing cache${RESET}"
+        echo -e "\n${RED}❌ CRITICAL: Base Database Format Issue Detected${RESET}"
+        echo -e "${RED}❌ Base database uses legacy format and CANNOT be used${RESET}"
+        echo -e "${CYAN}💡 You need an updated base database file with clean multi-country format${RESET}"
+        echo -e "${CYAN}💡 Contact script distributor for updated base database${RESET}"
+        echo -e "${CYAN}💡 Or use Base Database Distribution Builder to convert existing database${RESET}"
         critical_issues=true
     fi
     
     if [[ "$user_format" == "legacy" ]] || [[ "$user_format" == "mixed" ]]; then
-        echo -e "\n${RED}❌ CRITICAL: User Cache Format Issue Detected${RESET}"
-        echo -e "${RED}❌ User cache uses legacy format and CANNOT be used${RESET}"
-        echo -e "${YELLOW}⚠️  Script will delete legacy user cache to prevent data corruption${RESET}"
+        echo -e "\n${RED}❌ CRITICAL: User Database Format Issue Detected${RESET}"
+        echo -e "${RED}❌ User database uses legacy format and CANNOT be used${RESET}"
+        echo -e "${YELLOW}⚠️  Script will delete legacy user database to prevent data corruption${RESET}"
         
-        if confirm_action "Delete legacy user cache and allow script to continue?"; then
-            echo -e "${CYAN}🔄 Deleting legacy user cache...${RESET}"
+        if confirm_action "Delete legacy user database and allow script to continue?"; then
+            echo -e "${CYAN}🔄 Deleting legacy user database...${RESET}"
             rm -f "$USER_STATIONS_JSON"
             echo '[]' > "$USER_STATIONS_JSON"
-            echo -e "${GREEN}✅ Legacy user cache deleted - you can rebuild with clean format${RESET}"
-            echo -e "${CYAN}💡 Use 'Manage Television Markets' → 'Run User Caching' to rebuild${RESET}"
+            echo -e "${GREEN}✅ Legacy user database deleted - you can rebuild with clean format${RESET}"
+            echo -e "${CYAN}💡 Use 'Manage Television Markets' → 'User Database Expansion' to rebuild${RESET}"
         else
-            echo -e "${RED}❌ Cannot continue with legacy user cache${RESET}"
+            echo -e "${RED}❌ Cannot continue with legacy user database${RESET}"
             critical_issues=true
         fi
     fi
@@ -6747,7 +6579,7 @@ validate_cache_formats_on_startup() {
     if [[ "$critical_issues" == "true" ]]; then
         echo -e "\n${RED}❌ SCRIPT CANNOT CONTINUE WITH LEGACY FORMAT DATA${RESET}"
         echo -e "${CYAN}💡 Fix the format issues above and restart the script${RESET}"
-        echo -e "${CYAN}💡 Use Base Cache Distribution Builder for cache conversion${RESET}"
+        echo -e "${CYAN}💡 Use Base Database Distribution Builder for database conversion${RESET}"
         echo -e "${CYAN}💡 Or contact script distributor for updated files${RESET}"
         echo
         echo -e "${YELLOW}Press any key to exit...${RESET}"
@@ -6766,7 +6598,409 @@ validate_cache_formats_on_startup() {
     fi
 }
 
+# ============================================================================
+# SUBMENU FUNCTIONS (Hybrid Architecture)
+# ============================================================================
+
+# Search submenu - consolidates all search functionality
+search_submenu() {
+  while true; do
+    # Define search menu options
+    search_options=(
+      "1|Search Local Database"
+      "2|Direct API Search|requires Channels DVR"
+      "3|Reverse Station ID Lookup"
+      "q|Back to Main Menu"
+    )
+    
+    # Display menu using hybrid approach
+    clear
+    show_menu_header "Search Menu"
+    
+    # Show database status
+    display_database_status
+    echo
+    
+    # Show menu options
+    show_menu_options "${search_options[@]}"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case $choice in
+      1) search_local_database ;;
+      2) run_direct_api_search ;;
+      3) reverse_station_id_lookup_menu ;;
+      q|Q|"") break ;;
+      *) show_invalid_menu_choice "Search Menu" "$choice" ;;
+    esac
+  done
+}
+
+# Emby submenu - consolidates Emby functionality
+emby_submenu() {
+  # Check if Emby is configured before proceeding
+  if ! check_integration_requirement "Emby" "is_emby_configured" "configure_emby_integration" "Emby Integration"; then
+    return 1
+  fi
+  
+  # Auto-check connection when entering menu
+  echo -e "${CYAN}🔄 Checking Emby connection...${RESET}"
+  if ! emby_test_connection >/dev/null 2>&1; then
+    echo -e "${YELLOW}⚠️  Emby connection failed. Please verify your settings in Integration Configuration${RESET}"
+    pause_for_user
+  fi
+  
+  while true; do
+    # Define Emby menu options
+    emby_options=(
+      "1|Populate Missing LineupIDs"
+      "2|Clear All Channel Logos"
+      "3|Clear All Channel Numbers"
+      "q|Back to Main Menu"
+    )
+    
+    # Display menu
+    clear
+    show_menu_header "Emby Integration"
+    
+    # Show Emby status using modular system
+    display_status_emby_context
+    
+    # Show menu options
+    show_menu_options "${emby_options[@]}"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case $choice in
+      1) 
+        echo -e "${YELLOW}⚠️  This will scan all Emby channels and populate missing LineupIDs${RESET}"
+        read -p "Continue? (y/n): " confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+          scan_emby_missing_listingsids
+        fi
+        ;;
+      2) 
+        echo -e "${YELLOW}⚠️  This will clear all channel logos from Emby${RESET}"
+        read -p "Are you sure? (y/n): " confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+          emby_delete_all_logos
+        fi
+        pause_for_user
+        ;;
+      3)
+        echo -e "${YELLOW}⚠️  This will clear ALL channel numbers from ALL Live TV channels${RESET}"
+        echo -e "${YELLOW}This cannot be undone!${RESET}"
+        read -p "Are you sure you want to continue? (y/n): " confirm
+        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+          echo -e "${YELLOW}Please confirm again to proceed${RESET}"
+          read -p "Type 'clear' to confirm: " confirm2
+          if [[ "$confirm2" == "clear" ]]; then
+            emby_clear_all_channel_numbers
+          else
+            echo -e "${GREEN}Operation cancelled${RESET}"
+          fi
+        fi
+        pause_for_user
+        ;;
+      q|Q|"") break ;;
+      *) show_invalid_menu_choice "Emby Menu" "$choice" ;;
+    esac
+  done
+}
+
+# Logging Submenu
+logging_submenu() {
+  while true; do
+    clear
+    echo -e "${BOLD}${BLUE}📝 Logging${RESET}\n"
+    
+    # Show current status
+    echo -e "${BOLD}Current Configuration:${RESET}"
+    local current_color="$SUCCESS_STYLE"
+    case "$LOG_LEVEL" in
+      "DEBUG") current_color="$INFO_STYLE" ;;
+      "WARN"|"ERROR"|"FATAL") current_color="$WARNING_STYLE" ;;
+    esac
+    echo -e "Log Level: ${current_color}$LOG_LEVEL${RESET}"
+    
+    # Show log file locations
+    echo -e "Main Log: ${INFO_STYLE}${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}${RESET}"
+    echo -e "Error Log: ${INFO_STYLE}${LOG_ERROR_FILE:-$LOGS_DIR/error.log}${RESET}"
+    echo -e "Debug Log: ${INFO_STYLE}${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}${RESET}"
+    echo
+    
+    echo -e "${BOLD}Logging Options:${RESET}"
+    echo -e "  ${GREEN}1)${RESET} Change Log Level"
+    echo -e "  ${CYAN}2)${RESET} View Main Log (last 50 lines)"
+    echo -e "  ${CYAN}3)${RESET} View Error Log (last 30 lines)"
+    echo -e "  ${CYAN}4)${RESET} View Debug Log (last 30 lines)"
+    echo -e "  ${YELLOW}5)${RESET} View All Recent Logs"
+    echo -e "  ${RED}6)${RESET} Clear All Logs"
+    echo -e "  ${GRAY}q)${RESET} Back to Settings"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case "$choice" in
+      1)
+        logging_change_level
+        ;;
+      2)
+        logging_view_main
+        pause_for_user
+        ;;
+      3)
+        logging_view_errors
+        pause_for_user
+        ;;
+      4)
+        logging_view_debug
+        pause_for_user
+        ;;
+      5)
+        logging_view_all_recent
+        pause_for_user
+        ;;
+      6)
+        logging_clear_all
+        pause_for_user
+        ;;
+      q|"")
+        break
+        ;;
+      *)
+        echo -e "${RED}Invalid option${RESET}"
+        sleep 1
+        ;;
+    esac
+  done
+}
+
+# Change log level
+logging_change_level() {
+  clear
+  echo -e "${BOLD}${BLUE}🔧 Change Log Level${RESET}\n"
+  
+  echo -e "${BOLD}Current Log Level: ${SUCCESS_STYLE}$LOG_LEVEL${RESET}\n"
+  
+  echo -e "${CYAN}Available Log Levels:${RESET}"
+  echo -e "  ${INFO_STYLE}DEBUG${RESET}  - Most verbose, shows all debug information"
+  echo -e "  ${SUCCESS_STYLE}INFO${RESET}   - Default level, shows general information (recommended)"
+  echo -e "  ${WARNING_STYLE}WARN${RESET}   - Shows warnings and above"
+  echo -e "  ${WARNING_STYLE}ERROR${RESET}  - Shows only errors and fatal messages"
+  echo -e "  ${WARNING_STYLE}FATAL${RESET}  - Shows only fatal errors"
+  echo
+  
+  echo -e "${BOLD}Select new log level:${RESET}"
+  echo -e "  ${GREEN}1)${RESET} DEBUG (Most verbose)"
+  echo -e "  ${GREEN}2)${RESET} INFO (Recommended)"
+  echo -e "  ${GREEN}3)${RESET} WARN (Warnings only)"
+  echo -e "  ${GREEN}4)${RESET} ERROR (Errors only)"
+  echo -e "  ${GREEN}5)${RESET} FATAL (Fatal errors only)"
+  echo -e "  ${GRAY}q)${RESET} Keep current setting"
+  echo
+  
+  read -p "Select option: " choice
+  choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+  
+  local new_log_level=""
+  case "$choice" in
+    1) new_log_level="DEBUG" ;;
+    2) new_log_level="INFO" ;;
+    3) new_log_level="WARN" ;;
+    4) new_log_level="ERROR" ;;
+    5) new_log_level="FATAL" ;;
+    q|"") 
+      echo -e "${YELLOW}Log level unchanged${RESET}"
+      return 0
+      ;;
+    *)
+      echo -e "${RED}Invalid option${RESET}"
+      return 1
+      ;;
+  esac
+  
+  # Update log level
+  LOG_LEVEL="$new_log_level"
+  save_setting "LOG_LEVEL" "$LOG_LEVEL"
+  
+  echo -e "${GREEN}✅ Log level updated to: $LOG_LEVEL${RESET}"
+  echo -e "${CYAN}💡 The new log level will take effect on next script restart${RESET}"
+  
+  # Ask if user wants to restart now
+  echo
+  if confirm_action "Restart script now to apply new log level"; then
+    echo -e "${CYAN}Restarting script...${RESET}"
+    exec "$0" "$@"
+  fi
+}
+
+# View main log
+logging_view_main() {
+  clear
+  echo -e "${BOLD}${BLUE}📄 Main Log (Last 50 lines)${RESET}\n"
+  
+  local log_file="${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}"
+  if [[ -f "$log_file" ]]; then
+    echo -e "${CYAN}File: $log_file${RESET}"
+    echo -e "${GRAY}$(ls -lh "$log_file" | awk '{print "Size: " $5 ", Modified: " $6 " " $7 " " $8}')${RESET}"
+    echo
+    tail -n 50 "$log_file" 2>/dev/null || echo -e "${YELLOW}No recent log entries${RESET}"
+  else
+    echo -e "${YELLOW}Log file not found: $log_file${RESET}"
+  fi
+}
+
+# View error log
+logging_view_errors() {
+  clear
+  echo -e "${BOLD}${RED}❌ Error Log (Last 30 lines)${RESET}\n"
+  
+  local log_file="${LOG_ERROR_FILE:-$LOGS_DIR/error.log}"
+  if [[ -f "$log_file" ]]; then
+    echo -e "${CYAN}File: $log_file${RESET}"
+    echo -e "${GRAY}$(ls -lh "$log_file" | awk '{print "Size: " $5 ", Modified: " $6 " " $7 " " $8}')${RESET}"
+    echo
+    tail -n 30 "$log_file" 2>/dev/null || echo -e "${YELLOW}No error entries${RESET}"
+  else
+    echo -e "${GREEN}✅ No error log file found (no errors logged)${RESET}"
+  fi
+}
+
+# View debug log
+logging_view_debug() {
+  clear
+  echo -e "${BOLD}${INFO_STYLE}🐛 Debug Log (Last 30 lines)${RESET}\n"
+  
+  local log_file="${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}"
+  if [[ -f "$log_file" ]]; then
+    echo -e "${CYAN}File: $log_file${RESET}"
+    echo -e "${GRAY}$(ls -lh "$log_file" | awk '{print "Size: " $5 ", Modified: " $6 " " $7 " " $8}')${RESET}"
+    echo
+    tail -n 30 "$log_file" 2>/dev/null || echo -e "${YELLOW}No debug entries${RESET}"
+  else
+    echo -e "${YELLOW}Debug log file not found: $log_file${RESET}"
+    echo -e "${CYAN}💡 Debug logs are only created when LOG_LEVEL=DEBUG${RESET}"
+  fi
+}
+
+# View all recent logs
+logging_view_all_recent() {
+  clear
+  echo -e "${BOLD}${BLUE}📋 All Recent Log Activity${RESET}\n"
+  
+  # Find all log files
+  local log_files=()
+  [[ -f "${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}" ]] && log_files+=("${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}")
+  [[ -f "${LOG_ERROR_FILE:-$LOGS_DIR/error.log}" ]] && log_files+=("${LOG_ERROR_FILE:-$LOGS_DIR/error.log}")
+  [[ -f "${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}" ]] && log_files+=("${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}")
+  
+  if [[ ${#log_files[@]} -eq 0 ]]; then
+    echo -e "${YELLOW}No log files found${RESET}"
+    return
+  fi
+  
+  echo -e "${CYAN}Showing last 20 lines from each log file, sorted by time:${RESET}\n"
+  
+  # Combine and sort log entries by timestamp
+  {
+    for log_file in "${log_files[@]}"; do
+      tail -n 20 "$log_file" 2>/dev/null | while IFS= read -r line; do
+        echo "$(basename "$log_file"): $line"
+      done
+    done
+  } | sort -k2,3
+}
+
+# Clear all logs
+logging_clear_all() {
+  clear
+  echo -e "${BOLD}${RED}🗑️  Clear All Logs${RESET}\n"
+  
+  echo -e "${YELLOW}⚠️  This will permanently delete all log files:${RESET}"
+  echo -e "• ${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}"
+  echo -e "• ${LOG_ERROR_FILE:-$LOGS_DIR/error.log}"
+  echo -e "• ${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}"
+  echo -e "• Any rotated log files (.1, .2, etc.)"
+  echo
+  
+  if confirm_action "Clear all log files"; then
+    # Clear main logs
+    > "${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}" 2>/dev/null
+    > "${LOG_ERROR_FILE:-$LOGS_DIR/error.log}" 2>/dev/null
+    > "${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}" 2>/dev/null
+    
+    # Remove rotated logs
+    rm -f "${LOG_MAIN_FILE:-$LOGS_DIR/globalstationsearch.log}".* 2>/dev/null
+    rm -f "${LOG_ERROR_FILE:-$LOGS_DIR/error.log}".* 2>/dev/null
+    rm -f "${LOG_DEBUG_FILE:-$LOGS_DIR/debug.log}".* 2>/dev/null
+    
+    echo -e "${GREEN}✅ All log files cleared${RESET}"
+  else
+    echo -e "${YELLOW}Log clearing cancelled${RESET}"
+  fi
+}
+
+# Simple Backup Management Menu
+simple_backup_menu() {
+  while true; do
+    clear
+    echo -e "${BOLD}${BLUE}📦 Backup Management${RESET}\n"
+    
+    # Show backup info
+    backup_show_info
+    
+    echo -e "${BOLD}Backup Options:${RESET}"
+    echo -e "  ${GREEN}1)${RESET} Create Backup"
+    echo -e "  ${CYAN}2)${RESET} List All Backups"
+    echo -e "  ${YELLOW}3)${RESET} Restore from Backup"
+    echo -e "  ${RED}4)${RESET} Cleanup Old Backups"
+    echo -e "  ${GRAY}q)${RESET} Back to Settings"
+    echo
+    
+    read -p "Select option: " choice
+    choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+    
+    case "$choice" in
+      1)
+        clear
+        backup_create "manual"
+        pause_for_user
+        ;;
+      2)
+        clear
+        backup_list
+        pause_for_user
+        ;;
+      3)
+        clear
+        backup_restore
+        pause_for_user
+        ;;
+      4)
+        clear
+        backup_cleanup
+        pause_for_user
+        ;;
+      q|"")
+        break
+        ;;
+      *)
+        echo -e "${RED}Invalid option${RESET}"
+        sleep 1
+        ;;
+    esac
+  done
+}
+
 main_menu() {
+  log_info "main" "Main menu started"
+  
   while true; do
     
     show_main_menu
@@ -6774,17 +7008,31 @@ main_menu() {
     read -p "Select option: " choice
     choice=$(echo "$choice" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
     case $choice in
-      1) search_local_database ;;
-      2) dispatcharr_integration_check ;;
-      3) scan_emby_missing_listingsids ;;
-      4) manage_markets ;;
-      5) run_user_caching "false" && pause_for_user ;;
-      6) run_direct_api_search ;;
-      7) reverse_station_id_lookup_menu ;;
-      8) cache_management_main_menu ;;
-      9) settings_menu ;;
-      q|Q|"") echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
-      *) show_invalid_menu_choice "Main Menu" "$choice" ;;
+      1) 
+        log_user_action "Accessed Search submenu"
+        search_submenu 
+        ;;
+      2) 
+        log_user_action "Accessed Dispatcharr integration"
+        dispatcharr_integration_check 
+        ;;
+      3) 
+        log_user_action "Accessed Emby submenu"
+        emby_submenu 
+        ;;
+      4) 
+        log_user_action "Accessed Settings menu"
+        settings_menu 
+        ;;
+      q|Q|"") 
+        log_info "main" "Application shutdown requested by user"
+        echo -e "${GREEN}Goodbye!${RESET}"
+        exit 0 
+        ;;
+      *) 
+        log_warn "main" "Invalid menu choice: $choice"
+        show_invalid_menu_choice "Main Menu" "$choice" 
+        ;;
     esac
   done
 }
@@ -6799,6 +7047,12 @@ setup_directories
 # Load essential modules (utils and config only)
 load_essential_modules
 
+# Initialize logging system early
+log_init
+
+log_info "init" "GlobalStationSearch v$VERSION starting up"
+log_info "init" "Essential modules loaded, logging system initialized"
+
 # Now we can safely call setup_config since config.sh is loaded
 setup_config
 check_dependencies
@@ -6806,16 +7060,47 @@ check_dependencies
 # Load all remaining modules (they can now safely use config variables)
 load_remaining_modules
 
+log_info "init" "All modules loaded successfully"
+
 # Validate cache formats before proceeding
 validate_cache_formats_on_startup
 
 # Initialize cache optimization system
 init_combined_cache_startup
 
+# Initialize backup system
+backup_init
+
+# Display current version with update status
+if command -v check_for_updates >/dev/null 2>&1; then
+    # Show progress indicator before update check
+    echo -e "${CYAN}🔄 Checking for updates...${RESET}"
+    
+    # Perform update check and capture return code
+    check_for_updates "true" "false" >/dev/null 2>&1
+    update_check_result=$?
+    
+    if [[ $update_check_result -eq 0 ]]; then
+        # Up to date
+        echo -e "${INFO_STYLE}📌 Current version v$VERSION, ${GREEN}up to date!${RESET}"
+    elif [[ $update_check_result -eq 2 ]]; then
+        # Updates available
+        echo -e "${INFO_STYLE}📌 Current version v$VERSION, ${YELLOW}update available!${RESET} ${CYAN}See Settings for update instructions.${RESET}"
+    else
+        # Error or unknown status, just show version
+        echo -e "${INFO_STYLE}📌 Current version v$VERSION${RESET}"
+    fi
+else
+    # Update module not loaded, just show version
+    echo -e "${INFO_STYLE}📌 Current version v$VERSION${RESET}"
+fi
+
 # Initialize and perform startup update check
 if command -v perform_startup_update_check >/dev/null 2>&1; then
     perform_startup_update_check
 fi
+
+log_info "init" "Application initialization complete, starting main menu"
 
 # Wait for user to allow review of status messages
 pause_for_user

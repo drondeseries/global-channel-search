@@ -2,21 +2,24 @@
 
 A comprehensive television station search tool that (optionally) integrates with Channels DVR and Dispatcharr to provide enhanced station discovery and automated Dispatcharr field population.
 
-## Version 2.1.0
-**Patch (2.1.0)**
-- Improved User Caching (resume from interruption, more efficient, fewer API calls)
-- Significantly improved dispatcharr authentication and token management
-- Continue process of code cleaning and reorganization
-- New complete USA, CAN, GBR base databse
+## Version 2.5.0
+**Major Update Release (2.5.0)**
+- New Emby Integration submenu
+- Complete Dispatcharr Channel Management System (create, edit, manage channels/groups/streams)
+- Enhanced logging system with comprehensive submenu (view, configure, clear logs)
+- Complete menu restructuring: Search, Dispatcharr, Emby, Settings
+- Submenus also reorganized
+- Updated terminology: base/user cache → base/user database
+- Fixed Bash compatibility issues and modular architecture/code improvements
 
 ## Features
 
 ### No Setup Required
-- **Comprehensive Base Cache** - Thousands of pre-loaded stations from USA, Canada, and UK, including streaming channels
+- **Comprehensive Base Database** - Thousands of pre-loaded stations from USA, Canada, and UK, including streaming channels
 - **Search immediately**
 - **Optional Expansion** - Add custom markets only if you need additional coverage
 
-### 🔍 **Powerful Search**
+### 🔍 Search**
 - **Local Database Search** - Searching happens locally, without API calls
 - **Direct API Search** - Real-time queries to Channels DVR server (requires Channels DVR integration)
 - **Smart Filtering** - Filter by resolution (SDTV, HDTV, UHDTV) and country
@@ -24,27 +27,25 @@ A comprehensive television station search tool that (optionally) integrates with
 - **Advanced Channel Name Parsing** - Intelligent channel name analysis with auto-detection of country, resolution, and language
 - **Reverse Station ID Lookup**
 
-### 🔧 **Dispatcharr Integration**
-- **Automated Station ID Matching** - Interactive matching for channels missing station IDs
-- **Complete Field Population** - Automatically populate channel name, TVG-ID, station ID, and logos
-- **Visual Comparison** - See current vs. proposed logos side-by-side
-- **Batch Processing Modes** - Choose immediate apply or queue for review
-- **Automatic Data Replacement** - Mass update all channels with station IDs
-- **Resume Support** - Continue processing from where you left off
-- **Enhanced Authentication** - Background token management without workflow interruption
+### 🔧 **Integrations**
+- **Dispatcharr - Complete Channel Management** - Create, edit, update, and delete channels from search results
+- **Dispatcharr - Group Management** - View, create, modify, and delete channel groups
+- **Dispatcharr - Stream Management** - Search, assign, and remove streams with table-based UI
+- **Dispatcharr - Field Population and Station ID Matching** - Interactive matching for channels missing station IDs. Automatically populate channel name, TVG-ID, station ID, and logos
+- **Emby - Populate Missing listingIds** - Automatically find any missing listingIds and add them to Emby for rich EPG data
+- **Emby - Delete All Channel Numbers** - Useful for some users
 
 ### 🌍 **Market Management**
 - **Granular Control** - Add specific ZIP codes/postal codes for any country
 - **Smart Caching** - Incremental updates only process new markets
-- **Base Cache Awareness** - Automatically skips markets already covered
-- **Force Refresh** - Override base cache when you need specific market processing
-- **Enhanced Validation** - Country and postal code normalization and validation
+- **Base Database Awareness** - Automatically skips markets already covered
+- **Force Refresh** - Override base database when you need specific market processing
 
-### 🔄 **Auto-Update System**
-- **Startup Checks** - Optional update checking when script starts
-- **Configurable Intervals** - Set update check frequency
-- **In-Script Management** - Update directly from within the application
-- **Background Processing** - Non-intrusive update notifications
+### 🔄 **System Management**
+- **Enhanced Logging** - Comprehensive logging menu with view/configure/clear options
+- **Configurable Log Levels** - DEBUG, INFO, WARN, ERROR levels with file rotation
+- **Backup Management** - Universal tar.gz backup format with fixed file resolution
+- **Auto-Update System** - Configurable update checking and in-script management
 
 ## Requirements
 
@@ -56,8 +57,9 @@ A comprehensive television station search tool that (optionally) integrates with
 ### Optional
 - **viu** - Logo previews and display
 - **bc** - Progress calculations during caching
-- **Channels DVR server** - For Direct API Search and adding channels using user cache
-- **Dispatcharr** - For automated channel field population
+- **Channels DVR server** - For Direct API Search and adding channels using user database
+- **Dispatcharr** - For Dispatcharr integrations
+- **Emby** - For Emby integrations
 
 ## Installation
 
@@ -86,13 +88,10 @@ brew install jq curl
 
 ## Quick Start
 
-### Option 1: Immediate Use (Recommended)
 ```bash
 ./globalstationsearch.sh
 ```
-Select **"Search Local Database"** - works immediately with thousands of pre-loaded stations!
 
-### Option 2: Command Line Help
 ```bash
 ./globalstationsearch.sh --help           # Usage help
 ./globalstationsearch.sh --version        # Version number
@@ -104,15 +103,14 @@ Select **"Search Local Database"** - works immediately with thousands of pre-loa
 This script is designed to be self-contained and user-friendly. For issues or suggestions find me on the Dispatcharr Discord.
 
 ## Version History
-- **2.0.4** - Fix to Emby API calls and other bugfixes
-- **2.0.0** - BREAKING RELEASE all data must be deleted, no longer backward compatible, added
-multicountry, lineup tracing. Emby integration
-- **1.4.5** - Enhanced authentication, API consolidation, improved channel selection, auto-update system
-- **1.4.2** - Channel parsing fixes and stability improvements
-- **1.4.0** - Major modular architecture overhaul, enhanced stability, improved workflows
-- **1.3.2** - Dispatcharr token refresh fixes, resume support
-- **1.3.1** - Enhanced Dispatcharr workflows, improved parsing, better navigation
-- **1.3.0** - Enhanced Dispatcharr integration, logo workflow, menu consistency
-- **1.2.0** - Major base cache overhaul, better user cache handling  
-- **1.1.0** - Added comprehensive local base cache
+- **2.5.0** - Complete channel management suite, enhanced logging system, improved backup
+- **2.4.0** - Full Dispatcharr channel/group/stream management, standardized styling
+- **2.3.0** - Centralized logging system, modular architecture completion
+- **2.2.0** - Menu restructuring, terminology updates, enhanced integration management
+- **2.1.0** - Improved User Database Expansion, enhanced authentication
+- **2.0.4** - Emby API fixes and bugfixes
+- **2.0.0** - BREAKING: Multicountry support, lineup tracing, Emby integration
+- **1.4.x** - Authentication improvements, API consolidation, auto-update system
+- **1.3.x** - Enhanced Dispatcharr integration, logo workflows
+- **1.2.x** - Base database overhaul, improved user database handling
 - **1.0.0** - Initial release with Dispatcharr integration

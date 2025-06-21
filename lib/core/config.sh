@@ -31,6 +31,9 @@ setup_config() {
       EMBY_API_KEY=${EMBY_API_KEY:-""}
       EMBY_USER_ID=${EMBY_USER_ID:-""}
       
+      # Logging settings
+      LOG_LEVEL=${LOG_LEVEL:-"INFO"}
+      
       # Resume state - ONLY channel number now
       LAST_PROCESSED_CHANNEL_NUMBER=${LAST_PROCESSED_CHANNEL_NUMBER:-""}
       
@@ -50,7 +53,7 @@ create_minimal_config() {
   echo -e "${YELLOW}Setting up configuration...${RESET}"
   echo -e "${CYAN}💡 Channels DVR server is optional and only needed for:${RESET}"
   echo -e "${CYAN}   • Direct API search${RESET}"
-  echo -e "${CYAN}   • User Cache Expansion${RESET}"
+  echo -e "${CYAN}   • User Database Expansion${RESET}"
   echo -e "${GREEN}   • Local Database Search works out of the box with base database!${RESET}"
   echo
   

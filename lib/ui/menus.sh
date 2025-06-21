@@ -23,32 +23,31 @@ show_menu() {
             show_unified_system_status
             ;;
         "cache") 
-            _show_cache_menu_status
+            display_status_database_context
             ;;
         "dispatcharr")
-            _show_dispatcharr_menu_status
+            display_status_dispatcharr_context
             ;;
         "markets")
             _show_markets_menu_status
             ;;
         "settings")
-            _show_settings_menu_status
+            display_status_settings_menu
             ;;
         "none")
             # No status section
             ;;
     esac
     
-    # Show menu options
-    local -n options_array=$options_var
-    show_menu_options "${options_array[@]}"
+    # Show menu options - using eval for compatibility with older Bash versions
+    eval "show_menu_options \"\${${options_var}[@]}\""
     echo
 }
 
 # Universal menu header formatter
 show_menu_header() {
     local title="$1"
-    local subtitle="$2"
+    local subtitle="${2:-}"
     
     echo -e "${BOLD}${CYAN}=== $title ===${RESET}\n"
     
@@ -97,10 +96,10 @@ handle_menu_input() {
 
 # Universal invalid choice display
 show_invalid_menu_choice() {
-    local menu_name="$1"
-    local invalid_choice="$2"
+    local menu_name="${1:-Unknown Menu}"
+    local invalid_choice="${2:-[empty]}"
     
-    echo -e "${RED}❌ Invalid Option: '$invalid_choice'${RESET}"
+    echo -e "${ERROR_STYLE}❌ Invalid Option: '$invalid_choice'${RESET}"
     echo -e "${CYAN}💡 Please select a valid option from the $menu_name menu${RESET}"
     sleep 2
 }
@@ -134,80 +133,27 @@ show_menu_transition() {
 
 # Cache management menu status
 _show_cache_menu_status() {
-    local breakdown=$(get_stations_breakdown)
-    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
-    local total_count=$(get_total_stations_count)
+    # Use modular status system - this function now calls the database context orchestrator
+    display_status_database_context
     
-    echo -e "${BOLD}${BLUE}=== Current Cache Status ===${RESET}"
-    
-    # Base cache status
-    if [ "$base_count" -gt 0 ]; then
-        format_status_indicator "success" "Base Station Database: $base_count stations" "distributed cache"
-    else
-        format_status_indicator "error" "Base Station Database: Not found" "expected in script directory"
-    fi
-    
-    # User cache status
-    if [ "$user_count" -gt 0 ]; then
-        format_status_indicator "success" "User Station Database: $user_count stations" "your additions"
-        local user_size=$(ls -lh "$USER_STATIONS_JSON" 2>/dev/null | awk '{print $5}')
-        [[ -n "$user_size" ]] && echo -e "   ${CYAN}📊 Size: $user_size${RESET}"
-    else
-        format_status_indicator "warning" "User Station Database: Empty" "build via Market Management"
-    fi
-    
-    echo -e "${CYAN}📊 Total Available Stations: ${BOLD}$total_count${RESET}"
-    
-    # Search capability
-    if [ "$total_count" -gt 0 ]; then
-        format_status_indicator "success" "Local Database Search: Fully operational"
-    else
-        format_status_indicator "error" "Local Database Search: No station data available"
-    fi
-    echo
-    
-    # Processing state
+    # Keep the processing state summary for now as it's specialized
     _show_processing_state_summary
 }
 
 # Dispatcharr menu status
 _show_dispatcharr_menu_status() {
-    echo -e "${BOLD}${BLUE}=== Connection Status ===${RESET}"
+    # Use modular status system - this function now calls the dispatcharr context orchestrator
+    display_status_dispatcharr_context
     
-    if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
-        if dispatcharr_test_connection; then
-            format_status_indicator "success" "Dispatcharr Integration: Active and Connected"
-            echo -e "   ${CYAN}🌐 Server: $DISPATCHARR_URL${RESET}"
-            echo -e "   ${CYAN}👤 User: ${DISPATCHARR_USERNAME:-"Not configured"}${RESET}"
-            _show_token_status
-        else
-            format_status_indicator "error" "Dispatcharr Integration: Connection Failed"
-            echo -e "   ${CYAN}🌐 Configured Server: $DISPATCHARR_URL${RESET}"
-        fi
-    else
-        format_status_indicator "warning" "Dispatcharr Integration: Disabled"
-    fi
-    echo
-    
-    # Pending operations
+    # Keep specialized sections for now (pending operations, token status)
     echo -e "${BOLD}${BLUE}=== Pending Operations ===${RESET}"
     if [[ -f "$DISPATCHARR_MATCHES" ]] && [[ -s "$DISPATCHARR_MATCHES" ]]; then
         local pending_count=$(wc -l < "$DISPATCHARR_MATCHES")
-        echo -e "${YELLOW}📋 Pending Station ID Changes: $pending_count matches queued${RESET}"
+        display_status_line "📋" "Pending Station ID Changes" "$pending_count matches queued" "$WARNING_STYLE"
     else
-        format_status_indicator "success" "Pending Operations: No pending changes"
+        display_status_line "✅" "Pending Operations" "No pending changes" "$SUCCESS_STYLE"
     fi
     echo
-    
-    # Database compatibility
-    echo -e "${BOLD}${BLUE}=== Database Compatibility ===${RESET}"
-    local total_count=$(get_total_stations_count)
-    if [ "$total_count" -gt 0 ]; then
-        format_status_indicator "success" "Local Station Database: $total_count stations available" "fully compatible"
-    else
-        format_status_indicator "error" "Local Station Database: No station data available" "limited functionality"
-    fi
 }
 
 # Emby menu status
@@ -249,7 +195,7 @@ _show_markets_menu_status() {
     
     if [ -f "$CSV_FILE" ] && [ -s "$CSV_FILE" ]; then
         local market_count=$(awk 'END {print NR-1}' "$CSV_FILE")
-        format_status_indicator "success" "Markets configured: $market_count"
+        display_status_line "📍" "Markets configured" "$market_count" "$SUCCESS_STYLE"
         echo
         
         # Show market table
@@ -278,123 +224,14 @@ _show_markets_menu_status() {
             echo -e "${CYAN}📊 Status Summary: ${GREEN}$cached_count cached${RESET}, ${RED}$pending_count pending${RESET}"
         fi
     else
-        format_status_indicator "warning" "No markets configured"
+        display_status_line "⚠️" "Markets configured" "0" "$WARNING_STYLE"
     fi
 }
 
 # Settings menu status
 _show_settings_menu_status() {
-    echo -e "${BOLD}${BLUE}=== Current Configuration ===${RESET}"
-    
-    # Server configuration with status
-    if [[ -n "${CHANNELS_URL:-}" ]]; then
-        echo -e "${GREEN}✅ Channels DVR Server: $CHANNELS_URL${RESET}"
-    else
-        echo -e "${YELLOW}⚠️  Channels DVR Server: Not configured${RESET}"
-    fi
-    
-    # Logo display with dependency check
-    if [[ "$SHOW_LOGOS" == "true" ]]; then
-        if command -v viu &> /dev/null; then
-            echo -e "${GREEN}✅ Logo Display: Enabled${RESET}"
-        else
-            echo -e "${YELLOW}⚠️  Logo Display: Enabled (viu not installed)${RESET}"
-        fi
-    else
-        echo -e "${CYAN}💡 Logo Display: Disabled${RESET}"
-    fi
-    
-    # Resolution filter with enhanced details    
-    if [[ "$FILTER_BY_RESOLUTION" == "true" ]]; then
-      if [[ -n "$ENABLED_RESOLUTIONS" ]]; then
-        echo -e "${GREEN}✅ Resolution Filter: Active (${YELLOW}$ENABLED_RESOLUTIONS${RESET})"
-      else
-        echo -e "${RED}❌ Resolution Filter: Enabled but no resolutions selected${RESET}"
-      fi
-    else
-      echo -e "${CYAN}💡 Resolution Filter: Disabled (showing all quality levels)${RESET}"
-    fi
-
-    if [[ "$FILTER_BY_COUNTRY" == "true" ]]; then
-      if [[ -n "$ENABLED_COUNTRIES" ]]; then
-        echo -e "${GREEN}✅ Country Filter: Active (${YELLOW}$ENABLED_COUNTRIES${RESET})"
-      else
-        echo -e "${RED}❌ Country Filter: Enabled but no countries selected${RESET}"
-      fi
-    else
-      echo -e "${CYAN}💡 Country Filter: Disabled (showing all countries)${RESET}"
-    fi
-
-    # Dispatcharr integration with connection status
-    if [[ "$DISPATCHARR_ENABLED" == "true" ]]; then
-        if [[ -n "${DISPATCHARR_URL:-}" ]]; then
-            if dispatcharr_test_connection 2>/dev/null; then
-                echo -e "${GREEN}✅ Dispatcharr Integration: Connected (${CYAN}$DISPATCHARR_URL${RESET})"
-            else
-                echo -e "${YELLOW}⚠️  Dispatcharr Integration: Configured but connection failed${RESET}"
-            fi
-        else
-            echo -e "${YELLOW}⚠️  Dispatcharr Integration: Enabled but not configured${RESET}"
-        fi
-    else
-        echo -e "${CYAN}💡 Dispatcharr Integration: Disabled${RESET}"
-    fi
-
-    # Emby integration with connection status
-    if [[ "$EMBY_ENABLED" == "true" ]]; then
-        if [[ -n "${EMBY_URL:-}" ]]; then
-            if is_emby_authenticated 2>/dev/null; then
-                echo -e "${GREEN}✅ Emby Integration: Connected (${CYAN}$EMBY_URL${RESET})"
-            else
-                echo -e "${YELLOW}⚠️  Emby Integration: Configured but connection failed${RESET}"
-            fi
-        else
-            echo -e "${YELLOW}⚠️  Emby Integration: Enabled but not configured${RESET}"
-        fi
-    else
-        echo -e "${CYAN}💡 Emby Integration: Disabled${RESET}"
-    fi
-    
-    # Database status summary
-    echo
-    echo -e "${BOLD}${BLUE}=== Database Status ===${RESET}"
-    local total_count=$(get_total_stations_count)
-    local breakdown=$(get_stations_breakdown)
-    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
-    
-    if [ "$total_count" -gt 0 ]; then
-        echo -e "${GREEN}✅ Station Database: $total_count stations available${RESET}"
-        if [ "$base_count" -gt 0 ]; then
-            echo -e "${CYAN}   📊 Base Stations: $base_count${RESET}"
-        fi
-        if [ "$user_count" -gt 0 ]; then
-            echo -e "${CYAN}   📊 User Stations: $user_count${RESET}"
-        fi
-    else
-        echo -e "${YELLOW}⚠️  Station Database: No stations available${RESET}"
-    fi
-    
-    # Active search filters summary
-    echo
-    echo -e "${BOLD}${BLUE}=== Active Search Filters ===${RESET}"
-    local active_filters=0
-    
-    if [[ "$FILTER_BY_RESOLUTION" == "true" ]] && [[ -n "$ENABLED_RESOLUTIONS" ]]; then
-        echo -e "${GREEN}✅ Resolution Filter: $ENABLED_RESOLUTIONS${RESET}"
-        ((active_filters++))
-    fi
-    
-    if [[ "$FILTER_BY_COUNTRY" == "true" ]] && [[ -n "$ENABLED_COUNTRIES" ]]; then
-        echo -e "${GREEN}✅ Country Filter: $ENABLED_COUNTRIES${RESET}"
-        ((active_filters++))
-    fi
-    
-    if [ "$active_filters" -eq 0 ]; then
-        echo -e "${CYAN}💡 No search filters active - showing all available stations${RESET}"
-    else
-        echo -e "${CYAN}💡 $active_filters search filter(s) active - results will be filtered${RESET}"
-    fi
+    # Use modular status system - this function now just calls the orchestrator
+    display_status_settings_menu
 }
 
 # Private helpers
@@ -430,18 +267,18 @@ _show_processing_state_summary() {
         fi
         local pending_markets=$((market_count - cached_markets))
         
-        format_status_indicator "success" "Market Configuration: $market_count markets configured"
+        display_status_line "📍" "Market Configuration" "$market_count markets configured" "$SUCCESS_STYLE"
         if [ "$pending_markets" -gt 0 ]; then
-            echo -e "   ${YELLOW}📊 Pending Markets: $pending_markets${RESET}"
+            echo -e "   ${WARNING_STYLE}📊 Pending Markets: $pending_markets${RESET}"
         fi
     else
-        format_status_indicator "warning" "Market Configuration: No markets configured"
+        display_status_line "⚠️" "Market Configuration" "No markets configured" "$WARNING_STYLE"
     fi
     
     # Cache health
     if [ -d "$CACHE_DIR" ]; then
         local cache_size=$(du -sh "$CACHE_DIR" 2>/dev/null | cut -f1 || echo "unknown")
-        echo -e "${CYAN}📊 Total Cache Size: $cache_size${RESET}"
+        echo -e "${INFO_STYLE}📊 Total Cache Size: $cache_size${RESET}"
     fi
 }
 
@@ -484,18 +321,13 @@ _show_markets_table() {
 
 # Main menu template
 show_main_menu() {
-  # Define menu options
-  local main_options=(
-    "1|Search Local Database"
+  # Define menu options without 'local' for eval access
+  main_options=(
+    "1|Search"
     "2|Dispatcharr Integration" 
     "3|Emby Integration"
-    "4|Manage Television Markets for User Cache"
-    "5|Run User Caching"
-    "6|Direct API Search"
-    "7|Reverse Station ID Lookup"
-    "8|Local Cache Management"
-    "9|Settings"
-    "q|Quit"
+    "4|Settings"
+    "q|Exit"
   )
   
   show_menu "Global Station Search v$VERSION|system|main_options"
@@ -507,12 +339,12 @@ show_main_menu() {
     echo -e "${CYAN}No station database found - here's how to get started:${RESET}"
     echo
     echo -e "${GREEN}Option 1: Immediate Use${RESET}"
-    echo -e "• Try 'Search Local Database' - works with base cache if available"
+    echo -e "• Try 'Search Local Database' - works with base database if available"
     echo -e "• Use 'Direct API Search' if you have a Channels DVR server configured"
     echo
     echo -e "${GREEN}Option 2: Build Your Database${RESET}"
     echo -e "• Use 'Manage Television Markets' to add your local markets"
-    echo -e "• Run 'Run User Caching' to build a comprehensive station database"
+    echo -e "• Run 'User Database Expansion' to build a comprehensive station database"
     echo -e "• Requires a Channels DVR server (configurable in Settings)"
     echo
     echo -e "${GREEN}Option 3: Integration${RESET}"
@@ -524,20 +356,16 @@ show_main_menu() {
 
 # Settings menu template
 show_settings_menu() {
-    local settings_options=(
-        "a|Change Channels DVR Server"
-        "b|Toggle Logo Display"
-        "c|Configure Resolution Filter"
-        "d|Configure Country Filter"
-        "e|View Cache Statistics"
-        "f|Reset All Settings"
-        "g|Export Settings"
-        "h|Export Station Database to CSV"
-        "i|Configure Dispatcharr Integration"
-        "j|Configure Emby Integration"
-        "k|Developer Information"
-        "l|Update Management"
-        "m|Backup Management"
+    # Define without 'local' for eval access
+    settings_options=(
+        "1|Database Management"
+        "2|Integration Configuration|Channels DVR, Dispatcharr, Emby"
+        "3|Toggle Logo Display"
+        "4|Search Filters"
+        "5|Logging"
+        "6|Check for Updates"
+        "7|Backup Management"
+        "8|Clear Temporary Files"
         "q|Back to Main Menu"
     )
     
@@ -545,20 +373,21 @@ show_settings_menu() {
 }
 
 # Cache management menu template
-show_cache_management_menu() {
-    local cache_options=(
-        "a|Incremental Update|add new markets only"
-        "b|Full User Cache Refresh|rebuild entire user cache"
-        "c|View Cache Statistics|detailed breakdown"
-        "d|Export Combined Database to CSV|backup/external use"
-        "e|Clear User Cache|remove custom stations"
-        "f|Clear Temporary Files|cleanup disk space"
-        "g|Advanced Cache Operations|developer tools"
-        "h|Clean Dispatcharr Logo Cache|remove old logo entries"
+show_database_management_menu() {
+    # Define without 'local' for eval access
+    cache_options=(
+        "1|Incremental Update|add new markets only"
+        "2|Full User Database Refresh|rebuild entire user database"
+        "3|View Cache Statistics|detailed breakdown"
+        "4|Export Combined Database to CSV|backup/external use"
+        "5|Clear User Database|remove custom stations"
+        "6|Clear Temporary Files|cleanup disk space"
+        "7|Advanced Cache Operations|developer tools"
+        "8|Clean Dispatcharr Logo Cache|remove old logo entries"
         "q|Back to Main Menu"
     )
     
-    show_menu "Local Cache Management|cache|cache_options"
+    show_menu "Local Database Management|cache|cache_options"
     
     # Show smart recommendations
     _show_cache_recommendations
@@ -566,14 +395,11 @@ show_cache_management_menu() {
 
 # Dispatcharr integration menu template
 show_dispatcharr_menu() {
-    local dispatcharr_options=(
-        "a|Scan Channels for Missing Station IDs"
-        "b|Interactive Station ID Matching"
-        "c|Commit Station ID Changes"
-        "d|Populate Other Dispatcharr Fields|channel names, logos, tvg-ids"
-        "e|Configure Dispatcharr Connection"
-        "f|View Integration Logs"
-        "g|Refresh Authentication Tokens"
+    # Define without 'local' for eval access
+    dispatcharr_options=(
+        "1|Match Missing Station IDs|scan, match, commit changes"
+        "2|Channel Management|create, modify, populate fields"
+        "3|Group Management|view, create, modify groups"
         "q|Back to Main Menu"
     )
     
@@ -583,15 +409,53 @@ show_dispatcharr_menu() {
     _show_dispatcharr_recommendations
 }
 
+# Match Missing Station IDs submenu
+show_dispatcharr_stationid_menu() {
+    stationid_options=(
+        "a|Scan Channels for Missing Station IDs"
+        "b|Interactive Station ID Matching"
+        "c|Commit Station ID Changes"
+        "q|Back to Dispatcharr Menu"
+    )
+    
+    show_menu "Match Missing Station IDs|dispatcharr|stationid_options"
+}
+
+# Channel Management submenu
+show_dispatcharr_channel_menu() {
+    channel_options=(
+        "a|Populate Dispatcharr Fields|channel names, logos, tvg-ids"
+        "b|Create New Channel|from search results"
+        "c|Manage Existing Channels|modify, delete, streams"
+        "q|Back to Dispatcharr Menu"
+    )
+    
+    show_menu "Channel Management|dispatcharr|channel_options"
+}
+
+# Group Management submenu
+show_dispatcharr_group_menu() {
+    group_options=(
+        "a|View Channel Groups"
+        "b|Create New Group"
+        "c|Modify Group"
+        "d|Delete Group"
+        "q|Back to Dispatcharr Menu"
+    )
+    
+    show_menu "Group Management|dispatcharr|group_options"
+}
+
 show_markets_menu() {
-    local markets_options=(
-        "a|Add Market|Configure new country/ZIP combination"
-        "b|Remove Market|Remove existing market from configuration"
-        "c|Import Markets from File|Bulk import from CSV file"
-        "d|Export Markets to File|Backup current configuration"
-        "e|Clean Up Postal Code Formats|Standardize existing entries"
-        "f|Force Refresh Market|Reprocess specific market"
-        "r|Ready to Cache|Proceed to User Cache Expansion"
+    # Define without 'local' for eval access
+    markets_options=(
+        "1|Add Market|Configure new country/ZIP combination"
+        "2|Remove Market|Remove existing market from configuration"
+        "3|Import Markets from File|Bulk import from CSV file"
+        "4|Export Markets to File|Backup current configuration"
+        "5|Clean Up Postal Code Formats|Standardize existing entries"
+        "6|Force Refresh Market|Reprocess specific market"
+        "7|Ready to Expand Database|Proceed to User Database Expansion"
         "q|Back to Main Menu"
     )
     
@@ -622,7 +486,7 @@ _show_dispatcharr_recommendations() {
     if [[ "$DISPATCHARR_ENABLED" != "true" ]]; then
         echo -e "${BOLD}${YELLOW}💡 Quick Start Recommendation:${RESET}"
         echo -e "${CYAN}   Start with option 'e' to configure your Dispatcharr connection${RESET}"
-    elif ! dispatcharr_test_connection; then
+    elif [[ "${DISPATCHARR_CONNECTION_VERIFIED:-}" != "true" ]] && ! dispatcharr_test_connection >/dev/null 2>&1; then
         echo -e "${BOLD}${YELLOW}💡 Connection Issue Detected:${RESET}"
         echo -e "${CYAN}   Try option 'e' to reconfigure connection or 'g' to refresh tokens${RESET}"
     elif [ "$total_count" -eq 0 ]; then
@@ -632,8 +496,5 @@ _show_dispatcharr_recommendations() {
         local pending_count=$(wc -l < "$DISPATCHARR_MATCHES")
         echo -e "${BOLD}${YELLOW}💡 Pending Changes Detected:${RESET}"
         echo -e "${CYAN}   You have $pending_count matches ready - try option 'c' to commit${RESET}"
-    else
-        echo -e "${BOLD}${YELLOW}💡 Ready for Channel Management:${RESET}"
-        echo -e "${CYAN}   Start with option 'a' to scan for channels needing station IDs${RESET}"
     fi
 }

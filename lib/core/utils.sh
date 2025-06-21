@@ -166,3 +166,285 @@ show_setting_status() {
             ;;
     esac
 }
+
+ensure_stations_database() {
+    if ! has_stations_database; then
+        echo -e "${RED}❌ No station database available${RESET}"
+        echo -e "${CYAN}💡 Function not available - requires station database${RESET}"
+        return 1
+    fi
+    return 0
+}
+
+validate_station_id_input() {
+    local input="$1"
+    
+    # Remove any whitespace
+    local cleaned_id=$(echo "$input" | tr -d '[:space:]')
+    
+    # Validate station ID format
+    if [[ "$cleaned_id" =~ ^[0-9]+$ ]]; then
+        if (( cleaned_id >= 1 && cleaned_id <= 999999 )); then
+            echo "$cleaned_id"  # Return the cleaned valid ID
+            return 0
+        else
+            echo -e "${RED}❌ Station ID out of valid range (1-999999)${RESET}" >&2
+            return 1
+        fi
+    else
+        echo -e "${RED}❌ Station ID must be numeric only${RESET}" >&2
+        return 1
+    fi
+}
+
+# ============================================================================
+# API UTILITY FUNCTIONS
+# ============================================================================
+
+# Ensure configuration variables are available
+ensure_config_loaded() {
+    local config_file="${CONFIG_FILE:-data/globalstationsearch.env}"
+    if [[ -f "$config_file" ]] && [[ -z "${CHANNELS_URL:-}" || -z "${DISPATCHARR_URL:-}" ]]; then
+        source "$config_file" 2>/dev/null
+    fi
+}
+
+# URL encoding utility
+url_encode() {
+    local string="$1"
+    local encoded=""
+    local length=${#string}
+    
+    for ((i=0; i<length; i++)); do
+        local char="${string:i:1}"
+        case "$char" in
+            [a-zA-Z0-9.~_-])
+                encoded+="$char"
+                ;;
+            ' ')
+                encoded+="%20"
+                ;;
+            *)
+                # Convert to hex for other special characters
+                printf -v hex "%02X" "'$char"
+                encoded+="%$hex"
+                ;;
+        esac
+    done
+    
+    echo "$encoded"
+}
+
+# ============================================================================
+# NETWORK VALIDATION FUNCTIONS
+# ============================================================================
+
+# Validate IPv4 address
+utils_validate_ip_address() {
+    local ip="$1"
+    
+    # IPv4 pattern
+    if [[ "$ip" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+        # Validate each octet
+        local IFS='.'
+        local -a octets=($ip)
+        for octet in "${octets[@]}"; do
+            if (( octet > 255 )); then
+                return 1
+            fi
+        done
+        return 0
+    fi
+    
+    # IPv6 pattern (simplified)
+    if [[ "$ip" =~ ^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$ ]]; then
+        return 0
+    fi
+    
+    return 1
+}
+
+# Validate hostname/FQDN
+utils_validate_hostname() {
+    local host="$1"
+    
+    # Hostname pattern (RFC 1123)
+    if [[ "$host" =~ ^[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?)*$ ]]; then
+        return 0
+    fi
+    
+    return 1
+}
+
+# Validate port number
+utils_validate_port() {
+    local port="$1"
+    
+    # Empty port is valid (for reverse proxy)
+    if [[ -z "$port" ]]; then
+        return 0
+    fi
+    
+    # Check if numeric and in valid range
+    if [[ "$port" =~ ^[0-9]+$ ]] && (( port >= 1 && port <= 65535 )); then
+        return 0
+    fi
+    
+    return 1
+}
+
+# Combined host validation (IP or hostname)
+utils_validate_host() {
+    local host="$1"
+    
+    # Try IP validation first, then hostname
+    utils_validate_ip_address "$host" || utils_validate_hostname "$host"
+}
+
+# ============================================================================
+# SERVICE CONFIGURATION HELPERS
+# ============================================================================
+
+# Display service configuration consistently
+utils_show_service_config() {
+    local service_name="$1"
+    local enabled="$2"
+    local host="$3"
+    local port="$4"
+    local connection_status="$5"
+    
+    echo -e "${BOLD}${BLUE}$service_name Configuration${RESET}"
+    echo -e "Status: $([ "$enabled" = "true" ] && echo "${GREEN}Enabled${RESET}" || echo "${YELLOW}Disabled${RESET}")"
+    
+    if [[ "$enabled" == "true" ]]; then
+        if [[ -n "$port" ]]; then
+            echo -e "Server: ${CYAN}$host:$port${RESET}"
+        else
+            echo -e "Server: ${CYAN}$host${RESET}"
+        fi
+        echo -e "Connection: $connection_status"
+    fi
+    echo
+}
+
+# Prompt for port with reverse proxy support
+utils_prompt_for_port() {
+    local service_name="$1"
+    local default_port="$2"
+    local port
+    
+    echo
+    echo "Port Configuration:"
+    echo "- Default port: $default_port"
+    echo "- Press Enter to leave port blank"
+    read -p "Enter port: " port
+    
+    # Validate if provided
+    if [[ -n "$port" ]] && ! utils_validate_port "$port"; then
+        echo -e "${RED}Invalid port number. Please enter a number between 1-65535.${RESET}"
+        return 1
+    fi
+    
+    echo "$port"  # Returns empty string if user pressed Enter
+}
+
+# Build URL with optional port
+utils_build_service_url() {
+    local protocol="$1"
+    local host="$2"
+    local port="$3"
+    
+    if [[ -n "$port" ]]; then
+        echo "${protocol}://${host}:${port}"
+    else
+        echo "${protocol}://${host}"
+    fi
+}
+
+# ============================================================================
+# INTERNAL VALIDATION HELPERS (for validate_input function)
+# ============================================================================
+
+_validate_ip_address() {
+    utils_validate_ip_address "$1"
+}
+
+_validate_port() {
+    local port="$1"
+    local min="${2:-1}"
+    local max="${3:-65535}"
+    
+    if utils_validate_port "$port" && [[ -n "$port" ]]; then
+        if (( port >= min && port <= max )); then
+            return 0
+        fi
+    elif [[ -z "$port" ]]; then
+        # Empty port is valid
+        return 0
+    fi
+    
+    return 1
+}
+
+_validate_numeric_range() {
+    local value="$1"
+    local min="$2"
+    local max="$3"
+    
+    if [[ "$value" =~ ^[0-9]+$ ]]; then
+        if (( value >= min && value <= max )); then
+            return 0
+        fi
+    fi
+    
+    return 1
+}
+
+_validate_choice_list() {
+    local choice="$1"
+    shift
+    local valid_choices=("$@")
+    
+    for valid in "${valid_choices[@]}"; do
+        if [[ "$choice" == "$valid" ]]; then
+            return 0
+        fi
+    done
+    
+    return 1
+}
+
+_validate_multi_choice_list() {
+    local choices="$1"
+    shift
+    local valid_choices=("$@")
+    
+    # Split comma-separated choices
+    IFS=',' read -ra selected <<< "$choices"
+    
+    for choice in "${selected[@]}"; do
+        local found=0
+        for valid in "${valid_choices[@]}"; do
+            if [[ "$choice" == "$valid" ]]; then
+                found=1
+                break
+            fi
+        done
+        if [[ $found -eq 0 ]]; then
+            return 1
+        fi
+    done
+    
+    return 0
+}
+
+_validate_non_empty() {
+    local value="$1"
+    
+    if [[ -n "$value" ]]; then
+        return 0
+    fi
+    
+    return 1
+}
+

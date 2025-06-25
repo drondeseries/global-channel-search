@@ -254,7 +254,7 @@ cdvr_get_status() {
 # Returns: 0 - Normal exit, 1 - Error
 cdvr_run_direct_api_search() {
     # Check if CDVR is configured before proceeding
-    if ! check_integration_requirement "Channels DVR" "is_cdvr_configured" "configure_cdvr_integration" "Direct API Search"; then
+    if ! check_integration_requirement "Channels DVR" "is_cdvr_configured" "configure_cdvr_connection" "Direct API Search"; then
         return 1
     fi
     

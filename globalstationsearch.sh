@@ -4,8 +4,16 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025-05-26
-VERSION="2.5.2"
+VERSION="2.5.3"
 VERSION_INFO="Last Modified: 2025-06-25
+
+Update (2.5.3)
+
+- Fixed Emby integration menu setup flow
+- Fixed Channels DVR integration menu setup flow
+- Added configure_cdvr_connection wrapper function
+- Consolidated all integration configurations to use settings framework
+- Fixed missing configure_*_integration function errors across all integrations
 
 Update (2.5.2)
 
@@ -900,6 +908,14 @@ reverse_station_id_lookup_menu() {
         
         # Loop continues - user returns to lookup screen
     done
+}
+
+# ============================================================================
+# CHANNELS DVR INTEGRATION FUNCTIONS
+# ============================================================================
+
+configure_cdvr_connection() {
+    configure_integration "Channels DVR" "CHANNELS" "false" "cdvr_test_connection"
 }
 
 # ============================================================================
@@ -6371,7 +6387,7 @@ check_integration_requirement() {
                 # Navigate to appropriate configuration
                 case "$integration_name" in
                     "Channels DVR")
-                        configure_cdvr_integration
+                        configure_cdvr_connection
                         # After configuration, check again
                         if $check_function; then
                             return 0  # Success, can proceed
@@ -6392,7 +6408,7 @@ check_integration_requirement() {
                         fi
                         ;;
                     "Emby")
-                        configure_emby_integration
+                        configure_emby_connection
                         if $check_function; then
                             return 0
                         else
@@ -6650,7 +6666,7 @@ search_submenu() {
 # Emby submenu - consolidates Emby functionality
 emby_submenu() {
   # Check if Emby is configured before proceeding
-  if ! check_integration_requirement "Emby" "is_emby_configured" "configure_emby_integration" "Emby Integration"; then
+  if ! check_integration_requirement "Emby" "is_emby_configured" "configure_emby_connection" "Emby Integration"; then
     return 1
   fi
   

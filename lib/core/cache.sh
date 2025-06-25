@@ -1839,7 +1839,7 @@ perform_user_database_expansion() {
   local force_refresh="${1:-false}"  # Optional parameter: false=incremental, true=complete refresh
   
   # Check if CDVR is configured before proceeding
-  if ! check_integration_requirement "Channels DVR" "is_cdvr_configured" "configure_cdvr_integration" "User Database Expansion"; then
+  if ! check_integration_requirement "Channels DVR" "is_cdvr_configured" "configure_cdvr_connection" "User Database Expansion"; then
     return 1
   fi
   

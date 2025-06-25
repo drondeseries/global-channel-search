@@ -4,8 +4,14 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025-05-26
-VERSION="2.5.1"
+VERSION="2.5.2"
 VERSION_INFO="Last Modified: 2025-06-25
+
+Update (2.5.2)
+
+- Fixed Dispatcharr integration menu setup flow
+- Consolidated Dispatcharr configuration to use settings framework
+- Fixed missing configure_dispatcharr_integration function errors
 
 Update (2.5.1)
 
@@ -4206,7 +4212,7 @@ view_dispatcharr_logs() {
 
 dispatcharr_integration_check() {
   # Check if Dispatcharr is configured before proceeding
-  if ! check_integration_requirement "Dispatcharr" "is_dispatcharr_configured" "configure_dispatcharr_integration" "Dispatcharr Integration"; then
+  if ! check_integration_requirement "Dispatcharr" "is_dispatcharr_configured" "configure_dispatcharr_connection" "Dispatcharr Integration"; then
     return 1
   fi
   
@@ -6376,7 +6382,7 @@ check_integration_requirement() {
                         fi
                         ;;
                     "Dispatcharr")
-                        configure_dispatcharr_integration
+                        configure_dispatcharr_connection
                         if $check_function; then
                             return 0
                         else

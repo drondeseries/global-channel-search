@@ -4,8 +4,15 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025-05-26
-VERSION="2.5.0"
-VERSION_INFO="Last Modified: 2025-06-21
+VERSION="2.5.1"
+VERSION_INFO="Last Modified: 2025-06-25
+
+Update (2.5.1)
+
+- Fixed Emby integration listing provider addition failures
+- Removed duplicate confirmation prompts in Emby workflow  
+- Fixed database expansion memory exhaustion causing system freezes
+- Improved resume functionality for interrupted database builds
 
 Update (2.5.0)
 
@@ -1106,10 +1113,6 @@ scan_emby_missing_listingsids() {
     fi
     
     # Step 4: Add listing providers to Emby
-    echo
-    echo -e "${CYAN}📡 Adding listing providers to Emby server...${RESET}"
-    echo
-    
     # Call the new function to process listing providers
     if process_emby_missing_listings "$lookup_results" "${channel_mapping[@]}"; then
         echo -e "\n${GREEN}✅ Emby listing provider integration complete${RESET}"

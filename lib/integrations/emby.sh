@@ -647,11 +647,13 @@ emby_add_listing_provider() {
             Name: $name
         }')
     
+    _emby_log "debug" "Adding listing provider - Payload: $provider_payload"
+    
     # Add to Emby listing providers (silent operation for progress display)
     local response
     response=$(curl -s \
-        --connect-timeout $API_STANDARD_TIMEOUT \
-        --max-time $((API_STANDARD_TIMEOUT * 2)) \
+        --connect-timeout ${API_STANDARD_TIMEOUT:-10} \
+        --max-time $((${API_STANDARD_TIMEOUT:-10} * 2)) \
         -w "HTTPSTATUS:%{http_code}" \
         -X POST \
         -H "Content-Type: application/json" \
@@ -661,17 +663,44 @@ emby_add_listing_provider() {
     
     local curl_exit_code=$?
     local http_status=$(echo "$response" | grep -o "HTTPSTATUS:[0-9]*" | cut -d: -f2)
+    local response_body=$(echo "$response" | sed 's/HTTPSTATUS:[0-9]*//')
+    
+    # Log debug information
+    _emby_log "debug" "Add listing provider response - Status: $http_status, Curl exit: $curl_exit_code"
+    if [[ -n "$response_body" ]] && [[ "$response_body" != "{}" ]]; then
+        _emby_log "debug" "Response body: $response_body"
+    fi
     
     # Handle results (return codes only, progress display handles messaging)
     if [[ $curl_exit_code -ne 0 ]]; then
+        _emby_log "error" "Curl command failed with exit code: $curl_exit_code"
+        return 1
+    fi
+    
+    # Check if we got an HTTP status
+    if [[ -z "$http_status" ]]; then
+        _emby_log "error" "No HTTP status received - possible connection or timeout issue"
         return 1
     fi
     
     case "$http_status" in
-        200|201|204|409)  # Include 409 (already exists) as success
+        200|201|204)
             return 0
             ;;
+        409)  # Already exists
+            _emby_log "debug" "Listing provider already exists: $listings_id"
+            return 0
+            ;;
+        401)
+            _emby_log "error" "Authentication failed - invalid token"
+            return 1
+            ;;
+        404)
+            _emby_log "error" "API endpoint not found - check Emby version"
+            return 1
+            ;;
         *)
+            _emby_log "error" "Failed with HTTP status: $http_status"
             return 1
             ;;
     esac
@@ -682,36 +711,14 @@ process_emby_missing_listings() {
     local lookup_results="$1"
     local channel_mapping=("${@:2}")
     
-    echo -e "\n${BOLD}${CYAN}=== Adding Missing Listing Providers to Emby ===${RESET}"
-    echo
-    
     # Extract unique listing providers from lookup results
     local unique_providers
     unique_providers=$(echo "$lookup_results" | jq -r '.[] | "\(.lineupId)|\(.country)|\(.lineupName)"' | sort -u)
     
     local provider_count=$(echo "$unique_providers" | wc -l)
     
-    echo -e "${CYAN}📊 Found ${BOLD}$provider_count unique listing providers${RESET}${CYAN} to add${RESET}"
-    echo
-    
-    # Show what we're about to add
-    echo -e "${BOLD}${BLUE}=== Listing Providers to Add ===${RESET}"
-    printf "${BOLD}${YELLOW}%-20s %-10s %-30s${RESET}\n" "LineupId" "Country" "Name"
-    echo "------------------------------------------------------------"
-    
-    while IFS='|' read -r lineup_id country lineup_name; do
-        printf "%-20s %-10s %-30s\n" "$lineup_id" "$country" "$lineup_name"
-    done <<< "$unique_providers"
-    
-    echo
-    
-    if ! confirm_action "Add these $provider_count listing providers to Emby?"; then
-        echo -e "${YELLOW}⚠️  Operation cancelled by user${RESET}"
-        return 0
-    fi
-    
     # Add each unique listing provider
-    echo -e "\n${CYAN}📡 Adding listing providers to Emby...${RESET}"
+    echo -e "\n${CYAN}📡 Processing listing providers...${RESET}"
     
     local added_count=0
     local failed_count=0
@@ -721,19 +728,17 @@ process_emby_missing_listings() {
     while IFS='|' read -r lineup_id country lineup_name; do
         echo -e "${CYAN}  📡 Adding provider: ${BOLD}$lineup_id${RESET}${CYAN} ($lineup_name)${RESET}"
         
-        if emby_add_listing_provider "$lineup_id" "$country" "$lineup_name" "embygn"; then
+        # Call the function and capture its return status immediately
+        emby_add_listing_provider "$lineup_id" "$country" "$lineup_name" "embygn"
+        local add_result=$?
+        
+        if [[ $add_result -eq 0 ]]; then
             ((added_count++))
             echo -e "${GREEN}     ✅ Successfully added${RESET}"
             provider_details+=("$lineup_id ($country): $lineup_name")
         else
-            # Check if it was a "already exists" case (we return 0 for 409)
-            if [[ $? -eq 0 ]]; then
-                ((already_exists_count++))
-                echo -e "${CYAN}     ℹ️  Already configured${RESET}"
-            else
-                ((failed_count++))
-                echo -e "${RED}     ❌ Failed to add${RESET}"
-            fi
+            ((failed_count++))
+            echo -e "${RED}     ❌ Failed to add${RESET}"
         fi
         echo
     done <<< "$unique_providers"

@@ -1230,8 +1230,6 @@ enhance_stations_with_granular_resume() {
         echo -e "${GREEN}📊 Estimated previously enhanced: $enhanced_from_api stations${RESET}" >&2
     fi
     
-    local tmp_json="$CACHE_DIR/enhancement_tmp_$(date +%s).json"
-
     # Check if stations file exists and has content
     if [ ! -f "$stations_file" ]; then
         echo -e "${RED}❌ Stations file not found: $stations_file${RESET}" >&2
@@ -1250,67 +1248,100 @@ enhance_stations_with_granular_resume() {
     # Initialize progress tracking
     start_fresh_enhancement_tracking "$operation" "$stations_file"
 
-    # Load stations into array
-    mapfile -t stations < <(jq -c '.[]' "$stations_file")
-    local actual_stations=${#stations[@]}
+    # Get actual station count without loading all into memory
+    local actual_stations=$total_stations
 
     echo -e "${CYAN}📊 Processing $actual_stations stations for enhancement (starting from $start_index)...${RESET}" >&2
     
-    # Create array to collect enhanced stations
-    local enhanced_stations=()
+    # Create temporary file for output to avoid memory issues
+    local temp_output="$CACHE_DIR/enhancement_output_$(date +%s).json"
     
-    # Handle resume: add already processed stations first
+    # Handle resume: copy already processed stations first
     if [[ $start_index -gt 0 ]]; then
-        echo -e "${CYAN}🔄 Adding previously processed stations 0-$((start_index-1))...${RESET}" >&2
+        echo -e "${CYAN}🔄 Preserving previously processed stations 0-$((start_index-1))...${RESET}" >&2
         
-        for ((j = 0; j < start_index; j++)); do
-            enhanced_stations+=("${stations[$j]}")
-        done
+        # Use jq to extract first N stations efficiently
+        jq --arg n "$start_index" '.[0:($n|tonumber)]' "$stations_file" > "$temp_output"
         
-        echo -e "${GREEN}✅ Added $start_index previously processed stations${RESET}" >&2
+        echo -e "${GREEN}✅ Preserved $start_index previously processed stations${RESET}" >&2
+    else
+        # Initialize with empty array for proper JSON format
+        echo "[]" > "$temp_output"
     fi
     
-    # Process stations starting from start_index
-    for ((i = start_index; i < actual_stations; i++)); do
-        local station="${stations[$i]}"
-        local current=$((i + 1))
-        local percent=$((current * 100 / actual_stations))
+    # Process remaining stations using jq to avoid loading all into memory
+    local current=$start_index
+    local batch_size=50  # Process in smaller batches
+    
+    while [ $current -lt $actual_stations ]; do
+        local batch_end=$((current + batch_size))
+        if [ $batch_end -gt $actual_stations ]; then
+            batch_end=$actual_stations
+        fi
         
-        # Show progress bar BEFORE processing (only if more than 10 stations)
+        # Show progress bar (only if more than 10 stations)
         if [ "$actual_stations" -gt 10 ]; then
+            local percent=$((current * 100 / actual_stations))
             show_progress_bar "$current" "$actual_stations" "$percent" "$start_time"
         fi
-
-        # ORIGINAL ENHANCEMENT LOGIC
-        local callSign=$(echo "$station" | jq -r '.callSign // empty')
-        local name=$(echo "$station" | jq -r '.name // empty')
         
-        # Only enhance if station has callsign but missing name AND server is configured
-        if [[ -n "$callSign" && "$callSign" != "null" && ( -z "$name" || "$name" == "null" ) && -n "${CHANNELS_URL:-}" ]]; then
-            local api_response=$(curl -s --connect-timeout $QUICK_TIMEOUT "$CHANNELS_URL/tms/stations/$callSign" 2>/dev/null)
-            local current_station_id=$(echo "$station" | jq -r '.stationId')
-            local station_info=$(echo "$api_response" | jq -c --arg id "$current_station_id" '.[] | select(.stationId == $id) // empty' 2>/dev/null)
+        # Process batch of stations
+        local batch_output=$(jq --arg start "$current" --arg end "$batch_end" --arg cdvr_url "${CHANNELS_URL:-}" \
+            '.[$start|tonumber:$end|tonumber] | map(
+                . as $station |
+                if (.callSign // empty) != "" and 
+                   (.name // empty) == "" and 
+                   $cdvr_url != "" then
+                    {station: ., needs_api: true}
+                else
+                    {station: ., needs_api: false}
+                end
+            )' "$stations_file")
+        
+        # Process each station in batch that needs API enhancement
+        local enhanced_batch=()
+        while IFS= read -r item; do
+            local needs_api=$(echo "$item" | jq -r '.needs_api')
+            local station=$(echo "$item" | jq -c '.station')
             
-            if [[ -n "$station_info" && "$station_info" != "null" && "$station_info" != "{}" ]]; then
-                if echo "$station_info" | jq empty 2>/dev/null; then
-                    # Selectively merge only specific fields to avoid type conflicts
-                    local enhanced_name=$(echo "$station_info" | jq -r '.name // ""')
-                    if [[ -n "$enhanced_name" && "$enhanced_name" != "null" ]]; then
-                        station=$(echo "$station" | jq --arg new_name "$enhanced_name" '. + {name: $new_name}')
-                        ((enhanced_from_api++))
+            if [[ "$needs_api" == "true" ]]; then
+                local callSign=$(echo "$station" | jq -r '.callSign')
+                local current_station_id=$(echo "$station" | jq -r '.stationId')
+                
+                # API call for enhancement
+                local api_response=$(curl -s --connect-timeout ${QUICK_TIMEOUT:-2} "$CHANNELS_URL/tms/stations/$callSign" 2>/dev/null)
+                
+                if [[ -n "$api_response" ]]; then
+                    local station_info=$(echo "$api_response" | jq -c --arg id "$current_station_id" '.[] | select(.stationId == $id) // empty' 2>/dev/null)
+                    
+                    if [[ -n "$station_info" && "$station_info" != "null" && "$station_info" != "{}" ]]; then
+                        local enhanced_name=$(echo "$station_info" | jq -r '.name // ""')
+                        if [[ -n "$enhanced_name" && "$enhanced_name" != "null" ]]; then
+                            station=$(echo "$station" | jq --arg new_name "$enhanced_name" '. + {name: $new_name}')
+                            ((enhanced_from_api++))
+                        fi
                     fi
                 fi
+                
+                # Small delay to prevent API rate limiting
+                sleep 0.05
             fi
             
-            # Add small delay to prevent API rate limiting
-            sleep 0.05
-        fi
-
-        # Add processed station to array
-        enhanced_stations+=("$station")
+            enhanced_batch+=("$station")
+        done < <(echo "$batch_output" | jq -c '.[]')
         
-        # Update progress every 25 stations
-        if [[ $((current % 25)) -eq 0 ]]; then
+        # Append batch to output file maintaining JSON array format
+        if [[ ${#enhanced_batch[@]} -gt 0 ]]; then
+            # Convert batch to JSON array and merge with existing
+            printf '%s\n' "${enhanced_batch[@]}" | jq -s '.' > "$CACHE_DIR/temp_batch.json"
+            jq -s '.[0] + .[1]' "$temp_output" "$CACHE_DIR/temp_batch.json" > "$temp_output.new"
+            mv "$temp_output.new" "$temp_output"
+            rm -f "$CACHE_DIR/temp_batch.json"
+        fi
+        
+        # Update progress
+        current=$batch_end
+        if [[ $((current % 100)) -eq 0 ]] || [[ $current -ge $actual_stations ]]; then
             update_enhancement_progress_simple "$operation" "$current" "$enhanced_from_api"
         fi
     done
@@ -1323,23 +1354,17 @@ enhance_stations_with_granular_resume() {
     echo -e "${GREEN}✅ Station enhancement completed successfully${RESET}" >&2
     echo -e "${CYAN}📊 Enhanced $enhanced_from_api stations via API lookup${RESET}" >&2
     
-    # Convert array to proper JSON array and save
+    # Finalize enhanced station data
     echo -e "${CYAN}💾 Finalizing enhanced station data...${RESET}" >&2
     
-    if printf '%s\n' "${enhanced_stations[@]}" | jq -s '.' > "$tmp_json"; then
-        # Validate the output is a proper JSON array
-        if [[ "$(jq 'type' "$tmp_json" 2>/dev/null)" == '"array"' ]]; then
-            mv "$tmp_json" "$stations_file"
-            echo -e "${GREEN}✅ Enhanced station data saved as proper JSON array${RESET}" >&2
-        else
-            echo -e "${RED}❌ Failed to create proper JSON array${RESET}" >&2
-            rm -f "$tmp_json"
-            return 1
-        fi
+    # Validate the output is a proper JSON array
+    if [[ -f "$temp_output" ]] && [[ "$(jq 'type' "$temp_output" 2>/dev/null)" == '"array"' ]]; then
+        # Move the temporary file to replace the original
+        mv "$temp_output" "$stations_file"
+        echo -e "${GREEN}✅ Enhanced station data saved as proper JSON array${RESET}" >&2
     else
-        echo -e "${RED}❌ Station Enhancement: Failed to save enhanced data${RESET}" >&2
-        echo -e "${CYAN}💡 Check disk space and file permissions${RESET}" >&2
-        rm -f "$tmp_json"
+        echo -e "${RED}❌ Failed to create proper JSON array${RESET}" >&2
+        rm -f "$temp_output"
         return 1
     fi
 

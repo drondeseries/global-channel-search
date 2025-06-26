@@ -4,8 +4,14 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025-05-26
-VERSION="2.5.3"
+VERSION="2.5.4"
 VERSION_INFO="Last Modified: 2025-06-25
+
+Update (2.5.4)
+- Fix user database expansion enhancement loop
+- Fix jq syntax errors in station processing  
+- Fix deduplication function return codes
+- Improve enhancement progress display
 
 Update (2.5.3)
 

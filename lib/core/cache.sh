@@ -1112,18 +1112,17 @@ process_all_markets_sequentially_fast() {
         
         if [[ $? -eq 0 ]]; then
             # Smart deduplicate with country consolidation
-            smart_deduplicate_stations_before_enhancement \
+            if smart_deduplicate_stations_before_enhancement \
                 "$CACHE_DIR/temp_user_stations_raw.json" \
-                "$CACHE_DIR/temp_user_stations.json"
-            
-            # Clean up intermediate file
-            rm -f "$CACHE_DIR/temp_user_stations_raw.json"
-            
-            if [[ $? -eq 0 ]]; then
+                "$CACHE_DIR/temp_user_stations.json"; then
+                
+                # Clean up intermediate file (disabled for debugging)
+                # rm -f "$CACHE_DIR/temp_user_stations_raw.json"
                 echo "$CACHE_DIR/temp_user_stations.json"
                 return 0
             else
                 echo -e "${RED}❌ Failed to deduplicate stations${RESET}" >&2
+                rm -f "$CACHE_DIR/temp_user_stations_raw.json"
                 return 1
             fi
         else
@@ -1146,52 +1145,48 @@ smart_deduplicate_stations_before_enhancement() {
     echo -e "${CYAN}📊 Original stations: $original_count${RESET}" >&2
     
     # SIMPLIFIED LOGIC: Keep only the first lineup trace per station
-    jq '
-      # Group by stationId and smart merge
-      group_by(.stationId) | map(
-        if length == 1 then
-          # Single station - keep only first lineup trace
-          .[0] as $station |
-          if $station.lineupTracing and ($station.lineupTracing | length > 0) then
-            # Simple: keep only the first lineup trace
-            (if ($station.lineupTracing | length) > 0 then
-              [($station.lineupTracing[0] + {discoveredOrder: 1, isPrimary: true})]
-            else
-              []
-            end) as $final_traces |
-            
-            # Keep station with single optimized trace
-            $station + {lineupTracing: $final_traces}
-          else
-            # No lineup tracing - keep as is
-            $station
-          end
-        else
-          # Multiple stations with same ID - smart merge with single trace
-          .[0] as $primary |
-          
-          # STEP 1: Collect all countries from availableIn arrays (UNCHANGED - preserves data integrity)
-          ([.[] | .availableIn[]? // empty] | 
-           select(. != null and . != "") | unique | sort) as $all_countries |
-          
-          # STEP 2: Simple - take the first lineup trace from any station being merged
-          (([.[] | .lineupTracing[]? // empty] | .[0]) // null) as $first_trace |
-          (if $first_trace then
-            [$first_trace + {discoveredOrder: 1, isPrimary: true}]
-          else
-            []
-          end) as $final_traces |
-          
-          # STEP 3: Create final merged station (UNCHANGED - preserves data integrity)
-          $primary + {
-            availableIn: $all_countries,
-            multiCountry: ($all_countries | length > 1),
-            lineupTracing: $final_traces,
-            source: (if ([.[] | .source] | unique | length) > 1 then "combined" else $primary.source end)
-          }
-        end
-      ) | sort_by(.name // "")
-    ' "$input_file" > "$output_file"
+    jq "$(cat << 'EOF'
+group_by(.stationId) | map(
+  if length == 1 then
+    .[0] as $station |
+    if $station.lineupTracing and ($station.lineupTracing | length > 0) then
+      (if ($station.lineupTracing | length) > 0 then
+        [($station.lineupTracing[0] + {discoveredOrder: 1, isPrimary: true})]
+      else
+        []
+      end) as $final_traces |
+      $station + {lineupTracing: $final_traces}
+    else
+      $station
+    end
+  else
+    .[0] as $primary |
+    ([.[] | .availableIn[]? // empty] | select(. != null and . != "") | unique | sort) as $all_countries |
+    (([.[] | .lineupTracing[]? // empty] | .[0]) // null) as $first_trace |
+    (if $first_trace then
+      [$first_trace + {discoveredOrder: 1, isPrimary: true}]
+    else
+      []
+    end) as $final_traces |
+    $primary + {
+      availableIn: $all_countries,
+      multiCountry: ($all_countries | length > 1),
+      lineupTracing: $final_traces,
+      source: (if ([.[] | .source] | unique | length) > 1 then "combined" else $primary.source end)
+    }
+  end
+) | sort_by(.name // "")
+EOF
+)" "$input_file" > "$output_file"
+    
+    # Check if output file was created successfully
+    if [[ ! -f "$output_file" ]] || [[ ! -s "$output_file" ]]; then
+        echo -e "${RED}❌ Deduplication failed - output file not created or empty${RESET}" >&2
+        echo -e "${YELLOW}Input file: $input_file${RESET}" >&2
+        echo -e "${YELLOW}Output file: $output_file${RESET}" >&2
+        ls -la "$input_file" "$output_file" 2>/dev/null >&2 || true
+        return 1
+    fi
     
     # Simplified reporting - should always be 1 trace per station now
     local dedupe_count=$(jq 'length' "$output_file" 2>/dev/null || echo "0")
@@ -1271,7 +1266,7 @@ enhance_stations_with_granular_resume() {
     
     # Process remaining stations using jq to avoid loading all into memory
     local current=$start_index
-    local batch_size=50  # Process in smaller batches
+    local batch_size=1  # Process one station at a time for progress visibility
     
     while [ $current -lt $actual_stations ]; do
         local batch_end=$((current + batch_size))
@@ -1279,24 +1274,18 @@ enhance_stations_with_granular_resume() {
             batch_end=$actual_stations
         fi
         
-        # Show progress bar (only if more than 10 stations)
-        if [ "$actual_stations" -gt 10 ]; then
-            local percent=$((current * 100 / actual_stations))
-            show_progress_bar "$current" "$actual_stations" "$percent" "$start_time"
-        fi
+        # Show progress (update in place to avoid spam)
+        local percent=$((current * 100 / actual_stations))
+        printf "\r🔄 Enhancing stations: %d/%d (%d%%) - Enhanced: %d" "$current" "$actual_stations" "$percent" "$enhanced_from_api" >&2
         
         # Process batch of stations
-        local batch_output=$(jq --arg start "$current" --arg end "$batch_end" --arg cdvr_url "${CHANNELS_URL:-}" \
-            '.[$start|tonumber:$end|tonumber] | map(
-                . as $station |
-                if (.callSign // empty) != "" and 
-                   (.name // empty) == "" and 
-                   $cdvr_url != "" then
-                    {station: ., needs_api: true}
-                else
-                    {station: ., needs_api: false}
-                end
-            )' "$stations_file")
+        local batch_output
+        # Use limit/skip approach to avoid array slicing issues
+        local batch_size=$((batch_end - current))
+        batch_output=$(jq --arg skip "$current" --arg limit "$batch_size" --arg cdvr_url "${CHANNELS_URL:-}" \
+            '. | [to_entries[] | select(.key >= ($skip|tonumber) and .key < (($skip|tonumber) + ($limit|tonumber))) | .value] | map({station: ., needs_api: ((.callSign // empty | length) > 0 and (.name // empty | length) == 0 and ($cdvr_url | length) > 0)})' \
+            "$stations_file" 2>/dev/null)
+        
         
         # Process each station in batch that needs API enhancement
         local enhanced_batch=()
@@ -1330,6 +1319,18 @@ enhance_stations_with_granular_resume() {
             enhanced_batch+=("$station")
         done < <(echo "$batch_output" | jq -c '.[]')
         
+        # If batch_output is empty, we still need to preserve the original stations
+        if [[ -z "$batch_output" ]] || [[ "$batch_output" == "[]" ]]; then
+            # Extract the current batch directly from the file
+            local batch_stations=$(jq --arg start "$current" --arg end "$batch_end" \
+                '.[($start|tonumber):($end|tonumber)]' "$stations_file" 2>/dev/null)
+            if [[ -n "$batch_stations" ]] && [[ "$batch_stations" != "[]" ]]; then
+                while IFS= read -r station; do
+                    enhanced_batch+=("$station")
+                done < <(echo "$batch_stations" | jq -c '.[]')
+            fi
+        fi
+        
         # Append batch to output file maintaining JSON array format
         if [[ ${#enhanced_batch[@]} -gt 0 ]]; then
             # Convert batch to JSON array and merge with existing
@@ -1341,15 +1342,13 @@ enhance_stations_with_granular_resume() {
         
         # Update progress
         current=$batch_end
-        if [[ $((current % 100)) -eq 0 ]] || [[ $current -ge $actual_stations ]]; then
+        if [[ $((current % 25)) -eq 0 ]] || [[ $current -ge $actual_stations ]]; then
             update_enhancement_progress_simple "$operation" "$current" "$enhanced_from_api"
         fi
     done
     
-    # Clear progress line only if it was shown
-    if [ "$actual_stations" -gt 10 ]; then
-        echo >&2
-    fi
+    # Clear progress line
+    echo >&2
     
     echo -e "${GREEN}✅ Station enhancement completed successfully${RESET}" >&2
     echo -e "${CYAN}📊 Enhanced $enhanced_from_api stations via API lookup${RESET}" >&2

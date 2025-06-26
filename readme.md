@@ -2,7 +2,13 @@
 
 A comprehensive television station search tool that (optionally) integrates with Channels DVR and Dispatcharr to provide enhanced station discovery and automated Dispatcharr field population.
 
-## Version 2.5.3
+## Version 2.5.4
+**Bug Fix Release (2.5.4)**
+- Fixed user database expansion enhancement loop
+- Fixed jq syntax errors in station processing
+- Fixed deduplication function return codes  
+- Improved enhancement progress display
+
 **Bug Fix Release (2.5.3)**
 - Fixed Emby integration menu setup flow
 - Fixed Channels DVR integration menu setup flow

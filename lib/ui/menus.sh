@@ -335,21 +335,11 @@ show_main_menu() {
     local total_count=$(get_total_stations_count 2>/dev/null || echo "0")
     if [[ "${total_count:-0}" -eq 0 ]]; then
     echo
-    echo -e "${BOLD}${YELLOW}💡 Quick Start Guide:${RESET}"
-    echo -e "${CYAN}No station database found - here's how to get started:${RESET}"
+    echo -e "${BOLD}${YELLOW}💡 Quick Start:${RESET}"
+    echo -e "${CYAN}No station database found.${RESET}"
     echo
-    echo -e "${GREEN}Option 1: Immediate Use${RESET}"
-    echo -e "• Try 'Search Local Database' - works with base database if available"
-    echo -e "• Use 'Direct API Search' if you have a Channels DVR server configured"
-    echo
-    echo -e "${GREEN}Option 2: Build Your Database${RESET}"
-    echo -e "• Use 'Manage Television Markets' to add your local markets"
-    echo -e "• Run 'User Database Expansion' to build a comprehensive station database"
-    echo -e "• Requires a Channels DVR server (configurable in Settings)"
-    echo
-    echo -e "${GREEN}Option 3: Integration${RESET}"
-    echo -e "• Use 'Dispatcharr Integration' for automated channel management"
-    echo -e "• Configure connections in 'Settings' menu"
+    echo -e "• Create a user database using 'Manage Television Markets'"
+    echo -e "• Or contact the developer for a base database"
     echo
   fi
 }

@@ -956,27 +956,40 @@ process_single_market_for_user_cache() {
             
             if [[ "$station_count" -gt 0 ]]; then
                 # Process stations with metadata injection (unchanged)
-                echo "$stations_response" | 
-                jq --arg country "$country" \
-                   --arg source "user" \
-                   --arg lineup_id "$lineup_id" \
-                   --arg lineup_name "$lineup_name" \
-                   --arg lineup_location "$lineup_location" \
-                   --arg lineup_type "$lineup_type" \
-                   -c 'map(. + {
-                       source: $source,
-                       availableIn: [$country],
-                       multiCountry: false,
-                       lineupTracing: [{
-                         lineupId: $lineup_id,
-                         lineupName: $lineup_name,
-                         country: $country,
-                         location: $lineup_location,
-                         type: $lineup_type,
-                         discoveredOrder: 1,
-                         isPrimary: true
-                       }]
-                     } | del(.country, .originLineupId, .originLineupName, .originLocation, .originType))[]' 2>/dev/null >> "$CACHE_DIR/temp_user_stations.tmp"
+                # First validate the stations response is valid JSON array
+                if echo "$stations_response" | jq -e 'type == "array"' >/dev/null 2>&1; then
+                    # Process each station and append to temp file
+                    echo "$stations_response" | 
+                    jq --arg country "$country" \
+                       --arg source "user" \
+                       --arg lineup_id "$lineup_id" \
+                       --arg lineup_name "$lineup_name" \
+                       --arg lineup_location "$lineup_location" \
+                       --arg lineup_type "$lineup_type" \
+                       -c 'map(. + {
+                           source: $source,
+                           availableIn: [$country],
+                           multiCountry: false,
+                           lineupTracing: [{
+                             lineupId: $lineup_id,
+                             lineupName: $lineup_name,
+                             country: $country,
+                             location: $lineup_location,
+                             type: $lineup_type,
+                             discoveredOrder: 1,
+                             isPrimary: true
+                           }]
+                         } | del(.country, .originLineupId, .originLineupName, .originLocation, .originType))[]' 2>/dev/null >> "$CACHE_DIR/temp_user_stations.tmp"
+                    
+                    # Check if jq processing succeeded
+                    if [[ ${PIPESTATUS[1]} -ne 0 ]]; then
+                        echo -e "${RED}❌ Failed to process stations for lineup $lineup_id${RESET}" >&2
+                        ((station_count = 0))
+                    fi
+                else
+                    echo -e "${RED}❌ Invalid stations response format for lineup $lineup_id${RESET}" >&2
+                    ((station_count = 0))
+                fi
                 
                 # Show successful processing message
                 echo -e "${GREEN}✅ Processed: $lineup_id ($station_count stations)${RESET}" >&2
@@ -1107,31 +1120,65 @@ process_all_markets_sequentially_fast() {
     if [[ -s "$CACHE_DIR/temp_user_stations.tmp" ]]; then
         echo -e "${CYAN}🔄 Converting and smart deduplicating collected stations...${RESET}" >&2
         
-        # First convert to array
-        jq -s '.' "$CACHE_DIR/temp_user_stations.tmp" > "$CACHE_DIR/temp_user_stations_raw.json"
+        # Try to convert directly to array first
+        echo -e "${CYAN}📊 Creating stations array...${RESET}" >&2
         
-        if [[ $? -eq 0 ]]; then
+        # Attempt direct conversion with error capture
+        if jq -s '.' "$CACHE_DIR/temp_user_stations.tmp" > "$CACHE_DIR/temp_user_stations_raw.json" 2>"$CACHE_DIR/jq_error.log"; then
+            # Success - proceed normally
+            echo -e "${GREEN}✅ Successfully created stations array${RESET}" >&2
+        else
+            # Conversion failed - try to salvage what we can
+            echo -e "${YELLOW}⚠️  Direct conversion failed - attempting recovery${RESET}" >&2
+            
+            # Use jq to filter out invalid lines and create array in one pass
+            # This is much faster than line-by-line validation
+            jq -R 'fromjson? // empty' "$CACHE_DIR/temp_user_stations.tmp" | \
+            jq -s '.' > "$CACHE_DIR/temp_user_stations_raw.json" 2>/dev/null
+            
+            if [[ $? -eq 0 ]]; then
+                local original_count=$(wc -l < "$CACHE_DIR/temp_user_stations.tmp")
+                local recovered_count=$(jq 'length' "$CACHE_DIR/temp_user_stations_raw.json" 2>/dev/null || echo "0")
+                echo -e "${GREEN}✅ Recovered $recovered_count stations from $original_count lines${RESET}" >&2
+            else
+                # Final fallback - create empty array
+                echo -e "${YELLOW}⚠️  Recovery failed - creating empty array${RESET}" >&2
+                echo "[]" > "$CACHE_DIR/temp_user_stations_raw.json"
+            fi
+        fi
+        
+        # Now deduplicate if we have stations
+        local station_count=$(jq 'length' "$CACHE_DIR/temp_user_stations_raw.json" 2>/dev/null || echo "0")
+        if [[ $station_count -gt 0 ]]; then
             # Smart deduplicate with country consolidation
             if smart_deduplicate_stations_before_enhancement \
-                "$CACHE_DIR/temp_user_stations_raw.json" \
-                "$CACHE_DIR/temp_user_stations.json"; then
-                
+                    "$CACHE_DIR/temp_user_stations_raw.json" \
+                    "$CACHE_DIR/temp_user_stations.json"; then
+                    
                 # Clean up intermediate file (disabled for debugging)
                 # rm -f "$CACHE_DIR/temp_user_stations_raw.json"
                 echo "$CACHE_DIR/temp_user_stations.json"
                 return 0
             else
-                echo -e "${RED}❌ Failed to deduplicate stations${RESET}" >&2
-                rm -f "$CACHE_DIR/temp_user_stations_raw.json"
-                return 1
+                echo -e "${YELLOW}⚠️  Failed to deduplicate - using raw stations${RESET}" >&2
+                # Use raw stations file as fallback
+                cp "$CACHE_DIR/temp_user_stations_raw.json" "$CACHE_DIR/temp_user_stations.json"
+                echo "$CACHE_DIR/temp_user_stations.json"
+                return 0
             fi
         else
-            echo -e "${RED}❌ Failed to create consolidated stations array${RESET}" >&2
-            return 1
+            echo -e "${YELLOW}⚠️  No valid stations collected - creating empty array${RESET}" >&2
+            # Create empty but valid JSON array
+            echo "[]" > "$CACHE_DIR/temp_user_stations.json"
+            echo "$CACHE_DIR/temp_user_stations.json"
+            return 0
         fi
     else
-        echo -e "${YELLOW}⚠️  No stations collected${RESET}" >&2
-        return 1
+        echo -e "${YELLOW}⚠️  No stations collected - creating empty array${RESET}" >&2
+        # Create empty but valid JSON array
+        echo "[]" > "$CACHE_DIR/temp_user_stations.json"
+        echo "$CACHE_DIR/temp_user_stations.json"
+        return 0
     fi
 }
 
@@ -1972,10 +2019,17 @@ perform_user_database_expansion() {
       temp_stations_file=$(process_all_markets_sequentially_fast "$force_refresh" "$total_markets" "$recovery_choice")
       local processing_result=$?
       
-      if [[ $processing_result -ne 0 ]] || [[ -z "$temp_stations_file" ]]; then
-        echo -e "${YELLOW}⚠️  No new stations collected${RESET}" >&2
-        finalize_progress_tracking "user_caching" "no_new_stations"
-        return 0
+      # Always continue to enhancement even if no stations or partial failure
+      if [[ -z "$temp_stations_file" ]] || [[ ! -f "$temp_stations_file" ]]; then
+        echo -e "${YELLOW}⚠️  No stations file created - creating empty array${RESET}" >&2
+        temp_stations_file="$CACHE_DIR/temp_user_stations.json"
+        echo "[]" > "$temp_stations_file"
+      fi
+      
+      # Check if file is empty array
+      local station_count=$(jq 'length' "$temp_stations_file" 2>/dev/null || echo "0")
+      if [[ "$station_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠️  No stations collected, but continuing to enhancement phase${RESET}" >&2
       fi
       
       # Mark market processing as completed

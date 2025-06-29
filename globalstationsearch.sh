@@ -4,51 +4,15 @@
 # Description: Television station search tool using Channels DVR API
 # dispatcharr integration for direct field population from search results
 # Created: 2025-05-26
-VERSION="2.5.5"
-VERSION_INFO="Last Modified: 2025-06-27
+VERSION="2.6.0"
+VERSION_INFO="Last Modified: 2025-06-29
 
-Update (2.5.5)
-- Enhanced user database expansion station processing
-- Improved database handling for expanded station entries
-- Optimized station enhancement workflow
+Update (2.6.0)
+- Add lineup-based user database expansion
+- Fix database status display parsing
+- Enhanced station enhancement workflow"
 
-Update (2.5.4)
-- Fix user database expansion enhancement loop
-- Fix jq syntax errors in station processing  
-- Fix deduplication function return codes
-- Improve enhancement progress display
-
-Update (2.5.3)
-
-- Fixed Emby integration menu setup flow
-- Fixed Channels DVR integration menu setup flow
-- Added configure_cdvr_connection wrapper function
-- Consolidated all integration configurations to use settings framework
-- Fixed missing configure_*_integration function errors across all integrations
-
-Update (2.5.2)
-
-- Fixed Dispatcharr integration menu setup flow
-- Consolidated Dispatcharr configuration to use settings framework
-- Fixed missing configure_dispatcharr_integration function errors
-
-Update (2.5.1)
-
-- Fixed Emby integration listing provider addition failures
-- Removed duplicate confirmation prompts in Emby workflow  
-- Fixed database expansion memory exhaustion causing system freezes
-- Improved resume functionality for interrupted database builds
-
-Update (2.5.0)
-
-- New Emby Integration submenu                                                                                                                                              
-- Complete Dispatcharr Channel Management System (create, edit, manage channels/groups/streams)                                                                             
-- Enhanced logging system with comprehensive submenu (view, configure, clear logs)                                                                                          
-- Complete menu restructuring: Search, Dispatcharr, Emby, Settings                                                                                                          
-- Submenus also reorganized                                                                                                                                                 
--  Updated terminology: base/user cache → base/user database                                                                                                                 
-- Fixed Bash compatibility issues and modular architecture/code improvements
-"
+# ============================================================================
 
 check_version_flags() {
   case "${1:-}" in
@@ -6088,11 +6052,12 @@ database_management_submenu() {
     # Define database menu options
     database_options=(
       "1|Market Management"
-      "2|User Database Expansion"
-      "3|Clear User Database"
-      "4|Export Database to CSV"
-      "5|Database Statistics"
-      "6|Rebuild Combined Database"
+      "2|User Database Expansion (By Market)"
+      "3|User Database Expansion (By Lineup ID)"
+      "4|Clear User Database"
+      "5|Export Database to CSV"
+      "6|Database Statistics"
+      "7|Rebuild Combined Database"
       "q|Back to Settings"
     )
     
@@ -6102,8 +6067,8 @@ database_management_submenu() {
     
     # Show database status
     local breakdown=$(get_stations_breakdown)
-    local base_count=$(echo "$breakdown" | cut -d' ' -f1)
-    local user_count=$(echo "$breakdown" | cut -d' ' -f2)
+    local base_count=$(echo "$breakdown" | sed 's/Base: \([0-9]*\).*/\1/')
+    local user_count=$(echo "$breakdown" | sed 's/.*User: \([0-9]*\).*/\1/')
     local total_count=$(get_total_stations_count)
     
     echo -e "${BOLD}${BLUE}=== Database Status ===${RESET}"
@@ -6122,7 +6087,8 @@ database_management_submenu() {
     case $choice in
       1) manage_markets ;;
       2) perform_user_database_expansion "false" && pause_for_user ;;
-      3) 
+      3) perform_lineup_database_expansion && pause_for_user ;;
+      4) 
         echo -e "${YELLOW}⚠️  This will remove all user-added stations${RESET}"
         read -p "Are you sure? (y/n): " confirm
         if [[ "$confirm" =~ ^[Yy]$ ]]; then
@@ -6130,9 +6096,9 @@ database_management_submenu() {
         fi
         pause_for_user
         ;;
-      4) export_stations_to_csv && pause_for_user ;;
-      5) show_unified_cache_stats "detailed" && pause_for_user ;;
-      6) rebuild_combined_database && pause_for_user ;;
+      5) export_stations_to_csv && pause_for_user ;;
+      6) show_unified_cache_stats "detailed" && pause_for_user ;;
+      7) rebuild_combined_database && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_menu_choice "Database Management" "$choice" ;;
     esac

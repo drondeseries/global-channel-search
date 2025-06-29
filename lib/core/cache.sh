@@ -2120,3 +2120,228 @@ perform_user_database_expansion() {
   # COMPLETION: FINALIZE PROGRESS TRACKING
   finalize_progress_tracking "user_caching" "completed"
 }
+
+# ============================================================================
+# LINEUP-BASED DATABASE EXPANSION
+# ============================================================================
+
+# Expand user database using lineup IDs instead of markets
+# Integrates lineup processor logic with existing database expansion workflow
+perform_lineup_database_expansion() {
+    echo -e "\n${BOLD}${BLUE}=== User Database Expansion (By Lineup ID) ===${RESET}"
+    echo -e "${CYAN}This allows you to add stations from specific lineup IDs to your user database.${RESET}"
+    echo
+    
+    # Check Channels DVR connectivity
+    if [[ -z "${CHANNELS_URL:-}" ]]; then
+        echo -e "${RED}❌ Channels DVR not configured${RESET}"
+        echo -e "${CYAN}💡 Configure Channels DVR in Integration Settings first${RESET}"
+        return 1
+    fi
+    
+    if ! curl -s --connect-timeout 3 "$CHANNELS_URL" >/dev/null 2>&1; then
+        echo -e "${RED}❌ Cannot connect to Channels DVR at $CHANNELS_URL${RESET}"
+        echo -e "${CYAN}💡 Check that Channels DVR is running and accessible${RESET}"
+        return 1
+    fi
+    
+    echo -e "${GREEN}✅ Channels DVR connected at $CHANNELS_URL${RESET}"
+    echo
+    
+    # Get lineup IDs from user
+    echo -e "${BOLD}Lineup ID Input:${RESET}"
+    echo -e "${CYAN}Enter lineup ID(s) - single ID or comma-separated for multiple:${RESET}"
+    echo -e "${CYAN}Examples: USA-DISH501-X or CAN-OTA-M3N3T6,USA-XFIN-X${RESET}"
+    echo
+    
+    local lineup_input
+    read -p "Lineup ID(s): " lineup_input
+    
+    if [[ -z "$lineup_input" ]]; then
+        echo -e "${YELLOW}⚠️  No lineup IDs provided${RESET}"
+        return 1
+    fi
+    
+    # Clean and validate lineup IDs
+    local lineups=()
+    IFS=',' read -ra raw_lineups <<< "$lineup_input"
+    
+    for lineup in "${raw_lineups[@]}"; do
+        # Trim whitespace
+        lineup=$(echo "$lineup" | xargs)
+        
+        # Basic validation - lineup should have format like XXX-XXXXX-X
+        if [[ "$lineup" =~ ^[A-Z]{3}-[A-Z0-9]+-[A-Z0-9]+$ ]]; then
+            lineups+=("$lineup")
+        else
+            echo -e "${YELLOW}⚠️  Skipping invalid lineup format: '$lineup'${RESET}"
+        fi
+    done
+    
+    if [[ ${#lineups[@]} -eq 0 ]]; then
+        echo -e "${RED}❌ No valid lineup IDs provided${RESET}"
+        echo -e "${CYAN}💡 Lineup IDs should follow format: XXX-XXXXX-X (e.g., USA-DISH501-X)${RESET}"
+        return 1
+    fi
+    
+    echo -e "${GREEN}✅ Processing ${#lineups[@]} valid lineup ID(s):${RESET}"
+    for lineup in "${lineups[@]}"; do
+        echo -e "  • $lineup"
+    done
+    echo
+    
+    # Confirm with user
+    if ! confirm_action "Proceed with lineup database expansion?"; then
+        echo -e "${YELLOW}⚠️  Operation cancelled${RESET}"
+        return 1
+    fi
+    
+    # Create temporary directory for processing
+    local temp_dir="$CACHE_DIR/lineup_expansion_$$"
+    mkdir -p "$temp_dir"
+    
+    echo -e "\n${BOLD}${BLUE}=== Processing Lineups ===${RESET}"
+    
+    local successful_lineups=0
+    local failed_lineups=0
+    local total_stations=0
+    local all_stations_file="$temp_dir/all_stations.json"
+    echo '[]' > "$all_stations_file"
+    
+    # Process each lineup
+    for lineup_id in "${lineups[@]}"; do
+        echo -e "\n${CYAN}🔄 Processing lineup: $lineup_id${RESET}"
+        
+        # Extract country code from lineup ID (first 3 characters)
+        local country_code="${lineup_id:0:3}"
+        
+        # Download stations for this lineup using correct API endpoint
+        local lineup_url="$CHANNELS_URL/dvr/guide/stations/$lineup_id"
+        local stations_response
+        
+        if stations_response=$(curl -s --connect-timeout 15 --max-time 60 "$lineup_url" 2>/dev/null); then
+            if [[ -n "$stations_response" ]] && jq empty <<< "$stations_response" 2>/dev/null; then
+                local station_count=$(jq 'length' <<< "$stations_response" 2>/dev/null || echo "0")
+                
+                if [[ "$station_count" -gt 0 ]]; then
+                    # Enhance stations with metadata for clean format
+                    local enhanced_stations
+                    enhanced_stations=$(jq --arg lineup "$lineup_id" \
+                                         --arg source "lineup_expansion" \
+                                         --arg timestamp "$(date -Iseconds)" \
+                                         --arg country "$country_code" \
+                                         'map(. + {
+                                           source: $source,
+                                           processed_timestamp: $timestamp,
+                                           lineupTracing: [{
+                                             lineupId: $lineup,
+                                             country: $country,
+                                             discoveredOrder: 1,
+                                             isPrimary: true
+                                           }],
+                                           availableIn: [$country]
+                                         } | 
+                                         # Remove legacy country field if it exists
+                                         del(.country))' <<< "$stations_response" 2>/dev/null)
+                    
+                    if [[ -n "$enhanced_stations" ]] && jq empty <<< "$enhanced_stations" 2>/dev/null; then
+                        # Append to combined stations file
+                        local temp_combined="$temp_dir/temp_combined.json"
+                        jq -s 'add' "$all_stations_file" <(echo "$enhanced_stations") > "$temp_combined"
+                        mv "$temp_combined" "$all_stations_file"
+                        
+                        echo -e "  ${GREEN}✅ Downloaded and enhanced $station_count stations${RESET}"
+                        ((successful_lineups++))
+                        total_stations=$((total_stations + station_count))
+                    else
+                        echo -e "  ${RED}❌ Failed to enhance station metadata${RESET}"
+                        ((failed_lineups++))
+                    fi
+                else
+                    echo -e "  ${YELLOW}⚠️  Lineup exists but contains no stations${RESET}"
+                    ((failed_lineups++))
+                fi
+            else
+                echo -e "  ${RED}❌ Invalid response or lineup not found${RESET}"
+                ((failed_lineups++))
+            fi
+        else
+            echo -e "  ${RED}❌ Download failed (network error or lineup not found)${RESET}"
+            ((failed_lineups++))
+        fi
+    done
+    
+    # Processing summary
+    echo -e "\n${BOLD}Processing Summary:${RESET}"
+    echo -e "${GREEN}✅ Successful: $successful_lineups lineups${RESET}"
+    echo -e "${RED}❌ Failed: $failed_lineups lineups${RESET}"
+    echo -e "${CYAN}📊 Total raw stations: $total_stations${RESET}"
+    
+    if [[ $successful_lineups -eq 0 ]]; then
+        echo -e "\n${RED}❌ No lineups were successfully processed${RESET}"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Deduplicate stations
+    echo -e "\n${CYAN}🔄 Deduplicating stations...${RESET}"
+    local deduped_file="$temp_dir/deduped_stations.json"
+    
+    if jq 'group_by(.stationId) | map(.[0])' "$all_stations_file" > "$deduped_file" 2>/dev/null; then
+        local deduped_count=$(jq 'length' "$deduped_file" 2>/dev/null || echo "0")
+        local duplicates_removed=$((total_stations - deduped_count))
+        
+        echo -e "${GREEN}✅ Deduplication complete: $deduped_count unique stations${RESET}"
+        if [[ $duplicates_removed -gt 0 ]]; then
+            echo -e "${CYAN}📊 Removed $duplicates_removed duplicate stations${RESET}"
+        fi
+    else
+        echo -e "${RED}❌ Deduplication failed${RESET}"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    # Validate clean format
+    local clean_count=$(jq '[.[] | select(.availableIn)] | length' "$deduped_file" 2>/dev/null || echo "0")
+    if [[ "$clean_count" -ne "$deduped_count" ]]; then
+        echo -e "${RED}❌ Some stations are not in clean format${RESET}"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+    
+    echo -e "${GREEN}✅ All stations validated as clean format${RESET}"
+    
+    # Enhancement phase using existing function
+    echo -e "\n${CYAN}🔄 Enhancing station data...${RESET}"
+    local start_time=$(date +%s)
+    local enhanced_count
+    enhanced_count=$(enhance_stations_with_granular_resume "$start_time" "$deduped_file" "user_caching")
+    
+    if [[ $? -eq 0 ]]; then
+        echo -e "${GREEN}✅ Enhanced $enhanced_count stations via TMS API${RESET}"
+    else
+        echo -e "${YELLOW}⚠️  Enhancement had issues but continuing with integration${RESET}"
+    fi
+    
+    # Integration using existing infrastructure
+    echo -e "\n${CYAN}🔄 Integrating into user database...${RESET}"
+    
+    if add_stations_to_user_cache "$deduped_file"; then
+        echo -e "${GREEN}✅ Successfully added stations to user database${RESET}"
+        
+        # Clean up
+        rm -rf "$temp_dir"
+        
+        echo -e "\n${GREEN}✅ Lineup database expansion completed successfully!${RESET}"
+        echo -e "${CYAN}📊 Added $deduped_count unique stations from $successful_lineups lineups${RESET}"
+        if [[ -n "$enhanced_count" && "$enhanced_count" -gt 0 ]]; then
+            echo -e "${CYAN}📊 Enhanced $enhanced_count stations with additional metadata${RESET}"
+        fi
+        
+        return 0
+    else
+        echo -e "${RED}❌ Failed to integrate stations into user database${RESET}"
+        rm -rf "$temp_dir"
+        return 1
+    fi
+}

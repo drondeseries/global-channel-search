@@ -2,11 +2,11 @@
 
 A comprehensive television station search tool that (optionally) integrates with Channels DVR and Dispatcharr to provide enhanced station discovery and automated Dispatcharr field population.
 
-## Version 2.5.5
-**Enhancement Release (2.5.5)**
-- Enhanced user database expansion station processing
-- Improved database handling for expanded station entries
-- Optimized station enhancement workflow
+## Version 2.6.0
+**Feature Release (2.6.0)**
+- Add lineup-based user database expansion
+- Fix database status display parsing  
+- Enhanced station enhancement workflow
 
 **Bug Fix Release (2.5.4)**
 - Fixed user database expansion enhancement loop

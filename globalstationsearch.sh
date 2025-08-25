@@ -1697,6 +1697,7 @@ process_single_channel_station_id() {
       [[ $current_page -lt $total_pages ]] && echo "n) Next page"
       [[ $current_page -gt 1 ]] && echo "p) Previous page"
       echo "s) Search with different term"
+      echo "i) Search with AI"
       echo "m) Enter station ID manually"
       echo "k) Skip this channel (return to scan results)"
       echo "q) Cancel and return to Dispatcharr menu"
@@ -1777,6 +1778,29 @@ process_single_channel_station_id() {
             detected_country=""
             detected_resolution=""
             echo -e "${CYAN}💡 Auto-detected filters cleared for manual search${RESET}"
+          fi
+          ;;
+        i|I)
+          if ! is_gemini_configured; then
+              echo -e "${RED}❌ Gemini is not configured. Please configure it in the Settings menu.${RESET}"
+              pause_for_user
+          else
+              local ai_query
+              read -p "Enter your AI search query [default: $channel_name]: " ai_query
+              ai_query=${ai_query:-$channel_name}
+
+              local ai_params
+              ai_params=$(gemini_ai_search_parser "$ai_query")
+              if [[ $? -eq 0 ]]; then
+                  search_term=$(echo "$ai_params" | jq -r '.search_term // empty')
+                  detected_resolution=$(echo "$ai_params" | jq -r '.quality // empty')
+                  detected_country=$(echo "$ai_params" | jq -r '.country // empty')
+                  echo -e "${GREEN}✅ AI search parameters applied. Re-running search...${RESET}"
+                  current_page=1
+              else
+                  echo -e "${RED}❌ AI search failed.${RESET}"
+                  pause_for_user
+              fi
           fi
           ;;
         m|M)
@@ -2047,6 +2071,7 @@ interactive_stationid_matching() {
         [[ $current_page -lt $total_pages ]] && echo "n) Next page"
         [[ $current_page -gt 1 ]] && echo "p) Previous page"
         echo "s) Search with different term"
+        echo "i) Search with AI"
         echo "m) Enter station ID manually"
         echo "k) Skip this channel"
         echo "q) Quit matching (or press Enter)"
@@ -2138,6 +2163,29 @@ interactive_stationid_matching() {
               detected_country=""
               detected_resolution=""
               echo -e "${CYAN}💡 Auto-detected filters cleared for manual search${RESET}"
+            fi
+            ;;
+          i|I)
+            if ! is_gemini_configured; then
+                echo -e "${RED}❌ Gemini is not configured. Please configure it in the Settings menu.${RESET}"
+                pause_for_user
+            else
+                local ai_query
+                read -p "Enter your AI search query [default: $channel_name]: " ai_query
+                ai_query=${ai_query:-$channel_name}
+
+                local ai_params
+                ai_params=$(gemini_ai_search_parser "$ai_query")
+                if [[ $? -eq 0 ]]; then
+                    search_term=$(echo "$ai_params" | jq -r '.search_term // empty')
+                    detected_resolution=$(echo "$ai_params" | jq -r '.quality // empty')
+                    detected_country=$(echo "$ai_params" | jq -r '.country // empty')
+                    echo -e "${GREEN}✅ AI search parameters applied. Re-running search...${RESET}"
+                    current_page=1
+                else
+                    echo -e "${RED}❌ AI search failed.${RESET}"
+                    pause_for_user
+                fi
             fi
             ;;
           m|M)
@@ -4366,6 +4414,103 @@ run_dispatcharr_integration() {
   done
 }
 
+run_automatic_ai_matching() {
+    if ! check_integration_requirement "Gemini" "is_gemini_configured" "configure_gemini_integration" "Automatic AI Matching"; then
+        return 1
+    fi
+    if ! check_integration_requirement "Dispatcharr" "is_dispatcharr_configured" "configure_dispatcharr_connection" "Automatic AI Matching"; then
+        return 1
+    fi
+
+    clear
+    echo -e "${BOLD}${CYAN}=== Automatic AI Station ID Matching ===${RESET}\n"
+    echo -e "${BLUE}📍 This will attempt to automatically match all channels missing a station ID.${RESET}"
+    echo -e "${CYAN}It uses the Gemini AI to find high-confidence (single result) matches.${RESET}"
+    echo -e "${YELLOW}Channels with ambiguous (zero or multiple) matches will be skipped.${RESET}"
+    echo
+
+    echo -e "${CYAN}🔍 Finding channels missing station IDs...${RESET}"
+    local channels_data=$(get_and_cache_dispatcharr_channels)
+    local missing_channels=$(find_channels_missing_stationid "$channels_data")
+
+    if [[ -z "$missing_channels" ]]; then
+        echo -e "${GREEN}✅ No channels are missing station IDs. Nothing to do!${RESET}"
+        return 0
+    fi
+
+    mapfile -t missing_array <<< "$missing_channels"
+    local total_missing=${#missing_array[@]}
+
+    echo -e "${GREEN}✅ Found $total_missing channels to process.${RESET}"
+    if ! confirm_action "Start the automatic matching process?"; then
+        echo -e "${YELLOW}⚠️ Operation cancelled.${RESET}"
+        return 1
+    fi
+
+    local success_count=0
+    local skipped_count=0
+    local failed_count=0
+    local processed_count=0
+
+    echo
+
+    for channel_line in "${missing_array[@]}"; do
+        ((processed_count++))
+
+        IFS=$'\t' read -r channel_id channel_name group number <<< "$channel_line"
+
+        echo -ne "\r${CYAN}Processing $processed_count of $total_missing: ${channel_name:0:40}...${RESET}"
+
+        local ai_params
+        ai_params=$(gemini_ai_search_parser "$channel_name")
+        if [[ $? -ne 0 ]]; then
+            ((failed_count++))
+            continue
+        fi
+
+        local search_term=$(echo "$ai_params" | jq -r '.search_term // empty')
+        local quality=$(echo "$ai_params" | jq -r '.quality // empty')
+        local country=$(echo "$ai_params" | jq -r '.country // empty')
+
+        local result_count
+        result_count=$(shared_station_search "$search_term" 1 "count" "$country" "$quality")
+
+        if [[ "$result_count" -eq 1 ]]; then
+            local station_data=$(shared_station_search "$search_term" 1 "full" "$country" "$quality")
+            local station_id=$(echo "$station_data" | cut -f4)
+
+            if update_dispatcharr_channel_station_id "$channel_id" "$station_id"; then
+                ((success_count++))
+            else
+                ((failed_count++))
+            fi
+        else
+            ((skipped_count++))
+        fi
+        sleep 0.5 # To avoid hitting API rate limits
+    done
+
+    echo # Newline after progress bar
+    display_ai_matching_summary "$success_count" "$skipped_count" "$failed_count" "$total_missing"
+}
+
+display_ai_matching_summary() {
+    local success="$1"
+    local skipped="$2"
+    local failed="$3"
+    local total="$4"
+
+    echo
+    echo -e "${BOLD}${BLUE}=== Automatic AI Matching Complete ===${RESET}"
+    echo
+    echo -e "${CYAN}📊 Processed $total total channels.${RESET}"
+    echo -e "${GREEN}✅ Successfully matched: $success${RESET}"
+    echo -e "${YELLOW}⚠️  Skipped (ambiguous matches): $skipped${RESET}"
+    echo -e "${RED}❌ Failed (API or other errors): $failed${RESET}"
+    echo
+    echo -e "${CYAN}💡 The remaining $skipped skipped channels can be processed using 'Interactive Station ID Matching'.${RESET}"
+}
+
 # Station ID matching submenu handler
 run_dispatcharr_stationid_menu() {
   while true; do
@@ -4382,7 +4527,11 @@ run_dispatcharr_stationid_menu() {
         show_menu_transition "starting" "interactive matching"
         interactive_stationid_matching 
         ;;
-      c|C) 
+      c|C)
+        show_menu_transition "starting" "automatic AI station ID matching"
+        run_automatic_ai_matching && pause_for_user
+        ;;
+      d|D)
         show_menu_transition "starting" "station ID changes processing"
         batch_update_stationids && pause_for_user 
         ;;

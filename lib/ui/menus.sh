@@ -404,7 +404,8 @@ show_dispatcharr_stationid_menu() {
     stationid_options=(
         "a|Scan Channels for Missing Station IDs"
         "b|Interactive Station ID Matching"
-        "c|Commit Station ID Changes"
+        "c|Automatic AI Station ID Matching"
+        "d|Commit Queued Station ID Changes"
         "q|Back to Dispatcharr Menu"
     )
     

@@ -1162,9 +1162,14 @@ configure_gemini_integration() {
             echo -e "${BOLD}Step 2: API Key${RESET}"
             echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
 
-            # Use configure_setting for secret input and save the result
-            if configure_setting "secret" "GEMINI_API_KEY" "$GEMINI_API_KEY"; then
-                save_setting "GEMINI_API_KEY" "$GEMINI_API_KEY"
+            local temp_api_key
+            read -s -p "Enter API Key: " temp_api_key
+            echo
+
+            if [[ -n "$temp_api_key" ]]; then
+                save_setting "GEMINI_API_KEY" "$temp_api_key"
+                GEMINI_API_KEY="$temp_api_key" # Update global var for current session
+
                 echo
                 echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
                 if gemini_test_connection; then
@@ -1174,6 +1179,7 @@ configure_gemini_integration() {
                 fi
             else
                 echo -e "${YELLOW}⚠️  No API Key entered. The integration will not work until an API key is set.${RESET}"
+                save_setting "GEMINI_API_KEY" ""
             fi
             ;;
         2) # Disable

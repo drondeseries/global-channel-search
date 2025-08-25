@@ -43,7 +43,7 @@ gemini_test_connection() {
         return 1
     fi
 
-    local api_url="https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+    local api_url="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
 
     # Simple payload to test the API
     local payload
@@ -121,7 +121,7 @@ PROMPT
         }
     }')
 
-    local api_url="https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+    local api_url="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
 
     local response
     response=$(curl -s \

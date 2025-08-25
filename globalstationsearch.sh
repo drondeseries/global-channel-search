@@ -1129,44 +1129,66 @@ configure_gemini_integration() {
     clear
     echo -e "${BOLD}${CYAN}=== Configure Gemini Integration ===${RESET}\n"
 
-    # Show current status first
-    show_setting_status "GEMINI_ENABLED" "$GEMINI_ENABLED" "Gemini AI Search" \
-        "$([ "$GEMINI_ENABLED" = "true" ] && echo "enabled" || echo "disabled")"
+    # Show current status
+    echo -e "${BOLD}Current Status:${RESET}"
+    if [[ "$GEMINI_ENABLED" == "true" ]]; then
+        echo -e "Status: ${GREEN}Enabled${RESET}"
+        [[ -n "$GEMINI_API_KEY" ]] && echo -e "API Key: ${CYAN}Set${RESET}" || echo -e "API Key: ${YELLOW}Not Set${RESET}"
+    else
+        echo -e "Status: ${YELLOW}Disabled${RESET}"
+    fi
     echo
 
-    # This function handles the user prompt and updates the GEMINI_ENABLED variable.
-    # We pass the variable name and its current value.
-    configure_setting "boolean" "GEMINI_ENABLED" "$GEMINI_ENABLED" "Gemini AI Search"
+    # Explicit Enable/Disable menu
+    echo -e "${BOLD}Step 1: Integration Status${RESET}"
+    echo -e "${CYAN}Choose an option for Gemini AI Search:${RESET}"
+    echo
+    echo -e "${GREEN}1)${RESET} Enable"
+    echo -e "${YELLOW}2)${RESET} Disable"
+    echo -e "${CYAN}3)${RESET} Cancel (keep current settings)"
+    echo
 
-    # After the function runs, we check the new value of the variable.
-    if [[ "$GEMINI_ENABLED" == "true" ]]; then
-        # If the user chose to enable it, now we ask for the API key.
-        echo
-        echo -e "${BOLD}Step 2: API Key${RESET}"
-        echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
-        echo -e "${CYAN}You can get a key from Google AI Studio.${RESET}"
+    local choice
+    read -p "Select option [3]: " choice
+    choice=${choice:-3}
 
-        # Use configure_setting to handle the secret input
-        if configure_setting "secret" "GEMINI_API_KEY" "$GEMINI_API_KEY"; then
-            # If the user enters a key, we test it.
+    case "$choice" in
+        1) # Enable
+            save_setting "GEMINI_ENABLED" "true"
+            GEMINI_ENABLED=true
+            echo -e "${GREEN}✅ Gemini AI Search enabled.${RESET}"
+
             echo
-            echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
-            if gemini_test_connection; then
-                echo -e "${GREEN}✅ Connection test successful! Gemini is active.${RESET}"
+            echo -e "${BOLD}Step 2: API Key${RESET}"
+            echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
+
+            # Use configure_setting for secret input and save the result
+            if configure_setting "secret" "GEMINI_API_KEY" "$GEMINI_API_KEY"; then
+                save_setting "GEMINI_API_KEY" "$GEMINI_API_KEY"
+                echo
+                echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
+                if gemini_test_connection; then
+                    echo -e "${GREEN}✅ Connection test successful!${RESET}"
+                else
+                    echo -e "${RED}❌ Connection test failed. The API key may be invalid.${RESET}"
+                fi
             else
-                echo -e "${RED}❌ Connection test failed.${RESET}"
-                echo -e "${YELLOW}⚠️  The API key may be invalid. Disabling integration for safety.${RESET}"
-                save_setting "GEMINI_ENABLED" "false"
+                echo -e "${YELLOW}⚠️  No API Key entered. The integration will not work until an API key is set.${RESET}"
             fi
-        else
-            # If the user enters a blank key, disable the integration.
-            echo -e "${YELLOW}⚠️  No API Key entered. Disabling integration.${RESET}"
+            ;;
+        2) # Disable
             save_setting "GEMINI_ENABLED" "false"
-        fi
-    else
-        # If the user chose to disable it, we just confirm.
-        echo -e "${YELLOW}✅ Gemini AI Search is disabled.${RESET}"
-    fi
+            save_setting "GEMINI_API_KEY" "" # Clear the key when disabling
+            GEMINI_ENABLED=false
+            echo -e "${YELLOW}✅ Gemini AI Search disabled.${RESET}"
+            ;;
+        3|"")
+            echo -e "${CYAN}💡 No changes made.${RESET}"
+            ;;
+        *)
+            echo -e "${RED}❌ Invalid option. No changes made.${RESET}"
+            ;;
+    esac
 
     echo -e "\n${GREEN}✅ Gemini configuration completed${RESET}"
 }

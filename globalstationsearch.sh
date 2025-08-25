@@ -1129,41 +1129,43 @@ configure_gemini_integration() {
     clear
     echo -e "${BOLD}${CYAN}=== Configure Gemini Integration ===${RESET}\n"
 
+    # Show current status first
     show_setting_status "GEMINI_ENABLED" "$GEMINI_ENABLED" "Gemini AI Search" \
         "$([ "$GEMINI_ENABLED" = "true" ] && echo "enabled" || echo "disabled")"
     echo
 
-    if configure_setting "boolean" "Gemini AI Search" "$GEMINI_ENABLED"; then
-        GEMINI_ENABLED=true
-        save_setting "GEMINI_ENABLED" "true"
+    # This function handles the user prompt and updates the GEMINI_ENABLED variable.
+    # We pass the variable name and its current value.
+    configure_setting "boolean" "GEMINI_ENABLED" "$GEMINI_ENABLED" "Gemini AI Search"
 
+    # After the function runs, we check the new value of the variable.
+    if [[ "$GEMINI_ENABLED" == "true" ]]; then
+        # If the user chose to enable it, now we ask for the API key.
         echo
         echo -e "${BOLD}Step 2: API Key${RESET}"
         echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
         echo -e "${CYAN}You can get a key from Google AI Studio.${RESET}"
 
+        # Use configure_setting to handle the secret input
         if configure_setting "secret" "GEMINI_API_KEY" "$GEMINI_API_KEY"; then
-            echo -e "${GREEN}✅ Gemini API Key saved.${RESET}"
+            # If the user enters a key, we test it.
+            echo
+            echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
+            if gemini_test_connection; then
+                echo -e "${GREEN}✅ Connection test successful! Gemini is active.${RESET}"
+            else
+                echo -e "${RED}❌ Connection test failed.${RESET}"
+                echo -e "${YELLOW}⚠️  The API key may be invalid. Disabling integration for safety.${RESET}"
+                save_setting "GEMINI_ENABLED" "false"
+            fi
         else
-            echo -e "${YELLOW}⚠️  Gemini API Key not set. The integration will not work.${RESET}"
-            GEMINI_ENABLED=false
+            # If the user enters a blank key, disable the integration.
+            echo -e "${YELLOW}⚠️  No API Key entered. Disabling integration.${RESET}"
             save_setting "GEMINI_ENABLED" "false"
         fi
     else
-        GEMINI_ENABLED=false
-        save_setting "GEMINI_ENABLED" "false"
-        echo -e "${CYAN}💡 Gemini AI Search disabled${RESET}"
-    fi
-
-    # Auto-test connection after configuration
-    if [[ "$GEMINI_ENABLED" == "true" ]] && [[ -n "${GEMINI_API_KEY:-}" ]]; then
-        echo
-        echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
-        if gemini_test_connection; then
-            echo -e "${GREEN}✅ Connection test successful!${RESET}"
-        else
-            echo -e "${YELLOW}⚠️  Connection test failed. Please check your API Key.${RESET}"
-        fi
+        # If the user chose to disable it, we just confirm.
+        echo -e "${YELLOW}✅ Gemini AI Search is disabled.${RESET}"
     fi
 
     echo -e "\n${GREEN}✅ Gemini configuration completed${RESET}"

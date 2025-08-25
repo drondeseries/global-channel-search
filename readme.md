@@ -57,11 +57,11 @@ A comprehensive television station search tool that (optionally) integrates with
 - **Reverse Station ID Lookup**
 
 ### 🔧 **Integrations**
-- **AI-Powered Search** - Use natural language queries (e.g., "news channels in the uk") to find stations, powered by the Google Gemini API.
+- **AI-Powered Search** - Use natural language queries (e.g., "news channels in the uk") to find stations, powered by the Google Gemini API. This is available as a standalone search and within the Dispatcharr station matching workflow.
 - **Dispatcharr - Complete Channel Management** - Create, edit, update, and delete channels from search results
 - **Dispatcharr - Group Management** - View, create, modify, and delete channel groups
 - **Dispatcharr - Stream Management** - Search, assign, and remove streams with table-based UI
-- **Dispatcharr - Field Population and Station ID Matching** - Interactive matching for channels missing station IDs. Automatically populate channel name, TVG-ID, station ID, and logos
+- **Dispatcharr - Field Population and Station ID Matching** - Interactive and **fully automatic** matching for channels missing station IDs. Automatically populate channel name, TVG-ID, station ID, and logos
 - **Emby - Populate Missing listingIds** - Automatically find any missing listingIds and add them to Emby for rich EPG data
 - **Emby - Delete All Channel Numbers** - Useful for some users
 

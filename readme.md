@@ -57,6 +57,7 @@ A comprehensive television station search tool that (optionally) integrates with
 - **Reverse Station ID Lookup**
 
 ### 🔧 **Integrations**
+- **AI-Powered Search** - Use natural language queries (e.g., "news channels in the uk") to find stations, powered by the Google Gemini API.
 - **Dispatcharr - Complete Channel Management** - Create, edit, update, and delete channels from search results
 - **Dispatcharr - Group Management** - View, create, modify, and delete channel groups
 - **Dispatcharr - Stream Management** - Search, assign, and remove streams with table-based UI
@@ -86,6 +87,7 @@ A comprehensive television station search tool that (optionally) integrates with
 ### Optional
 - **viu** - Logo previews and display
 - **bc** - Progress calculations during caching
+- **Google Gemini API Key** - For AI-Powered Search feature
 - **Channels DVR server** - For Direct API Search and adding channels using user database
 - **Dispatcharr** - For Dispatcharr integrations
 - **Emby** - For Emby integrations

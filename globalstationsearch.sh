@@ -1129,74 +1129,88 @@ configure_gemini_integration() {
     clear
     echo -e "${BOLD}${CYAN}=== Configure Gemini Integration ===${RESET}\n"
 
-    # Show current status
-    echo -e "${BOLD}Current Status:${RESET}"
     if [[ "$GEMINI_ENABLED" == "true" ]]; then
-        echo -e "Status: ${GREEN}Enabled${RESET}"
+        # --- ENABLED MENU ---
+        echo -e "${BOLD}Current Status: ${GREEN}Enabled${RESET}"
         [[ -n "$GEMINI_API_KEY" ]] && echo -e "API Key: ${CYAN}Set${RESET}" || echo -e "API Key: ${YELLOW}Not Set${RESET}"
-    else
-        echo -e "Status: ${YELLOW}Disabled${RESET}"
-    fi
-    echo
+        echo
+        echo -e "${BOLD}Options:${RESET}"
+        echo -e "1) Change API Key"
+        echo -e "2) Disable Gemini AI Search"
+        echo -e "3) Cancel"
 
-    # Explicit Enable/Disable menu
-    echo -e "${BOLD}Step 1: Integration Status${RESET}"
-    echo -e "${CYAN}Choose an option for Gemini AI Search:${RESET}"
-    echo
-    echo -e "${GREEN}1)${RESET} Enable"
-    echo -e "${YELLOW}2)${RESET} Disable"
-    echo -e "${CYAN}3)${RESET} Cancel (keep current settings)"
-    echo
+        local choice
+        read -p "Select option [3]: " choice
+        choice=${choice:-3}
 
-    local choice
-    read -p "Select option [3]: " choice
-    choice=${choice:-3}
-
-    case "$choice" in
-        1) # Enable
-            save_setting "GEMINI_ENABLED" "true"
-            GEMINI_ENABLED=true
-            echo -e "${GREEN}✅ Gemini AI Search enabled.${RESET}"
-
-            echo
-            echo -e "${BOLD}Step 2: API Key${RESET}"
-            echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
-
-            local temp_api_key
-            read -s -p "Enter API Key: " temp_api_key
-            echo
-
-            if [[ -n "$temp_api_key" ]]; then
-                save_setting "GEMINI_API_KEY" "$temp_api_key"
-                GEMINI_API_KEY="$temp_api_key" # Update global var for current session
-
-                echo
-                echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
-                if gemini_test_connection; then
-                    echo -e "${GREEN}✅ Connection test successful!${RESET}"
-                else
-                    echo -e "${RED}❌ Connection test failed. The API key may be invalid.${RESET}"
-                fi
-            else
-                echo -e "${YELLOW}⚠️  No API Key entered. The integration will not work until an API key is set.${RESET}"
+        case "$choice" in
+            1) # Change API Key
+                prompt_for_and_test_gemini_key
+                ;;
+            2) # Disable
+                save_setting "GEMINI_ENABLED" "false"
                 save_setting "GEMINI_API_KEY" ""
-            fi
-            ;;
-        2) # Disable
-            save_setting "GEMINI_ENABLED" "false"
-            save_setting "GEMINI_API_KEY" "" # Clear the key when disabling
-            GEMINI_ENABLED=false
-            echo -e "${YELLOW}✅ Gemini AI Search disabled.${RESET}"
-            ;;
-        3|"")
-            echo -e "${CYAN}💡 No changes made.${RESET}"
-            ;;
-        *)
-            echo -e "${RED}❌ Invalid option. No changes made.${RESET}"
-            ;;
-    esac
+                GEMINI_ENABLED=false
+                GEMINI_API_KEY=""
+                echo -e "${YELLOW}✅ Gemini AI Search disabled.${RESET}"
+                ;;
+            *) # Cancel
+                echo -e "${CYAN}💡 No changes made.${RESET}"
+                ;;
+        esac
+    else
+        # --- DISABLED MENU ---
+        echo -e "${BOLD}Current Status: ${YELLOW}Disabled${RESET}"
+        echo
+        echo -e "${BOLD}Options:${RESET}"
+        echo -e "1) Enable Gemini AI Search"
+        echo -e "2) Cancel"
 
-    echo -e "\n${GREEN}✅ Gemini configuration completed${RESET}"
+        local choice
+        read -p "Select option [2]: " choice
+        choice=${choice:-2}
+
+        case "$choice" in
+            1) # Enable
+                save_setting "GEMINI_ENABLED" "true"
+                GEMINI_ENABLED=true
+                echo -e "${GREEN}✅ Gemini AI Search enabled.${RESET}"
+                prompt_for_and_test_gemini_key
+                ;;
+            *) # Cancel
+                echo -e "${CYAN}💡 No changes made.${RESET}"
+                ;;
+        esac
+    fi
+
+    echo -e "\n${GREEN}✅ Gemini configuration process finished.${RESET}"
+}
+
+prompt_for_and_test_gemini_key() {
+    echo
+    echo -e "${BOLD}API Key Configuration${RESET}"
+    echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
+
+    local temp_api_key
+    read -s -p "Enter API Key: " temp_api_key
+    echo
+
+    if [[ -n "$temp_api_key" ]]; then
+        save_setting "GEMINI_API_KEY" "$temp_api_key"
+        GEMINI_API_KEY="$temp_api_key" # Update global var for current session
+
+        echo
+        echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
+        if gemini_test_connection; then
+            echo -e "${GREEN}✅ Connection test successful! API Key is valid.${RESET}"
+        else
+            echo -e "${RED}❌ Connection test failed. The API key may be invalid.${RESET}"
+        fi
+    else
+        echo -e "${YELLOW}⚠️  No API Key entered. The existing key (if any) has been cleared.${RESET}"
+        save_setting "GEMINI_API_KEY" ""
+        GEMINI_API_KEY=""
+    fi
 }
 
 

@@ -181,6 +181,7 @@ load_remaining_modules() {
         "lib/core/cache.sh|Cache Management Module|true"
         "lib/integrations/dispatcharr.sh|Enhanced Dispatcharr Integration|true"
         "lib/integrations/emby.sh|Emby Server Integration|true"
+        "lib/integrations/gemini.sh|Gemini AI Integration|true"
         "lib/integrations/cdvr.sh|Channels DVR Integration|true"
         "lib/core/search.sh|Search and Filtering Utilities|true"
         "lib/core/database.sh|Database Operations|true"
@@ -1119,6 +1120,55 @@ scan_emby_missing_listingsids() {
     
     pause_for_user
 }
+
+# ============================================================================
+# GEMINI INTEGRATION FUNCTIONS
+# ============================================================================
+
+configure_gemini_integration() {
+    clear
+    echo -e "${BOLD}${CYAN}=== Configure Gemini Integration ===${RESET}\n"
+
+    show_setting_status "GEMINI_ENABLED" "$GEMINI_ENABLED" "Gemini AI Search" \
+        "$([ "$GEMINI_ENABLED" = "true" ] && echo "enabled" || echo "disabled")"
+    echo
+
+    if configure_setting "boolean" "Gemini AI Search" "$GEMINI_ENABLED"; then
+        GEMINI_ENABLED=true
+        save_setting "GEMINI_ENABLED" "true"
+
+        echo
+        echo -e "${BOLD}Step 2: API Key${RESET}"
+        echo -e "${CYAN}Please enter your Google Gemini API Key.${RESET}"
+        echo -e "${CYAN}You can get a key from Google AI Studio.${RESET}"
+
+        if configure_setting "secret" "GEMINI_API_KEY" "$GEMINI_API_KEY"; then
+            echo -e "${GREEN}✅ Gemini API Key saved.${RESET}"
+        else
+            echo -e "${YELLOW}⚠️  Gemini API Key not set. The integration will not work.${RESET}"
+            GEMINI_ENABLED=false
+            save_setting "GEMINI_ENABLED" "false"
+        fi
+    else
+        GEMINI_ENABLED=false
+        save_setting "GEMINI_ENABLED" "false"
+        echo -e "${CYAN}💡 Gemini AI Search disabled${RESET}"
+    fi
+
+    # Auto-test connection after configuration
+    if [[ "$GEMINI_ENABLED" == "true" ]] && [[ -n "${GEMINI_API_KEY:-}" ]]; then
+        echo
+        echo -e "${CYAN}🔄 Testing Gemini connection...${RESET}"
+        if gemini_test_connection; then
+            echo -e "${GREEN}✅ Connection test successful!${RESET}"
+        else
+            echo -e "${YELLOW}⚠️  Connection test failed. Please check your API Key.${RESET}"
+        fi
+    fi
+
+    echo -e "\n${GREEN}✅ Gemini configuration completed${RESET}"
+}
+
 
 # ============================================================================
 # DISPATCHARR INTEGRATION FUNCTIONS
@@ -6424,6 +6474,10 @@ is_emby_configured() {
     [[ "$EMBY_ENABLED" == "true" ]] && [[ -n "${EMBY_URL:-}" ]] && command -v emby_test_connection >/dev/null 2>&1 && emby_test_connection >/dev/null 2>&1
 }
 
+is_gemini_configured() {
+    [[ "$GEMINI_ENABLED" == "true" ]] && [[ -n "${GEMINI_API_KEY:-}" ]]
+}
+
 # Integration Configuration submenu
 integration_configuration_submenu() {
   while true; do
@@ -6432,6 +6486,7 @@ integration_configuration_submenu() {
       "1|Channels DVR Configuration"
       "2|Dispatcharr Configuration"
       "3|Emby Configuration"
+      "4|Gemini Configuration"
       "q|Back to Settings"
     )
     
@@ -6466,6 +6521,15 @@ integration_configuration_submenu() {
     else
       echo -e "Emby: ${YELLOW}Disabled${RESET}"
     fi
+
+    # Gemini status
+    if [[ "$GEMINI_ENABLED" == "true" ]] && [[ -n "${GEMINI_API_KEY:-}" ]]; then
+      echo -e "Gemini: ${GREEN}Enabled${RESET} (API Key set)"
+    elif [[ "$GEMINI_ENABLED" == "true" ]]; then
+      echo -e "Gemini: ${YELLOW}Enabled but API Key not set${RESET}"
+    else
+      echo -e "Gemini: ${YELLOW}Disabled${RESET}"
+    fi
     echo
     
     # Show menu options
@@ -6479,6 +6543,7 @@ integration_configuration_submenu() {
       1) configure_integration "Channels DVR" "CHANNELS" "false" "cdvr_test_connection" && pause_for_user ;;
       2) configure_integration "Dispatcharr" "DISPATCHARR" "true" "dispatcharr_test_connection" && pause_for_user ;;
       3) configure_integration "Emby" "EMBY" "true" "emby_test_connection" && pause_for_user ;;
+      4) configure_gemini_integration && pause_for_user ;;
       q|Q|"") break ;;
       *) show_invalid_menu_choice "Integration Configuration" "$choice" ;;
     esac
@@ -6604,14 +6669,81 @@ validate_cache_formats_on_startup() {
 # SUBMENU FUNCTIONS (Hybrid Architecture)
 # ============================================================================
 
+run_ai_powered_search() {
+    if ! check_integration_requirement "Gemini" "is_gemini_configured" "configure_gemini_integration" "AI-Powered Search"; then
+        return 1
+    fi
+
+    clear
+    echo -e "${BOLD}${CYAN}=== AI-Powered Search ===${RESET}\n"
+    echo -e "${BLUE}📍 Use natural language to search for stations.${RESET}"
+    echo -e "${CYAN}Examples: 'cnn in hd', 'uk news channels', 'local channels for 90210'${RESET}"
+    echo
+
+    local user_query
+    read -p "Enter your search query (or 'q' to return): " user_query
+
+    if [[ -z "$user_query" || "$user_query" == "q" ]]; then
+        return 0
+    fi
+
+    echo -e "\n${CYAN}🤖 Asking the AI to parse your query...${RESET}"
+    local ai_params
+    ai_params=$(gemini_ai_search_parser "$user_query")
+
+    if [[ $? -ne 0 ]]; then
+        echo -e "${RED}❌ AI search failed. Please try again.${RESET}"
+        pause_for_user
+        return 1
+    fi
+
+    # Extract parameters from the AI's response
+    local search_term=$(echo "$ai_params" | jq -r '.search_term // empty')
+    local quality=$(echo "$ai_params" | jq -r '.quality // empty')
+    local country=$(echo "$ai_params" | jq -r '.country // empty')
+
+    echo -e "${GREEN}✅ AI has interpreted your search as:${RESET}"
+    echo -e "   Search Term: ${YELLOW}${search_term:-'(not specified)'}${RESET}"
+    echo -e "   Quality: ${YELLOW}${quality:-'(not specified)'}${RESET}"
+    echo -e "   Country: ${YELLOW}${country:-'(not specified)'}${RESET}"
+    pause_for_user
+
+    # Temporarily override filters for this search
+    local old_filter_res="$FILTER_BY_RESOLUTION"
+    local old_res="$ENABLED_RESOLUTIONS"
+    local old_filter_country="$FILTER_BY_COUNTRY"
+    local old_countries="$ENABLED_COUNTRIES"
+
+    if [[ -n "$quality" ]]; then
+        FILTER_BY_RESOLUTION=true
+        ENABLED_RESOLUTIONS="$quality"
+    fi
+
+    if [[ -n "$country" ]]; then
+        FILTER_BY_COUNTRY=true
+        ENABLED_COUNTRIES="$country"
+    fi
+
+    # Run the standard search with AI-provided parameters
+    perform_search "$search_term"
+
+    # Restore original filters
+    FILTER_BY_RESOLUTION="$old_filter_res"
+    ENABLED_RESOLUTIONS="$old_res"
+    FILTER_BY_COUNTRY="$old_filter_country"
+    ENABLED_COUNTRIES="$old_countries"
+}
+
+
 # Search submenu - consolidates all search functionality
 search_submenu() {
   while true; do
     # Define search menu options
     search_options=(
       "1|Search Local Database"
-      "2|Direct API Search|requires Channels DVR"
-      "3|Reverse Station ID Lookup"
+      "2|AI-Powered Search|requires Gemini"
+      "3|Direct API Search|requires Channels DVR"
+      "4|Reverse Station ID Lookup"
       "q|Back to Main Menu"
     )
     
@@ -6632,8 +6764,9 @@ search_submenu() {
     
     case $choice in
       1) search_local_database ;;
-      2) run_direct_api_search ;;
-      3) reverse_station_id_lookup_menu ;;
+      2) run_ai_powered_search ;;
+      3) run_direct_api_search ;;
+      4) reverse_station_id_lookup_menu ;;
       q|Q|"") break ;;
       *) show_invalid_menu_choice "Search Menu" "$choice" ;;
     esac
